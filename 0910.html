@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>真の組織力とは何か</title>
+  <style>
+    :root{
+      /* ====== THEME (Apple-Inspired) ====== */
+      --highlight-blue: #007AFF; /* 애플의 시그니처 블루 */
+      --highlight-orange: #FF9500; /* 애플의 시그니처 오렌지 */
+      
+      --bg: #000000; /* 더 깊고 강렬한 블랙 배경 */
+      --fg: #F5F5F7; /* 눈이 편안한 오프화이트 텍스트 */
+      --muted: #86868B; /* 보조 텍스트를 위한 차분한 그레이 */
+
+      --card-bg: rgba(28, 28, 30, 0.75); /* 반투명 다크 그레이 카드 배경 (유리 질감 강화) */
+      --card-border: rgba(128, 128, 128, 0.3); /* 카드의 경계를 명확히 하는 은은한 테두리 */
+
+      /* ====== SLIDE CANVAS (16:9) ====== */
+      --slide-width: 1600px;
+      --slide-height: 900px;
+
+      /* ====== LOGO URL（変更可） ====== */
+      --logo: url('https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/07/GLD_type02_white_1178_785-2-1.png');
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    html,body{height:100%}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Hiragino Sans','Noto Sans JP',sans-serif;
+      background:var(--bg);color:var(--fg);
+      -webkit-font-smoothing:antialiased;
+      overflow:hidden;
+    }
+
+    /* ====== Deck (スライド全体のステージを16:9固定でスケール) ====== */
+    .deck{
+      position:fixed;left:50%;top:50%;
+      width:var(--slide-width);height:var(--slide-height);
+      transform:translate(-50%,-50%) scale(var(--scale,1));
+      transform-origin:center center;
+      background:transparent;
+    }
+
+    /* ====== Slide ====== */
+    .slide{
+      position:absolute;inset:0;
+      display:none;flex-direction:column;justify-content:center;align-items:center;
+      padding:64px 96px;
+      opacity:0;transform:translateY(16px);
+      transition:opacity .6s cubic-bezier(.25,.46,.45,.94), transform .6s cubic-bezier(.25,.46,.45,.94);
+    }
+    .slide.active{display:flex;opacity:1;transform:translateY(0);z-index:10}
+
+    .content{max-width:1200px;width:100%;position:relative}
+
+    /* ====== Type Scale (16:9基準で見やすく調整) ====== */
+    h1{font-size:72px;line-height:1.08;font-weight:650;letter-spacing:-.02em;text-align:center;margin-bottom:24px}
+    h2{font-size:44px;line-height:1.16;font-weight:560;letter-spacing:-.01em;margin-bottom:28px}
+    .subtitle{font-size:28px;color:var(--muted);text-align:center;margin-top:12px;opacity:0;animation:slideUp 800ms ease-out 200ms forwards}
+
+    .highlight{color:var(--highlight-blue);font-weight:600}
+    .asset-highlight{color:var(--highlight-orange);font-weight:600}
+
+    .glass-card{
+      background:var(--card-bg);backdrop-filter:blur(20px);
+      border:1px solid var(--card-border);border-radius:20px;
+      padding:28px;transition:all .3s ease;position:relative
+    }
+
+    .vs-container{display:flex;align-items:center;gap:36px;margin:28px 0}
+    .vs-item{flex:1;opacity:0;transform:translateY(18px);animation:fadeInUp .6s ease-out forwards}
+    .vs-item:nth-child(1){animation-delay:.15s}
+    .vs-item:nth-child(3){animation-delay:.35s}
+    .vs-divider{font-size:32px;font-weight:200;color:#777;opacity:0;animation:pulse .8s ease-out .25s forwards}
+
+    .two-column{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+
+    .big-number{font-size:128px;font-weight:200;text-align:center;color:var(--highlight-orange);line-height:1;margin-bottom:8px;opacity:0;animation:scaleIn .7s ease-out forwards}
+
+    .point-grid{display:grid;gap:16px;margin-top:16px}
+    .point-item{
+      background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:20px;
+      opacity:0;transform:translateX(-16px);animation:slideInLeft .6s ease-out forwards
+    }
+    .point-item:nth-child(1){animation-delay:.08s}
+    .point-item:nth-child(2){animation-delay:.18s}
+    .point-item h4{color:var(--highlight-blue);font-size:22px;margin-bottom:8px;font-weight:600}
+    .point-item p{color:#d2d2d7;font-size:18px;line-height:1.6}
+
+    .final-quote{text-align:center;position:relative}
+    .final-quote .main-question{font-size:44px;font-weight:620;line-height:1.25;margin-bottom:24px;opacity:0;animation:fadeIn .7s ease-out .2s forwards}
+    .final-quote .answer{font-size:22px;color:var(--muted);line-height:1.6;opacity:0;animation:fadeIn .7s ease-out .45s forwards}
+
+    /* ====== Header / Footer / Counter ====== */
+    .deck-header, .deck-footer {
+      position: absolute;
+      width: 100%;
+      padding: 0 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .deck-header {
+      top: 32px;
+    }
+
+    .deck-footer {
+      bottom: 28px;
+    }
+    
+    .deck-header > *, .deck-footer > * {
+      pointer-events: auto;
+    }
+
+
+/* 아래 코드로 기존 .company-logo 스타일을 교체해주세요. */
+
+.company-logo {
+  width: 120px;
+  height: 100px; /* 높이 값을 auto에서 구체적인 숫자로 변경 */
+  background-image: var(--logo);
+  background-size: contain;
+  background-position: center left; /* 로고를 왼쪽에 정렬하여 더 보기 좋게 수정 */
+  background-repeat: no-repeat;
+}
+    
+    .presentation-title {
+      font-size: 18px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .footer-text {
+      font-size: 16px;
+      color: #888;
+    }
+
+    .navigation {
+      position: static;
+      transform: none;
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      width: 10px;
+      height: 10px;
+      background: rgba(255, 255, 255, .35);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all .25s ease;
+    }
+    .nav-btn.active {
+      background: var(--highlight-blue);
+      transform: scale(1.25);
+    }
+    .nav-btn:hover {
+      filter: brightness(1.15);
+    }
+
+    .slide-counter {
+      position: static;
+      font-size: 16px;
+      color: #888;
+      width: 64px;
+      text-align: right;
+    }
+    
+    /* ====== Animations ====== */
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes slideInLeft{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+    @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+    /* ====== Responsive (縦長端末などでも安全表示) ====== */
+    @media (max-width: 900px){
+      .slide{padding:40px 48px}
+      .two-column{grid-template-columns:1fr;gap:20px}
+      h1{font-size:56px} h2{font-size:34px} .subtitle{font-size:22px}
+      .big-number{font-size:96px}
+      .point-item p{font-size:16px}
+    }
+
+    /* ====== Print / PDF ====== */
+    @media print{
+      @page {
+        size: 16in 9in;
+        margin: 0;
+      }
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        background: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .deck {
+        position: static !important;
+        transform: none !important;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .slide {
+        position: relative !important;
+        display: flex !important;
+        opacity: 1 !important;
+        transform: none !important;
+        width: 100%;
+        height: 100%;
+        page-break-after: always;
+        break-after: page;
+      }
+      .slide:last-of-type {
+        page-break-after: auto;
+        break-after: auto;
+      }
+      .deck-header, .deck-footer, .navigation, .slide-counter {
+        display: none !important;
+      }
+    }
+
+    /* ======== 업데이트 중 표시를 위한 스타일 ======== */
+.slide:not(:first-of-type) .content {
+  filter: blur(8px); /* 1번 슬라이드를 제외한 모든 슬라이드의 콘텐츠를 블러 처리 */
+  pointer-events: none; /* 블러된 슬라이드는 클릭 등 상호작용 안 되게 설정 */
+}
+
+.slide:not(:first-of-type)::after {
+  content: 'Updating...'; /* 표시할 텍스트 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  font-weight: bold;
+  color: var(--fg);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); /* 텍스트가 잘 보이도록 그림자 추가 */
+  z-index: 20;
+}
+  </style>
+</head>
+
+<body data-logo="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png">
+  <div id="deck" class="deck">
+
+    <header class="deck-header">
+      <div class="company-logo" aria-label="Company Logo"></div>
+      <div class="presentation-title">真の組織力とは何か</div>
+    </header>
+
+    <footer class="deck-footer">
+      <div class="footer-text">DAC女性管理職研修2025_September</div>
+      <div class="navigation"></div>
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></div>
+    </footer>
+
+    <section class="slide active">
+      <div class="content">
+        <h1>真の組織力とは何か</h1>
+        <p class="subtitle">私は組織の真の力になっているだろうか？</p>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="big-number">1.5倍</div>
+        <h2 style="text-align:center;">組織力の現実</h2>
+        <div class="glass-card" style="text-align:center;margin-top:18px;">
+          <p style="font-size:24px;margin-bottom:18px;color:#d2d2d7;line-height:1.6;">
+            優秀な人材が一人辞めると、補充コストは年収の1.5倍。<br>
+            しかし本当の損失は、その人を中心に回っていた<span class="asset-highlight">情報共有・問題解決・意思決定</span>が止まること。
+          </p>
+          <p style="font-size:26px;margin:14px 0;">
+            新しい人が来ても、この<span class="highlight">見えないネットワーク</span>は簡単には復旧できません。
+          </p>
+          <p style="font-size:20px;color:var(--muted);">では、真の組織力とは何でしょうか？</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <h2 style="text-align:center;margin-bottom:24px;">経営書に書かれていること<br>vs<br>現場の現実</h2>
+        <div class="vs-container">
+          <div class="vs-item">
+            <div class="glass-card">
+              <h3 style="font-size:26px;margin-bottom:14px;color:#ccc;">理論</h3>
+              <p style="font-size:20px;color:#d2d2d7;margin-bottom:8px;">全員の力を結集してシナジー効果を</p>
+              <p style="font-size:18px;color:var(--muted);">正しいが、<br>どうやって？が抜けている。</p>
+            </div>
+          </div>
+          <div class="vs-divider">vs</div>
+          <div class="vs-item">
+            <div class="glass-card" style="border-color:var(--highlight-orange);">
+              <h3 style="font-size:26px;margin-bottom:14px;color:var(--highlight-orange);">現実</h3>
+              <p style="font-size:20px;color:#d2d2d7;margin-bottom:8px;">どうやって自発的に協力したくなるか</p>
+              <p style="font-size:18px;color:var(--muted);">ここが解決すれば、<br>理論は自然に実現する。</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card" style="text-align:center;margin-top:22px;">
+          <p style="font-size:26px;">制度による協力 vs <span class="asset-highlight">内発的な協力</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content two-column">
+        <div>
+          <h2>考えてみてください</h2>
+          <p style="font-size:20px;color:#d2d2d7;line-height:1.6;margin-bottom:18px;">
+            あなたの周りで、本当に<span class="highlight">「この人と一緒に仕事がしたい」</span>と思った人がいませんか？
+          </p>
+          <p style="font-size:18px;color:var(--muted);line-height:1.6;">
+            その人は何が違ったでしょうか？<br>技術力？経験？それとも...<br><br>
+            答えは、協力を求める側ではなく、<br><span class="highlight">協力したくなる相手</span>だったことです。
+          </p>
+        </div>
+        <div class="point-grid">
+          <div class="point-item">
+            <h4>発想の転換</h4>
+            <p>「どうやって協力してもらうか」ではなく「どうやって協力したくなる人になるか」。この視点の違いが全てを変えます。</p>
+          </div>
+          <div class="point-item">
+            <h4>個人の魅力 = 組織の競争力</h4>
+            <p>一人ひとりが「選ばれる人」になることで、自然と強い組織が生まれる。これが真の組織力の源泉です。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <h2 style="text-align:center;margin-bottom:28px;">受けた分だけ vs 受けた分以上</h2>
+        <div class="vs-container">
+          <div class="vs-item">
+            <div class="glass-card" style="text-align:center;">
+              <h4 style="font-size:22px;color:#ccc;margin-bottom:16px;">距離を置くタイプ</h4>
+              <p style="font-size:19px;margin:12px 0;color:#d2d2d7;">
+                ・要請されたことだけ正確に<br>・線を引いて仕事<br>・安全な範囲内でのみ
+              </p>
+              <p style="color:var(--muted);font-size:17px;">リスクは少ないが、<br>印象も薄い。</p>
+            </div>
+          </div>
+          <div class="vs-divider">vs</div>
+          <div class="vs-item">
+            <div class="glass-card" style="border-color:var(--highlight-blue);text-align:center;">
+              <h4 style="font-size:22px;color:var(--highlight-blue);margin-bottom:16px;">積極的に関わるタイプ</h4>
+              <p style="font-size:19px;margin:12px 0;color:#d2d2d7;">
+                ・要請されたこと + α<br>・境界を越えた協力<br>・リスクを取って挑戦
+              </p>
+              <p style="color:var(--muted);font-size:17px;">危険もあるが、<br>強い印象を残す。</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card" style="text-align:center;margin-top:18px;">
+          <p style="font-size:24px;color:#fff;">人は<span class="highlight">期待以上のことをしてくれる人</span>を忘れない</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content two-column">
+        <div>
+          <h2>具体的には<br><span class="highlight">どうするか</span></h2>
+          <p style="font-size:20px;color:#d2d2d7;line-height:1.6;margin-bottom:18px;">
+            協力したくなる人の特徴は、技術的スキルではありません。もっと根本的な姿勢の問題です。
+          </p>
+        </div>
+        <div class="point-grid">
+          <div class="point-item">
+            <h4>一貫した態度</h4>
+            <p>相手が誰であろうと、基本的な姿勢は変わらない。だから安心して協力できる。</p>
+          </div>
+          <div class="point-item">
+            <h4>エネルギーを惜しまない</h4>
+            <p>損得勘定はするけれど、最終的には人に投資することを楽しんでいる。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <h2 style="text-align:center;">そうなると何が起こるか</h2>
+        <div class="glass-card" style="text-align:center;margin-top:22px;">
+          <h4 style="font-size:26px;color:var(--highlight-blue);margin-bottom:16px;">選ばれる人の循環</h4>
+          <p style="font-size:20px;color:#d2d2d7;margin-bottom:16px;">
+            良いプロジェクトに誘われる → 重要な情報が入る → 成果が上がる<br>
+            → さらに信頼される → また良い機会が来る
+          </p>
+          <p style="font-size:30px;color:#fff;margin:14px 0;font-weight:600;">
+            これが<span class="highlight">真の競争優位</span>
+          </p>
+          <p style="font-size:18px;color:var(--muted);">そして、こんな人が一人、また一人と増えていくと...</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content final-quote">
+        <p class="main-question">一人が変わると<br>組織が変わる</p>
+        <p class="answer">
+          <span class="highlight">選ばれる人</span>が一人いると、その周りの5人が影響を受ける。<br>
+          その5人がまた周りに影響し、連鎖反応が始まる。<br><br>
+          新しい制度も、トップダウンの指示も要りません。<br>
+          ただ、<span class="asset-highlight">一人ひとりが「協力したくなる人」</span>になること。<br><br>
+          それが、真の組織力を築く最も確実で、最も持続可能な道です。
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ====== 16:9 Fit to Window ======
+    const deck = document.getElementById('deck');
+    function fitStage(){
+      const sw = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slide-width'));
+      const sh = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slide-height'));
+      const scale = Math.min(window.innerWidth / sw, window.innerHeight / sh);
+      deck.style.setProperty('--scale', scale.toString());
+    }
+    window.addEventListener('resize', fitStage);
+    fitStage();
+
+    // ====== Logo from data attribute (optional override) ======
+    (function(){
+      const url = document.body.getAttribute('data-logo');
+      if(url){
+        document.documentElement.style.setProperty('--logo', `url('${url}')`);
+      }
+    })();
+
+    // ====== Slides / Navigation ======
+    let currentSlide = 0;
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+    const navigation = document.querySelector('.navigation');
+
+    document.getElementById('total-slides').textContent = totalSlides.toString();
+
+    for(let i=0;i<totalSlides;i++){
+      const btn = document.createElement('button');
+      btn.classList.add('nav-btn');
+      btn.addEventListener('click',()=>showSlide(i));
+      navigation.appendChild(btn);
+    }
+    const navBtns = document.querySelectorAll('.nav-btn');
+
+    function showSlide(n){
+      if(n<0 || n>=totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      navBtns[currentSlide].classList.remove('active');
+      currentSlide = n;
+      requestAnimationFrame(()=>{
+        slides[currentSlide].classList.add('active');
+        navBtns[currentSlide].classList.add('active');
+        document.getElementById('current-slide').textContent = (currentSlide+1).toString();
+      });
+    }
+    function nextSlide(){ if(currentSlide < totalSlides-1) showSlide(currentSlide+1); }
+    function prevSlide(){ if(currentSlide > 0) showSlide(currentSlide-1); }
+
+    // 初期化
+    showSlide(0);
+
+    // ====== Controls ======
+    document.addEventListener('keydown',(e)=>{
+      if(e.key==='ArrowRight' || e.key===' ' || e.key==='PageDown' || e.key==='ArrowDown'){ e.preventDefault(); nextSlide(); }
+      else if(e.key==='ArrowLeft' || e.key==='PageUp' || e.key==='ArrowUp'){ e.preventDefault(); prevSlide(); }
+      else if(e.key.toLowerCase()==='a'){ // Auto-advance toggle (約22秒/枚 ≒ 3分/8枚)
+        toggleAutoplay();
+      }
+    });
+
+    document.addEventListener('click',(e)=>{
+      if(!(e.target instanceof HTMLElement)) return;
+      if(!e.target.classList.contains('nav-btn') && !e.target.closest('.deck-header, .deck-footer')) {
+        nextSlide();
+      }
+    });
+
+    // ====== Auto Play (~3min total) ======
+    let autoplayTimer=null;
+    const perSlideMs = 22500; // 約22.5秒/枚
+    function toggleAutoplay(){
+      if(autoplayTimer){
+        clearInterval(autoplayTimer); autoplayTimer=null;
+      }else{
+        autoplayTimer = setInterval(()=>{
+          if(currentSlide >= totalSlides-1){ clearInterval(autoplayTimer); autoplayTimer=null; }
+          else{ nextSlide(); }
+        }, perSlideMs);
+      }
+    }
+
+    // ====== Print: ensure first slide visible for preview before printing ======
+    window.addEventListener('beforeprint', ()=>{
+      showSlide(0);
+    });
+  </script>
+</body>
+</html>
