@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; overflow: hidden; }
-
+    
         .presentation-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
@@ -25,12 +25,11 @@
             transform-origin: top left;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.4s, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.4s, visibility 0.4s;
         }
-
+    
         .slide.active { opacity: 1; visibility: visible; z-index: 1; }
-        .slide:not(.active) { transform-origin: center center; }
-
+        
         .slide-index-badge {
             position: absolute; top: 50px; right: 50px;
             padding: 10px 20px; border-radius: 999px;
@@ -40,7 +39,7 @@
             border: 1px solid rgba(0,0,0,0.05);
             z-index: 100;
         }
-
+    
         .slide-footer {
             height: 100px;
             flex-shrink: 0;
@@ -55,28 +54,26 @@
         .footer-title { font-size: 20px; font-weight: 600; color: #8a8a8e; }
         
         .slide-header { padding: 80px 80px 32px 80px; border-bottom: 2px solid #e5e5e7; flex-shrink: 0; }
-        .slide-number { font-size: 20px; color: #86868b; letter-spacing: 2px; margin-bottom: 16px; }
-        .slide-title { font-size: 72px; font-weight: 700; letter-spacing: -2px; line-height: 1.1; }
-        .slide-subtitle { font-size: 36px; color: #6e6e73; margin-top: 16px; }
+        .slide-number { font-size: 20px; color: maroon; /* [테마] 와인색 포인트 컬러 적용 */ font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; }
+        .slide-title { font-size: 72px; font-weight: 700; letter-spacing: -2px; line-height: 1.1; color: #000; }
+        .slide-subtitle { font-size: 36px; color: #555; margin-top: 16px; }
         .slide-content { flex-grow: 1; padding: 40px 80px; display: flex; flex-direction: column; min-height: 0; }
         
-        .title-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #1c1c1c 0%, #333 100%); color: white; }
+        /* --- 슬라이드 0 (타이틀) --- */
+        .title-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #2d0b0b 0%, #000000 100%); color: white; }
         .title-slide .company-logo { width: 240px; margin-bottom: 40px; } .title-slide .company-logo img { width: 100%; }
-        .main-title { 
-            font-size: 110px; font-weight: 700; margin-bottom: 24px; letter-spacing: -4px; line-height: 1;
-            background: linear-gradient(135deg, #ffffff 0%, #d4e7ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .subtitle { font-size: 48px; font-weight: 300; opacity: .9; margin-bottom: 60px; }
-        .presenter-info { font-size: 28px; } .presenter-info .name { font-weight: 700; margin-top: 8px; }
-        .date-info { font-size: 22px; opacity: .6; margin-top: 24px; }
+        .main-title { font-size: 110px; font-weight: 700; margin-bottom: 24px; letter-spacing: -4px; line-height: 1; }
+        .subtitle { font-size: 48px; font-weight: 300; opacity: .9; margin-bottom: 60px; color: #ffde99; }
+        .presenter-info { font-size: 28px; padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); } 
+        .presenter-info .name { font-weight: 700; margin-top: 8px; }
+        .date-info { font-size: 22px; opacity: .6; }
         .title-slide .slide-index-badge { color: #fff; background: rgba(255,255,255,.1); }
         .title-slide .slide-header, .title-slide .slide-footer { display: none; }
-
-        .ending-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #007aff 0%, #0051d5 100%); color: #fff; }
+    
+        /* --- [수정] 슬라이드 5 (엔딩) --- */
+        .ending-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #2d0b0b 0%, #000000 100%); color: #fff; }
         .ending-message { font-size: 80px; font-weight: 700; margin-bottom: 40px; letter-spacing: -2px; line-height: 1.2; }
-        .ending-subtitle { font-size: 36px; font-weight: 400; opacity: .9; margin-bottom: 60px; }
+        .ending-subtitle { font-size: 36px; font-weight: 400; opacity: .9; margin-bottom: 60px; color: #ffde99; }
         .next-step { margin-top: 40px; padding: 24px 32px; background: rgba(255,255,255,.1); border-radius: 16px; border: 1px solid rgba(255,255,255,.2); }
         .next-step-title { font-size: 20px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,.7); margin-bottom: 12px; }
         .next-step p { font-size: 28px; font-weight: 500; }
@@ -84,17 +81,18 @@
         .ending-slide .slide-index-badge { color: #fff; background: rgba(255,255,255,.1); }
         .ending-slide .slide-header, .ending-slide .slide-footer { display: none; }
         
+        /* --- 일반 슬라이드 디자인 --- */
         .problem-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; flex-grow: 1; align-items: center; }
         .visual-story { display: flex; flex-direction: column; gap: 24px; }
-        .story-card { background: #f5f5f7; border-radius: 20px; padding: 32px; position: relative; }
+        .story-card { background: #f5f5f7; border-radius: 20px; padding: 32px; position: relative; border: 1px solid rgba(0, 0, 0, 0.05); }
         .story-number { position: absolute; top: -20px; left: 32px; background: #ff3b30; color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; }
         .story-content { font-size: 30px; line-height: 1.5; }
         .highlight { background: linear-gradient(120deg, #ffcc00 0%, #ff9500 100%); padding: 4px 12px; border-radius: 8px; color: #fff; font-weight: 700; }
         .crisis-message { background: linear-gradient(135deg, #ff3b30, #ff6259); color: #fff; padding: 28px; border-radius: 20px; font-size: 36px; font-weight: 700; text-align: center; }
         .pyramid-visual { display: flex; align-items: center; justify-content: center; height: 100%; }
         .pyramid { width: 100%; max-width: 480px; }
-        .pyramid-level { height: 80px; margin: 4px auto; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 26px; position: relative; }
-        .level-1 { background: linear-gradient(135deg, #ff3b30, #ff6259); width: 40%; } .level-2 { background: linear-gradient(135deg, #ff9500, #ffb143); width: 60%; } .level-3 { background: linear-gradient(135deg, #ffcc00, #ffd74a); width: 80%; } .level-4 { background: linear-gradient(135deg, #c7c7cc, #d1d1d6); width: 100%; }
+        .pyramid-level { height: 80px; margin: 4px auto; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 26px; position: relative; }
+        .level-1 { background: linear-gradient(135deg, #ff3b30, #ff6259); } .level-2 { background: linear-gradient(135deg, #ff9500, #ffb143); } .level-3 { background: linear-gradient(135deg, #ffcc00, #ffd74a); } .level-4 { background: linear-gradient(135deg, #c7c7cc, #d1d1d6); }
         .pyramid-label { position: absolute; left: 105%; background: #fff; padding: 10px 18px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,.1); color: #1d1d1f; font-size: 20px; font-weight: 500; white-space: nowrap; }
         
         .current-state-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; flex-grow: 1; align-items: center; }
@@ -104,8 +102,10 @@
         .legend-item { display: flex; align-items: center; gap: 14px; padding: 14px; background: #f5f5f7; border-radius: 10px; }
         .legend-color { width: 28px; height: 28px; border-radius: 5px; } .legend-text, .legend-value { font-size: 20px; } .legend-value { font-weight: 700; margin-left: auto; }
         .insights-section { display: flex; flex-direction: column; gap: 24px; }
-        .insight-card { background: #f5f5f7; padding: 28px; border-radius: 16px; border-left: 8px solid; }
-        .insight-card.c1 { border-color: #ff3b30; } .insight-card.c2 { border-color: #ff9500; } .insight-card.c3 { border-color: #34c759; }
+        .insight-card { background: #f5f5f7; padding: 28px; border-radius: 16px; border: 1px solid rgba(0, 0, 0, 0.05); border-left: 8px solid; }
+        .insight-card.c1 { border-color: maroon; } /* [테마] 와인색 포인트 컬러 적용 */
+        .insight-card.c2 { border-color: #ff9500; } 
+        .insight-card.c3 { border-color: #34c759; }
         .insight-icon { font-size: 36px; margin-bottom: 12px; } .insight-text { font-size: 22px; line-height: 1.5; }
         
         #slide3 .slide-header { padding-top: 70px; padding-bottom: 24px; margin-bottom: 15px; }
@@ -113,45 +113,31 @@
         #slide3 .slide-subtitle { font-size: 32px; }
         #slide3 .slide-content { padding-top: 20px; padding-bottom: 20px; }
         #slide3 .solution-layout-new { display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; align-items: center; flex-grow: 1; }
-        #slide3 .pillar-card { border: 2px solid #e5e5e7; border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 18px; height: 100%; }
-        #slide3 .pillar-header { padding-bottom: 18px; text-align: center; border-bottom: 2px solid #e5e5e7; margin-bottom: 0; }
-        #slide3 .pillar-number { font-size: 18px; } #slide3 .pillar-title { font-size: 36px; } #slide3 .pillar-frequency { font-size: 20px; }
-        #slide3 .pillar-content { display: flex; flex-direction: column; gap: 14px; flex-grow: 1; }
-        #slide3 .pillar-point { display: flex; align-items: center; padding: 12px 14px; gap: 16px; }
-        #slide3 .point-text { font-size: 22px; line-height: 1.4; font-weight: 500; } #slide3 .point-text strong { font-weight: 700; }
+        #slide3 .pillar-card { border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 18px; height: 100%; }
+        #slide3 .pillar-header { padding-bottom: 18px; text-align: center; border-bottom: 2px solid #eef2f7; margin: -28px -28px 0 -28px; border-radius: 18px 18px 0 0; background-color: #f8f9fa; }
+        #slide3 .pillar-number { font-size: 16px; font-weight: 700; padding: 4px 14px; border-radius: 999px; color: #fff; }
+        #slide3 .pillar-1 .pillar-number { background-color: #ff9500; }
+        #slide3 .pillar-2 .pillar-number { background-color: #34c759; }
+        #slide3 .pillar-title { font-size: 38px; font-weight: 800; color: #000; }
+        #slide3 .pillar-frequency { font-size: 18px; font-weight: 600; padding: 6px 16px; border-radius: 999px; background-color: #e9ecef; color: #495057; }
+        #slide3 .pillar-content { display: flex; flex-direction: column; gap: 14px; flex-grow: 1; padding-top: 16px; }
+        #slide3 .pillar-point { display: flex; align-items: center; padding: 14px; gap: 16px; background: #f5f5f7; border-radius: 12px; }
+        #slide3 .point-icon { font-size: 32px; }
+        #slide3 .point-text { font-size: 22px; line-height: 1.4; font-weight: 500; }
         #slide3 .department-flow { margin-top: auto; padding: 14px; background: #f5f5f7; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 12px; }
-        #slide3 .dept-item { font-size: 18px; }
-        
-        #slide3 .kpi-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1d1d1f;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-}
-#slide3 .kpi-items {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-start;
-}
-#slide3 .kpi-tag {
-    background: #007aff; /* 핵심 테마 색상 적용 */
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 8px 18px;
-    border-radius: 999px; /* 라벨(Pill) 형태 */
-    border: none;
-}
-        #slide3 .implementation-vision-center { padding: 30px; background: #f0f3f8; border-radius: 16px; width: 380px; }
+        #slide3 .dept-item { font-size: 18px; font-weight: 600; }
+        #slide3 .kpi-section { margin-top: 18px; }
+        #slide3 .kpi-title { font-size: 18px; font-weight: 700; text-align: left; margin-bottom: 12px; }
+        #slide3 .kpi-items { display: flex; gap: 10px; justify-content: flex-start; }
+        #slide3 .kpi-tag { font-size: 17px; padding: 6px 14px; border-radius: 10px; }
+        #slide3 .implementation-vision-center { padding: 30px; background: #f0f3f8; border-radius: 16px; border: 2px solid #dde3ec; width: 380px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); }
         #slide3 .vision-role { display: flex; align-items: center; gap: 20px; }
         #slide3 .role-icon { font-size: 48px; }
         #slide3 .role-text { font-size: 22px; line-height: 1.45; }
         #slide3 .role-text strong { display: block; margin-bottom: 8px; font-size: 24px; color: #007aff; }
-        #slide3 .pillar-1 .flow-arrow, #slide3 .pillar-1 .point-icon { color: #ff9500; } 
-        #slide3 .pillar-2 .flow-arrow, #slide3 .pillar-2 .point-icon { color: #34c759; }
-        
+        #slide3 .pillar-1 .point-icon, #slide3 .pillar-1 .flow-arrow { color: #ff9500; } 
+        #slide3 .pillar-2 .point-icon, #slide3 .pillar-2 .flow-arrow { color: #34c759; }
+    
         #slide4 .impact-layout { display: flex; flex-direction: column; gap: 60px; flex-grow: 1; justify-content: center; }
         #slide4 .transformation-visual { display: flex; align-items: center; justify-content: center; }
         #slide4 .state-box { width: 280px; height: 280px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -159,144 +145,20 @@
         #slide4 .state-formula { font-size: 50px; font-weight: 700; } #slide4 .state-label { font-size: 22px; margin-top: 16px; opacity: .8; }
         #slide4 .arrow-transform { font-size: 70px; color: #007aff; margin: 0 30px; }
         #slide4 .benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-        #slide4 .benefit-item { background: #fff; padding: 24px; border-radius: 16px; text-align: center; }
-        #slide4 .benefit-icon { font-size: 60px; margin-bottom: 20px; } #slide4 .benefit-title { font-size: 22px; font-weight: 600; margin-bottom: 10px; }
-        #slide4 .benefit-metric { font-size: 48px; font-weight: 900; color: #007aff; } /* 폰트 두께 강화 */
-
-        /* --- [적용] 카드 디자인 개선 (그림자, 아이콘) --- */
-        .story-card, .pillar-card, .insight-card, .benefit-item, #slide3 .implementation-vision-center {
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 
-                        0px 5px 10px rgba(0, 0, 0, 0.05), 
-                        0px 15px 30px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .story-card:hover, .pillar-card:hover, .insight-card:hover, .benefit-item:hover, #slide3 .implementation-vision-center:hover {
-            transform: translateY(-8px);
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.03), 
-                        0px 10px 20px rgba(0, 0, 0, 0.08), 
-                        0px 25px 50px rgba(0, 0, 0, 0.05);
-        }
-        #slide3 .point-icon, #slide3 .role-icon {
-            display: flex; align-items: center; justify-content: center;
-            width: 60px; height: 60px; border-radius: 50%;
-            background-color: #eef5ff; font-size: 28px;
-        }
-        #slide3 .role-icon { background-color: #dde3ec; }
-
+        #slide4 .benefit-item { background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center; }
+        #slide4 .benefit-icon { font-size: 60px; margin-bottom: 20px; } #slide4 .benefit-title { font-size: 22px; font-weight: 600; margin-bottom: 10px; } 
+        #slide4 .benefit-metric { font-size: 48px; font-weight: 900; color: #0066CC; }
+    
         /* --- UI 요소 --- */
         .nav-buttons, .slide-indicator, .timer, .progress-bar { z-index: 1000; position: fixed; }
         .nav-buttons { bottom: 40px; right: 40px; display: flex; gap: 12px; }
-        .nav-btn { width: 50px; height: 50px; border-radius: 50%; background: rgba(0,0,0,.7); color: #fff; border: none; cursor: pointer; font-size: 24px; backdrop-filter: blur(10px); transition: background-color 0.3s; }
-        .nav-btn:hover { background-color: #007aff; }
+        .nav-btn { width: 50px; height: 50px; border-radius: 50%; background: rgba(0,0,0,.7); color: #fff; border: none; cursor: pointer; font-size: 24px; backdrop-filter: blur(10px); }
         .slide-indicator { bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
         .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.3); }
         .dot.active { background: #fff; width: 30px; border-radius: 5px; }
         .timer { top: 40px; right: 40px; background: rgba(0,0,0,.7); color: #fff; padding: 12px 20px; border-radius: 50px; font-size: 20px; font-weight: 600; backdrop-filter: blur(10px); }
         .progress-bar { top: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,.1); }
         .progress-fill { height: 100%; background: linear-gradient(90deg, #007aff, #3395ff); width: 0; transition: width .3s; }
-
-        /* --- 1. 핵심 데이터 & 수치 강조 --- */
-.pyramid-level {
-    font-weight: 700; /* 피라미드 안 숫자 굵게 */
-}
-#slide4 .benefit-metric {
-    font-weight: 900; /* 기대효과 숫자 매우 굵게 */
-    color: #0066CC;   /* 가시성을 위해 약간 더 진한 파란색으로 */
-}
-
-/* --- 2. 텍스트 색상 대비 강화 --- */
-.slide-title {
-    color: #000000; /* 가장 중요한 제목은 완전한 검은색으로 */
-}
-.slide-subtitle {
-    color: #555555; /* 부제는 조금 더 진한 회색으로 */
-}
-.story-content, .insight-text, .point-text, .role-text {
-    color: #1d1d1f; /* 본문 텍스트의 기본 색상을 명확하게 */
-}
-
-/* --- 1. 핵심 데이터 & 수치 강조 --- */
-.pyramid-level {
-    font-weight: 700; /* 피라미드 안 숫자 굵게 */
-}
-#slide4 .benefit-metric {
-    font-weight: 900; /* 기대효과 숫자 매우 굵게 */
-    color: #0066CC;   /* 가시성을 위해 약간 더 진한 파란색으로 */
-}
-
-/* --- 2. 텍스트 색상 대비 강화 --- */
-.slide-title {
-    color: #000000; /* 가장 중요한 제목은 완전한 검은색으로 */
-}
-.slide-subtitle {
-    color: #555555; /* 부제는 조금 더 진한 회색으로 */
-}
-.story-content, .insight-text, .point-text, .role-text {
-    color: #1d1d1f; /* 본문 텍스트의 기본 색상을 명확하게 */
-}
-
-/* --- 3. 테마 컬러 포인트 추가 --- */
-#slide3 .pillar-point {
-    border-top: 1px solid; /* 위쪽에 테두리를 추가할 공간 확보 */
-    padding-top: 10px;
-    margin-top: 1px;
-}
-#slide3 .pillar-1 .pillar-point {
-    border-color: #ffd199; /* Pillar 1 테마 색상 (연한 주황) */
-}
-#slide3 .pillar-2 .pillar-point {
-    border-color: #a8e6b8; /* Pillar 2 테마 색상 (연한 초록) */
-}
-/* --- #slide3 (4페이지) 카드 헤더 디자인 강화 --- */
-#slide3 .pillar-card {
-    /* 카드에 마우스를 올렸을 때 부드러운 효과 추가 */
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-#slide3 .pillar-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-#slide3 .pillar-header {
-    background-color: #f8f9fa; /* 헤더 영역에 부드러운 배경색 추가 */
-    padding: 24px;
-    border-radius: 18px 18px 0 0; /* 카드의 윗부분에만 둥근 모서리 적용 */
-    margin: -28px -28px 0 -28px; /* 카드 패딩에 맞춰 확장 */
-    border-bottom: 2px solid #eef2f7;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px; /* 헤더 내부 요소 간격 */
-}
-
-#slide3 .pillar-number {
-    font-size: 16px;
-    font-weight: 700;
-    padding: 4px 14px;
-    border-radius: 999px;
-    color: #fff;
-}
-/* 각 카드별 테마 색상 적용 */
-#slide3 .pillar-1 .pillar-number { background-color: #ff9500; }
-#slide3 .pillar-2 .pillar-number { background-color: #34c759; }
-
-#slide3 .pillar-title {
-    font-size: 38px; /* 폰트 크기 강조 */
-    font-weight: 800; /* 더 굵게 */
-    color: #000;
-}
-
-#slide3 .pillar-frequency {
-    font-size: 18px;
-    font-weight: 600;
-    padding: 6px 16px;
-    border-radius: 999px;
-    background-color: #e9ecef; /* 부드러운 회색 배경 */
-    color: #495057;
-}
-
     </style>
 </head>
 <body>
