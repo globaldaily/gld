@@ -1,410 +1,502 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GLD プレゼンテーション - autoscale fix</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue','Noto Sans JP',sans-serif;background:#000;color:#1d1d1f;overflow:hidden}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>GLD プレゼンテーション - 최종 완성본</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; overflow: hidden; }
 
-    .presentation-container{
-      position:relative;width:100vw;height:100vh;
-      background:linear-gradient(135deg,#000 0%,#1a1a1a 100%);
-    }
+        .presentation-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+        }
+        
+        .slide {
+            position: absolute;
+            width: 1920px;
+            height: 1080px;
+            background: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'Noto Sans JP', sans-serif;
+            color: #1d1d1f;
+            display: flex;
+            flex-direction: column;
+            transform-origin: top left;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
-    /* 화면 대응 스케일(바깥) */
-    .slide-scaler{
-      position:absolute;top:50%;left:50%;
-      width:1920px;height:1080px;
-      transform-origin:50% 50%;
-      /* transform은 JS에서 translate(-50%,-50%) scale(...) */
-    }
+        .slide.active { opacity: 1; visibility: visible; z-index: 1; }
+        .slide:not(.active) { transform-origin: center center; }
 
-    /* 디자인 기준 박스(고정 크기) */
-    .slide{
-      width:1920px;height:1080px;background:#fff;
-      box-shadow:0 20px 60px rgba(0,0,0,.3);
-      display:none;flex-direction:column;opacity:0;
-      position:relative;overflow:hidden; /* 넘치는 건 내부에서 축소 */
-    }
-    .slide.active{display:flex;opacity:1}
+        .slide-index-badge {
+            position: absolute; top: 50px; right: 50px;
+            padding: 10px 20px; border-radius: 999px;
+            background: rgba(0,0,0,.1); color: #000;
+            font-weight: 600; font-size: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.05);
+            z-index: 100;
+        }
 
-    /* 슬라이드 안의 ‘진짜 내용’을 감싸는 래퍼.
-       이걸 per-slide로 자동 축소해서 1920×1080 안에 끼워 넣는다. */
-    .slide-inner{
-      position:absolute;top:50%;left:50%;
-      transform-origin:top left; /* translate(-50%,-50%) 기준점 */
-      /* transform은 JS에서 translate(-50%,-50%) scale(...) */
-      width:max-content;height:max-content; /* 자연 크기 측정용 */
-    }
+        .slide-footer {
+            height: 100px;
+            flex-shrink: 0;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 80px;
+            border-top: 1px solid #e5e5e7;
+        }
+        .footer-logo img { width: 120px; opacity: 0.7; }
+        .footer-title { font-size: 20px; font-weight: 600; color: #8a8a8e; }
+        
+        .slide-header { padding: 80px 80px 32px 80px; border-bottom: 2px solid #e5e5e7; flex-shrink: 0; }
+        .slide-number { font-size: 20px; color: #86868b; letter-spacing: 2px; margin-bottom: 16px; }
+        .slide-title { font-size: 72px; font-weight: 700; letter-spacing: -2px; line-height: 1.1; }
+        .slide-subtitle { font-size: 36px; color: #6e6e73; margin-top: 16px; }
+        .slide-content { flex-grow: 1; padding: 40px 80px; display: flex; flex-direction: column; min-height: 0; }
+        
+        .title-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #1c1c1c 0%, #333 100%); color: white; }
+        .title-slide .company-logo { width: 240px; margin-bottom: 40px; } .title-slide .company-logo img { width: 100%; }
+        .main-title { 
+            font-size: 110px; font-weight: 700; margin-bottom: 24px; letter-spacing: -4px; line-height: 1;
+            background: linear-gradient(135deg, #ffffff 0%, #d4e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle { font-size: 48px; font-weight: 300; opacity: .9; margin-bottom: 60px; }
+        .presenter-info { font-size: 28px; } .presenter-info .name { font-weight: 700; margin-top: 8px; }
+        .date-info { font-size: 22px; opacity: .6; margin-top: 24px; }
+        .title-slide .slide-index-badge { color: #fff; background: rgba(255,255,255,.1); }
+        .title-slide .slide-header, .title-slide .slide-footer { display: none; }
 
-    .slide-header{margin-bottom:48px;padding:80px 80px 32px 80px;border-bottom:2px solid #e5e5e7}
-    .slide-number{font-size:20px;color:#86868b;font-weight:600;letter-spacing:2px;margin-bottom:16px}
-    .slide-title{font-size:72px;font-weight:700;letter-spacing:-2px;line-height:1.1}
-    .slide-subtitle{font-size:36px;color:#6e6e73;margin-top:16px;font-weight:400}
+        .ending-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #007aff 0%, #0051d5 100%); color: #fff; }
+        .ending-message { font-size: 80px; font-weight: 700; margin-bottom: 40px; letter-spacing: -2px; line-height: 1.2; }
+        .ending-subtitle { font-size: 36px; font-weight: 400; opacity: .9; margin-bottom: 60px; }
+        .next-step { margin-top: 40px; padding: 24px 32px; background: rgba(255,255,255,.1); border-radius: 16px; border: 1px solid rgba(255,255,255,.2); }
+        .next-step-title { font-size: 20px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,.7); margin-bottom: 12px; }
+        .next-step p { font-size: 28px; font-weight: 500; }
+        .ending-slide .company-logo { position: absolute; bottom: 80px; width: 120px; filter: brightness(0) invert(1); opacity: 1; }
+        .ending-slide .slide-index-badge { color: #fff; background: rgba(255,255,255,.1); }
+        .ending-slide .slide-header, .ending-slide .slide-footer { display: none; }
+        
+        .problem-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; flex-grow: 1; align-items: center; }
+        .visual-story { display: flex; flex-direction: column; gap: 24px; }
+        .story-card { background: #f5f5f7; border-radius: 20px; padding: 32px; position: relative; }
+        .story-number { position: absolute; top: -20px; left: 32px; background: #ff3b30; color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; }
+        .story-content { font-size: 30px; line-height: 1.5; }
+        .highlight { background: linear-gradient(120deg, #ffcc00 0%, #ff9500 100%); padding: 4px 12px; border-radius: 8px; color: #fff; font-weight: 700; }
+        .crisis-message { background: linear-gradient(135deg, #ff3b30, #ff6259); color: #fff; padding: 28px; border-radius: 20px; font-size: 36px; font-weight: 700; text-align: center; }
+        .pyramid-visual { display: flex; align-items: center; justify-content: center; height: 100%; }
+        .pyramid { width: 100%; max-width: 480px; }
+        .pyramid-level { height: 80px; margin: 4px auto; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 26px; position: relative; }
+        .level-1 { background: linear-gradient(135deg, #ff3b30, #ff6259); width: 40%; } .level-2 { background: linear-gradient(135deg, #ff9500, #ffb143); width: 60%; } .level-3 { background: linear-gradient(135deg, #ffcc00, #ffd74a); width: 80%; } .level-4 { background: linear-gradient(135deg, #c7c7cc, #d1d1d6); width: 100%; }
+        .pyramid-label { position: absolute; left: 105%; background: #fff; padding: 10px 18px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,.1); color: #1d1d1f; font-size: 20px; font-weight: 500; white-space: nowrap; }
+        
+        .current-state-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; flex-grow: 1; align-items: center; }
+        .chart-section { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .donut-container { position: relative; width: 450px; height: 450px; flex-shrink: 0; }
+        .chart-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 500px; }
+        .legend-item { display: flex; align-items: center; gap: 14px; padding: 14px; background: #f5f5f7; border-radius: 10px; }
+        .legend-color { width: 28px; height: 28px; border-radius: 5px; } .legend-text, .legend-value { font-size: 20px; } .legend-value { font-weight: 700; margin-left: auto; }
+        .insights-section { display: flex; flex-direction: column; gap: 24px; }
+        .insight-card { background: #f5f5f7; padding: 28px; border-radius: 16px; border-left: 8px solid; }
+        .insight-card.c1 { border-color: #ff3b30; } .insight-card.c2 { border-color: #ff9500; } .insight-card.c3 { border-color: #34c759; }
+        .insight-icon { font-size: 36px; margin-bottom: 12px; } .insight-text { font-size: 22px; line-height: 1.5; }
+        
+        #slide3 .slide-header { padding-top: 70px; padding-bottom: 24px; margin-bottom: 15px; }
+        #slide3 .slide-title { font-size: 64px; }
+        #slide3 .slide-subtitle { font-size: 32px; }
+        #slide3 .slide-content { padding-top: 20px; padding-bottom: 20px; }
+        #slide3 .solution-layout-new { display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; align-items: center; flex-grow: 1; }
+        #slide3 .pillar-card { border: 2px solid #e5e5e7; border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 18px; height: 100%; }
+        #slide3 .pillar-header { padding-bottom: 18px; text-align: center; border-bottom: 2px solid #e5e5e7; margin-bottom: 0; }
+        #slide3 .pillar-number { font-size: 18px; } #slide3 .pillar-title { font-size: 36px; } #slide3 .pillar-frequency { font-size: 20px; }
+        #slide3 .pillar-content { display: flex; flex-direction: column; gap: 14px; flex-grow: 1; }
+        #slide3 .pillar-point { display: flex; align-items: center; padding: 12px 14px; gap: 16px; }
+        #slide3 .point-text { font-size: 22px; line-height: 1.4; font-weight: 500; } #slide3 .point-text strong { font-weight: 700; }
+        #slide3 .department-flow { margin-top: auto; padding: 14px; background: #f5f5f7; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        #slide3 .dept-item { font-size: 18px; }
+        
+        #slide3 .kpi-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1d1d1f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+#slide3 .kpi-items {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+}
+#slide3 .kpi-tag {
+    background: #007aff; /* 핵심 테마 색상 적용 */
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 999px; /* 라벨(Pill) 형태 */
+    border: none;
+}
+        #slide3 .implementation-vision-center { padding: 30px; background: #f0f3f8; border-radius: 16px; width: 380px; }
+        #slide3 .vision-role { display: flex; align-items: center; gap: 20px; }
+        #slide3 .role-icon { font-size: 48px; }
+        #slide3 .role-text { font-size: 22px; line-height: 1.45; }
+        #slide3 .role-text strong { display: block; margin-bottom: 8px; font-size: 24px; color: #007aff; }
+        #slide3 .pillar-1 .flow-arrow, #slide3 .pillar-1 .point-icon { color: #ff9500; } 
+        #slide3 .pillar-2 .flow-arrow, #slide3 .pillar-2 .point-icon { color: #34c759; }
+        
+        #slide4 .impact-layout { display: flex; flex-direction: column; gap: 60px; flex-grow: 1; justify-content: center; }
+        #slide4 .transformation-visual { display: flex; align-items: center; justify-content: center; }
+        #slide4 .state-box { width: 280px; height: 280px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        #slide4 .state-before { background: #f5f5f7; border: 3px solid #d1d1d6; } #slide4 .state-after { background: linear-gradient(135deg, #34c759, #30d158); color: #fff; }
+        #slide4 .state-formula { font-size: 50px; font-weight: 700; } #slide4 .state-label { font-size: 22px; margin-top: 16px; opacity: .8; }
+        #slide4 .arrow-transform { font-size: 70px; color: #007aff; margin: 0 30px; }
+        #slide4 .benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        #slide4 .benefit-item { background: #fff; padding: 24px; border-radius: 16px; text-align: center; }
+        #slide4 .benefit-icon { font-size: 60px; margin-bottom: 20px; } #slide4 .benefit-title { font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+        #slide4 .benefit-metric { font-size: 48px; font-weight: 900; color: #007aff; } /* 폰트 두께 강화 */
 
-    /* 타이틀 */
-    .title-slide{padding:80px;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#1c1c1c 0%,#333 100%);color:#fff;border-radius:0}
-    .title-slide .slide-number{position:absolute;top:80px;left:80px;color:rgba(255,255,255,.7)}
-    .company-logo{width:240px;margin-bottom:40px}
-    .company-logo img{width:100%}
-    .main-title{font-size:96px;font-weight:700;margin-bottom:24px;letter-spacing:-3px}
-    .subtitle{font-size:48px;font-weight:300;opacity:.9;margin-bottom:60px}
-    .presenter-info .role{font-size:24px}
-    .presenter-info .name{font-size:32px;margin-top:8px}
-    .date-info{font-size:22px;opacity:.6;margin-top:32px}
+        /* --- [적용] 카드 디자인 개선 (그림자, 아이콘) --- */
+        .story-card, .pillar-card, .insight-card, .benefit-item, #slide3 .implementation-vision-center {
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 
+                        0px 5px 10px rgba(0, 0, 0, 0.05), 
+                        0px 15px 30px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .story-card:hover, .pillar-card:hover, .insight-card:hover, .benefit-item:hover, #slide3 .implementation-vision-center:hover {
+            transform: translateY(-8px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.03), 
+                        0px 10px 20px rgba(0, 0, 0, 0.08), 
+                        0px 25px 50px rgba(0, 0, 0, 0.05);
+        }
+        #slide3 .point-icon, #slide3 .role-icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 60px; height: 60px; border-radius: 50%;
+            background-color: #eef5ff; font-size: 28px;
+        }
+        #slide3 .role-icon { background-color: #dde3ec; }
 
-    /* slide1 */
-    #slide1 .problem-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;flex-grow:1;align-items:center;padding:0 80px 80px 80px}
-    .visual-story{display:flex;flex-direction:column;gap:32px}
-    .story-card{background:#f5f5f7;border-radius:20px;padding:40px;position:relative}
-    .story-number{position:absolute;top:-25px;left:40px;background:#ff3b30;color:#fff;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:24px}
-    .story-content{font-size:32px;line-height:1.6}
-    .highlight{background:linear-gradient(120deg,#ffcc00 0%,#ff9500 100%);padding:4px 12px;border-radius:8px;color:#fff;font-weight:700}
-    .crisis-message{background:linear-gradient(135deg,#ff3b30,#ff6259);color:#fff;padding:32px;border-radius:20px;font-size:40px;font-weight:700;text-align:center}
-    .pyramid{width:100%;max-width:500px;margin:0 auto}
-    .pyramid-level{height:90px;margin:5px auto;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:28px;position:relative}
-    .level-1{background:linear-gradient(135deg,#ff3b30,#ff6259);width:40%}
-    .level-2{background:linear-gradient(135deg,#ff9500,#ffb143);width:60%}
-    .level-3{background:linear-gradient(135deg,#ffcc00,#ffd74a);width:80%}
-    .level-4{background:linear-gradient(135deg,#c7c7cc,#d1d1d6);width:100%}
-    .pyramid-label{position:absolute;left:105%;background:#fff;padding:12px 20px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,.1);color:#1d1d1f;font-size:22px;font-weight:500;white-space:nowrap}
+        /* --- UI 요소 --- */
+        .nav-buttons, .slide-indicator, .timer, .progress-bar { z-index: 1000; position: fixed; }
+        .nav-buttons { bottom: 40px; right: 40px; display: flex; gap: 12px; }
+        .nav-btn { width: 50px; height: 50px; border-radius: 50%; background: rgba(0,0,0,.7); color: #fff; border: none; cursor: pointer; font-size: 24px; backdrop-filter: blur(10px); transition: background-color 0.3s; }
+        .nav-btn:hover { background-color: #007aff; }
+        .slide-indicator { bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.3); }
+        .dot.active { background: #fff; width: 30px; border-radius: 5px; }
+        .timer { top: 40px; right: 40px; background: rgba(0,0,0,.7); color: #fff; padding: 12px 20px; border-radius: 50px; font-size: 20px; font-weight: 600; backdrop-filter: blur(10px); }
+        .progress-bar { top: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,.1); }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #007aff, #3395ff); width: 0; transition: width .3s; }
 
-    /* slide2 */
-    #slide2 .current-state-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:80px;flex-grow:1;align-items:center;padding:0 80px 80px 80px}
-    .chart-section{display:flex;flex-direction:column;align-items:center;gap:40px}
-    .donut-container{position:relative;width:500px;height:500px}
-    .chart-legend{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:550px}
-    .legend-item{display:flex;align-items:center;gap:16px;padding:16px;background:#f5f5f7;border-radius:10px}
-    .legend-color{width:30px;height:30px;border-radius:5px}
-    .legend-text{font-size:22px}
-    .legend-value{font-weight:700;margin-left:auto;font-size:22px}
-    .insights-section{display:flex;flex-direction:column;gap:30px}
-    .insight-card{background:#f5f5f7;padding:32px;border-radius:16px;border-left:8px solid}
-    .insight-card.c1{border-color:#ff3b30}
-    .insight-card.c2{border-color:#ff9500}
-    .insight-card.c3{border-color:#34c759}
-    .insight-icon{font-size:40px;margin-bottom:16px}
-    .insight-text{font-size:24px;line-height:1.6}
+        /* --- 1. 핵심 데이터 & 수치 강조 --- */
+.pyramid-level {
+    font-weight: 700; /* 피라미드 안 숫자 굵게 */
+}
+#slide4 .benefit-metric {
+    font-weight: 900; /* 기대효과 숫자 매우 굵게 */
+    color: #0066CC;   /* 가시성을 위해 약간 더 진한 파란색으로 */
+}
 
-    /* slide3 */
-    #slide3 .solution-layout{display:flex;flex-direction:column;gap:30px;flex-grow:1;padding:0 80px 80px 80px}
-    .pillars-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;flex:1}
-    .pillar-card{border:2px solid #e5e5e7;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:24px}
-    .pillar-1{border-top:8px solid #ff9500}
-    .pillar-2{border-top:8px solid #34c759}
-    .pillar-header{text-align:center;padding-bottom:24px;border-bottom:2px solid #e5e5e7}
-    .pillar-number{font-size:20px;font-weight:600;color:#86868b;margin-bottom:10px}
-    .pillar-title{font-size:40px;font-weight:700;margin-bottom:10px}
-    .pillar-frequency{font-size:22px;font-weight:600;padding:8px 20px;background:linear-gradient(135deg,#007aff,#0051d5);color:#fff;border-radius:50px;display:inline-block}
-    .pillar-content{display:flex;flex-direction:column;gap:20px;flex:1}
-    .pillar-point{display:flex;align-items:center;gap:20px;padding:16px;background:#f5f5f7;border-radius:10px}
-    .point-icon{font-size:32px}
-    .point-text{font-size:24px;line-height:1.5}
-    .department-flow{display:flex;align-items:center;justify-content:center;gap:16px;padding:20px;background:#f5f5f7;border-radius:16px;margin-top:auto}
-    .dept-item{padding:10px 16px;background:#fff;border-radius:10px;font-size:20px;font-weight:600}
-    .flow-arrow{font-size:28px;font-weight:700}
-    .kpi-section{padding:20px;background:#f5f5f7;border-radius:16px}
-    .kpi-title{font-size:18px;font-weight:700;color:#86868b;margin-bottom:16px;text-transform:uppercase}
-    .kpi-items{display:flex;flex-wrap:wrap;gap:10px}
-    .kpi-tag{padding:8px 16px;background:#fff;border:2px solid #e5e5e7;border-radius:50px;font-size:18px}
-    .implementation-vision{padding:32px;background:#f5f5f7;border-radius:16px;border-left:6px solid #007aff}
-    .vision-role{display:flex;align-items:center;gap:20px}
-    .role-icon{font-size:48px}
-    .role-text{font-size:24px;line-height:1.5}
-    .pillar-1 .flow-arrow,.pillar-1 .point-icon{color:#ff9500}
-    .pillar-2 .flow-arrow,.pillar-2 .point-icon{color:#34c759}
+/* --- 2. 텍스트 색상 대비 강화 --- */
+.slide-title {
+    color: #000000; /* 가장 중요한 제목은 완전한 검은색으로 */
+}
+.slide-subtitle {
+    color: #555555; /* 부제는 조금 더 진한 회색으로 */
+}
+.story-content, .insight-text, .point-text, .role-text {
+    color: #1d1d1f; /* 본문 텍스트의 기본 색상을 명확하게 */
+}
 
-    /* slide4 */
-    #slide4 .impact-layout{display:flex;flex-direction:column;gap:80px;flex-grow:1;justify-content:center;padding:0 80px 80px 80px}
-    .transformation-visual{display:flex;align-items:center;justify-content:center}
-    .state-box{width:300px;height:300px;border-radius:30px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-    .state-before{background:#f5f5f7;border:3px solid #d1d1d6}
-    .state-after{background:linear-gradient(135deg,#34c759,#30d158);color:#fff}
-    .state-formula{font-size:54px;font-weight:700}
-    .state-label{font-size:24px;margin-top:16px;opacity:.8}
-    .arrow-transform{font-size:80px;color:#007aff;margin:0 40px}
-    .benefits-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
-    .benefit-item{background:#fff;border:2px solid #e5e5e7;padding:30px;border-radius:16px;text-align:center}
-    .benefit-icon{font-size:64px;margin-bottom:24px}
-    .benefit-title{font-size:24px;font-weight:600;margin-bottom:12px}
-    .benefit-metric{font-size:48px;font-weight:800;color:#007aff}
+/* --- 1. 핵심 데이터 & 수치 강조 --- */
+.pyramid-level {
+    font-weight: 700; /* 피라미드 안 숫자 굵게 */
+}
+#slide4 .benefit-metric {
+    font-weight: 900; /* 기대효과 숫자 매우 굵게 */
+    color: #0066CC;   /* 가시성을 위해 약간 더 진한 파란색으로 */
+}
 
-    /* ending */
-    .ending-slide{padding:80px;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#007aff 0%,#0051d5 100%);color:#fff;border-radius:0}
-    .ending-slide .slide-number{position:absolute;top:80px;left:80px;color:rgba(255,255,255,.7)}
-    .ending-message{font-size:80px;font-weight:700;margin-bottom:40px;letter-spacing:-2px;line-height:1.2}
-    .ending-subtitle{font-size:36px;font-weight:400;opacity:.9;margin-bottom:60px}
-    .next-step{margin-top:40px;padding:24px 32px;background:rgba(255,255,255,.1);border-radius:16px;border:1px solid rgba(255,255,255,.2)}
-    .next-step-title{font-size:20px;font-weight:600;letter-spacing:2px;color:rgba(255,255,255,.7);margin-bottom:12px}
-    .next-step p{font-size:28px;font-weight:500}
-    .ending-slide .company-logo{position:absolute;bottom:60px;width:120px}
+/* --- 2. 텍스트 색상 대비 강화 --- */
+.slide-title {
+    color: #000000; /* 가장 중요한 제목은 완전한 검은색으로 */
+}
+.slide-subtitle {
+    color: #555555; /* 부제는 조금 더 진한 회색으로 */
+}
+.story-content, .insight-text, .point-text, .role-text {
+    color: #1d1d1f; /* 본문 텍스트의 기본 색상을 명확하게 */
+}
 
-    /* UI */
-    .nav-buttons,.slide-indicator,.timer,.progress-bar{z-index:1000;position:fixed}
-    .nav-buttons{bottom:40px;right:40px;display:flex;gap:12px}
-    .nav-btn{width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;border:none;cursor:pointer;font-size:24px;backdrop-filter:blur(10px)}
-    .slide-indicator{bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
-    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3)}
-    .dot.active{background:#fff;width:30px;border-radius:5px}
-    .timer{top:40px;right:40px;background:rgba(0,0,0,.7);color:#fff;padding:12px 20px;border-radius:50px;font-size:20px;font-weight:600;backdrop-filter:blur(10px)}
-    .progress-bar{top:0;left:0;width:100%;height:5px;background:rgba(255,255,255,.1)}
-    .progress-fill{height:100%;background:linear-gradient(90deg,#007aff,#3395ff);width:0;transition:width .3s}
-  </style>
+/* --- 3. 테마 컬러 포인트 추가 --- */
+#slide3 .pillar-point {
+    border-top: 1px solid; /* 위쪽에 테두리를 추가할 공간 확보 */
+    padding-top: 10px;
+    margin-top: 1px;
+}
+#slide3 .pillar-1 .pillar-point {
+    border-color: #ffd199; /* Pillar 1 테마 색상 (연한 주황) */
+}
+#slide3 .pillar-2 .pillar-point {
+    border-color: #a8e6b8; /* Pillar 2 테마 색상 (연한 초록) */
+}
+/* --- #slide3 (4페이지) 카드 헤더 디자인 강화 --- */
+#slide3 .pillar-card {
+    /* 카드에 마우스를 올렸을 때 부드러운 효과 추가 */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#slide3 .pillar-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+#slide3 .pillar-header {
+    background-color: #f8f9fa; /* 헤더 영역에 부드러운 배경색 추가 */
+    padding: 24px;
+    border-radius: 18px 18px 0 0; /* 카드의 윗부분에만 둥근 모서리 적용 */
+    margin: -28px -28px 0 -28px; /* 카드 패딩에 맞춰 확장 */
+    border-bottom: 2px solid #eef2f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px; /* 헤더 내부 요소 간격 */
+}
+
+#slide3 .pillar-number {
+    font-size: 16px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 999px;
+    color: #fff;
+}
+/* 각 카드별 테마 색상 적용 */
+#slide3 .pillar-1 .pillar-number { background-color: #ff9500; }
+#slide3 .pillar-2 .pillar-number { background-color: #34c759; }
+
+#slide3 .pillar-title {
+    font-size: 38px; /* 폰트 크기 강조 */
+    font-weight: 800; /* 더 굵게 */
+    color: #000;
+}
+
+#slide3 .pillar-frequency {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background-color: #e9ecef; /* 부드러운 회색 배경 */
+    color: #495057;
+}
+
+    </style>
 </head>
 <body>
-  <div class="presentation-container">
-    <div class="slide-scaler">
-      <div class="slide title-slide" id="slide0"></div>
-      <div class="slide" id="slide1"></div>
-      <div class="slide" id="slide2"></div>
-      <div class="slide" id="slide3"></div>
-      <div class="slide" id="slide4"></div>
-      <div class="slide ending-slide" id="slide5"></div>
+    <div class="presentation-container">
+        <div class="slide title-slide active" id="slide0">
+            <div class="slide-index-badge">Slide 1/6</div>
+            <div class="company-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
+            <h1 class="main-title">掛け算の組織文化へ</h1>
+            <p class="subtitle">「足し算」組織の限界を超え、持続的な成長を創る</p>
+            <div class="presenter-info">
+              <div class="role">グローバル・デイリー 営業部長</div>
+              <div class="name">井出 悠</div>
+            </div>
+            <div class="date-info">2025.8.29</div>
+        </div>
+
+        <div class="slide" id="slide1">
+            <div class="slide-index-badge">Slide 2/6</div>
+            <div class="slide-header">
+                <div class="slide-number">CHAPTER 01</div><h2 class="slide-title">なぜ今、変革が必要なのか</h2><p class="slide-subtitle">見えてきた構造的リスク</p>
+            </div>
+            <div class="slide-content"><div class="problem-layout">
+                <div class="visual-story">
+                    <div class="story-card"><div class="story-number">1</div><div class="story-content">営業19名の組織で、たった<span class="highlight">2名</span>が全体目標の<span class="highlight">40-50%</span>を担っています</div></div>
+                    <div class="story-card"><div class="story-number">2</div><div class="story-content"><span class="highlight">大口1件</span>を失うだけで組織全体が崩れるリスクを抱えています</div></div>
+                    <div class="story-card"><div class="story-number">3</div><div class="story-content">しかし、社員の多くは<span class="highlight">危機感なく</span>日々を過ごしています</div></div>
+                    <div class="crisis-message">このままでは持続不可能</div>
+                </div>
+                <div class="pyramid-visual"><div class="pyramid">
+                    <div class="pyramid-level level-1">40-50% <span class="pyramid-label">部長+役員 2名</span></div><div class="pyramid-level level-2">70% <span class="pyramid-label">課長以上 4名</span></div><div class="pyramid-level level-3">90% <span class="pyramid-label">係長以上 8名</span></div><div class="pyramid-level level-4">100% <span class="pyramid-label">全営業 19名</span></div>
+                </div></div>
+            </div></div>
+            <div class="slide-footer">
+                <div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
+                <div class="footer-title">DAC女性管理職研修2025_September</div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide2">
+            <div class="slide-index-badge">Slide 3/6</div>
+            <div class="slide-header">
+                <div class="slide-number">CHAPTER 02</div><h2 class="slide-title">現状の構造を可視化する</h2><p class="slide-subtitle">数字が語る組織の偏り</p>
+            </div>
+            <div class="slide-content"><div class="current-state-layout">
+                <div class="chart-section">
+                    <div class="donut-container">
+                        <svg viewBox="0 0 400 400" style="width:100%;height:100%;"><g>
+                            <path d="M200 50 A150 150 0 0 1 350 200 L280 200 A80 80 0 0 0 200 120 Z" fill="#ff3b30"/><path d="M350 200 A150 150 0 0 1 200 350 L200 280 A80 80 0 0 0 280 200 Z" fill="#ff9500"/><path d="M200 350 A150 150 0 0 1 50 200 L120 200 A80 80 0 0 0 200 280 Z" fill="#ffcc00"/><path d="M50 200 A150 150 0 0 1 200 50 L200 120 A80 80 0 0 0 120 200 Z" fill="#c7c7cc"/>
+                            <circle cx="200" cy="200" r="70" fill="white"/><text x="200" y="190" text-anchor="middle" font-size="28" font-weight="700" fill="#1d1d1f">営業19名</text><text x="200" y="220" text-anchor="middle" font-size="16" fill="#86868b">売上構成比</text>
+                        </g></svg>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item"><div class="legend-color" style="background:#ff3b30;"></div><span class="legend-text">トップ2名</span><span class="legend-value">45%</span></div><div class="legend-item"><div class="legend-color" style="background:#ff9500;"></div><span class="legend-text">課長2名</span><span class="legend-value">25%</span></div><div class="legend-item"><div class="legend-color" style="background:#ffcc00;"></div><span class="legend-text">係長4名</span><span class="legend-value">20%</span></div><div class="legend-item"><div class="legend-color" style="background:#c7c7cc;"></div><span class="legend-text">その他11名</span><span class="legend-value">10%</span></div>
+                    </div>
+                </div>
+                <div class="insights-section">
+                    <div class="insight-card"><div class="insight-icon">⚠️</div><div class="insight-text"><strong>過度な集中リスク</strong><br>上位8名で90%の売上を支える脆弱な構造</div></div>
+                    <div class="insight-card"><div class="insight-icon">📉</div><div class="insight-text"><strong>成長の限界</strong><br>個人の努力だけでは組織の成長に限界がある</div></div>
+                    <div class="insight-card"><div class="insight-icon">🎯</div><div class="insight-text"><strong>必要なのは掛け算</strong><br>1+1=2ではなく、1×1=10の発想転換</div></div>
+                </div>
+            </div></div>
+            <div class="slide-footer">
+                <div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
+                <div class="footer-title">DAC女性管理職研修2025_September</div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide3">
+            <div class="slide-index-badge">Slide 4/6</div>
+            <div class="slide-header">
+                <div class="slide-number">CHAPTER 03</div><h2 class="slide-title">2つの横断施策で掛け算文化を創る</h2><p class="slide-subtitle">単独から協創へ、組織の新しい成長エンジン</p>
+            </div>
+            <div class="slide-content">
+                <div class="solution-layout-new">
+                    <div class="pillar-card pillar-1">
+                        <div class="pillar-header"><div class="pillar-number">施策 1</div><div class="pillar-title">全組織横断企画</div><div class="pillar-frequency">月1件 必須化</div></div>
+                        <div class="pillar-content">
+                            <div class="pillar-point"><span class="point-icon">🎯</span><span class="point-text"><strong>若手主導</strong>で企画から実行まで</span></div>
+                            <div class="pillar-point"><span class="point-icon">🔄</span><span class="point-text">全セクション<strong>必須参加</strong></span></div>
+                            <div class="pillar-point"><span class="point-icon">💡</span><span class="point-text">単一メディアでは<strong>不可能な価値</strong>創出</span></div>
+                        </div>
+                        <div class="department-flow"><div class="dept-item">営業</div><span class="flow-arrow">×</span><div class="dept-item">メディア</div><span class="flow-arrow">×</span><div class="dept-item">マーケ</div></div>
+                        <div class="kpi-section"><div class="kpi-title">KPI</div><div class="kpi-items"><span class="kpi-tag">企画実施数</span><span class="kpi-tag">参加部門数</span></div></div>
+                    </div>
+        
+                    <div class="implementation-vision-center">
+                        <div class="vision-role">
+                            <div class="role-icon">🚩</div>
+                            <div class="role-text"><strong>井出の役割</strong><p>旗振り役として方向性を示し、各セクションを巻き込み、横断を文化として定着させる</p></div>
+                        </div>
+                    </div>
+        
+                    <div class="pillar-card pillar-2">
+                        <div class="pillar-header"><div class="pillar-number">施策 2</div><div class="pillar-title">プル型セミナー事業</div><div class="pillar-frequency">月1回 定期開催</div></div>
+                        <div class="pillar-content">
+                            <div class="pillar-point"><span class="point-icon">🎓</span><span class="point-text"><strong>社外向け</strong>セミナー開催</span></div>
+                            <div class="pillar-point"><span class="point-icon">🧲</span><span class="point-text">顧客から<strong>選ばれる</strong>仕組み</span></div>
+                            <div class="pillar-point"><span class="point-icon">📊</span><span class="point-text">インバウンド<strong>案件獲得</strong></span></div>
+                        </div>
+                        <div class="department-flow"><div class="dept-item">広報</div><span class="flow-arrow">→</span><div class="dept-item">営業</div></div>
+                        <div class="kpi-section"><div class="kpi-title">KPI</div><div class="kpi-items"><span class="kpi-tag">集客数</span><span class="kpi-tag">商談化率</span></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
+                <div class="footer-title">DAC女性管理職研修2025_September</div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide4">
+            <div class="slide-index-badge">Slide 5/6</div>
+            <div class="slide-header">
+                <div class="slide-number">CHAPTER 04</div><h2 class="slide-title">期待される変革インパクト</h2><p class="slide-subtitle">組織が生まれ変わる4つの効果</p>
+            </div>
+            <div class="slide-content"><div class="impact-layout">
+                <div class="transformation-visual">
+                    <div class="state-box state-before"><div class="state-formula">1 + 1 = 2</div><div class="state-label">現在の組織</div></div>
+                    <div class="arrow-transform">→</div>
+                    <div class="state-box state-after"><div class="state-formula">1 × 1 = 10</div><div class="state-label">目指す組織</div></div>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-item"><div class="benefit-icon">👥</div><div class="benefit-title">若手の成長</div><div class="benefit-metric">12企画/年</div></div><div class="benefit-item"><div class="benefit-icon">⚖️</div><div class="benefit-title">負荷分散</div><div class="benefit-metric">-30%</div></div><div class="benefit-item"><div class="benefit-icon">💰</div><div class="benefit-title">売上拡大</div><div class="benefit-metric">+25%</div></div><div class="benefit-item"><div class="benefit-icon">🏆</div><div class="benefit-title">競争優位</div><div class="benefit-metric">独自価値</div></div>
+                </div>
+            </div></div>
+            <div class="slide-footer">
+                <div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
+                <div class="footer-title">DAC女性管理職研修2025_September</div>
+            </div>
+        </div>
+
+        <div class="slide ending-slide" id="slide5">
+            <div class="slide-index-badge">Slide 6/6</div>
+            <h1 class="ending-message">「個」に依存する時代を終え、<br>組織で成長する未来へ</h1>
+            <p class="ending-subtitle">掛け算の文化こそが、私たちの新しいスタンダードです。</p>
+            <div class="next-step">
+                <div class="next-step-title">NEXT STEP</div><p>来週中に各部門長と連携し、タスクフォースの設立を提案します。</p>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="nav-buttons">
-    <button class="nav-btn" onclick="previousSlide()">←</button>
-    <button class="nav-btn" onclick="nextSlide()">→</button>
-  </div>
-  <div class="slide-indicator"></div>
-  <div class="timer" id="timer">0:00</div>
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="nav-buttons"> <button class="nav-btn" onclick="previousSlide()">←</button> <button class="nav-btn" onclick="nextSlide()">→</button> </div>
+    <div class="slide-indicator"></div>
+    <div class="timer" id="timer">0:00</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-  <script>
-    /* -------- 슬라이드 내용 주입 -------- */
-    document.getElementById('slide0').innerHTML = `
-      <div class="slide-number">CHAPTER 00</div>
-      <div class="company-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
-      <h1 class="main-title">掛け算の組織文化へ</h1>
-      <p class="subtitle">「足し算」組織の限界を超え、持続的な成長を創る</p>
-      <div class="presenter-info">
-        <span class="role">グローバル・デイリー 営業部長</span>
-        <span class="name">井出 悠</span>
-      </div>
-      <div class="date-info">2025.9.9</div>`;
+    <script>
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const totalSlides = slides.length;
+        const indicator = document.querySelector('.slide-indicator');
+        const NATIVE_WIDTH = 1920, NATIVE_HEIGHT = 1080;
+        let currentSlide = 0;
 
-    document.getElementById('slide1').innerHTML = `
-      <div class="slide-header">
-        <div class="slide-number">CHAPTER 01</div>
-        <h2 class="slide-title">なぜ今、変革が必要なのか</h2>
-        <p class="slide-subtitle">見えてきた構造的リスク</p>
-      </div>
-      <div class="problem-layout">
-        <div class="visual-story">
-          <div class="story-card"><div class="story-number">1</div><div class="story-content">営業19名の組織で、たった<span class="highlight">2名</span>が全体目標の<span class="highlight">40-50%</span>を担っています</div></div>
-          <div class="story-card"><div class="story-number">2</div><div class="story-content"><span class="highlight">大口1件</span>を失うだけで組織全体が崩れるリスクを抱えています</div></div>
-          <div class="story-card"><div class="story-number">3</div><div class="story-content">しかし、社員の多くは<span class="highlight">危機感なく</span>日々を過ごしています</div></div>
-          <div class="crisis-message">このままでは持続不可能</div>
-        </div>
-        <div class="pyramid-visual">
-          <div class="pyramid">
-            <div class="pyramid-level level-1">40-50% <span class="pyramid-label">部長+役員 2名</span></div>
-            <div class="pyramid-level level-2">70% <span class="pyramid-label">課長以上 4名</span></div>
-            <div class="pyramid-level level-3">90% <span class="pyramid-label">係長以上 8名</span></div>
-            <div class="pyramid-level level-4">100% <span class="pyramid-label">全営業 19名</span></div>
-          </div>
-        </div>
-      </div>`;
+        function scaleAndPositionSlides() {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const scale = Math.min(viewportWidth / NATIVE_WIDTH, viewportHeight / NATIVE_HEIGHT);
+            const offsetX = (viewportWidth - (NATIVE_WIDTH * scale)) / 2;
+            const offsetY = (viewportHeight - (NATIVE_HEIGHT * scale)) / 2;
+            slides.forEach(slide => {
+                slide.style.transform = `translateX(${offsetX}px) translateY(${offsetY}px) scale(${scale})`;
+            });
+        }
+        
+        slides.forEach(() => indicator.appendChild(Object.assign(document.createElement('div'), { className: 'dot' })));
+        const dots = document.querySelectorAll('.dot');
 
-    document.getElementById('slide2').innerHTML = `
-      <div class="slide-header">
-        <div class="slide-number">CHAPTER 02</div>
-        <h2 class="slide-title">現状の構造を可視化する</h2>
-        <p class="slide-subtitle">数字が語る組織の偏り</p>
-      </div>
-      <div class="current-state-layout">
-        <div class="chart-section">
-          <div class="donut-container">
-            <svg viewBox="0 0 400 400" style="width:100%;height:100%;">
-              <g>
-                <path d="M200 50 A150 150 0 0 1 350 200 L280 200 A80 80 0 0 0 200 120 Z" fill="#ff3b30"/>
-                <path d="M350 200 A150 150 0 0 1 200 350 L200 280 A80 80 0 0 0 280 200 Z" fill="#ff9500"/>
-                <path d="M200 350 A150 150 0 0 1 50 200 L120 200 A80 80 0 0 0 200 280 Z" fill="#ffcc00"/>
-                <path d="M50 200 A150 150 0 0 1 200 50 L200 120 A80 80 0 0 0 120 200 Z" fill="#c7c7cc"/>
-                <circle cx="200" cy="200" r="70" fill="white"/>
-                <text x="200" y="190" text-anchor="middle" font-size="28" font-weight="700" fill="#1d1d1f">営業19名</text>
-                <text x="200" y="220" text-anchor="middle" font-size="16" fill="#86868b">売上構成比</text>
-              </g>
-            </svg>
-          </div>
-          <div class="chart-legend">
-            <div class="legend-item"><div class="legend-color" style="background:#ff3b30;"></div><span class="legend-text">トップ2名</span><span class="legend-value">45%</span></div>
-            <div class="legend-item"><div class="legend-color" style="background:#ff9500;"></div><span class="legend-text">課長2名</span><span class="legend-value">25%</span></div>
-            <div class="legend-item"><div class="legend-color" style="background:#ffcc00;"></div><span class="legend-text">係長4名</span><span class="legend-value">20%</span></div>
-            <div class="legend-item"><div class="legend-color" style="background:#c7c7cc;"></div><span class="legend-text">その他11名</span><span class="legend-value">10%</span></div>
-          </div>
-        </div>
-        <div class="insights-section">
-          <div class="insight-card c1"><div class="insight-icon">⚠️</div><div class="insight-text"><strong>過度な集中リスク</strong><br>上位8名で90%の売上を支える脆弱な構造</div></div>
-          <div class="insight-card c2"><div class="insight-icon">📉</div><div class="insight-text"><strong>成長の限界</strong><br>個人の努力だけでは組織の成長に限界がある</div></div>
-          <div class="insight-card c3"><div class="insight-icon">🎯</div><div class="insight-text"><strong>必要なのは掛け算</strong><br>1+1=2ではなく、1×1=10の発想転換</div></div>
-        </div>
-      </div>`;
+        function showSlide(n) {
+            const oldSlide = slides[currentSlide];
+            currentSlide = (n + totalSlides) % totalSlides;
+            const newSlide = slides[currentSlide];
+            
+            oldSlide.classList.remove('active');
+            newSlide.classList.add('active');
 
-    document.getElementById('slide3').innerHTML = `
-      <div class="slide-header">
-        <div class="slide-number">CHAPTER 03</div>
-        <h2 class="slide-title">2つの横断施策で掛け算文化を創る</h2>
-        <p class="slide-subtitle">単独から協創へ、組織の新しい成長エンジン</p>
-      </div>
-      <div class="solution-layout">
-        <div class="pillars-grid">
-          <div class="pillar-card pillar-1">
-            <div class="pillar-header">
-              <div class="pillar-number">施策 1</div>
-              <div class="pillar-title">全組織横断企画</div>
-              <div class="pillar-frequency">月1件 必須化</div>
-            </div>
-            <div class="pillar-content">
-              <div class="pillar-point"><span class="point-icon">🎯</span><span class="point-text"><strong>若手主導</strong>で企画から実行まで</span></div>
-              <div class="pillar-point"><span class="point-icon">🔄</span><span class="point-text">全セクション<strong>必須参加</strong></span></div>
-              <div class="pillar-point"><span class="point-icon">💡</span><span class="point-text">単一メディアでは<strong>不可能な価値</strong>創出</span></div>
-            </div>
-            <div class="department-flow"><div class="dept-item">営業</div><span class="flow-arrow">×</span><div class="dept-item">メディア</div><span class="flow-arrow">×</span><div class="dept-item">マーケ</div><span class="flow-arrow">×</span><div class="dept-item">自社メディア</div></div>
-            <div class="kpi-section"><div class="kpi-title">KPI</div><div class="kpi-items"><span class="kpi-tag">企画実施数</span><span class="kpi-tag">参加部門数</span><span class="kpi-tag">新規案件創出</span></div></div>
-          </div>
-          <div class="pillar-card pillar-2">
-            <div class="pillar-header">
-              <div class="pillar-number">施策 2</div>
-              <div class="pillar-title">プル型セミナー事業</div>
-              <div class="pillar-frequency">月1回 定期開催</div>
-            </div>
-            <div class="pillar-content">
-              <div class="pillar-point"><span class="point-icon">🎓</span><span class="point-text"><strong>社外向け</strong>セミナー開催</span></div>
-              <div class="pillar-point"><span class="point-icon">🧲</span><span class="point-text">顧客から<strong>選ばれる</strong>仕組み</span></div>
-              <div class="pillar-point"><span class="point-icon">📊</span><span class="point-text">インバウンド<strong>案件獲得</strong></span></div>
-            </div>
-            <div class="department-flow"><div class="dept-item">広報</div><span class="flow-arrow">→</span><div class="dept-item">営業</div></div>
-            <div class="kpi-section"><div class="kpi-title">KPI</div><div class="kpi-items"><span class="kpi-tag">集客数</span><span class="kpi-tag">商談化率</span><span class="kpi-tag">成約率</span></div></div>
-          </div>
-        </div>
-        <div class="implementation-vision"><div class="vision-role"><div class="role-icon">🚩</div><div class="role-text"><strong>井出の役割：</strong>旗振り役として方向性を示し、各セクションを巻き込み、横断を文化として定着させる</div></div></div>
-      </div>`;
+            dots.forEach((dot, index) => dot.classList.toggle('active', index === currentSlide));
+            document.getElementById('progressFill').style.width = (currentSlide / (totalSlides - 1)) * 100 + '%';
+        }
 
-    document.getElementById('slide4').innerHTML = `
-      <div class="slide-header">
-        <div class="slide-number">CHAPTER 04</div>
-        <h2 class="slide-title">期待される変革インパクト</h2>
-        <p class="slide-subtitle">組織が生まれ変わる4つの効果</p>
-      </div>
-      <div class="impact-layout">
-        <div class="transformation-visual">
-          <div class="state-box state-before"><div class="state-formula">1 + 1 = 2</div><div class="state-label">現在の組織</div></div>
-          <div class="arrow-transform">→</div>
-          <div class="state-box state-after"><div class="state-formula">1 × 1 = 10</div><div class="state-label">目指す組織</div></div>
-        </div>
-        <div class="benefits-grid">
-          <div class="benefit-item"><div class="benefit-icon">👥</div><div class="benefit-title">若手の成長</div><div class="benefit-metric">12企画/年</div></div>
-          <div class="benefit-item"><div class="benefit-icon">⚖️</div><div class="benefit-title">負荷分散</div><div class="benefit-metric">-30%</div></div>
-          <div class="benefit-item"><div class="benefit-icon">💰</div><div class="benefit-title">売上拡大</div><div class="benefit-metric">+25%</div></div>
-          <div class="benefit-item"><div class="benefit-icon">🏆</div><div class="benefit-title">競争優位</div><div class="benefit-metric">独自価値</div></div>
-        </div>
-      </div>`;
+        function nextSlide() { showSlide(currentSlide + 1); }
+        function previousSlide() { showSlide(currentSlide - 1); }
 
-    document.getElementById('slide5').innerHTML = `
-      <div class="slide-number">CHAPTER 05</div>
-      <h1 class="ending-message">「個」に依存する時代を終え、<br>組織で成長する未来へ</h1>
-      <p class="ending-subtitle">掛け算の文化こそが、私たちの新しいスタンダードです。</p>
-      <div class="next-step"><div class="next-step-title">NEXT STEP</div><p>来週中に各部門長と連携し、タスクフォースの設立を提案します。</p></div>
-      <div class="company-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>`;
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+        
+        let startTime = Date.now();
+        setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const m = Math.floor(elapsed / 60);
+            const s = String(elapsed % 60).padStart(2, '0');
+            document.getElementById('timer').textContent = `${m}:${s}`;
+        }, 1000);
 
-    /* -------- 프레젠 로직 -------- */
-    const DESIGN_W = 1920, DESIGN_H = 1080;
-    const scaler = document.querySelector('.slide-scaler');
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    const indicator = document.querySelector('.slide-indicator');
-
-    // 인디케이터
-    slides.forEach(()=>indicator.appendChild(Object.assign(document.createElement('div'),{className:'dot'})));
-    const dots = Array.from(document.querySelectorAll('.dot'));
-
-    // 내부 내용 감싸기 -> per-slide autoscale 대상 만들기
-    slides.forEach(slide=>{
-      const inner = document.createElement('div');
-      inner.className = 'slide-inner';
-      // 기존 자식들을 모두 slide-inner로 이동
-      const children = Array.from(slide.childNodes);
-      children.forEach(n=>inner.appendChild(n));
-      slide.appendChild(inner);
-    });
-
-    function scalePresentation(){
-      const cw = document.querySelector('.presentation-container').clientWidth;
-      const ch = document.querySelector('.presentation-container').clientHeight;
-      const s = Math.min(cw/DESIGN_W, ch/DESIGN_H);
-      scaler.style.transform = `translate(-50%, -50%) scale(${s})`;
-    }
-
-    // 슬라이드별 내용이 박스(1920×1080)를 넘치면 자동 축소
-    function fitSlide(slide){
-      const inner = slide.querySelector('.slide-inner');
-      // 초기화
-      inner.style.transform = 'translate(-50%, -50%) scale(1)';
-      // 자연 크기 측정
-      const contentW = inner.scrollWidth;
-      const contentH = inner.scrollHeight;
-      const needScale = Math.min(1, DESIGN_W / contentW, DESIGN_H / contentH);
-      inner.style.transform = `translate(-50%, -50%) scale(${needScale})`;
-    }
-    function fitAllSlides(){ slides.forEach(fitSlide); }
-
-    let currentSlide = 0;
-    function showSlide(n){
-      const total = slides.length;
-      const old = slides[currentSlide];
-      currentSlide = (n + total) % total;
-      const nu  = slides[currentSlide];
-
-      old.style.transition = 'opacity .3s ease-out';
-      old.style.opacity = 0;
-      setTimeout(()=>{
-        old.classList.remove('active');
-        nu.classList.add('active');
-        nu.style.transition = 'opacity .3s ease-in';
-        nu.style.opacity = 1;
-      },300);
-
-      dots.forEach(d=>d.classList.remove('active'));
-      dots[currentSlide].classList.add('active');
-
-      document.getElementById('progressFill').style.width = (currentSlide/(total-1))*100 + '%';
-    }
-    function nextSlide(){ showSlide(currentSlide+1); }
-    function previousSlide(){ showSlide(currentSlide-1); }
-
-    // 단축키
-    document.addEventListener('keydown',e=>{
-      if(e.key==='ArrowRight'||e.key===' ') nextSlide();
-      if(e.key==='ArrowLeft') previousSlide();
-    });
-
-    // 타이머
-    let startTime = Date.now();
-    setInterval(()=>{
-      const elapsed = Math.floor((Date.now()-startTime)/1000);
-      const m = Math.floor(elapsed/60);
-      const s = String(elapsed%60).padStart(2,'0');
-      document.getElementById('timer').textContent = `${m}:${s}`;
-    },1000);
-
-    // 초기 렌더
-    window.addEventListener('load',()=>{
-      fitAllSlides();          // 내부(2,3,4 같은 과밀 슬라이드 자동 축소)
-      slides[0].classList.add('active');
-      slides[0].style.opacity = 1;
-      dots[0].classList.add('active');
-      scalePresentation();     // 화면 대응 스케일
-    });
-
-    // 창 크기 변경 시: 바깥 스케일만 재계산 (내부는 px 고정이라 그대로)
-    window.addEventListener('resize', scalePresentation);
-
-    // 버튼에서 쓸 수 있게 노출
-    window.nextSlide = nextSlide;
-    window.previousSlide = previousSlide;
-  </script>
+        window.addEventListener('load', () => {
+            showSlide(0);
+            scaleAndPositionSlides();
+        });
+        window.addEventListener('resize', scaleAndPositionSlides);
+    </script>
 </body>
 </html>
