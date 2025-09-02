@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>GLD プレゼンテーション - 최종 완성본</title>
+    <title>GLD プレゼンテーション - 最終改善版v3</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; overflow: hidden; }
@@ -54,12 +54,12 @@
         .footer-title { font-size: 20px; font-weight: 600; color: #8a8a8e; }
         
         .slide-header { padding: 80px 80px 32px 80px; border-bottom: 2px solid #e5e5e7; flex-shrink: 0; }
-        .slide-number { font-size: 20px; color: maroon; /* [테마] 와인색 포인트 컬러 적용 */ font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; }
+        .slide-number { font-size: 20px; color: maroon; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; }
         .slide-title { font-size: 72px; font-weight: 700; letter-spacing: -2px; line-height: 1.1; color: #000; }
         .slide-subtitle { font-size: 36px; color: #555; margin-top: 16px; }
         .slide-content { flex-grow: 1; padding: 40px 80px; display: flex; flex-direction: column; min-height: 0; }
         
-        /* --- 슬라이드 0 (타이틀) --- */
+        /* --- 타이틀 슬라이드 --- */
         .title-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #2d0b0b 0%, #000000 100%); color: white; }
         .title-slide .company-logo { width: 240px; margin-bottom: 40px; } .title-slide .company-logo img { width: 100%; }
         .main-title { font-size: 110px; font-weight: 700; margin-bottom: 24px; letter-spacing: -4px; line-height: 1; }
@@ -70,7 +70,7 @@
         .title-slide .slide-index-badge { color: #fff; background: rgba(255,255,255,.1); }
         .title-slide .slide-header, .title-slide .slide-footer { display: none; }
     
-        /* --- [수정] 슬라이드 5 (엔딩) --- */
+        /* --- 엔딩 슬라이드 --- */
         .ending-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #2d0b0b 0%, #000000 100%); color: #fff; }
         .ending-message { font-size: 80px; font-weight: 700; margin-bottom: 40px; letter-spacing: -2px; line-height: 1.2; }
         .ending-subtitle { font-size: 36px; font-weight: 400; opacity: .9; margin-bottom: 60px; color: #ffde99; }
@@ -87,68 +87,80 @@
         .story-card { background: #f5f5f7; border-radius: 20px; padding: 32px; position: relative; border: 1px solid rgba(0, 0, 0, 0.05); }
         .story-number { position: absolute; top: -20px; left: 32px; background: #ff3b30; color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; }
         .story-content { font-size: 30px; line-height: 1.5; }
-        .highlight { background: linear-gradient(120deg, #ffcc00 0%, #ff9500 100%); padding: 4px 12px; border-radius: 8px; color: #fff; font-weight: 700; }
-        .crisis-message { background: linear-gradient(135deg, #ff3b30, #ff6259); color: #fff; padding: 28px; border-radius: 20px; font-size: 36px; font-weight: 700; text-align: center; }
         .pyramid-visual { display: flex; align-items: center; justify-content: center; height: 100%; }
         .pyramid { width: 100%; max-width: 480px; }
-        .pyramid-level { height: 80px; margin: 4px auto; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 26px; position: relative; }
-        .level-1 { background: linear-gradient(135deg, #ff3b30, #ff6259); } .level-2 { background: linear-gradient(135deg, #ff9500, #ffb143); } .level-3 { background: linear-gradient(135deg, #ffcc00, #ffd74a); } .level-4 { background: linear-gradient(135deg, #c7c7cc, #d1d1d6); }
         .pyramid-label { position: absolute; left: 105%; background: #fff; padding: 10px 18px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,.1); color: #1d1d1f; font-size: 20px; font-weight: 500; white-space: nowrap; }
+        .highlight { background: linear-gradient(120deg, #007aff 0%, #3395ff 100%); padding: 4px 12px; border-radius: 8px; color: #fff; font-weight: 700; }
+        .crisis-message { background: linear-gradient(135deg, #1c1c1e, #3a3a3c); color: #fff; padding: 28px; border-radius: 20px; font-size: 36px; font-weight: 700; text-align: center; } /* Darker, more sophisticated warning */
+        .pyramid-level { height: 80px; margin: 4px auto; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 26px; position: relative; }
+        .level-1 { background: linear-gradient(135deg, #007aff, #3395ff); } /* Primary Apple Blue */
+        .level-2 { background: linear-gradient(135deg, #34c759, #30d158); } /* Apple Green for growth */
+        .level-3 { background: linear-gradient(135deg, #ff9500, #ffb143); } /* Accent Orange for attention */
+        .level-4 { background: linear-gradient(135deg, #c7c7cc, #d1d1d6); } /* Neutral Grey for base */
+
+        /* 솔루션 슬라이드 스타일 */
+        .solution-new-layout { display: flex; flex-direction: column; gap: 20px; flex-grow: 1; }
+        .pillar-card-new { background: #fff; border: 2px solid #e5e5e7; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,.08); display:flex; flex-direction: column; }
+        .pillar-header-new { text-align: center; margin-bottom: 20px; }
+        .pillar-number-new { display: inline-block; background: linear-gradient(135deg, #007aff, #3395ff); color: #fff; padding: 8px 20px; border-radius: 25px; font-size: 18px; font-weight: 700; margin-bottom: 15px; }
+        .pillar-title-new { font-size: 40px; font-weight: 800; color: #1d1d1f; margin-bottom: 10px; }
+        .pillar-subtitle-new { font-size: 18px; color: #666; }
+        .pillar-content-new { display: flex; flex-direction: column; gap: 15px; }
+        .pillar-feature { display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 12px; }
+        .feature-icon { font-size: 24px; }
+        .feature-text { font-size: 18px; font-weight: 500; line-height: 1.4; }
+        .pillar-departments { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 12px; }
+        .dept-badge { background: #2196f3; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 16px; font-weight: 600; }
+        .dept-connector { font-size: 20px; font-weight: 700; color: #2196f3; }
+        .pillar-merits { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e5e7; }
+        .merits-title { font-size: 16px; font-weight: 600; text-align: center; color: #8a8a8e; margin-bottom: 15px; letter-spacing: 1px; }
+        .merits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .merit-item { background: #f8f9fa; padding: 12px; border-radius: 10px; text-align: center; }
+        .merit-dept { font-size: 14px; font-weight: 700; color: #007aff; margin-bottom: 5px; }
+        .merit-text { font-size: 14px; line-height: 1.4; color: #333; }
         
-        .current-state-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; flex-grow: 1; align-items: center; }
-        .chart-section { display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .donut-container { position: relative; width: 450px; height: 450px; flex-shrink: 0; }
-        .chart-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 500px; }
-        .legend-item { display: flex; align-items: center; gap: 14px; padding: 14px; background: #f5f5f7; border-radius: 10px; }
-        .legend-color { width: 28px; height: 28px; border-radius: 5px; } .legend-text, .legend-value { font-size: 20px; } .legend-value { font-weight: 700; margin-left: auto; }
-        .insights-section { display: flex; flex-direction: column; gap: 24px; }
-        .insight-card { background: #f5f5f7; padding: 28px; border-radius: 16px; border: 1px solid rgba(0, 0, 0, 0.05); border-left: 8px solid; }
-        .insight-card.c1 { border-color: maroon; } /* [테마] 와인색 포인트 컬러 적용 */
-        .insight-card.c2 { border-color: #ff9500; } 
-        .insight-card.c3 { border-color: #34c759; }
-        .insight-icon { font-size: 36px; margin-bottom: 12px; } .insight-text { font-size: 22px; line-height: 1.5; }
-        
-        #slide3 .slide-header { padding-top: 70px; padding-bottom: 24px; margin-bottom: 15px; }
-        #slide3 .slide-title { font-size: 64px; }
-        #slide3 .slide-subtitle { font-size: 32px; }
-        #slide3 .slide-content { padding-top: 20px; padding-bottom: 20px; }
-        #slide3 .solution-layout-new { display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; align-items: center; flex-grow: 1; }
-        #slide3 .pillar-card { border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 18px; height: 100%; }
-        #slide3 .pillar-header { padding-bottom: 18px; text-align: center; border-bottom: 2px solid #eef2f7; margin: -28px -28px 0 -28px; border-radius: 18px 18px 0 0; background-color: #f8f9fa; }
-        #slide3 .pillar-number { font-size: 16px; font-weight: 700; padding: 4px 14px; border-radius: 999px; color: #fff; }
-        #slide3 .pillar-1 .pillar-number { background-color: #ff9500; }
-        #slide3 .pillar-2 .pillar-number { background-color: #34c759; }
-        #slide3 .pillar-title { font-size: 38px; font-weight: 800; color: #000; }
-        #slide3 .pillar-frequency { font-size: 18px; font-weight: 600; padding: 6px 16px; border-radius: 999px; background-color: #e9ecef; color: #495057; }
-        #slide3 .pillar-content { display: flex; flex-direction: column; gap: 14px; flex-grow: 1; padding-top: 16px; }
-        #slide3 .pillar-point { display: flex; align-items: center; padding: 14px; gap: 16px; background: #f5f5f7; border-radius: 12px; }
-        #slide3 .point-icon { font-size: 32px; }
-        #slide3 .point-text { font-size: 22px; line-height: 1.4; font-weight: 500; }
-        #slide3 .department-flow { margin-top: auto; padding: 14px; background: #f5f5f7; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 12px; }
-        #slide3 .dept-item { font-size: 18px; font-weight: 600; }
-        #slide3 .kpi-section { margin-top: 18px; }
-        #slide3 .kpi-title { font-size: 18px; font-weight: 700; text-align: left; margin-bottom: 12px; }
-        #slide3 .kpi-items { display: flex; gap: 10px; justify-content: flex-start; }
-        #slide3 .kpi-tag { font-size: 17px; padding: 6px 14px; border-radius: 10px; }
-        #slide3 .implementation-vision-center { padding: 30px; background: #f0f3f8; border-radius: 16px; border: 2px solid #dde3ec; width: 380px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); }
-        #slide3 .vision-role { display: flex; align-items: center; gap: 20px; }
-        #slide3 .role-icon { font-size: 48px; }
-        #slide3 .role-text { font-size: 22px; line-height: 1.45; }
-        #slide3 .role-text strong { display: block; margin-bottom: 8px; font-size: 24px; color: #007aff; }
-        #slide3 .pillar-1 .point-icon, #slide3 .pillar-1 .flow-arrow { color: #ff9500; } 
-        #slide3 .pillar-2 .point-icon, #slide3 .pillar-2 .flow-arrow { color: #34c759; }
-    
-        #slide4 .impact-layout { display: flex; flex-direction: column; gap: 60px; flex-grow: 1; justify-content: center; }
-        #slide4 .transformation-visual { display: flex; align-items: center; justify-content: center; }
-        #slide4 .state-box { width: 280px; height: 280px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        #slide4 .state-before { background: #f5f5f7; border: 3px solid #d1d1d6; } #slide4 .state-after { background: linear-gradient(135deg, #34c759, #30d158); color: #fff; }
-        #slide4 .state-formula { font-size: 50px; font-weight: 700; } #slide4 .state-label { font-size: 22px; margin-top: 16px; opacity: .8; }
-        #slide4 .arrow-transform { font-size: 70px; color: #007aff; margin: 0 30px; }
-        #slide4 .benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-        #slide4 .benefit-item { background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center; }
-        #slide4 .benefit-icon { font-size: 60px; margin-bottom: 20px; } #slide4 .benefit-title { font-size: 22px; font-weight: 600; margin-bottom: 10px; } 
-        #slide4 .benefit-metric { font-size: 48px; font-weight: 900; color: #0066CC; }
-    
+        /* KPI 슬라이드 스타일 */
+        .kpi-layout { display: flex; flex-direction: column; gap: 30px; flex-grow: 1; }
+        .kpi-card { background: #fff; border: 2px solid #e5e5e7; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+        .kpi-card-header { text-align: center; margin-bottom: 25px; }
+        .kpi-card-title { font-size: 32px; font-weight: 800; color: #1d1d1f; margin-bottom: 15px; }
+        .kpi-metrics { display: flex; flex-direction: column; gap: 15px; }
+        .metric-item { background: #f8f9fa; padding: 15px; border-radius: 12px; border-left: 5px solid; }
+        .metric-item.primary { border-color: #007aff; }
+        .metric-item.success { border-color: #34c759; }
+        .metric-item.warning { border-color: #ff9500; }
+        .metric-label { font-size: 16px; color: #666; margin-bottom: 5px; }
+        .metric-value { font-size: 24px; font-weight: 800; color: #1d1d1f; }
+        .calculation-box { background: #e8f5e8; padding: 20px; border-radius: 12px; margin-top: 15px; }
+        .calculation-title { font-size: 16px; font-weight: 700; color: #2e7d32; margin-bottom: 10px; }
+        .calculation-text { font-size: 15px; line-height: 1.5; color: #2e7d32; }
+        .review-criteria-box { background: #f5f5f7; padding: 25px; border-radius: 15px; margin-top: 30px; }
+        .review-title { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 15px; color: #1d1d1f; }
+        .review-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; text-align: center; }
+        .review-item p { font-size: 14px; line-height: 1.4; color: #555; }
+        .review-item .label { font-size: 16px; font-weight: 700; margin-bottom: 5px; }
+        .review-item .label-go { color: #34c759; }
+        .review-item .label-adjust { color: #ff9500; }
+        .review-item .label-stop { color: #ff3b30; }
+
+        /* 로드맵 슬라이드 스타일 */
+        .roadmap-layout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; align-items: stretch; height: 100%; padding: 20px 0; }
+        .phase-card { background: #f8f9fa; border: 1px solid #e5e5e7; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.05); }
+        .phase-header { margin-bottom: 25px; }
+        .phase-icon { font-size: 50px; margin-bottom: 15px; }
+        .phase-title { font-size: 28px; font-weight: 800; color: #000; }
+        .phase-duration { font-size: 16px; color: #8a8a8e; font-weight: 500; }
+        .phase-role { margin-top: 25px; margin-bottom: 25px; }
+        .role-title { font-size: 16px; color: #8a8a8e; letter-spacing: 1px; margin-bottom: 8px; }
+        .role-name { font-size: 22px; font-weight: 700; color: #007aff; background: #e3f2fd; padding: 8px 15px; border-radius: 12px; display: inline-block; }
+        .phase-activities { text-align: left; margin-bottom: 25px; flex-grow: 1; }
+        .phase-activities ul { list-style-type: none; padding-left: 0; }
+        .phase-activities li { font-size: 17px; line-height: 1.6; margin-bottom: 12px; padding-left: 25px; position: relative; }
+        .phase-activities li::before { content: '✅'; position: absolute; left: 0; color: #34c759; }
+        .phase-goal { margin-top: auto; padding: 20px; background: #fff; border-radius: 15px; border: 1px solid #e5e5e7; }
+        .goal-title { font-size: 16px; font-weight: 700; color: #1d1d1f; margin-bottom: 8px; }
+        .goal-text { font-size: 16px; color: #555; line-height: 1.5; }
+
         /* --- UI 요소 --- */
         .nav-buttons, .slide-indicator, .timer, .progress-bar { z-index: 1000; position: fixed; }
         .nav-buttons { bottom: 40px; right: 40px; display: flex; gap: 12px; }
@@ -164,102 +176,147 @@
 <body>
     <div class="presentation-container">
         <div class="slide title-slide active" id="slide0">
-            <div class="slide-index-badge">Slide 1/6</div>
+            <div class="slide-index-badge">Slide 1/9</div>
             <div class="company-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
             <h1 class="main-title">掛け算の組織文化へ</h1>
             <p class="subtitle">「足し算」組織の限界を超え、持続的な成長を創る</p>
-            <div class="presenter-info">
-              <div class="role">グローバル・デイリー 営業部長</div>
-              <div class="name">井出 悠</div>
-            </div>
-            <div class="date-info">2025.8.29</div>
+            <div class="presenter-info"><div class="role">グローバル・デイリー 営業部長</div><div class="name">井出 悠</div></div>
+            <div class="date-info">2025.9.2</div>
         </div>
 
         <div class="slide" id="slide1">
-            <div class="slide-index-badge">Slide 2/6</div>
-            <div class="slide-header">
-                <div class="slide-number">CHAPTER 01</div><h2 class="slide-title">なぜ今、変革が必要なのか</h2><p class="slide-subtitle">見えてきた構造的リスク</p>
-            </div>
-            <div class="slide-content"><div class="problem-layout">
-                <div class="visual-story">
-                    <div class="story-card"><div class="story-number">1</div><div class="story-content">営業19名の組織で、たった<span class="highlight">2名</span>が全体目標の<span class="highlight">40-50%</span>を担っています</div></div>
-                    <div class="story-card"><div class="story-number">2</div><div class="story-content"><span class="highlight">大口1件</span>を失うだけで組織全体が崩れるリスクを抱えています</div></div>
-                    <div class="story-card"><div class="story-number">3</div><div class="story-content">しかし、社員の多くは<span class="highlight">危機感なく</span>日々を過ごしています</div></div>
-                    <div class="crisis-message">このままでは持続不可能</div>
-                </div>
-                <div class="pyramid-visual"><div class="pyramid">
-                    <div class="pyramid-level level-1">40-50% <span class="pyramid-label">部長+役員 2名</span></div><div class="pyramid-level level-2">70% <span class="pyramid-label">課長以上 4名</span></div><div class="pyramid-level level-3">90% <span class="pyramid-label">係長以上 8名</span></div><div class="pyramid-level level-4">100% <span class="pyramid-label">全営業 19名</span></div>
-                </div></div>
-            </div></div>
-            <div class="slide-footer">
-                <div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
-                <div class="footer-title">DAC女性管理職研修2025_September</div>
-            </div>
+            <div class="slide-index-badge">Slide 2/9</div>
+            <div class="slide-header"><div class="slide-number">CHAPTER 01</div><h2 class="slide-title">なぜ今、変革が必要なのか</h2><p class="slide-subtitle">見えてきた構造的リスク</p></div>
+            <div class="slide-content"><div class="problem-layout"><div class="visual-story"><div class="story-card"><div class="story-number" style="background: #007aff;">1</div><div class="story-content">営業19名の組織で、たった<span class="highlight">2名</span>が全体目標の<span class="highlight">40-50%</span>を担っています</div></div><div class="story-card"><div class="story-number" style="background: #007aff;">2</div><div class="story-content"><span class="highlight">大口1件</span>を失うだけで組織全体が崩れるリスクを抱えています</div></div><div class="story-card"><div class="story-number" style="background: #007aff;">3</div><div class="story-content">しかし、社員の多くは<span class="highlight">危機感なく</span>日々を過ごしています</div></div><div class="crisis-message">このままでは持続不可能</div></div><div class="pyramid-visual"><div class="pyramid"><div class="pyramid-level level-1">40-50% <span class="pyramid-label">部長+役員 2名</span></div><div class="pyramid-level level-2">70% <span class="pyramid-label">課長以上 4名</span></div><div class="pyramid-level level-3">90% <span class="pyramid-label">係長以上 8名</span></div><div class="pyramid-level level-4">100% <span class="pyramid-label">全営業 19名</span></div></div></div></div></div>
+            <div class="slide-footer"><div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div><div class="footer-title">DAC女性管理職研修2025_September</div></div>
         </div>
 
         <div class="slide" id="slide2">
-            <div class="slide-index-badge">Slide 3/6</div>
-            <div class="slide-header">
-                <div class="slide-number">CHAPTER 02</div><h2 class="slide-title">現状の構造を可視化する</h2><p class="slide-subtitle">数字が語る組織の偏り</p>
+            <div class="slide-index-badge">Slide 3/9</div>
+            <div class="slide-header" style="padding: 50px 80px 15px;">
+                <div class="slide-number">CHAPTER 02</div>
+                <h2 class="slide-title" style="font-size: 52px;">目標と現実の巨大なギャップ</h2>
+                <p class="slide-subtitle" style="font-size: 24px;">8ヶ月実績が物語る個人依存の深刻さ</p>
             </div>
-            <div class="slide-content"><div class="current-state-layout">
-                <div class="chart-section">
-                    <div class="donut-container">
-                        <svg viewBox="0 0 400 400" style="width:100%;height:100%;"><g>
-                            <path d="M200 50 A150 150 0 0 1 350 200 L280 200 A80 80 0 0 0 200 120 Z" fill="#ff3b30"/><path d="M350 200 A150 150 0 0 1 200 350 L200 280 A80 80 0 0 0 280 200 Z" fill="#ff9500"/><path d="M200 350 A150 150 0 0 1 50 200 L120 200 A80 80 0 0 0 200 280 Z" fill="#ffcc00"/><path d="M50 200 A150 150 0 0 1 200 50 L200 120 A80 80 0 0 0 120 200 Z" fill="#c7c7cc"/>
-                            <circle cx="200" cy="200" r="70" fill="white"/><text x="200" y="190" text-anchor="middle" font-size="28" font-weight="700" fill="#1d1d1f">営業19名</text><text x="200" y="220" text-anchor="middle" font-size="16" fill="#86868b">売上構成比</text>
-                        </g></svg>
+            <div class="slide-content" style="padding: 15px 80px;">
+                <div style="display: grid; grid-template-columns: 1fr 250px 1fr; gap: 30px; height: 680px; align-items: center;">
+                    
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <h3 style="font-size: 24px; font-weight: 800; color: #34c759; margin-bottom: 5px;">📊 8ヶ月目標割合</h3>
+                            <p style="font-size: 14px; color: #666;">理想的な分散構造</p>
+                        </div>
+                        
+                        <div style="position: relative; width: 400px; height: 400px;">
+                            <svg viewBox="0 0 400 400" style="width:100%;height:100%;">
+                                <g>
+                                    <path d="M200 50 A150 150 0 0 1 254.51 82.84 L227.07 131.51 A80 80 0 0 0 200 120 Z" fill="#007aff"/>
+                                    <path d="M254.51 82.84 A150 150 0 0 1 325.98 131.26 L254.52 150.67 A80 80 0 0 0 227.07 131.51 Z" fill="#34c759"/>
+                                    <path d="M325.98 131.26 A150 150 0 0 1 362.86 200.00 L274.29 200.00 A80 80 0 0 0 254.52 150.67 Z" fill="#ff9500"/>
+                                    <path d="M362.86 200.00 A150 150 0 0 1 325.98 268.74 L254.52 249.33 A80 80 0 0 0 274.29 200.00 Z" fill="#ffcc00"/>
+                                    <path d="M325.98 268.74 A150 150 0 1 1 200 50 L200 120 A80 80 0 1 0 254.52 249.33 Z" fill="#8e8e93"/>
+                                    
+                                    <circle cx="200" cy="200" r="70" fill="white"/>
+                                    <text x="200" y="190" text-anchor="middle" font-size="16" font-weight="700" fill="#1d1d1f">営業19名</text>
+                                    <text x="200" y="207" text-anchor="middle" font-size="12" fill="#34c759" font-weight="600">目標分散</text>
+                                    <text x="200" y="220" text-anchor="middle" font-size="10" fill="#86868b">理想的構造</text>
+
+                                    <text x="227" y="68" text-anchor="middle" font-size="18" font-weight="800" fill="#000">10%</text>
+                                    <text x="310" y="115" text-anchor="middle" font-size="18" font-weight="800" fill="#000">13%</text>
+                                    <text x="345" y="200" text-anchor="middle" font-size="18" font-weight="800" fill="#000">12%</text>
+                                    <text x="310" y="285" text-anchor="middle" font-size="18" font-weight="800" fill="#000">12%</text>
+                                    <text x="120" y="280" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">52%</text>
+                                </g>
+                            </svg>
+                        </div>
                     </div>
-                    <div class="chart-legend">
-                        <div class="legend-item"><div class="legend-color" style="background:#ff3b30;"></div><span class="legend-text">トップ2名</span><span class="legend-value">45%</span></div><div class="legend-item"><div class="legend-color" style="background:#ff9500;"></div><span class="legend-text">課長2名</span><span class="legend-value">25%</span></div><div class="legend-item"><div class="legend-color" style="background:#ffcc00;"></div><span class="legend-text">係長4名</span><span class="legend-value">20%</span></div><div class="legend-item"><div class="legend-color" style="background:#c7c7cc;"></div><span class="legend-text">その他11名</span><span class="legend-value">10%</span></div>
+
+                    <div style="display: flex; flex-direction: column; gap: 25px; justify-content: center; align-items: center; height: 100%;">
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; border-left: 6px solid #007aff;"><div style="font-size: 20px; font-weight: 900; color: #007aff;">大城</div><div style="flex: 1; height: 4px; background: #007aff;"></div><div style="font-size: 18px; font-weight: 800; color: #007aff;">→</div></div>
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; border-left: 6px solid #34c759;"><div style="font-size: 20px; font-weight: 900; color: #34c759;">井出</div><div style="flex: 1; height: 4px; background: #34c759;"></div><div style="font-size: 18px; font-weight: 800; color: #34c759;">→</div></div>
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; border-left: 6px solid #ff9500;"><div style="font-size: 20px; font-weight: 900; color: #ff9500;">田湯</div><div style="flex: 1; height: 4px; background: #ff9500;"></div><div style="font-size: 18px; font-weight: 800; color: #ff9500;">→</div></div>
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; border-left: 6px solid #ffcc00;"><div style="font-size: 20px; font-weight: 900; color: #ffcc00;">菅野</div><div style="flex: 1; height: 4px; background: #ffcc00;"></div><div style="font-size: 18px; font-weight: 800; color: #ffcc00;">→</div></div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <h3 style="font-size: 32px; font-weight: 800; color: #ff3b30; margin-bottom: 5px;">⚠️ 8ヶ月実績割合</h3>
+                            <p style="font-size: 16px; color: #ff3b30; font-weight: 600;">危険な個人依存構造</p>
+                        </div>
+                        <div style="position: relative; width: 480px; height: 480px;">
+                            <svg viewBox="0 0 400 400" style="width:100%;height:100%;">
+                                <g>
+                                    <path d="M200 50 A150 150 0 0 1 316.37 106.37 L276.25 133.25 A80 80 0 0 0 200 120 Z" fill="#007aff"/>
+                                    <path d="M316.37 106.37 A150 150 0 0 1 371.69 285.32 L259.01 254.17 A80 80 0 0 0 276.25 133.25 Z" fill="#34c759"/>
+                                    <path d="M371.69 285.32 A150 150 0 0 1 303.09 334.02 L242.45 267.35 A80 80 0 0 0 259.01 254.17 Z" fill="#ff9500"/>
+                                    <path d="M303.09 334.02 A150 150 0 0 1 238.83 362.86 L223.91 274.29 A80 80 0 0 0 242.45 267.35 Z" fill="#ffcc00"/>
+                                    <path d="M238.83 362.86 A150 150 0 0 1 200 50 L200 120 A80 80 0 0 0 223.91 274.29 Z" fill="#8e8e93"/>
+                                    <circle cx="200" cy="200" r="70" fill="white"/>
+                                    <text x="200" y="170" text-anchor="middle" font-size="18" font-weight="700" fill="#1d1d1f">営業19名</text>
+                                    <text x="200" y="190" text-anchor="middle" font-size="14" fill="#ff3b30" font-weight="700">実績集中</text>
+                                    <text x="200" y="210" text-anchor="middle" font-size="12" fill="#ff3b30" font-weight="600">上位4名で</text>
+                                    <text x="200" y="230" text-anchor="middle" font-size="18" font-weight="800" fill="#ff3b30">63.1%</text>
+                                    
+                                    <text x="270" y="65" text-anchor="middle" font-size="22" font-weight="800" fill="#000">22%</text>
+                                    <text x="385" y="190" text-anchor="middle" font-size="20" font-weight="800" fill="#000">19%</text>
+                                    <text x="330" y="340" text-anchor="middle" font-size="18" font-weight="800" fill="#000">11%</text>
+                                    <text x="250" y="370" text-anchor="middle" font-size="18" font-weight="800" fill="#000">12%</text>
+                                    <text x="90" y="250" text-anchor="middle" font-size="20" font-weight="800" fill="#000">37%</text>
+                                </g>
+                            </svg>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #ff3b30, #ff6259); color: #fff; padding: 15px 20px; border-radius: 12px; text-align: center; width: 350px; margin-top: 20px;">
+                            <div style="font-size: 20px; font-weight: 800;">この状況は持続不可能</div>
+                        </div>
                     </div>
                 </div>
-                <div class="insights-section">
-                    <div class="insight-card"><div class="insight-icon">⚠️</div><div class="insight-text"><strong>過度な集中リスク</strong><br>上位8名で90%の売上を支える脆弱な構造</div></div>
-                    <div class="insight-card"><div class="insight-icon">📉</div><div class="insight-text"><strong>成長の限界</strong><br>個人の努力だけでは組織の成長に限界がある</div></div>
-                    <div class="insight-card"><div class="insight-icon">🎯</div><div class="insight-text"><strong>必要なのは掛け算</strong><br>1+1=2ではなく、1×1=10の発想転換</div></div>
-                </div>
-            </div></div>
-            <div class="slide-footer">
-                <div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
-                <div class="footer-title">DAC女性管理職研修2025_September</div>
             </div>
+            <div class="slide-footer"><div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div><div class="footer-title">DAC女性管理職研修2025_September</div></div>
         </div>
 
         <div class="slide" id="slide3">
-            <div class="slide-index-badge">Slide 4/6</div>
+            <div class="slide-index-badge">Slide 4/9</div>
             <div class="slide-header">
-                <div class="slide-number">CHAPTER 03</div><h2 class="slide-title">2つの横断施策で掛け算文化を創る</h2><p class="slide-subtitle">単独から協創へ、組織の新しい成長エンジン</p>
+                <div class="slide-number">CHAPTER 03</div>
+                <h2 class="slide-title">なぜ、この構造が生まれたのか</h2>
+                <p class="slide-subtitle">「個人の努力」の限界と「組織の仕組み」の不在</p>
             </div>
             <div class="slide-content">
-                <div class="solution-layout-new">
-                    <div class="pillar-card pillar-1">
-                        <div class="pillar-header"><div class="pillar-number">施策 1</div><div class="pillar-title">全組織横断企画</div><div class="pillar-frequency">月1件 必須化</div></div>
-                        <div class="pillar-content">
-                            <div class="pillar-point"><span class="point-icon">🎯</span><span class="point-text"><strong>若手主導</strong>で企画から実行まで</span></div>
-                            <div class="pillar-point"><span class="point-icon">🔄</span><span class="point-text">全セクション<strong>必須参加</strong></span></div>
-                            <div class="pillar-point"><span class="point-icon">💡</span><span class="point-text">単一メディアでは<strong>不可能な価値</strong>創出</span></div>
+                <div class="problem-layout">
+                    <div class="visual-story">
+                        <div class="story-card">
+                            <div class="story-number" style="background: #007aff;">1</div>
+                            <div class="story-content"><strong>アポ獲得の壁</strong><br>一般社員のアポは月平均<span class="highlight">12件</span>。目標<span class="highlight">20件</span>に届かず、成功体験を積めていない。</div>
                         </div>
-                        <div class="department-flow"><div class="dept-item">営業</div><span class="flow-arrow">×</span><div class="dept-item">メディア</div><span class="flow-arrow">×</span><div class="dept-item">マーケ</div></div>
-                        <div class="kpi-section"><div class="kpi-title">KPI</div><div class="kpi-items"><span class="kpi-tag">企画実施数</span><span class="kpi-tag">参加部門数</span><span class="kpi-tag">新規案件創出数</span><span class="kpi-tag">若手参加率</span></div></div>
+                        <div class="story-card">
+                            <div class="story-number" style="background: #007aff;">2</div>
+                            <div class="story-content"><strong>育成機会の不足</strong><br>多忙な先輩社員は、若手の育成に時間を割く余裕がない。結果、<span class="highlight">OJTが機能不全</span>に。</div>
+                        </div>
+                        <div class="crisis-message">個人の根性に頼るだけでは、<br>この悪循環は断ち切れない</div>
                     </div>
-        
-                    <div class="implementation-vision-center">
-                        <div class="vision-role">
-                            <div class="role-icon">🚩</div>
-                            <div class="role-text"><strong>井出の役割</strong><p>旗振り役として方向性を示し、各セクションを巻き込み、横断を文化として定着させる</p></div>
+                    
+                    <div class="pyramid-visual" style="align-items: flex-start; padding-top: 60px;">
+                        <div style="width: 100%; max-width: 750px;">
+                            <div style="text-align: center; margin-bottom: 40px;">
+                                <div style="font-size: 32px; font-weight: 700; color: #1c1c1e; margin-bottom: 20px;">悪循環の構造</div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                                <div class="pyramid-level level-1" style="width: 400px; flex-shrink: 0; margin: 0; position: static;">アポ獲得の困難</div>
+                                <div style="padding-left: 20px; font-size: 20px; font-weight: 500; line-height: 1.4;">若手の自信と経験値の低下</div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                                <div class="pyramid-level level-2" style="width: 400px; flex-shrink: 0; margin: 0; position: static;">成長の停滞</div>
+                                <div style="padding-left: 20px; font-size: 20px; font-weight: 500; line-height: 1.4;">スキルアップ機会の不足</div>
+                            </div>
+
+                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                                <div class="pyramid-level level-3" style="width: 400px; flex-shrink: 0; margin: 0; position: static;">組織力の未活用</div>
+                                <div style="padding-left: 20px; font-size: 20px; font-weight: 500; line-height: 1.4;">部門間の連携不足・個人戦</div>
+                            </div>
+
                         </div>
-                    </div>
-        
-                    <div class="pillar-card pillar-2">
-                        <div class="pillar-header"><div class="pillar-number">施策 2</div><div class="pillar-title">プル型セミナー事業</div><div class="pillar-frequency">月1回 定期開催</div></div>
-                        <div class="pillar-content">
-                            <div class="pillar-point"><span class="point-icon">🎓</span><span class="point-text"><strong>社外向け</strong>セミナー開催</span></div>
-                            <div class="pillar-point"><span class="point-icon">🧲</span><span class="point-text">顧客から<strong>選ばれる</strong>仕組み</span></div>
-                            <div class="pillar-point"><span class="point-icon">📊</span><span class="point-text">インバウンド<strong>案件獲得</strong></span></div>
-                        </div>
-                        <div class="department-flow"><div class="dept-item">広報</div><span class="flow-arrow">→</span><div class="dept-item">営業</div></div>
-                        <div class="kpi-section"><div class="kpi-title">KPI</div><div class="kpi-items"><span class="kpi-tag">集客数</span><span class="kpi-tag">商談化率</span><span class="kpi-tag">成約率（案件数）</span></div></div>
                     </div>
                 </div>
             </div>
@@ -270,37 +327,214 @@
         </div>
 
         <div class="slide" id="slide4">
-            <div class="slide-index-badge">Slide 5/6</div>
-            <div class="slide-header">
-                <div class="slide-number">CHAPTER 04</div><h2 class="slide-title">期待される変革インパクト</h2><p class="slide-subtitle">組織が生まれ変わる4つの効果</p>
+            <div class="slide-index-badge">Slide 5/9</div>
+            <div class="slide-header" style="padding: 60px 80px 20px;">
+                <div class="slide-number">CHAPTER 04</div>
+                <h2 class="slide-title">2つの成長エンジンで組織を再起動</h2>
+                <p class="slide-subtitle">個人戦から、仕組みで勝つ組織戦へ</p>
             </div>
-            <div class="slide-content"><div class="impact-layout">
-                <div class="transformation-visual">
-                    <div class="state-box state-before"><div class="state-formula">1 + 1 = 2</div><div class="state-label">現在の組織</div></div>
-                    <div class="arrow-transform">→</div>
-                    <div class="state-box state-after"><div class="state-formula">1 × 1 = 10</div><div class="state-label">目指す組織</div></div>
+            <div class="slide-content" style="padding-top: 20px;">
+                <div class="solution-new-layout">
+                    <div style="display: grid; grid-template-columns: 1fr 200px 1fr; gap: 30px; align-items: stretch; flex-grow: 1;">
+                        
+                        <div class="pillar-card-new" style="padding: 20px 25px;">
+                            <div class="pillar-header-new" style="margin-bottom: 15px;">
+                                <div class="pillar-number-new">ENGINE ①</div>
+                                <h3 class="pillar-title-new">成長機会創出エンジン</h3>
+                                <p class="pillar-subtitle-new">仕組みで顧客接点を創り、若手の成長を加速</p>
+                            </div>
+                            <div class="pillar-content-new" style="gap: 10px;">
+                                <div class="pillar-feature" style="padding: 10px;"><span class="feature-icon">🔧</span><span class="feature-text">【改善】現場の声で、オウンドメディアのメニューを改善</span></div>
+                                <div class="pillar-feature" style="padding: 10px;"><span class="feature-icon">💻</span><span class="feature-text">【実行】改善メニューをテーマに、オンラインセミナーを実施</span></div>
+                                <div class="pillar-feature" style="padding: 10px;"><span class="feature-icon">💰</span><span class="feature-text">【収益化】若手はセミナーからの高品質な接点を商談へ</span></div>
+                            </div>
+                            <div style="flex-grow: 1;"></div>
+                            <div class="pillar-departments" style="margin-top: 10px; padding: 10px;">
+                                <span class="dept-badge">広報</span><span class="dept-connector">×</span><span class="dept-badge">営業</span><span class="dept-connector">×</span><span class="dept-badge">メディア(オウンド)</span>
+                            </div>
+                            <div class="pillar-merits" style="margin-top: 10px; padding-top: 10px;">
+                                <div class="merits-title" style="margin-bottom: 10px;">What's in it for us?</div>
+                                <div class="merits-grid" style="gap: 8px;">
+                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">広報</div><div class="merit-text">事業貢献と連動した、戦略的ブランディングの実践</div></div>
+                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">営業</div><div class="merit-text">改善に貢献したメディアから、高確度な商談を獲得</div></div>
+                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">メディア(オウンド)</div><div class="merit-text">現場の声を反映したメニュー開発で、売上に直接貢献</div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                            <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-radius: 20px; width: 100%;">
+                                <div style="font-size: 32px; margin-bottom: 15px;">🎼</div>
+                                <div style="font-size: 18px; font-weight: 800; color: #1565c0; margin-bottom: 10px;">井出の役割</div>
+                                <div style="font-size: 14px; line-height: 1.3; color: #424242;">推進責任者として、部署連携の文化を醸成し、プロジェクトの成功を推進する。 </div>
+                            </div>
+                        </div>
+
+                        <div class="pillar-card-new" style="padding: 20px 25px;">
+                            <div class="pillar-header-new" style="margin-bottom: 15px;">
+                                <div class="pillar-number-new">ENGINE ②</div>
+                                <h3 class="pillar-title-new">企画ソリューション創造エンジン</h3>
+                                <p class="pillar-subtitle-new">顧客インサイトから、他社が真似できない価値を共創</p>
+                            </div>
+                            <div class="pillar-content-new" style="gap: 10px;">
+                                <div class="pillar-feature" style="padding: 10px;"><span class="feature-icon">🤝</span><span class="feature-text">外部メディアとの協業で大型企画を創出</span></div>
+                                <div class="pillar-feature" style="padding: 10px;"><span class="feature-icon">💎</span><span class="feature-text">独自価値の提供で価格競争から脱却</span></div>
+                                <div class="pillar-feature" style="padding: 10px;"><span class="feature-icon">📈</span><span class="feature-text">会社のブランド価値と利益率を向上</span></div>
+                            </div>
+                            <div style="flex-grow: 1;"></div>
+                            <div class="pillar-departments" style="margin-top: 10px; padding: 10px;">
+                                <span class="dept-badge">営業</span><span class="dept-connector">×</span><span class="dept-badge">メディア</span><span class="dept-connector">×</span><span class="dept-badge">マーケ</span>
+                            </div>
+                            <div class="pillar-merits" style="margin-top: 10px; padding-top: 10px;">
+                                <div class="merits-title" style="margin-bottom: 10px;">What's in it for us?</div>
+                                <div class="merits-grid" style="gap: 8px;">
+                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">営業</div><div class="merit-text">高単価・高利益率案件の創出</div></div>
+                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">メディア</div><div class="merit-text">企画力のアピールとブランド露出</div></div>
+                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">マーケ</div><div class="merit-text">強力なPRコンテンツの創出</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="benefits-grid">
-                    <div class="benefit-item"><div class="benefit-icon">👥</div><div class="benefit-title">若手の成長</div><div class="benefit-metric">12企画/年</div></div><div class="benefit-item"><div class="benefit-icon">⚖️</div><div class="benefit-title">負荷分散</div><div class="benefit-metric">-30%</div></div><div class="benefit-item"><div class="benefit-icon">💰</div><div class="benefit-title">売上拡大</div><div class="benefit-metric">+25%</div></div><div class="benefit-item"><div class="benefit-icon">🏆</div><div class="benefit-title">競争優位</div><div class="benefit-metric">独自価値</div></div>
-                </div>
-            </div></div>
+            </div>
             <div class="slide-footer">
                 <div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
                 <div class="footer-title">DAC女性管理職研修2025_September</div>
             </div>
         </div>
 
-        <div class="slide ending-slide" id="slide5">
-            <div class="slide-index-badge">Slide 6/6</div>
-            <h1 class="ending-message">「個」に依存する時代を終え、<br>組織で成長する未来へ</h1>
+        <div class="slide" id="slide5">
+            <div class="slide-index-badge">Slide 6/9</div>
+            <div class="slide-header" style="padding: 60px 80px 20px;">
+                <div class="slide-number">CHAPTER 05</div>
+                <h2 class="slide-title">パイロット計画と年間インパクト</h2>
+                <p class="slide-subtitle">まず3ヶ月で成功モデルを確立。そこから見える大きな可能性。</p>
+            </div>
+            <div class="slide-content" style="padding-top: 25px; padding-bottom: 25px; justify-content: center;">
+                <div class="kpi-layout">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 320px; gap: 30px; align-items: stretch;">
+                        <div class="kpi-card">
+                            <div class="kpi-card-header"><h3 class="kpi-card-title">ENGINE ① パイロット目標 (3ヶ月)</h3></div>
+                            <div class="kpi-metrics">
+                                <div class="metric-item primary"><div class="metric-label">広報・集客KPI (プロセス)</div><div class="metric-value">セミナー2回 / ホットリード10件</div></div>
+                                <div class="metric-item success"><div class="metric-label">営業KPI (プロセス)</div><div class="metric-value">商談化率 60% (6件)</div></div>
+                                <div class="metric-item warning"><div class="metric-label">最終成果目標 (結果)</div><div class="metric-value">受注 2件</div></div>
+                            </div>
+                            <div class="calculation-box"><div class="calculation-title">パイロット期間 売上目標</div><div class="calculation-text">単価150万円 × 2件 = <strong>300万円</strong></div></div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-card-header"><h3 class="kpi-card-title">ENGINE ② パイロット目標 (3ヶ月)</h3></div>
+                            <div class="kpi-metrics">
+                                <div class="metric-item primary"><div class="metric-label">プロセスKPI</div><div class="metric-value">大型企画 1件ローンチ</div></div>
+                                <div class="metric-item success"><div class="metric-label">プロセスKPI</div><div class="metric-value">問い合わせ 10件 / 商談 3件</div></div>
+                                <div class="metric-item warning"><div class="metric-label">最終成果目標 (結果)</div><div class="metric-value">受注 1社</div></div>
+                            </div>
+                            <div class="calculation-box"><div class="calculation-title">パイロット期間 売上目標</div><div class="calculation-text">単価500万円 × 1社 = <strong>500万円</strong></div></div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <div style="background: linear-gradient(135deg, #34c759, #30d158); color: #fff; padding: 25px; border-radius: 20px; text-align: center; width: 100%; box-shadow: 0 10px 30px rgba(52, 199, 89, 0.3);">
+                                <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">パイロット成功時の年間インパクト(試算)</div>
+                                <div style="font-size: 42px; font-weight: 900; margin-bottom: 15px;">約1億円</div>
+                                <div style="font-size: 14px; opacity: 0.9; line-height: 1.4;">エンジン① 3,900万 + エンジン② 6,000万</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
+                <div class="footer-title">DAC女性管理職研修2025_September</div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide6">
+            <div class="slide-index-badge">Slide 7/9</div>
+            <div class="slide-header">
+                <div class="slide-number">CHAPTER 06</div>
+                <h2 class="slide-title">若手の成長ロードマップ</h2>
+                <p class="slide-subtitle">パイロット計画と連動した、現実的な育成ステップ</p>
+            </div>
+            <div class="slide-content">
+                <div class="roadmap-layout">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <div class="phase-icon">💡</div>
+                            <h3 class="phase-title">Phase 1: パイロット期</h3>
+                            <p class="phase-duration">1〜3ヶ月</p>
+                        </div>
+                        <div class="phase-role"><div class="role-title">役割</div><div class="role-name">ホットリード・クローザー</div></div>
+                        <div class="phase-activities"><ul><li>顧客の生の声を企画チームへフィードバックする</li><li>先輩が創出した商談機会のフォローに集中する</li><li>セミナー運営と発表を間近で学び、型を吸収する</li></ul></div>
+                        <div class="phase-goal"><h4 class="goal-title">目標</h4><p class="goal-text">パイロット計画の目標を達成し、「売れる型」の習得と成功体験を獲得する</p></div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <div class="phase-icon">📈</div>
+                            <h3 class="phase-title">Phase 2: 展開・実践期</h3>
+                            <p class="phase-duration">4〜9ヶ月</p>
+                        </div>
+                        <div class="phase-role"><div class="role-title">役割</div><div class="role-name">共同発表者</div></div>
+                        <div class="phase-activities"><ul><li>セミナーの一部（事例紹介など）を担当し発表を実践</li><li>企画会議へ主体的に参加し、アイディアを提案する</li><li>自身の成功事例を言語化し、ナレッジとして共有する</li></ul></div>
+                        <div class="phase-goal"><h4 class="goal-title">目標</h4><p class="goal-text">成功モデルを横展開し、個人のスキルとして定着させる</p></div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <div class="phase-icon">🌟</div>
+                            <h3 class="phase-title">Phase 3: 自走・主導期</h3>
+                            <p class="phase-duration">10ヶ月以降</p>
+                        </div>
+                        <div class="phase-role"><div class="role-title">役割</div><div class="role-name">セミナー・ホスト</div></div>
+                        <div class="phase-activities"><ul><li>自身の得意領域でセミナー全体を企画・主導する</li><li>新しい若手のメンターとして、成功体験を伝承する</li><li>部署横断の新しい企画を自ら起案・推進する</li></ul></div>
+                        <div class="phase-goal"><h4 class="goal-title">目標</h4><p class="goal-text">仕組みを自ら回し、組織を牽引する次世代エースとなる</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer"><div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div><div class="footer-title">DAC女性管理職研修2025_September</div></div>
+        </div>
+        
+        <div class="slide" id="slide7">
+            <div class="slide-index-badge">Slide 8/9</div>
+            <div class="slide-header"><div class="slide-number">CHAPTER 07</div><h2 class="slide-title">これは、単なる売上増ではない</h2><p class="slide-subtitle">事業、組織、そして「人」の持続的成長への投資</p></div>
+            <div class="slide-content"><div style="display: flex; flex-direction: column; gap: 60px; flex-grow: 1; justify-content: center;"><div style="display: flex; align-items: center; justify-content: center;"><div style="width: 280px; height: 280px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f5f5f7; border: 3px solid #d1d1d6;"><div style="font-size: 40px; font-weight: 700;">個人商店の<br>足し算</div><div style="font-size: 22px; margin-top: 16px; opacity: .8;">現在の組織</div></div><div style="font-size: 70px; color: #007aff; margin: 0 30px;">→</div><div style="width: 280px; height: 280px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #34c759, #30d158); color: #fff;"><div style="font-size: 40px; font-weight: 700;">仕組みの<br>掛け算</div><div style="font-size: 22px; margin-top: 16px; opacity: .8;">目指す組織</div></div></div><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">📈</div>
+                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">若手の成長加速</h3><p style="font-size: 16px; color: #555;">成功体験による<br>自信とスキル向上</p>
+                </div>
+                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🛡️</div>
+                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">リスク分散</h3><p style="font-size: 16px; color: #555;">属人化からの脱却<br>安定した組織へ</p>
+                </div>
+                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🤝</div>
+                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">採用力強化</h3><p style="font-size: 16px; color: #555;">「成長できる会社」<br>としての魅力向上</p>
+                </div>
+                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🎯</div>
+                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">競争優位の確立</h3><p style="font-size: 16px; color: #555;">他社が真似できない<br>組織力という価値</p>
+                </div>
+            </div></div></div>
+            <div class="slide-footer"><div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div><div class="footer-title">DAC女性管理職研修2025_September</div></div>
+        </div>
+
+        <div class="slide ending-slide" id="slide8">
+            <div class="slide-index-badge">Slide 9/9</div>
+            <h1 class="ending-message">「個」に依存する時代を終え、<br>「仕組み」で成長する未来へ</h1>
             <p class="ending-subtitle">掛け算の文化こそが、私たちの新しいスタンダードです。</p>
             <div class="next-step">
-                <div class="next-step-title">NEXT STEP</div><p>来週中に各部門長と連携し、タスクフォースの設立を提案します。</p>
+                <div class="next-step-title">NEXT STEP</div>
+                <p style="text-align: left; display: inline-block;">
+                    <b>11月:</b> 本計画の承認、及びタスクフォースの組成<br>
+                    <b>12月-2月:</b> パイロット計画の実行 (第1四半期)<br>
+                    <b>3月:</b> 初期成果をレビューし、改善点を計画に反映<br>
+                    <b>4月以降:</b> 改善された計画を元に、全社的に本格展開
+                </p>
             </div>
         </div>
     </div>
 
-    <div class="nav-buttons"> <button class="nav-btn" onclick="previousSlide()">←</button> <button class="nav-btn" onclick="nextSlide()">→</button> </div>
+    <div class="nav-buttons"> 
+        <button class="nav-btn" onclick="previousSlide()">←</button> 
+        <button class="nav-btn" onclick="nextSlide()">→</button> 
+    </div>
     <div class="slide-indicator"></div>
     <div class="timer" id="timer">0:00</div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
