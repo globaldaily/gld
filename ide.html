@@ -210,6 +210,61 @@
 .dept-badge.dept-media { background-color: #1abc9c; } /* 미디어: 혁신의 청록색 */
 .dept-badge.dept-marketing { background-color: #f39c12; } /* 마케팅: 에너지의 주황색 */ 
     </style>
+
+/* --- Slide 1 전용 레이아웃 --- */
+#slide1 .problem-layout{
+  display:grid;
+  grid-template-columns:1fr 1.2fr; /* 좌:스토리 / 우:그래프 */
+  gap:40px;
+  align-items:stretch;
+}
+
+#slide1 .visual-story{ gap:20px; }
+#slide1 .story-card{ padding:28px; }
+#slide1 .crisis-message{ padding:24px; font-size:32px; }
+
+/* 우측 비교 패널: 目標 | VS | 実績 */
+#slide1 .charts-container{
+  display:grid;
+  grid-template-columns:1fr 120px 1fr;
+  gap:20px;
+  align-items:center;
+  justify-items:center;
+  width:100%;
+}
+#slide1 .chart-wrapper{ width:100%; max-width:420px; text-align:center; }
+
+/* 도넛 캔버스: 정사각 유지 + 폴백 */
+#slide1 .chart-canvas{
+  position:relative;
+  width:100%;
+  max-width:420px;
+  margin:0 auto;
+  aspect-ratio:1/1;
+  flex:0 0 auto;
+}
+@supports not (aspect-ratio:1/1){
+  #slide1 .chart-canvas{ height:0; padding-top:100%; }
+}
+#slide1 .chart-canvas > svg{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  display:block;
+}
+
+/* 중앙 텍스트(가독성 업) */
+#slide1 .donut-title{   font-size:20px; font-weight:800; }
+#slide1 .donut-percent{ font-size:64px; font-weight:900; letter-spacing:-1px; }
+
+/* 조각 퍼센트 라벨: 흰 외곽선으로 또렷하게 */
+#slide1 .slice-label{
+  font-size:22px;
+  font-weight:900;
+  paint-order:stroke;
+  stroke:#fff; stroke-width:4px;
+}
+
+
 </head>
 <body>
     <div class="presentation-container">
@@ -222,126 +277,7 @@
             <div class="date-info">2025.9.2</div>
         </div>
 
-        <div class="slide" id="slide1">
-            <div class="slide-index-badge">Slide 1/6</div>
-            <div class="slide-header">
-              <div class="slide-number">CHAPTER 01</div>
-              <h2 class="slide-title">目標と現実の巨大なギャップ</h2>
-              <p class="slide-subtitle">見えてきた構造的リスクと、個人依存の深刻さ</p>
-            </div>
-          
-            <div class="slide-content">
-              <div class="problem-layout" style="gap:40px;">
-                <!-- 좌측 스토리 -->
-                <div class="visual-story">
-                  <div class="story-card">
-                    <div class="story-number" style="background:#007aff;">1</div>
-                    <div class="story-content">
-                      営業19名の組織で、たった<span class="highlight">2名</span>が全体目標の
-                      <span class="highlight">40-50%</span>を担っています
-                    </div>
-                  </div>
-                  <div class="story-card">
-                    <div class="story-number" style="background:#007aff;">2</div>
-                    <div class="story-content">
-                      <span class="highlight">大口1件</span>を失うだけで組織全体が崩れるリスクを抱えています
-                    </div>
-                  </div>
-                  <div class="story-card">
-                    <div class="story-number" style="background:#007aff;">3</div>
-                    <div class="story-content">
-                      しかし、社員の多くは<span class="highlight">危機感なく</span>日々を過ごしています
-                    </div>
-                  </div>
-                  <div class="crisis-message">このままでは持続不可能</div>
-                </div>
-          
-                <!-- 우측 비교: 目標 vs 現実 (도넛 2개 + 중앙 Δ) -->
-                <div style="display:grid;grid-template-columns:1fr 120px 1fr;gap:20px;align-items:center;width:100%;">
-                  <!-- 목표(理想) -->
-                  <div style="width:100%;max-width:420px;background:#f6fff7;border:1px solid #e3f5e6;border-radius:16px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.05);justify-self:end;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                      <h3 style="color:#2e7d32;font-weight:800;">📊 8ヶ月<strong>目標</strong>割合</h3>
-                      <span style="font-size:12px;color:#2e7d32;background:#e8f5e9;border:1px solid #c8e6c9;padding:6px 10px;border-radius:999px;font-weight:700;">理想的な分散</span>
-                    </div>
-                    <div class="pie-box" style="width:100%;aspect-ratio:1/1;max-width:360px;margin:0 auto;">
-                      <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;display:block;">
-                        <g>
-                          <!-- 도넛 조각 -->
-                          <path fill="#007aff" d="M200 50 A 150 150 0 0 1 254.51 82.84 L 227.07 131.51 A 80 80 0 0 0 200 120 Z"></path>
-                          <path fill="#34c759" d="M254.51 82.84 A 150 150 0 0 1 325.98 131.26 L 254.52 150.67 A 80 80 0 0 0 227.07 131.51 Z"></path>
-                          <path fill="#ff9500" d="M325.98 131.26 A 150 150 0 0 1 362.86 200 L 274.29 200 A 80 80 0 0 0 254.52 150.67 Z"></path>
-                          <path fill="#ffcc00" d="M362.86 200 A 150 150 0 0 1 325.98 268.74 L 254.52 249.33 A 80 80 0 0 0 274.29 200 Z"></path>
-                          <path fill="#8e8e93" d="M325.98 268.74 A 150 150 0 1 1 200 50 L 200 120 A 80 80 0 1 0 254.52 249.33 Z"></path>
-                          <!-- 도넛 구멍 -->
-                          <circle cx="200" cy="200" r="70" fill="#fff"></circle>
-                          <!-- 중앙강조: 上位4名シェア(目標) 47% -->
-                          <text x="200" y="186" text-anchor="middle" font-size="14" font-weight="700" fill="#2e7d32">上位4名シェア</text>
-                          <text x="200" y="220" text-anchor="middle" font-size="36" font-weight="900" fill="#2e7d32">47%</text>
-                          <!-- 보조 퍼센트 라벨 -->
-                          <text x="227" y="68" text-anchor="middle" font-size="16" font-weight="800" fill="#000">10%</text>
-                          <text x="310" y="115" text-anchor="middle" font-size="16" font-weight="800" fill="#000">13%</text>
-                          <text x="345" y="200" text-anchor="middle" font-size="16" font-weight="800" fill="#000">12%</text>
-                          <text x="310" y="285" text-anchor="middle" font-size="16" font-weight="800" fill="#000">12%</text>
-                          <text x="120" y="280" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">52%</text>
-                        </g>
-                      </svg>
-                    </div>
-                  </div>
-          
-                  <!-- 중앙 VS/Delta -->
-                  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;justify-self:center;">
-                    <div style="font-size:42px;line-height:1;font-weight:900;color:#1d1d1f;">VS</div>
-                    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-                      <div style="font-size:12px;color:#8a8a8e;">上位4名シェアの差</div>
-                      <div style="background:linear-gradient(135deg,#ff3b30,#ff6b6b);color:#fff;border-radius:999px;padding:10px 16px;font-weight:800;box-shadow:0 8px 24px rgba(255,59,48,.35);">
-                        +16.1pt
-                      </div>
-                    </div>
-                  </div>
-          
-                  <!-- 현실(実績) -->
-                  <div style="width:100%;max-width:420px;background:#fff5f5;border:1px solid #fde0e0;border-radius:16px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.05);justify-self:start;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                      <h3 style="color:#c62828;font-weight:800;">⚠️ 8ヶ月<strong>実績</strong>割合</h3>
-                      <span style="font-size:12px;color:#c62828;background:#fdecea;border:1px solid #f5c2c7;padding:6px 10px;border-radius:999px;font-weight:700;">個人依存が顕著</span>
-                    </div>
-                    <div class="pie-box" style="width:100%;aspect-ratio:1/1;max-width:360px;margin:0 auto;">
-                      <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;display:block;">
-                        <g>
-                          <path fill="#007aff" d="M 200 50 A 150 150 0 0 1 347.89 154.55 L 265.26 163.03 A 80 80 0 0 0 200 120 Z"></path>
-                          <path fill="#34c759" d="M 347.89 154.55 A 150 150 0 0 1 328.71 303.01 L 255.31 241.61 A 80 80 0 0 0 265.26 163.03 Z"></path>
-                          <path fill="#ff9500" d="M 328.71 303.01 A 150 150 0 0 1 234.33 359.39 L 218.31 271.67 A 80 80 0 0 0 255.31 241.61 Z"></path>
-                          <path fill="#ffcc00" d="M 234.33 359.39 A 150 150 0 0 1 127.66 341.34 L 150.75 262.05 A 80 80 0 0 0 218.31 271.67 Z"></path>
-                          <path fill="#8e8e93" d="M 127.66 341.34 A 150 150 0 1 1 200 50 L 200 120 A 80 80 0 1 0 150.75 262.05 Z"></path>
-                          <circle cx="200" cy="200" r="70" fill="#fff"></circle>
-          
-                          <!-- 중앙강조: 上位4名で 63.1% -->
-                          <text x="200" y="206" text-anchor="middle" font-size="12" font-weight="700" fill="#c62828">上位4名で</text>
-                          <text x="200" y="238" text-anchor="middle" font-size="40" font-weight="900" fill="#c62828">63.1%</text>
-          
-                          <!-- 보조 퍼센트 라벨 -->
-                          <text x="310" y="90" text-anchor="middle" font-size="16" font-weight="800" fill="#000">22%</text>
-                          <text x="375" y="240" text-anchor="middle" font-size="16" font-weight="800" fill="#000">19%</text>
-                          <text x="270" y="360" text-anchor="middle" font-size="16" font-weight="800" fill="#000">11%</text>
-                          <text x="160" y="365" text-anchor="middle" font-size="16" font-weight="800" fill="#000">12%</text>
-                          <text x="90" y="210" text-anchor="middle" font-size="16" font-weight="800" fill="#000">36%</text>
-                        </g>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <!-- /비교 -->
-              </div>
-            </div>
-          
-            <div class="slide-footer">
-              <div class="footer-logo">
-                <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD">
-              </div>
-              <div class="footer-title">DAC女性管理職研修2025_September</div>
-            </div>
-          </div>
+        <div class="slide" id="slide1"> <div class="slide-index-badge">Slide 1/6</div> <div class="slide-header"> <div class="slide-number">CHAPTER 01</div> <h2 class="slide-title">目標と現実の巨大なギャップ</h2> <p class="slide-subtitle">見えてきた構造的リスクと、個人依存の深刻さ</p> </div> <div class="slide-content"> <div class="problem-layout" style="gap:40px; align-items:stretch;"> <!-- 좌: 스토리 --> <div class="visual-story"> <div class="story-card"> <div class="story-number" style="background:#007aff;">1</div> <div class="story-content"> 営業19名の組織で、たった<span class="highlight">2名</span>が全体目標の <span class="highlight">40-50%</span>を担っています </div> </div> <div class="story-card"> <div class="story-number" style="background:#007aff;">2</div> <div class="story-content"> <span class="highlight">大口1件</span>を失うだけで組織全体が崩れるリスクを抱えています </div> </div> <div class="story-card"> <div class="story-number" style="background:#007aff;">3</div> <div class="story-content"> しかし、社員の多くは<span class="highlight">危機感なく</span>日々を過ごしています </div> </div> <div class="crisis-message">このままでは持続不可能</div> </div> <!-- 우: 目標 vs 現実 비교 패널 --> <div class="charts-container" style="display:grid; grid-template-columns:1fr 120px 1fr; gap:20px; align-items:center; justify-items:center; width:100%;"> <!-- 目標(理想) --> <div class="chart-wrapper" style="width:100%; max-width:420px; background:#f6fff7; border:1px solid #e3f5e6; border-radius:16px; padding:16px; box-shadow:0 8px 24px rgba(0,0,0,.05); justify-self:end;"> <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;"> <h3 style="color:#2e7d32; font-weight:800;">📊 8ヶ月<strong>目標</strong>割合</h3> <span style="font-size:12px; color:#2e7d32; background:#e8f5e9; border:1px solid #c8e6c9; padding:6px 10px; border-radius:999px; font-weight:700;">理想的な分散</span> </div> <div class="chart-canvas"> <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet"> <g> <path fill="#007aff" d="M200 50 A150 150 0 0 1 254.51 82.84 L227.07 131.51 A80 80 0 0 0 200 120 Z"></path> <path fill="#34c759" d="M254.51 82.84 A150 150 0 0 1 325.98 131.26 L254.52 150.67 A80 80 0 0 0 227.07 131.51 Z"></path> <path fill="#ff9500" d="M325.98 131.26 A150 150 0 0 1 362.86 200 L274.29 200 A80 80 0 0 0 254.52 150.67 Z"></path> <path fill="#ffcc00" d="M362.86 200 A150 150 0 0 1 325.98 268.74 L254.52 249.33 A80 80 0 0 0 274.29 200 Z"></path> <path fill="#8e8e93" d="M325.98 268.74 A150 150 0 1 1 200 50 L200 120 A80 80 0 1 0 254.52 249.33 Z"></path> <!-- 도넛 구멍을 더 키워(읽기 쉬움) --> <circle cx="200" cy="200" r="95" fill="#fff"></circle> <!-- 중앙 큰 숫자 --> <text class="donut-title" x="200" y="185" text-anchor="middle" fill="#2e7d32">上位4名シェア</text> <text class="donut-percent" x="200" y="245" text-anchor="middle" fill="#2e7d32">47%</text> <!-- 바깥 라벨(좌표 업데이트) --> <text class="slice-label" x="230" y="58" text-anchor="middle" fill="#000">10%</text> <text class="slice-label" x="325" y="100" text-anchor="middle" fill="#000">13%</text> <text class="slice-label" x="365" y="195" text-anchor="middle" fill="#000">12%</text> <text class="slice-label" x="325" y="300" text-anchor="middle" fill="#000">12%</text> <text class="slice-label" x="85" y="335" text-anchor="middle" fill="#000">52%</text> </g> </svg> </div> </div> <!-- 중앙 VS / Δ --> <div style="display:flex; flex-direction:column; align-items:center; gap:12px; justify-self:center;"> <div style="font-size:42px; line-height:1; font-weight:900; color:#1d1d1f;">VS</div> <div style="display:flex; flex-direction:column; align-items:center; gap:8px;"> <div style="font-size:12px; color:#8a8a8e;">上位4名シェアの差</div> <div style="background:linear-gradient(135deg,#ff3b30,#ff6b6b); color:#fff; border-radius:999px; padding:10px 16px; font-weight:800; box-shadow:0 8px 24px rgba(255,59,48,.35);"> +16.1pt </div> </div> </div> <!-- 現実(実績) --> <div class="chart-wrapper" style="width:100%; max-width:420px; background:#fff5f5; border:1px solid #fde0e0; border-radius:16px; padding:16px; box-shadow:0 8px 24px rgba(0,0,0,.05); justify-self:start;"> <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;"> <h3 style="color:#c62828; font-weight:800;">⚠️ 8ヶ月<strong>実績</strong>割合</h3> <span style="font-size:12px; color:#c62828; background:#fdecea; border:1px solid #f5c2c7; padding:6px 10px; border-radius:999px; font-weight:700;">個人依存が顕著</span> </div> <div class="chart-canvas"> <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet"> <g> <path fill="#007aff" d="M200 50 A150 150 0 0 1 347.89 154.55 L265.26 163.03 A80 80 0 0 0 200 120 Z"></path> <path fill="#34c759" d="M347.89 154.55 A150 150 0 0 1 328.71 303.01 L255.31 241.61 A80 80 0 0 0 265.26 163.03 Z"></path> <path fill="#ff9500" d="M328.71 303.01 A150 150 0 0 1 234.33 359.39 L218.31 271.67 A80 80 0 0 0 255.31 241.61 Z"></path> <path fill="#ffcc00" d="M234.33 359.39 A150 150 0 0 1 127.66 341.34 L150.75 262.05 A80 80 0 0 0 218.31 271.67 Z"></path> <path fill="#8e8e93" d="M127.66 341.34 A150 150 0 1 1 200 50 L200 120 A80 80 0 1 0 150.75 262.05 Z"></path> <!-- 도넛 구멍 확대 --> <circle cx="200" cy="200" r="95" fill="#fff"></circle> <!-- 중앙 큰 숫자 --> <text class="donut-title" x="200" y="158" text-anchor="middle" fill="#c62828">上位4名で</text> <text class="donut-percent" x="200" y="245" text-anchor="middle" fill="#c62828">63.1%</text> <!-- 바깥 라벨(좌표 업데이트) --> <text class="slice-label" x="315" y="85" text-anchor="middle" fill="#000">22%</text> <text class="slice-label" x="380" y="235" text-anchor="middle" fill="#000">19%</text> <text class="slice-label" x="270" y="370" text-anchor="middle" fill="#000">11%</text> <text class="slice-label" x="160" y="380" text-anchor="middle" fill="#000">12%</text> <text class="slice-label" x="70" y="220" text-anchor="middle" fill="#000">36%</text> </g> </svg> </div> </div> <!-- /charts-container --> </div> </div> <div class="slide-footer"> <div class="footer-logo"> <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"> </div> <div class="footer-title">DAC女性管理職研修2025_September</div> </div> </div>
         <div class="slide" id="slide2">
             <div class="slide-index-badge">Slide 2/6</div>
             <div class="slide-header">
