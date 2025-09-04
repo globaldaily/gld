@@ -1423,8 +1423,8 @@
             }
         
             // 특정 슬라이드(3번/8번) 여백 컴팩트
-            if (i === 2) s.classList.add('tall-slide', 'fit-compact');            // 아젠다
-            if (i === 7) s.classList.add('tall-slide', 'fit-compact', 'chart-hero'); // 차트
+            if (i === 2) s.classList.add('tall-slide', 'fit-compact');            // 3p(아젠다)
+            if (i === 7) s.classList.add('tall-slide', 'fit-compact', 'chart-hero'); // 8p(차트)
           });
         
           positionSourceNotes();
@@ -1659,20 +1659,44 @@
             };
           }
         
-          // (B) 프린트용 윈도우 오픈
-          function openPrintView() {
+          // (B) 캔버스 → 이미지 URL
+          function snapshotCanvasToImage(canvas) {
+            try {
+              canvas.width = 1600; canvas.height = 500;
+              if (canvas.chart) {
+                canvas.chart.options.responsive = false;
+                canvas.chart.options.animation = false;
+                canvas.chart.options.animations = { duration: 0 };
+                canvas.chart.resize();
+                canvas.chart.update('none');
+              }
+              return canvas.toDataURL('image/png');
+            } catch(e) {
+              return null;
+            }
+          }
+        
+          // (C) 새창 인쇄
+          async function openPrintView() {
             const restore = forceRenderTemporarily();
         
             // 차트 준비
             try {
               const c = document.getElementById('countryChart');
               if (c && !c.chart) initCountryChart();
-              if (c && c.chart) { c.chart.resize(); c.chart.update('none'); }
+              if (c && c.chart) {
+                c.width = 1600; c.height = 500;
+                c.chart.options.responsive = false;
+                c.chart.options.animation = false;
+                c.chart.options.animations = { duration: 0 };
+                c.chart.resize();
+                c.chart.update('none');
+              }
             } catch(e) {}
+            await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
         
             const w = window.open('', '_blank');
             const doc = w.document;
-        
             const css = `
               @page { size: 16in 9in; margin: 0; }
               html, body {
@@ -1681,15 +1705,12 @@
               }
               .page {
                 width:16in; height:9in; box-sizing:border-box;
-                padding: 1.2in 1.0in 1.2in; /* 상하좌우 여백(쏠림 방지) */
+                padding: 1.2in 1.0in 1.2in;
                 page-break-after: always; overflow:hidden;
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Sans", Meiryo, sans-serif;
                 display:flex; align-items:center; justify-content:center;
               }
-              .viewport {
-                width: 1920px; height: 1080px;
-                transform-origin: center center;
-              }
+              .viewport { width: 1920px; height: 1080px; transform-origin: center center; }
               h1,h2,h3,h4,p,li,span,div { text-shadow:none !important; }
               img { max-width:100%; height:auto; }
             `;
@@ -1699,17 +1720,12 @@
         
             const srcSlides = Array.from(document.querySelectorAll('.slide'));
             srcSlides.forEach((s, i) => {
-              // 페이지 래퍼
               const page = doc.createElement('section');
               page.className = 'page';
         
-              // 원본 슬라이드 클론
               const clone = s.cloneNode(true);
         
-              // 화면 전용 요소 제거
-              clone.querySelectorAll('.slide-counter').forEach(n => n.remove());
-        
-              // 클론 트리 정적화(absolute/transform 등 제거 → 인쇄 안전)
+              // 화면 전용 요소 제거 및 정적화
               clone.style.display = 'block';
               clone.style.visibility = 'visible';
               clone.querySelectorAll('*').forEach(el => {
@@ -1717,38 +1733,35 @@
                 if (!st) return;
                 if (st.visibility === 'hidden') st.visibility = 'visible';
                 if (st.display === 'none')     st.display    = 'block';
-                st.position = 'static';
                 st.transform = 'none';
                 st.animation = 'none';
                 st.transition = 'none';
                 st.filter = 'none';
                 st.backdropFilter = 'none';
+                if (st.position === 'absolute' || st.position === 'fixed') st.position = 'relative';
               });
         
-              // (핵심) 캔버스 → 이미지 스냅샷(원본에서 찍은 데이터URL 사용)
+              // 캔버스 → 이미지
               const srcCanvases = s.querySelectorAll('canvas');
               const cloneCanvases = clone.querySelectorAll('canvas');
               srcCanvases.forEach((cv, idx) => {
-                try {
-                  // 원본에서 스냅샷
-                  const url = cv.toDataURL('image/png');
+                const url = snapshotCanvasToImage(cv);
+                if (url && cloneCanvases[idx]) {
                   const img = doc.createElement('img');
                   img.src = url;
                   img.alt = 'chart snapshot';
                   img.style.width = '100%';
-                  img.style.height = 'auto';
-                  if (cloneCanvases[idx]) cloneCanvases[idx].replaceWith(img);
-                } catch(e) {}
+                  cloneCanvases[idx].replaceWith(img);
+                }
               });
         
-              // 1920x1080 뷰포트 안에 클론 삽입
               const viewport = doc.createElement('div');
               viewport.className = 'viewport';
               viewport.appendChild(clone);
               page.appendChild(viewport);
               doc.body.appendChild(page);
         
-              // 페이지의 가용 크기 측정 후 균등 스케일 + 중앙
+              // 1920x1080 → 페이지 스케일
               const cs = w.getComputedStyle(page);
               const pw = page.clientWidth  - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
               const ph = page.clientHeight - parseFloat(cs.paddingTop)  - parseFloat(cs.paddingBottom);
@@ -1776,18 +1789,28 @@
           window.openPrintView = openPrintView;
         })();
         
-        /* ===========================================================
-           10) 기본 인쇄(Ctrl/Cmd+P) 대응 — 차트 스냅샷만 주입
-           (하드 프린트 모드 사용이 가장 안전하지만,
-            기본 인쇄에서도 그래프 누락 방지)
-        =========================================================== */
+        /* =========================
+           10) 기본 인쇄(Ctrl/Cmd+P) 훅 — 차트 스냅샷 + 다페이지 강제
+        ========================= */
         (function () {
-          function snapshotCountryChart() {
+          function ensureCountryChartReady() {
             const c = document.getElementById('countryChart');
+            if (!c) return null;
+            try {
+              if (!c.chart && typeof Chart !== 'undefined') {
+                if (typeof initCountryChart === 'function') initCountryChart();
+              }
+              return c;
+            } catch (e) { return c; }
+          }
+        
+          function snapshotCountryChart() {
+            const c = ensureCountryChartReady();
             if (!c) return;
         
-            const slide = c.closest('.slide');
+            // 비가시 슬라이드도 임시표시
             let revert = null;
+            const slide = c.closest('.slide');
             if (slide && getComputedStyle(slide).display === 'none') {
               const prev = slide.style.display;
               slide.style.display = 'block';
@@ -1796,39 +1819,95 @@
         
             try {
               if (!c.chart) initCountryChart();
-              if (c.chart) { c.chart.resize(); c.chart.update('none'); }
-            } catch(e) {}
-        
-            try {
-              const url = c.toDataURL('image/png');
-              let img = document.getElementById('countryChartPrint');
-              if (!img) {
-                img = document.createElement('img');
-                img.id = 'countryChartPrint';
-                img.alt = 'chart snapshot';
-                c.parentNode.insertBefore(img, c); // 캔버스 바로 앞에
+              if (c.chart) {
+                c.width = 1600;
+                c.height = 500;
+                c.chart.options.responsive = false;
+                c.chart.options.animation = false;
+                c.chart.options.animations = { duration: 0 };
+                c.chart.resize();
+                c.chart.update('none');
               }
-              img.src = url;
-            } catch(e) {}
+            } catch (e) {}
         
-            if (revert) revert();
+            // 두 프레임 대기 후 스냅샷
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                try {
+                  const url = c.toDataURL('image/png');
+                  let img = document.getElementById('countryChartPrint');
+                  if (!img) {
+                    img = document.createElement('img');
+                    img.id = 'countryChartPrint';
+                    img.alt = 'chart snapshot';
+                    c.parentNode.insertBefore(img, c);
+                  }
+                  img.src = url;
+                } catch (e) {}
+                if (revert) revert();
+              });
+            });
           }
         
-          window.addEventListener('beforeprint', () => {
+          function beforePrint() {
             isPrinting = true;
+            if (typeof setChartForPrint === 'function') setChartForPrint(true);
             snapshotCountryChart();
-            setChartForPrint?.(true);
-          });
-          window.addEventListener('afterprint', () => {
+        
+            // 모든 슬라이드를 보이도록
+            document.querySelectorAll('.slide').forEach(s => {
+              s.setAttribute('data-print-prev-display', s.style.display || '');
+              s.style.display = 'block';
+              s.style.position = 'relative';
+            });
+        
+            // 컨테이너/프레젠테이션도 고정/트랜스폼 제거
+            const pc = document.querySelector('.presentation-container');
+            const pr = document.querySelector('.presentation');
+            if (pc) { pc.style.position = 'static'; pc.style.width = 'auto'; pc.style.height = 'auto'; }
+            if (pr) { pr.style.transform = 'none'; pr.style.width = 'auto'; pr.style.height = 'auto'; pr.style.overflow = 'visible'; }
+        
+            fitAll();
+            positionSourceNotes();
+          }
+        
+          function afterPrint() {
             isPrinting = false;
-            setChartForPrint?.(false);
-            // 스냅샷 제거(원하면 남겨도 무방)
-            const img = document.getElementById('countryChartPrint');
-            if (img) img.remove();
-          });
+            if (typeof setChartForPrint === 'function') setChartForPrint(false);
+        
+            document.querySelectorAll('.slide').forEach(s => {
+              const prev = s.getAttribute('data-print-prev-display');
+              if (prev !== null) {
+                s.style.display = prev;
+                s.removeAttribute('data-print-prev-display');
+              }
+            });
+        
+            const c = document.getElementById('countryChart');
+            if (c && c.chart) {
+              c.chart.options.responsive = true;
+              c.chart.resize();
+            }
+        
+            updateScale();
+            fitAll();
+            positionSourceNotes();
+          }
+        
+          // 브라우저 인쇄 이벤트 연결
+          if ('matchMedia' in window) {
+            const mql = window.matchMedia('print');
+            (mql.addEventListener ? mql.addEventListener.bind(mql, 'change') : mql.addListener).call(mql, (e) => {
+              if (e.matches) beforePrint(); else afterPrint();
+            });
+          }
+          window.addEventListener('beforeprint', beforePrint);
+          window.addEventListener('afterprint', afterPrint);
+        
+          // 디버그용 수동 호출
+          window.__snapshotCountryChart = snapshotCountryChart;
         })();
         </script>
-        
-
+   
       </body>
       </html>
