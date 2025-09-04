@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>GLD プレゼンテーション - 最終改善版v3</title>
+    <title>井出プレゼンテーション - 最終改善版v9</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; overflow: hidden; }
@@ -29,6 +29,9 @@
         }
     
         .slide.active { opacity: 1; visibility: visible; z-index: 1; }
+        
+        .slide.appendix-slide { z-index: 0; }
+        .slide.appendix-slide.active { z-index: 1; }
         
         .slide-index-badge {
             position: absolute; top: 50px; right: 50px;
@@ -59,7 +62,7 @@
         .slide-subtitle { font-size: 36px; color: #555; margin-top: 16px; }
         .slide-content { flex-grow: 1; padding: 40px 80px; display: flex; flex-direction: column; min-height: 0; }
         
-        /* --- 타이틀 슬라이드 --- */
+        /* --- Title Slide --- */
         .title-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #2d0b0b 0%, #000000 100%); color: white; }
         .title-slide .company-logo { width: 240px; margin-bottom: 40px; } .title-slide .company-logo img { width: 100%; }
         .main-title { font-size: 110px; font-weight: 700; margin-bottom: 24px; letter-spacing: -4px; line-height: 1; }
@@ -67,38 +70,33 @@
         .presenter-info { font-size: 28px; padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); } 
         .presenter-info .name { font-weight: 700; margin-top: 8px; }
         .date-info { font-size: 22px; opacity: .6; }
-        .title-slide .slide-index-badge { color: #fff; background: rgba(255,255,255,.1); }
         .title-slide .slide-header, .title-slide .slide-footer { display: none; }
     
-        /* --- 엔딩 슬라이드 --- */
+        /* --- Ending Slide --- */
         .ending-slide { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #2d0b0b 0%, #000000 100%); color: #fff; }
         .ending-message { font-size: 80px; font-weight: 700; margin-bottom: 40px; letter-spacing: -2px; line-height: 1.2; }
         .ending-subtitle { font-size: 36px; font-weight: 400; opacity: .9; margin-bottom: 60px; color: #ffde99; }
         .next-step { margin-top: 40px; padding: 24px 32px; background: rgba(255,255,255,.1); border-radius: 16px; border: 1px solid rgba(255,255,255,.2); }
         .next-step-title { font-size: 20px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,.7); margin-bottom: 12px; }
-        .next-step p { font-size: 28px; font-weight: 500; }
-        .ending-slide .company-logo { position: absolute; bottom: 80px; width: 120px; filter: brightness(0) invert(1); opacity: 1; }
+        .next-step p { font-size: 24px; font-weight: 500; }
         .ending-slide .slide-index-badge { color: #fff; background: rgba(255,255,255,.1); }
         .ending-slide .slide-header, .ending-slide .slide-footer { display: none; }
         
-        /* --- 일반 슬라이드 디자인 --- */
+        /* --- General Slide Design --- */
         .problem-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; flex-grow: 1; align-items: center; }
-        .visual-story { display: flex; flex-direction: column; gap: 24px; }
+        .visual-story { display: flex; flex-direction: column; gap: 24px; justify-content: center; }
         .story-card { background: #f5f5f7; border-radius: 20px; padding: 32px; position: relative; border: 1px solid rgba(0, 0, 0, 0.05); }
         .story-number { position: absolute; top: -20px; left: 32px; background: #ff3b30; color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; }
         .story-content { font-size: 30px; line-height: 1.5; }
-        .pyramid-visual { display: flex; align-items: center; justify-content: center; height: 100%; }
-        .pyramid { width: 100%; max-width: 480px; }
-        .pyramid-label { position: absolute; left: 105%; background: #fff; padding: 10px 18px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,.1); color: #1d1d1f; font-size: 20px; font-weight: 500; white-space: nowrap; }
+        .pyramid-visual { display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; }
         .highlight { background: linear-gradient(120deg, #007aff 0%, #3395ff 100%); padding: 4px 12px; border-radius: 8px; color: #fff; font-weight: 700; }
-        .crisis-message { background: linear-gradient(135deg, #1c1c1e, #3a3a3c); color: #fff; padding: 28px; border-radius: 20px; font-size: 36px; font-weight: 700; text-align: center; } /* Darker, more sophisticated warning */
+        .crisis-message { background: linear-gradient(135deg, #1c1c1e, #3a3a3c); color: #fff; padding: 28px; border-radius: 20px; font-size: 36px; font-weight: 700; text-align: center; }
         .pyramid-level { height: 80px; margin: 4px auto; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 26px; position: relative; }
-        .level-1 { background: linear-gradient(135deg, #007aff, #3395ff); } /* Primary Apple Blue */
-        .level-2 { background: linear-gradient(135deg, #34c759, #30d158); } /* Apple Green for growth */
-        .level-3 { background: linear-gradient(135deg, #ff9500, #ffb143); } /* Accent Orange for attention */
-        .level-4 { background: linear-gradient(135deg, #c7c7cc, #d1d1d6); } /* Neutral Grey for base */
+        .level-1 { background: linear-gradient(135deg, #007aff, #3395ff); }
+        .level-2 { background: linear-gradient(135deg, #34c759, #30d158); }
+        .level-3 { background: linear-gradient(135deg, #ff9500, #ffb143); }
 
-        /* 솔루션 슬라이드 스타일 */
+        /* --- Solution Slide Style --- */
         .solution-new-layout { display: flex; flex-direction: column; gap: 20px; flex-grow: 1; }
         .pillar-card-new { background: #fff; border: 2px solid #e5e5e7; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,.08); display:flex; flex-direction: column; }
         .pillar-header-new { text-align: center; margin-bottom: 20px; }
@@ -107,19 +105,21 @@
         .pillar-subtitle-new { font-size: 18px; color: #666; }
         .pillar-content-new { display: flex; flex-direction: column; gap: 15px; }
         .pillar-feature { display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 12px; }
-        .feature-icon { font-size: 24px; }
-        .feature-text { font-size: 18px; font-weight: 500; line-height: 1.4; }
+        .feature-icon { font-size: 28px; }
+        .feature-text { font-size: 22px; font-weight: 500; line-height: 1.4; }
         .pillar-departments { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 12px; }
-        .dept-badge { background: #2196f3; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 16px; font-weight: 600; }
-        .dept-connector { font-size: 20px; font-weight: 700; color: #2196f3; }
-        .pillar-merits { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e5e7; }
-        .merits-title { font-size: 16px; font-weight: 600; text-align: center; color: #8a8a8e; margin-bottom: 15px; letter-spacing: 1px; }
-        .merits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
-        .merit-item { background: #f8f9fa; padding: 12px; border-radius: 10px; text-align: center; }
-        .merit-dept { font-size: 14px; font-weight: 700; color: #007aff; margin-bottom: 5px; }
-        .merit-text { font-size: 14px; line-height: 1.4; color: #333; }
+        .dept-badge { background: #2196f3; color: #fff; padding: 8px 16px; border-radius: 20px; font-size: 18px; font-weight: 600; }
+        .dept-connector { font-size: 22px; font-weight: 700; color: #2196f3; }
+        .pillar-merits { margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e5e7; }
+        .merits-title { font-size: 16px; font-weight: 600; text-align: center; color: #8a8a8e; margin-bottom: 10px; letter-spacing: 1px; }
         
-        /* KPI 슬라이드 스타일 */
+        /* ++ NEW ++ Merits List Style for Readability */
+        .merits-list { display: flex; flex-direction: column; gap: 10px; text-align: left; padding: 0 10px; }
+        .merit-list-item { font-size: 18px; line-height: 1.5; }
+        .merit-list-item .merit-dept { font-weight: 700; color: #007aff; margin-right: 8px; }
+        .merit-list-item .merit-text { color: #333; }
+        
+        /* --- KPI Slide Style --- */
         .kpi-layout { display: flex; flex-direction: column; gap: 30px; flex-grow: 1; }
         .kpi-card { background: #fff; border: 2px solid #e5e5e7; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
         .kpi-card-header { text-align: center; margin-bottom: 25px; }
@@ -134,16 +134,8 @@
         .calculation-box { background: #e8f5e8; padding: 20px; border-radius: 12px; margin-top: 15px; }
         .calculation-title { font-size: 16px; font-weight: 700; color: #2e7d32; margin-bottom: 10px; }
         .calculation-text { font-size: 15px; line-height: 1.5; color: #2e7d32; }
-        .review-criteria-box { background: #f5f5f7; padding: 25px; border-radius: 15px; margin-top: 30px; }
-        .review-title { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 15px; color: #1d1d1f; }
-        .review-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; text-align: center; }
-        .review-item p { font-size: 14px; line-height: 1.4; color: #555; }
-        .review-item .label { font-size: 16px; font-weight: 700; margin-bottom: 5px; }
-        .review-item .label-go { color: #34c759; }
-        .review-item .label-adjust { color: #ff9500; }
-        .review-item .label-stop { color: #ff3b30; }
 
-        /* 로드맵 슬라이드 스타일 */
+        /* --- Roadmap Slide Style --- */
         .roadmap-layout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; align-items: stretch; height: 100%; padding: 20px 0; }
         .phase-card { background: #f8f9fa; border: 1px solid #e5e5e7; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.05); }
         .phase-header { margin-bottom: 25px; }
@@ -161,7 +153,7 @@
         .goal-title { font-size: 16px; font-weight: 700; color: #1d1d1f; margin-bottom: 8px; }
         .goal-text { font-size: 16px; color: #555; line-height: 1.5; }
 
-        /* --- UI 요소 --- */
+        /* --- UI Elements --- */
         .nav-buttons, .slide-indicator, .timer, .progress-bar { z-index: 1000; position: fixed; }
         .nav-buttons { bottom: 40px; right: 40px; display: flex; gap: 12px; }
         .nav-btn { width: 50px; height: 50px; border-radius: 50%; background: rgba(0,0,0,.7); color: #fff; border: none; cursor: pointer; font-size: 24px; backdrop-filter: blur(10px); }
@@ -175,147 +167,103 @@
 </head>
 <body>
     <div class="presentation-container">
+        
         <div class="slide title-slide active" id="slide0">
-            <div class="slide-index-badge">Slide 1/9</div>
             <div class="company-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
             <h1 class="main-title">掛け算の組織文化へ</h1>
             <p class="subtitle">「足し算」組織の限界を超え、持続的な成長を創る</p>
-            <div class="presenter-info"><div class="role">グローバル・デイリー 営業部長</div><div class="name">井出 悠</div></div>
+            <div class="presenter-info"><div class="role">グローバル・デイリー 営業部</div><div class="name">井出 悠</div></div>
             <div class="date-info">2025.9.2</div>
         </div>
 
         <div class="slide" id="slide1">
-            <div class="slide-index-badge">Slide 2/9</div>
-            <div class="slide-header"><div class="slide-number">CHAPTER 01</div><h2 class="slide-title">なぜ今、変革が必要なのか</h2><p class="slide-subtitle">見えてきた構造的リスク</p></div>
-            <div class="slide-content"><div class="problem-layout"><div class="visual-story"><div class="story-card"><div class="story-number" style="background: #007aff;">1</div><div class="story-content">営業19名の組織で、たった<span class="highlight">2名</span>が全体目標の<span class="highlight">40-50%</span>を担っています</div></div><div class="story-card"><div class="story-number" style="background: #007aff;">2</div><div class="story-content"><span class="highlight">大口1件</span>を失うだけで組織全体が崩れるリスクを抱えています</div></div><div class="story-card"><div class="story-number" style="background: #007aff;">3</div><div class="story-content">しかし、社員の多くは<span class="highlight">危機感なく</span>日々を過ごしています</div></div><div class="crisis-message">このままでは持続不可能</div></div><div class="pyramid-visual"><div class="pyramid"><div class="pyramid-level level-1">40-50% <span class="pyramid-label">部長+役員 2名</span></div><div class="pyramid-level level-2">70% <span class="pyramid-label">課長以上 4名</span></div><div class="pyramid-level level-3">90% <span class="pyramid-label">係長以上 8名</span></div><div class="pyramid-level level-4">100% <span class="pyramid-label">全営業 19名</span></div></div></div></div></div>
+            <div class="slide-index-badge">Slide 1/6</div>
+            <div class="slide-header"><div class="slide-number">CHAPTER 01</div><h2 class="slide-title">なぜ今、変革が必要なのか</h2><p class="slide-subtitle">見えてきた構造的リスクと、個人依存の現実</p></div>
+            <div class="slide-content"><div class="problem-layout">
+                <div class="visual-story">
+                    <div class="story-card"><div class="story-number" style="background: #007aff;">1</div><div class="story-content">営業19名の組織で、たった<span class="highlight">2名</span>が全体目標の<span class="highlight">40-50%</span>を担っています</div></div>
+                    <div class="story-card"><div class="story-number" style="background: #007aff;">2</div><div class="story-content"><span class="highlight">大口1件</span>を失うだけで組織全体が崩れるリスクを抱えています</div></div>
+                    <div class="story-card"><div class="story-number" style="background: #007aff;">3</div><div class="story-content">しかし、社員の多くは<span class="highlight">危機感なく</span>日々を過ごしています</div></div>
+                    <div class="crisis-message">このままでは持続不可能</div>
+                </div>
+                <div class="pyramid-visual">
+                     <div style="text-align: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 32px; font-weight: 800; color: #ff3b30; margin-bottom: 5px;">⚠️ 8ヶ月実績割合</h3>
+                        <p style="font-size: 16px; color: #ff3b30; font-weight: 600;">危険な個人依存構造</p>
+                    </div>
+                    <div style="position: relative; width: 480px; height: 480px;">
+                        <svg viewBox="0 0 400 400" style="width:100%;height:100%;">
+                            <g>
+                                <path d="M200 50 A150 150 0 0 1 316.37 106.37 L276.25 133.25 A80 80 0 0 0 200 120 Z" fill="#007aff"/>
+                                <path d="M316.37 106.37 A150 150 0 0 1 371.69 285.32 L259.01 254.17 A80 80 0 0 0 276.25 133.25 Z" fill="#34c759"/>
+                                <path d="M371.69 285.32 A150 150 0 0 1 303.09 334.02 L242.45 267.35 A80 80 0 0 0 259.01 254.17 Z" fill="#ff9500"/>
+                                <path d="M303.09 334.02 A150 150 0 0 1 238.83 362.86 L223.91 274.29 A80 80 0 0 0 242.45 267.35 Z" fill="#ffcc00"/>
+                                <path d="M238.83 362.86 A150 150 0 0 1 200 50 L200 120 A80 80 0 0 0 223.91 274.29 Z" fill="#8e8e93"/>
+                                <circle cx="200" cy="200" r="70" fill="white"/>
+                                <text x="200" y="170" text-anchor="middle" font-size="18" font-weight="700" fill="#1d1d1f">営業19名</text>
+                                <text x="200" y="190" text-anchor="middle" font-size="14" fill="#ff3b30" font-weight="700">実績集中</text>
+                                <text x="200" y="210" text-anchor="middle" font-size="12" fill="#ff3b30" font-weight="600">上位4名で</text>
+                                <text x="200" y="230" text-anchor="middle" font-size="18" font-weight="800" fill="#ff3b30">63.1%</text>
+                                
+                                <text x="270" y="65" text-anchor="middle" font-size="22" font-weight="800" fill="#000">22%</text>
+                                <text x="385" y="190" text-anchor="middle" font-size="20" font-weight="800" fill="#000">19%</text>
+                                <text x="330" y="340" text-anchor="middle" font-size="18" font-weight="800" fill="#000">11%</text>
+                                <text x="250" y="370" text-anchor="middle" font-size="18" font-weight="800" fill="#000">12%</text>
+                                <text x="90" y="250" text-anchor="middle" font-size="20" font-weight="800" fill="#000">37%</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div></div>
             <div class="slide-footer"><div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div><div class="footer-title">DAC女性管理職研修2025_September</div></div>
         </div>
 
         <div class="slide" id="slide2">
-            <div class="slide-index-badge">Slide 3/9</div>
-            <div class="slide-header" style="padding: 50px 80px 15px;">
-                <div class="slide-number">CHAPTER 02</div>
-                <h2 class="slide-title" style="font-size: 52px;">目標と現実の巨大なギャップ</h2>
-                <p class="slide-subtitle" style="font-size: 24px;">8ヶ月実績が物語る個人依存の深刻さ</p>
-            </div>
-            <div class="slide-content" style="padding: 15px 80px;">
-                <div style="display: grid; grid-template-columns: 1fr 250px 1fr; gap: 30px; height: 680px; align-items: center;">
-                    
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <h3 style="font-size: 24px; font-weight: 800; color: #34c759; margin-bottom: 5px;">📊 8ヶ月目標割合</h3>
-                            <p style="font-size: 14px; color: #666;">理想的な分散構造</p>
-                        </div>
-                        
-                        <div style="position: relative; width: 400px; height: 400px;">
-                            <svg viewBox="0 0 400 400" style="width:100%;height:100%;">
-                                <g>
-                                    <path d="M200 50 A150 150 0 0 1 254.51 82.84 L227.07 131.51 A80 80 0 0 0 200 120 Z" fill="#007aff"/>
-                                    <path d="M254.51 82.84 A150 150 0 0 1 325.98 131.26 L254.52 150.67 A80 80 0 0 0 227.07 131.51 Z" fill="#34c759"/>
-                                    <path d="M325.98 131.26 A150 150 0 0 1 362.86 200.00 L274.29 200.00 A80 80 0 0 0 254.52 150.67 Z" fill="#ff9500"/>
-                                    <path d="M362.86 200.00 A150 150 0 0 1 325.98 268.74 L254.52 249.33 A80 80 0 0 0 274.29 200.00 Z" fill="#ffcc00"/>
-                                    <path d="M325.98 268.74 A150 150 0 1 1 200 50 L200 120 A80 80 0 1 0 254.52 249.33 Z" fill="#8e8e93"/>
-                                    
-                                    <circle cx="200" cy="200" r="70" fill="white"/>
-                                    <text x="200" y="190" text-anchor="middle" font-size="16" font-weight="700" fill="#1d1d1f">営業19名</text>
-                                    <text x="200" y="207" text-anchor="middle" font-size="12" fill="#34c759" font-weight="600">目標分散</text>
-                                    <text x="200" y="220" text-anchor="middle" font-size="10" fill="#86868b">理想的構造</text>
-
-                                    <text x="227" y="68" text-anchor="middle" font-size="18" font-weight="800" fill="#000">10%</text>
-                                    <text x="310" y="115" text-anchor="middle" font-size="18" font-weight="800" fill="#000">13%</text>
-                                    <text x="345" y="200" text-anchor="middle" font-size="18" font-weight="800" fill="#000">12%</text>
-                                    <text x="310" y="285" text-anchor="middle" font-size="18" font-weight="800" fill="#000">12%</text>
-                                    <text x="120" y="280" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">52%</text>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; gap: 25px; justify-content: center; align-items: center; height: 100%;">
-                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; border-left: 6px solid #007aff;"><div style="font-size: 20px; font-weight: 900; color: #007aff;">大城</div><div style="flex: 1; height: 4px; background: #007aff;"></div><div style="font-size: 18px; font-weight: 800; color: #007aff;">→</div></div>
-                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; border-left: 6px solid #34c759;"><div style="font-size: 20px; font-weight: 900; color: #34c759;">井出</div><div style="flex: 1; height: 4px; background: #34c759;"></div><div style="font-size: 18px; font-weight: 800; color: #34c759;">→</div></div>
-                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; border-left: 6px solid #ff9500;"><div style="font-size: 20px; font-weight: 900; color: #ff9500;">田湯</div><div style="flex: 1; height: 4px; background: #ff9500;"></div><div style="font-size: 18px; font-weight: 800; color: #ff9500;">→</div></div>
-                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 100%; border-left: 6px solid #ffcc00;"><div style="font-size: 20px; font-weight: 900; color: #ffcc00;">菅野</div><div style="flex: 1; height: 4px; background: #ffcc00;"></div><div style="font-size: 18px; font-weight: 800; color: #ffcc00;">→</div></div>
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <h3 style="font-size: 32px; font-weight: 800; color: #ff3b30; margin-bottom: 5px;">⚠️ 8ヶ月実績割合</h3>
-                            <p style="font-size: 16px; color: #ff3b30; font-weight: 600;">危険な個人依存構造</p>
-                        </div>
-                        <div style="position: relative; width: 480px; height: 480px;">
-                            <svg viewBox="0 0 400 400" style="width:100%;height:100%;">
-                                <g>
-                                    <path d="M200 50 A150 150 0 0 1 316.37 106.37 L276.25 133.25 A80 80 0 0 0 200 120 Z" fill="#007aff"/>
-                                    <path d="M316.37 106.37 A150 150 0 0 1 371.69 285.32 L259.01 254.17 A80 80 0 0 0 276.25 133.25 Z" fill="#34c759"/>
-                                    <path d="M371.69 285.32 A150 150 0 0 1 303.09 334.02 L242.45 267.35 A80 80 0 0 0 259.01 254.17 Z" fill="#ff9500"/>
-                                    <path d="M303.09 334.02 A150 150 0 0 1 238.83 362.86 L223.91 274.29 A80 80 0 0 0 242.45 267.35 Z" fill="#ffcc00"/>
-                                    <path d="M238.83 362.86 A150 150 0 0 1 200 50 L200 120 A80 80 0 0 0 223.91 274.29 Z" fill="#8e8e93"/>
-                                    <circle cx="200" cy="200" r="70" fill="white"/>
-                                    <text x="200" y="170" text-anchor="middle" font-size="18" font-weight="700" fill="#1d1d1f">営業19名</text>
-                                    <text x="200" y="190" text-anchor="middle" font-size="14" fill="#ff3b30" font-weight="700">実績集中</text>
-                                    <text x="200" y="210" text-anchor="middle" font-size="12" fill="#ff3b30" font-weight="600">上位4名で</text>
-                                    <text x="200" y="230" text-anchor="middle" font-size="18" font-weight="800" fill="#ff3b30">63.1%</text>
-                                    
-                                    <text x="270" y="65" text-anchor="middle" font-size="22" font-weight="800" fill="#000">22%</text>
-                                    <text x="385" y="190" text-anchor="middle" font-size="20" font-weight="800" fill="#000">19%</text>
-                                    <text x="330" y="340" text-anchor="middle" font-size="18" font-weight="800" fill="#000">11%</text>
-                                    <text x="250" y="370" text-anchor="middle" font-size="18" font-weight="800" fill="#000">12%</text>
-                                    <text x="90" y="250" text-anchor="middle" font-size="20" font-weight="800" fill="#000">37%</text>
-                                </g>
-                            </svg>
-                        </div>
-                        <div style="background: linear-gradient(135deg, #ff3b30, #ff6259); color: #fff; padding: 15px 20px; border-radius: 12px; text-align: center; width: 350px; margin-top: 20px;">
-                            <div style="font-size: 20px; font-weight: 800;">この状況は持続不可能</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="slide-footer"><div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div><div class="footer-title">DAC女性管理職研修2025_September</div></div>
-        </div>
-
-        <div class="slide" id="slide3">
-            <div class="slide-index-badge">Slide 4/9</div>
+            <div class="slide-index-badge">Slide 2/6</div>
             <div class="slide-header">
-                <div class="slide-number">CHAPTER 03</div>
+                <div class="slide-number">CHAPTER 02</div>
                 <h2 class="slide-title">なぜ、この構造が生まれたのか</h2>
-                <p class="slide-subtitle">「個人の努力」の限界と「組織の仕組み」の不在</p>
+                <p class="slide-subtitle">2つの根深い課題：「育成」と「戦い方」</p>
             </div>
             <div class="slide-content">
-                <div class="problem-layout">
-                    <div class="visual-story">
-                        <div class="story-card">
+                <div class="problem-layout" style="align-items: flex-start; padding-top: 20px;">
+                    <div class="visual-story" style="gap: 15px;">
+                        <h3 style="font-size: 28px; font-weight: 700; border-bottom: 2px solid #007aff; padding-bottom: 8px; margin-bottom: 10px;">課題①：若手育成の停滞</h3>
+                        <div class="story-card" style="margin-top: 10px;">
                             <div class="story-number" style="background: #007aff;">1</div>
                             <div class="story-content"><strong>アポ獲得の壁</strong><br>一般社員のアポは月平均<span class="highlight">12件</span>。目標<span class="highlight">20件</span>に届かず、成功体験を積めていない。</div>
                         </div>
                         <div class="story-card">
                             <div class="story-number" style="background: #007aff;">2</div>
-                            <div class="story-content"><strong>育成機会の不足</strong><br>多忙な先輩社員は、若手の育成に時間を割く余裕がない。結果、<span class="highlight">OJTが機能不全</span>に。</div>
+                            <div class="story-content"><strong>現場の経験不足</strong><br>実践が少ないため、案件数も増えず数字獲得に至らない。</div>
                         </div>
-                        <div class="crisis-message">個人の根性に頼るだけでは、<br>この悪循環は断ち切れない</div>
                     </div>
                     
-                    <div class="pyramid-visual" style="align-items: flex-start; padding-top: 60px;">
+                    <div class="pyramid-visual" style="padding-top: 0; justify-content: flex-start;">
                         <div style="width: 100%; max-width: 750px;">
-                            <div style="text-align: center; margin-bottom: 40px;">
-                                <div style="font-size: 32px; font-weight: 700; color: #1c1c1e; margin-bottom: 20px;">悪循環の構造</div>
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <div style="font-size: 28px; font-weight: 700; color: #1c1c1e; margin-bottom: 15px;">結果として生まれる悪循環</div>
                             </div>
                             
-                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
-                                <div class="pyramid-level level-1" style="width: 400px; flex-shrink: 0; margin: 0; position: static;">アポ獲得の困難</div>
-                                <div style="padding-left: 20px; font-size: 20px; font-weight: 500; line-height: 1.4;">若手の自信と経験値の低下</div>
+                            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                <div class="pyramid-level level-1" style="width: 350px; flex-shrink: 0; margin: 0; position: static; height: 60px; font-size: 22px;">アポ獲得の困難</div>
+                                <div style="padding-left: 20px; font-size: 18px; font-weight: 500; line-height: 1.4;">若手の自信と経験値の低下</div>
                             </div>
                             
-                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
-                                <div class="pyramid-level level-2" style="width: 400px; flex-shrink: 0; margin: 0; position: static;">成長の停滞</div>
-                                <div style="padding-left: 20px; font-size: 20px; font-weight: 500; line-height: 1.4;">スキルアップ機会の不足</div>
+                            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                <div class="pyramid-level level-2" style="width: 350px; flex-shrink: 0; margin: 0; position: static; height: 60px; font-size: 22px;">成長の停滞</div>
+                                <div style="padding-left: 20px; font-size: 18px; font-weight: 500; line-height: 1.4;">スキルアップ機会の不足</div>
                             </div>
 
-                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
-                                <div class="pyramid-level level-3" style="width: 400px; flex-shrink: 0; margin: 0; position: static;">組織力の未活用</div>
-                                <div style="padding-left: 20px; font-size: 20px; font-weight: 500; line-height: 1.4;">部門間の連携不足・個人戦</div>
+                            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                <div class="pyramid-level level-3" style="width: 350px; flex-shrink: 0; margin: 0; position: static; height: 60px; font-size: 22px;">組織力の未活用</div>
+                                <div style="padding-left: 20px; font-size: 18px; font-weight: 500; line-height: 1.4;">部門間の連携不足・個人戦</div>
                             </div>
-
+                            
+                            <div style="margin-top: 50px; text-align: left; width: 100%;">
+                                <h3 style="font-size: 28px; font-weight: 700; border-bottom: 2px solid #ff9500; padding-bottom: 8px; margin-bottom: 15px;">課題②：個人の努力では限界</h3>
+                                <p style="font-size: 24px; line-height: 1.6; color: #333; padding-left: 10px;">個人の営業力やノウハウだけに頼る「個人戦」では、複雑化する市場で戦えない状況に。</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -326,10 +274,10 @@
             </div>
         </div>
 
-        <div class="slide" id="slide4">
-            <div class="slide-index-badge">Slide 5/9</div>
+        <div class="slide" id="slide3">
+            <div class="slide-index-badge">Slide 3/6</div>
             <div class="slide-header" style="padding: 60px 80px 20px;">
-                <div class="slide-number">CHAPTER 04</div>
+                <div class="slide-number">CHAPTER 03</div>
                 <h2 class="slide-title">2つの成長エンジンで組織を再起動</h2>
                 <p class="slide-subtitle">個人戦から、仕組みで勝つ組織戦へ</p>
             </div>
@@ -352,12 +300,21 @@
                             <div class="pillar-departments" style="margin-top: 10px; padding: 10px;">
                                 <span class="dept-badge">広報</span><span class="dept-connector">×</span><span class="dept-badge">営業</span><span class="dept-connector">×</span><span class="dept-badge">メディア(オウンド)</span>
                             </div>
-                            <div class="pillar-merits" style="margin-top: 10px; padding-top: 10px;">
-                                <div class="merits-title" style="margin-bottom: 10px;">What's in it for us?</div>
-                                <div class="merits-grid" style="gap: 8px;">
-                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">広報</div><div class="merit-text">事業貢献と連動した、戦略的ブランディングの実践</div></div>
-                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">営業</div><div class="merit-text">改善に貢献したメディアから、高確度な商談を獲得</div></div>
-                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">メディア(オウンド)</div><div class="merit-text">現場の声を反映したメニュー開発で、売上に直接貢献</div></div>
+                            <div class="pillar-merits">
+                                <div class="merits-title">What's in it for us?</div>
+                                <div class="merits-list">
+                                    <div class="merit-list-item">
+                                        <span class="merit-dept">広報:</span>
+                                        <span class="merit-text">事業貢献と連動した、戦略的ブランディングの実践</span>
+                                    </div>
+                                    <div class="merit-list-item">
+                                        <span class="merit-dept">営業:</span>
+                                        <span class="merit-text">改善に貢献したメディアから、高確度な商談を獲得</span>
+                                    </div>
+                                    <div class="merit-list-item">
+                                        <span class="merit-dept">メディア(オウンド):</span>
+                                        <span class="merit-text">現場の声を反映したメニュー開発で、売上に直接貢献</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -385,12 +342,21 @@
                             <div class="pillar-departments" style="margin-top: 10px; padding: 10px;">
                                 <span class="dept-badge">営業</span><span class="dept-connector">×</span><span class="dept-badge">メディア</span><span class="dept-connector">×</span><span class="dept-badge">マーケ</span>
                             </div>
-                            <div class="pillar-merits" style="margin-top: 10px; padding-top: 10px;">
-                                <div class="merits-title" style="margin-bottom: 10px;">What's in it for us?</div>
-                                <div class="merits-grid" style="gap: 8px;">
-                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">営業</div><div class="merit-text">高単価・高利益率案件の創出</div></div>
-                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">メディア</div><div class="merit-text">企画力のアピールとブランド露出</div></div>
-                                    <div class="merit-item" style="padding: 8px;"><div class="merit-dept">マーケ</div><div class="merit-text">強力なPRコンテンツの創出</div></div>
+                            <div class="pillar-merits">
+                                <div class="merits-title">What's in it for us?</div>
+                                <div class="merits-list">
+                                     <div class="merit-list-item">
+                                        <span class="merit-dept">営業:</span>
+                                        <span class="merit-text">高単価・高利益率案件の創出</span>
+                                    </div>
+                                     <div class="merit-list-item">
+                                        <span class="merit-dept">メディア:</span>
+                                        <span class="merit-text">企画力のアピールとブランド露出</span>
+                                    </div>
+                                     <div class="merit-list-item">
+                                        <span class="merit-dept">マーケ:</span>
+                                        <span class="merit-text">強力なPRコンテンツの創出</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -403,10 +369,10 @@
             </div>
         </div>
 
-        <div class="slide" id="slide5">
-            <div class="slide-index-badge">Slide 6/9</div>
+        <div class="slide" id="slide4">
+            <div class="slide-index-badge">Slide 4/6</div>
             <div class="slide-header" style="padding: 60px 80px 20px;">
-                <div class="slide-number">CHAPTER 05</div>
+                <div class="slide-number">CHAPTER 04</div>
                 <h2 class="slide-title">パイロット計画と年間インパクト</h2>
                 <p class="slide-subtitle">まず3ヶ月で成功モデルを確立。そこから見える大きな可能性。</p>
             </div>
@@ -447,10 +413,49 @@
             </div>
         </div>
 
-        <div class="slide" id="slide6">
-            <div class="slide-index-badge">Slide 7/9</div>
+        <div class="slide" id="slide5">
+            <div class="slide-index-badge">Slide 5/6</div>
+            <div class="slide-header"><div class="slide-number">CHAPTER 05</div><h2 class="slide-title">これは、単なる売上増ではない</h2><p class="slide-subtitle">事業、組織、そして「人」の持続的成長への投資</p></div>
+            <div class="slide-content"><div style="display: flex; flex-direction: column; gap: 60px; flex-grow: 1; justify-content: center;"><div style="display: flex; align-items: center; justify-content: center;"><div style="width: 280px; height: 280px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f5f5f7; border: 3px solid #d1d1d6;"><div style="font-size: 40px; font-weight: 700;">個人商店の<br>足し算</div><div style="font-size: 22px; margin-top: 16px; opacity: .8;">現在の組織</div></div><div style="font-size: 70px; color: #007aff; margin: 0 30px;">→</div><div style="width: 280px; height: 280px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #34c759, #30d158); color: #fff;"><div style="font-size: 40px; font-weight: 700;">仕組みの<br>掛け算</div><div style="font-size: 22px; margin-top: 16px; opacity: .8;">目指す組織</div></div></div><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">📈</div>
+                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">若手の成長加速</h3><p style="font-size: 16px; color: #555;">成功体験による<br>自信とスキル向上</p>
+                </div>
+                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🛡️</div>
+                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">リスク分散</h3><p style="font-size: 16px; color: #555;">属人化からの脱却<br>安定した組織へ</p>
+                </div>
+                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🤝</div>
+                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">採用力強化</h3><p style="font-size: 16px; color: #555;">「成長できる会社」<br>としての魅力向上</p>
+                </div>
+                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🎯</div>
+                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">競争優位の確立</h3><p style="font-size: 16px; color: #555;">他社が真似できない<br>組織力という価値</p>
+                </div>
+            </div></div></div>
+            <div class="slide-footer"><div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div><div class="footer-title">DAC女性管理職研修2025_September</div></div>
+        </div>
+        
+        <div class="slide ending-slide" id="slide6">
+            <div class="slide-index-badge">Slide 6/6</div>
+            <h1 class="ending-message" style="margin-bottom: 30px; font-size: 72px;">「個」に依存する時代を終え、<br>「仕組み」で成長する未来へ</h1>
+            <p class="ending-subtitle" style="margin-bottom: 50px;">掛け算の文化こそが、私たちの新しいスタンダードです。</p>
+            <div class="next-step">
+                <div class="next-step-title">NEXT STEP</div>
+                <p style="text-align: left; display: inline-block; line-height: 1.7;">
+                    <b>11月:</b> 本計画の承認、及びタスクフォースの組成<br>
+                    <b>12月-2月:</b> パイロット計画の実行 (第1四半期)<br>
+                    <b>3月:</b> 初期成果をレビューし、改善点を計画に反映<br>
+                    <b>4月以降:</b> 改善された計画を元に、全社的に本格展開
+                </p>
+            </div>
+        </div>
+        
+        <div class="slide appendix-slide" id="slide7">
+            <div class="slide-index-badge">参考資料</div>
             <div class="slide-header">
-                <div class="slide-number">CHAPTER 06</div>
+                <div class="slide-number">APPENDIX</div>
                 <h2 class="slide-title">若手の成長ロードマップ</h2>
                 <p class="slide-subtitle">パイロット計画と連動した、現実的な育成ステップ</p>
             </div>
@@ -490,45 +495,7 @@
             </div>
             <div class="slide-footer"><div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div><div class="footer-title">DAC女性管理職研修2025_September</div></div>
         </div>
-        
-        <div class="slide" id="slide7">
-            <div class="slide-index-badge">Slide 8/9</div>
-            <div class="slide-header"><div class="slide-number">CHAPTER 07</div><h2 class="slide-title">これは、単なる売上増ではない</h2><p class="slide-subtitle">事業、組織、そして「人」の持続的成長への投資</p></div>
-            <div class="slide-content"><div style="display: flex; flex-direction: column; gap: 60px; flex-grow: 1; justify-content: center;"><div style="display: flex; align-items: center; justify-content: center;"><div style="width: 280px; height: 280px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f5f5f7; border: 3px solid #d1d1d6;"><div style="font-size: 40px; font-weight: 700;">個人商店の<br>足し算</div><div style="font-size: 22px; margin-top: 16px; opacity: .8;">現在の組織</div></div><div style="font-size: 70px; color: #007aff; margin: 0 30px;">→</div><div style="width: 280px; height: 280px; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #34c759, #30d158); color: #fff;"><div style="font-size: 40px; font-weight: 700;">仕組みの<br>掛け算</div><div style="font-size: 22px; margin-top: 16px; opacity: .8;">目指す組織</div></div></div><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
-                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">📈</div>
-                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">若手の成長加速</h3><p style="font-size: 16px; color: #555;">成功体験による<br>自信とスキル向上</p>
-                </div>
-                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">🛡️</div>
-                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">リスク分散</h3><p style="font-size: 16px; color: #555;">属人化からの脱却<br>安定した組織へ</p>
-                </div>
-                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">🤝</div>
-                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">採用力強化</h3><p style="font-size: 16px; color: #555;">「成長できる会社」<br>としての魅力向上</p>
-                </div>
-                <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 5px 10px rgba(0, 0, 0, 0.05), 0px 15px 30px rgba(0, 0, 0, 0.03); padding: 24px; border-radius: 16px; text-align: center;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">🎯</div>
-                    <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 10px;">競争優位の確立</h3><p style="font-size: 16px; color: #555;">他社が真似できない<br>組織力という価値</p>
-                </div>
-            </div></div></div>
-            <div class="slide-footer"><div class="footer-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div><div class="footer-title">DAC女性管理職研修2025_September</div></div>
-        </div>
 
-        <div class="slide ending-slide" id="slide8">
-            <div class="slide-index-badge">Slide 9/9</div>
-            <h1 class="ending-message">「個」に依存する時代を終え、<br>「仕組み」で成長する未来へ</h1>
-            <p class="ending-subtitle">掛け算の文化こそが、私たちの新しいスタンダードです。</p>
-            <div class="next-step">
-                <div class="next-step-title">NEXT STEP</div>
-                <p style="text-align: left; display: inline-block;">
-                    <b>11月:</b> 本計画の承認、及びタスクフォースの組成<br>
-                    <b>12月-2月:</b> パイロット計画の実行 (第1四半期)<br>
-                    <b>3月:</b> 初期成果をレビューし、改善点を計画に反映<br>
-                    <b>4月以降:</b> 改善された計画を元に、全社的に本格展開
-                </p>
-            </div>
-        </div>
     </div>
 
     <div class="nav-buttons"> 
@@ -541,10 +508,14 @@
 
     <script>
         const slides = Array.from(document.querySelectorAll('.slide'));
-        const totalSlides = slides.length;
+        const navigableSlides = slides.filter(slide => !slide.classList.contains('appendix-slide'));
+        const totalNavigableSlides = navigableSlides.length;
+        
+        const contentSlideCount = totalNavigableSlides - 1; 
+
         const indicator = document.querySelector('.slide-indicator');
         const NATIVE_WIDTH = 1920, NATIVE_HEIGHT = 1080;
-        let currentSlide = 0;
+        let currentSlideIndex = 0;
 
         function scaleAndPositionSlides() {
             const viewportWidth = window.innerWidth;
@@ -557,23 +528,56 @@
             });
         }
         
-        slides.forEach(() => indicator.appendChild(Object.assign(document.createElement('div'), { className: 'dot' })));
+        for (let i = 0; i < contentSlideCount; i++) {
+            indicator.appendChild(Object.assign(document.createElement('div'), { className: 'dot' }));
+        }
         const dots = document.querySelectorAll('.dot');
 
         function showSlide(n) {
-            const oldSlide = slides[currentSlide];
-            currentSlide = (n + totalSlides) % totalSlides;
-            const newSlide = slides[currentSlide];
-            
-            oldSlide.classList.remove('active');
-            newSlide.classList.add('active');
+            if (n >= totalNavigableSlides && currentSlideIndex === totalNavigableSlides - 1) {
+                 const appendix = document.querySelector('.appendix-slide');
+                 if (appendix) {
+                    navigableSlides[currentSlideIndex].classList.remove('active');
+                    appendix.classList.add('active');
+                    currentSlideIndex = totalNavigableSlides;
+                    updateUI();
+                 }
+                 return;
+            } else if (n < 0 && currentSlideIndex > totalNavigableSlides - 1) {
+                const appendix = document.querySelector('.appendix-slide');
+                if (appendix) appendix.classList.remove('active');
+                currentSlideIndex = totalNavigableSlides - 1;
+                navigableSlides[currentSlideIndex].classList.add('active');
+                updateUI();
+                return;
+            }
 
-            dots.forEach((dot, index) => dot.classList.toggle('active', index === currentSlide));
-            document.getElementById('progressFill').style.width = (currentSlide / (totalSlides - 1)) * 100 + '%';
+            currentSlideIndex = (n + totalNavigableSlides) % totalNavigableSlides;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            navigableSlides[currentSlideIndex].classList.add('active');
+            
+            updateUI();
         }
 
-        function nextSlide() { showSlide(currentSlide + 1); }
-        function previousSlide() { showSlide(currentSlide - 1); }
+        function updateUI() {
+            const progressFill = document.getElementById('progressFill');
+
+            if (currentSlideIndex === 0) { // Title slide
+                progressFill.style.width = '0%';
+                indicator.style.visibility = 'hidden';
+            } else if (currentSlideIndex < totalNavigableSlides) { // Content slides
+                progressFill.style.width = ((currentSlideIndex) / (contentSlideCount)) * 100 + '%';
+                indicator.style.visibility = 'visible';
+                dots.forEach((dot, index) => dot.classList.toggle('active', index === (currentSlideIndex - 1)));
+            } else { // Appendix slide
+                progressFill.style.width = '100%';
+                indicator.style.visibility = 'hidden';
+            }
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function previousSlide() { showSlide(currentSlideIndex - 1); }
 
         document.addEventListener('keydown', e => {
             if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
