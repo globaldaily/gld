@@ -266,25 +266,29 @@
 
 /* ==== PRINT / PDF ==== */
 /* =========================
-   PRINT (PDF) — 1920×1080 1枚=1スライド
+   PRINT FIXES — 1920×1080 그대로, 1슬라이드=1페이지
    ========================= */
    @media print {
 
-/* 1) 페이지 크기를 슬라이드(1920×1080)와 일치 */
+/* 페이지 크기를 16:9로 고정 */
 @page {
-  /* 브라우저별 호환 위해 px와 inch를 모두 명시 */
   size: 1920px 1080px;
-  size: 16in 9in;
+  size: 16in 9in;   /* 브라우저 호환용 중복 지정 */
   margin: 0;
 }
 
-/* 2) 화면용 레이아웃/스케일/배경 제거 */
+/* 화면용 레이아웃/배경 비활성화 */
 html, body {
   width: 1920px !important;
   height: 1080px !important;
-  background: #fff !important;       /* 배경 검은 면(여분 페이지) 방지 */
+  background: #fff !important;
   overflow: visible !important;
 }
+
+/* 슬라이드 외의 것은 전부 숨김 => 첫 빈 페이지 제거 */
+body > :not(.presentation-container) { display: none !important; }
+.presentation-container > :not(.slide) { display: none !important; }
+
 .presentation-container {
   position: static !important;
   width: 1920px !important;
@@ -292,56 +296,41 @@ html, body {
   background: transparent !important;
 }
 
-/* 3) 슬라이드를 인쇄용 블록으로: transform 해제, 한 페이지에 딱 맞춤 */
+/* 모든 슬라이드 출력 + 페이지 분리 */
 .slide {
   display: flex !important;
   flex-direction: column !important;
   position: relative !important;
-  top: 0 !important; left: 0 !important;
   width: 1920px !important;
   height: 1080px !important;
+  top: 0 !important; left: 0 !important;
   transform: none !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+  opacity: 1 !important; visibility: visible !important;
   pointer-events: none !important;
 
-  /* 페이지 나눔 제어 */
   break-inside: avoid !important;
   page-break-after: always !important;
   box-shadow: none !important;
 }
 .slide:last-of-type { page-break-after: auto !important; }
 
-/* 4) 푸터 높이/정렬 통일 (슬라이드1 포함) */
-.slide-content { flex: 1 1 auto !important; }
-.slide-footer  { flex-shrink: 0 !important; margin-top: auto !important; }
+/* 인쇄 시 UI/배지/프린트 버튼 숨김 */
+.nav-buttons, .slide-indicator, .timer, .progress-bar,
+.slide-index-badge, .print-btn { display: none !important; }
 
-/* 5) 화면 전용 UI/배지/네비 등은 출력에서 숨김 */
-.nav-buttons,
-.slide-indicator,
-.timer,
-.progress-bar,
-.slide-index-badge,
-.print-btn { display: none !important; }
-
-/* 6) 활성/비활성 상태 무시하고 전 슬라이드 출력 */
-.slide { display: flex !important; }
+/* ===== 푸터 위치 고정(모든 슬라이드 동일) ===== */
+.slide-footer {
+  position: absolute !important;
+  left: 0; right: 0; bottom: 0;      /* 항상 바닥 */
+  height: 100px !important;          /* 기존 높이 */
+  margin: 0 !important;
 }
-
-/* =========================
- 슬라이드3 협업 뱃지 중앙 정렬(양 카드 공통)
- ========================= */
-.pillar-departments{
-display: inline-flex !important;
-align-items: center; justify-content: center;
-gap: 12px;
-padding: 10px 16px;
-border-radius: 12px;
-margin: 8px auto 0;      /* 수평 중앙 */
-width: auto;             /* 내용만큼 너비 */
+/* 겹침 방지: 콘텐츠에 푸터 높이만큼 하단 여유 */
+.slide-content {
+  padding-bottom: calc(40px + 100px) !important; /* 기본 패딩 40px + 푸터 100px */
+  flex: 1 1 auto !important;
 }
-
-
+}
 </style>
 <link rel="icon" href="data:,">
 
