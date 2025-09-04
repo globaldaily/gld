@@ -185,6 +185,30 @@
     color: #fff; /* X 색상 흰색으로 변경 */
     font-weight: 700;
 }
+/* 1. 공통 스타일 */
+.pillar-departments {
+    background: #fff; /* 배경을 깔끔한 흰색으로 */
+    border: 2px solid #f0f0f0; /* 옅은 회색 테두리 */
+    padding: 12px;
+    border-radius: 12px;
+}
+.dept-badge {
+    color: #fff;
+    font-weight: 700;
+    padding: 8px 18px; /* 패딩을 조금 더 넉넉하게 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    border: none;
+}
+.dept-connector {
+    color: #888;
+    font-weight: 700;
+}
+
+/* 2. 부서별 고유 색상 지정 */
+.dept-badge.dept-sales { background-color: #0052cc; } /* 영업: 신뢰의 파란색 */
+.dept-badge.dept-pr { background-color: #8e44ad; }    /* 広報: 창의적 보라색 */
+.dept-badge.dept-media { background-color: #1abc9c; } /* 미디어: 혁신의 청록색 */
+.dept-badge.dept-marketing { background-color: #f39c12; } /* 마케팅: 에너지의 주황색 */ 
     </style>
 </head>
 <body>
@@ -320,8 +344,12 @@
                             </div>
                             <div style="flex-grow: 1;"></div>
                             <div class="pillar-departments" style="margin-top: 10px; padding: 10px;">
-                                <span class="dept-badge">広報</span><span class="dept-connector">×</span><span class="dept-badge">営業</span><span class="dept-connector">×</span><span class="dept-badge">メディア(オウンド)</span>
-                            </div>
+    <span class="dept-badge dept-pr">広報</span>
+    <span class="dept-connector">×</span>
+    <span class="dept-badge dept-sales">営業</span>
+    <span class="dept-connector">×</span>
+    <span class="dept-badge dept-media">メディア(オウンド)</span>
+</div>
                             <div class="pillar-merits">
                                 <div class="merits-title">What's in it for us?</div>
                                 <div class="merits-list">
@@ -361,9 +389,13 @@
                                 <div class="pillar-feature" style="padding: 10px;"><span class="feature-icon">📈</span><span class="feature-text">会社のブランド価値と利益率を向上</span></div>
                             </div>
                             <div style="flex-grow: 1;"></div>
-                            <div class="pillar-departments" style="margin-top: 10px; padding: 10px;">
-                                <span class="dept-badge">営業</span><span class="dept-connector">×</span><span class="dept-badge">メディア</span><span class="dept-connector">×</span><span class="dept-badge">マーケ</span>
-                            </div>
+                           <div class="pillar-departments" style="margin-top: 10px; padding: 10px;">
+    <span class="dept-badge dept-sales">営業</span>
+    <span class="dept-connector">×</span>
+    <span class="dept-badge dept-media">メディア</span>
+    <span class="dept-connector">×</span>
+    <span class="dept-badge dept-marketing">マーケ</span>
+</div>
                             <div class="pillar-merits">
                                 <div class="merits-title">What's in it for us?</div>
                                 <div class="merits-list">
