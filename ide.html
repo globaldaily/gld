@@ -14,24 +14,29 @@
         }
         
         .slide {
-            position: absolute;
-            width: 1920px;
-            height: 1080px;
-            background: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'Noto Sans JP', sans-serif;
-            color: #1d1d1f;
-            display: flex;
-            flex-direction: column;
-            transform-origin: top left;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s, visibility 0.4s;
-        }
-    
-        .slide.active { opacity: 1; visibility: visible; z-index: 1; }
+        position: absolute;
+        top: 0;       /* 추가 */
+        left: 0;      /* 추가 */
+        width: 1920px;
+        height: 1080px;
+        background: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'Noto Sans JP', sans-serif;
+        color: #1d1d1f;
+        display: flex;
+        flex-direction: column;
+        transform-origin: top left;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s, visibility 0.4s;
+        z-index: 0;
+        pointer-events: none;   /* 비활성 슬라이드 클릭 차단 */
         
-        .slide.appendix-slide { z-index: 0; }
-        .slide.appendix-slide.active { z-index: 1; }
+        }
+
+        .slide.active { opacity: 1; visibility: visible; z-index: 10;pointer-events: auto; }
+        
+        .slide.appendix-slide { z-index: 10; }
+
         
         .slide-index-badge {
             position: absolute; top: 50px; right: 50px;
@@ -263,6 +268,10 @@
   paint-order:stroke;
   stroke:#fff; stroke-width:4px;
 }
+/* 활성 슬라이드만 보이게 강제 */
+.slide { display: none; }
+.slide.active { display: flex; }
+
 </style>
 
 </head>
@@ -575,99 +584,91 @@
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
     <script>
-        const slides = Array.from(document.querySelectorAll('.slide'));
-        const navigableSlides = slides.filter(slide => !slide.classList.contains('appendix-slide'));
-        const totalNavigableSlides = navigableSlides.length;
+        (() => {
+          // 0) 슬라이드들을 "컨테이너의 직계 자식"으로 강제 평탄화 (중첩되어 있어도 순서 유지)
+          const container = document.querySelector('.presentation-container');
+          const allSlides = Array.from(document.querySelectorAll('.slide')); // 어디에 있든 전부 수집
+          allSlides.forEach(s => container.appendChild(s)); // DOM 순서대로 재부착 → 직계 자식화
         
-        const contentSlideCount = totalNavigableSlides - 1; 
-
-        const indicator = document.querySelector('.slide-indicator');
-        const NATIVE_WIDTH = 1920, NATIVE_HEIGHT = 1080;
-        let currentSlideIndex = 0;
-
-        function scaleAndPositionSlides() {
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
-            const scale = Math.min(viewportWidth / NATIVE_WIDTH, viewportHeight / NATIVE_HEIGHT);
-            const offsetX = (viewportWidth - (NATIVE_WIDTH * scale)) / 2;
-            const offsetY = (viewportHeight - (NATIVE_HEIGHT * scale)) / 2;
-            slides.forEach(slide => {
-                slide.style.transform = `translateX(${offsetX}px) translateY(${offsetY}px) scale(${scale})`;
-            });
-        }
+          // 1) 수집(이제 전부 직계 자식)
+          const slides = Array.from(container.querySelectorAll('.slide'));
+          const indicator = document.querySelector('.slide-indicator');
+          const progressFill = document.getElementById('progressFill');
         
-        for (let i = 0; i < contentSlideCount; i++) {
-            indicator.appendChild(Object.assign(document.createElement('div'), { className: 'dot' }));
-        }
-        const dots = document.querySelectorAll('.dot');
-
-        function showSlide(n) {
-            if (n >= totalNavigableSlides && currentSlideIndex === totalNavigableSlides - 1) {
-                 const appendix = document.querySelector('.appendix-slide');
-                 if (appendix) {
-                    navigableSlides[currentSlideIndex].classList.remove('active');
-                    appendix.classList.add('active');
-                    currentSlideIndex = totalNavigableSlides;
-                    updateUI();
-                 }
-                 return;
-            } else if (n < 0 && currentSlideIndex > totalNavigableSlides - 1) {
-                const appendix = document.querySelector('.appendix-slide');
-                if (appendix) appendix.classList.remove('active');
-                currentSlideIndex = totalNavigableSlides - 1;
-                navigableSlides[currentSlideIndex].classList.add('active');
-                updateUI();
-                return;
+          // 2) 상태
+          let idx = 0;
+        
+          // 3) 스케일 & 포지셔닝
+          const NATIVE_WIDTH = 1920, NATIVE_HEIGHT = 1080;
+          function scaleAll() {
+            const vw = window.innerWidth, vh = window.innerHeight;
+            const scale = Math.min(vw / NATIVE_WIDTH, vh / NATIVE_HEIGHT);
+            const ox = (vw - (NATIVE_WIDTH * scale)) / 2;
+            const oy = (vh - (NATIVE_HEIGHT * scale)) / 2;
+            slides.forEach(s => { s.style.transform = `translate(${ox}px, ${oy}px) scale(${scale})`; });
+          }
+          window.addEventListener('resize', scaleAll);
+        
+          // 4) 인디케이터(타이틀 제외 개수만큼)
+          const frag = document.createDocumentFragment();
+          for (let i = 1; i < slides.length; i++) {
+            const d = document.createElement('div');
+            d.className = 'dot';
+            d.addEventListener('click', () => go(i));
+            frag.appendChild(d);
+          }
+          indicator.appendChild(frag);
+          const dots = indicator.querySelectorAll('.dot');
+        
+          // 5) 렌더
+          function render() {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[idx].classList.add('active');
+        
+            if (idx === 0) {
+              indicator.style.visibility = 'hidden';
+              progressFill.style.width = '0%';
+            } else {
+              indicator.style.visibility = 'visible';
+              const total = slides.length - 1; // 타이틀 제외
+              progressFill.style.width = (idx / total) * 100 + '%';
+              dots.forEach((d, k) => d.classList.toggle('active', k === (idx - 1)));
             }
-
-            currentSlideIndex = (n + totalNavigableSlides) % totalNavigableSlides;
-            
-            slides.forEach(slide => slide.classList.remove('active'));
-            navigableSlides[currentSlideIndex].classList.add('active');
-            
-            updateUI();
-        }
-
-        function updateUI() {
-            const progressFill = document.getElementById('progressFill');
-
-            if (currentSlideIndex === 0) { // Title slide
-                progressFill.style.width = '0%';
-                indicator.style.visibility = 'hidden';
-            } else if (currentSlideIndex < totalNavigableSlides) { // Content slides
-                progressFill.style.width = ((currentSlideIndex) / (contentSlideCount)) * 100 + '%';
-                indicator.style.visibility = 'visible';
-                dots.forEach((dot, index) => dot.classList.toggle('active', index === (currentSlideIndex - 1)));
-            } else { // Appendix slide
-                progressFill.style.width = '100%';
-                indicator.style.visibility = 'hidden';
-            }
-        }
-
-        function nextSlide() { showSlide(currentSlideIndex + 1); }
-        function previousSlide() { showSlide(currentSlideIndex - 1); }
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
-            if (e.key === 'ArrowLeft') previousSlide();
-        });
+          }
         
-        let startTime = Date.now();
-        setInterval(() => {
+          // 6) 이동
+          function go(n) { idx = Math.max(0, Math.min(n, slides.length - 1)); render(); }
+          function next() { go(idx + 1); }
+          function prev() { go(idx - 1); }
+        
+          // 7) 키/버튼
+          window.nextSlide = next;
+          window.previousSlide = prev;
+          document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') next();
+            if (e.key === 'ArrowLeft') prev();
+          });
+        
+          // 8) 타이머
+          let startTime = Date.now();
+          setInterval(() => {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             const m = Math.floor(elapsed / 60);
             const s = String(elapsed % 60).padStart(2, '0');
-            document.getElementById('timer').textContent = `${m}:${s}`;
-        }, 1000);
-
-        window.addEventListener('load', () => {
-            showSlide(0);
-            scaleAndPositionSlides();
-        });
-        window.addEventListener('resize', scaleAndPositionSlides);
-
-        window.nextSlide = nextSlide;
-  window.previousSlide = previousSlide;
-    </script>
+            const el = document.getElementById('timer');
+            if (el) el.textContent = `${m}:${s}`;
+          }, 1000);
+        
+          // 9) 초기화
+          scaleAll();
+          go(0);
+        
+          // 디버그용
+          window.__slidesInfo = () => slides.map((s,i)=>({i, id:s.id, parent:s.parentElement.className}));
+        })();
+        </script>
+        
+        
+        
 </body>
 </html>
