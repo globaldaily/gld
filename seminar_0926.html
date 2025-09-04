@@ -291,10 +291,52 @@
   #countryChart { display: none !important; }
   #countryChartPrint { display: block !important; width: 100% !important; height: auto !important; }
 }
+/* ===== GD Presenter Nav (좌측 책갈피 배너) ===== */
+#gdPresenterNav{
+  position:fixed; top:0; left:0; height:100vh; width:264px;
+  background:rgba(25,26,48,.92);
+  border-right:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(10px);
+  z-index:120;
+  display:flex; flex-direction:column;
+}
+#gdPresenterNav .nav-head{
+  padding:14px 16px; font-size:16px; letter-spacing:.3px;
+  color:#81ecec; border-bottom:1px solid rgba(255,255,255,.12);
+}
+#gdPresenterNav .nav-list{ flex:1; overflow:auto; padding:10px 6px 16px; }
+#gdPresenterNav .gd-nav-item{
+  display:block; width:100%; text-align:left;
+  padding:10px 12px; margin:6px 8px; border-radius:12px;
+  border:1px solid transparent; background:transparent; color:#eaeaff;
+  font-size:14px; line-height:1.3; cursor:pointer;
+}
+#gdPresenterNav .gd-nav-item .num{opacity:.6; margin-right:6px; font-variant-numeric:tabular-nums;}
+#gdPresenterNav .gd-nav-item:hover{ background:rgba(162,155,254,.12); border-color:rgba(162,155,254,.28); }
+#gdPresenterNav .gd-nav-item.active{ background:rgba(129,236,236,.12); border-color:rgba(129,236,236,.5); color:#fff; }
+
+/* 좌측 패널이 차지한 폭만큼 프레젠테이션을 오른쪽으로 밀기 */
+.gd-with-nav .presentation-container{
+  left:264px !important; width:calc(100% - 264px) !important;
+}
+
+/* 프린트에선 자동 숨김 + 원위치 */
+@media print{
+  #gdPresenterNav{ display:none !important; }
+  .gd-with-nav .presentation-container{
+    left:0 !important; width:100% !important;
+  }
+}
 
 </style>
 </head>
 <body>
+    <aside id="gdPresenterNav" aria-label="Presenter navigation">
+        <div class="nav-head">📑 Slides</div>
+        <div class="nav-list" id="gdPresenterNavList"></div>
+      </aside>
+    
+      
     <div class="presentation-container">
         <div class="presentation">
             <!-- Opening (1-5) -->
@@ -320,18 +362,14 @@
                         <ul style="font-size: 26px; list-style-position: inside; padding-left: 10px; line-height: 1.7;">
                             <li>韓国MZ世代のSNS文脈と消費心理に精通</li>
                             <li>定性・定量調査からプロモーション提案まで</li>
-                            <li>サムスン電子、LG電子 韓国マーケティング経験</li>
-                            <li>延世大学校社会学科、高麗大学校消費者学修士</li>
                         </ul>
                     </div>
                     <div class="card">
                         <h4>チェ・ひろゆき</h4>
-                        <p style="font-size:28px; color: #a29bfe; margin-bottom: 20px;">アジア市場向けコンテンツ統括 | Inbound Content Director</p>
+                        <p style="font-size:28px; color: #a29bfe; margin-bottom: 20px;">訪日メディア「JAPANKURU」の統括 |<br> Inbound Content Director</p>
                         <ul style="font-size: 26px; list-style-position: inside; padding-left: 10px; line-height: 1.7;">
                             <li>韓国・台湾・東南アジア市場向けコンテンツプロデュース</li>
                             <li>地方自治体・観光施設との多国籍案件多数統括</li>
-                            <li>JTB、HIS アジアマーケティング統括経験</li>
-                            <li>早稲田大学国際教養学部、ソウル大学校交換学生</li>
                         </ul>
                     </div>
                 </div>
@@ -342,7 +380,7 @@
                 <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
                 <h2>本日のアジェンダ</h2>
                 <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 1700px;">
-                    <div class="card agenda-item"><div class="agenda-time">13:00-13:10</div><div class="agenda-content"><h4>オープニング & 目標設定</h4><p>講師紹介、参加者紹介、セミナー目標共有</p></div></div>
+                    <div class="card agenda-item"><div class="agenda-time">13:00-13:10</div><div class="agenda-content"><h4>オープニング</h4><p>講師紹介、参加者紹介、セミナー目標共有</p></div></div>
                     <div class="card agenda-item"><div class="agenda-time">13:10-13:40</div><div class="agenda-content"><h4>Session 1: 市場動向分析</h4><p>韓国市場の重要性、訪日韓国人旅行客の最新統計及び特性分析</p></div></div>
                     <div class="card agenda-item"><div class="agenda-time">13:40-14:20</div><div class="agenda-content"><h4>Session 2-1: 8つのトレンド詳解</h4><p>韓国人の消費行動に影響する核心トレンドの深層分析</p></div></div>
                     <div class="card agenda-item"><div class="agenda-time">14:20-14:50</div><div class="agenda-content"><h4>Session 2-2: 実務応用戦略</h4><p>業種別の具体的対応方案及び成功事例の紹介</p></div></div>
@@ -356,7 +394,7 @@
                 <h2>2時間で得られる成果</h2>
                 <div class="grid-3">
                     <div class="card">
-                        <h3 style="color:#a29bfe;">データに基づく最新動向</h3>
+                        <h3 style="color:#a29bfe;">データに基づく<br>最新動向</h3>
                         <p style="font-size: 28px;">2025年の最新データを通じて、韓国市場の「今」を正確に把握します。</p>
                     </div>
                     <div class="card">
@@ -364,7 +402,7 @@
                         <p style="font-size: 28px;">消費心理を貫く8つのメガトレンドを通じて、成功戦略の糸口を見つけます。</p>
                     </div>
                     <div class="card">
-                        <h3 style="color:#a29bfe;">すぐに実行可能な戦略</h3>
+                        <h3 style="color:#a29bfe;">すぐに実行可能な<br>戦略</h3>
                         <p style="font-size: 28px;">明日からすぐに適用できる業種別のカスタマイズされたアクションアイテムを得られます。</p>
                     </div>
                 </div>
@@ -1307,16 +1345,125 @@
             </div>
             
             <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <div class="flags">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+                </div>
                 <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
-                <h2>質疑応答・個別相談のご案内</h2>
-                <p style="font-size: 36px; margin-bottom: 50px;">ご不明な点はご自由にご質問ください。</p>
-                <div class="card" style="max-width: 1200px;">
-                    <h3 style="color:#a29bfe;">30分無料個別相談券</h3>
-                    <p style="font-size: 30px; margin: 20px 0;">本日のセミナー内容に基づき、貴社のビジネスに合わせた<br>深掘りした戦略コンサルティングをご提供します。</p>
-                    <p style="font-size: 26px;">（QRコードから今すぐお申し込みください）</p>
+                
+                <h2>参加者限定 3大特典</h2>
+                
+                <div class="grid-3" style="margin-top: 40px;">
+                    <div class="card">
+                        <div style="background: #81ecec; color: #1a1a2e; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 32px; margin: 0 auto 20px;">1</div>
+                        <h4 style="font-size: 32px; margin-bottom: 15px; color: #81ecec;">セミナー資料一式</h4>
+                        <p style="font-size: 26px; line-height: 1.5;">PDF形式でセミナー終了後にメール送付いたします</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div style="background: #81ecec; color: #1a1a2e; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 32px; margin: 0 auto 20px;">2</div>
+                        <h4 style="font-size: 32px; margin-bottom: 15px; color: #81ecec;">韓国トレンド定期レポート</h4>
+                        <p style="font-size: 26px; line-height: 1.5;">10月〜12月の3ヶ月間<br>月1回メールで最新情報をお届け</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div style="background: #81ecec; color: #1a1a2e; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 32px; margin: 0 auto 20px;">3</div>
+                        <h4 style="font-size: 32px; margin-bottom: 15px; color: #81ecec;">講師陣への個別相談</h4>
+                        <p style="font-size: 26px; line-height: 1.5;">30分間のオンライン相談（1回）<br>ご希望の方は個別にご連絡ください</p>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 50px; max-width: 1400px; background: rgba(162, 155, 254, 0.1); border: 2px solid rgba(162, 155, 254, 0.3);">
+                    <p style="font-size: 28px; color: #a29bfe; font-weight: 600;">特典のお受け取りには事後アンケートへのご協力をお願いいたします</p>
                 </div>
             </div>
+
+
+            <div class="slide">
+                <div class="flags">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓국" class="flag">
+                </div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                
+                <div style="display: flex; width: 100%; height: 100%; max-width: 1700px; gap: 60px; align-items: center;">
+                    
+                    <!-- Left: Text Content -->
+                    <div style="flex: 1; text-align: left; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <h2 style="font-size: 72px; margin-bottom: 30px; text-align: left;">韓国トレンド<br>定期レポート</h2>
+                        <h3 style="font-size: 42px; color: #81ecec; margin-bottom: 50px; text-align: left;">参加者特典として<br>3ヶ月間無料でお届け</h3>
+                        
+                        <div style="background: rgba(255,255,255,0.08); padding: 40px; border-radius: 20px; border-left: 5px solid #81ecec;">
+                            <div style="margin-bottom: 25px;">
+                                <h4 style="font-size: 28px; color: #a29bfe; margin-bottom: 10px;">韓国人マーケターによるキュレーション</h4>
+                                <p style="font-size: 24px; opacity: 0.9;">現地の文脈を理解した専門家が厳選</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 25px;">
+                                <h4 style="font-size: 28px; color: #a29bfe; margin-bottom: 10px;">トレンド背景分析</h4>
+                                <p style="font-size: 24px; opacity: 0.9;">なぜ流行するのかの深層心理まで解説</p>
+                            </div>
+                            
+                            <div>
+                                <h4 style="font-size: 28px; color: #a29bfe; margin-bottom: 10px;">日本市場への適用提案</h4>
+                                <p style="font-size: 24px; opacity: 0.9;">業種別の具体的な活用アイデアを提示</p>
+                            </div>
+                        </div>
+                        
+                       
+                    </div>
+                    
+                    <!-- Right: Stacked Report Images -->
+                    <div style="flex: 0.8; height: 100%; display: flex; align-items: center; justify-content: center; position: relative;">
+                        
+                        <!-- Background Paper (Page 2) -->
+                        <div style="position: absolute; top: 15px; left: 20px; background: rgba(255,255,255,0.08); padding: 30px; border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); transform: rotate(-1.5deg); opacity: 0.8;">
+                            <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/09/127.0.0.1_3000_Users_jk_andy_Desktop_HTMLE8ABB8E38085_jkc_HP_test1.html-2.png" 
+                                 alt="Korea Trend Monthly Report Page 2" 
+                                 style="height: 700px; width: auto; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                        </div>
+                        
+                        <!-- Foreground Paper (Page 1) -->
+                        <div style="position: relative; z-index: 2; background: rgba(255,255,255,0.12); padding: 30px; border-radius: 20px; box-shadow: 0 15px 50px rgba(0,0,0,0.4);">
+                            <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/09/127.0.0.1_3000_Users_jk_andy_Desktop_HTMLE8ABB8E38085_jkc_HP_test1.html-2.png" 
+                                 alt="Korea Trend Monthly Report Page 1" 
+                                 style="height: 700px; width: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.4);">
+                        </div>
+                        
+                        <!-- Page Indicator -->
+                        <div style="position: absolute; bottom: -20px; right: 20px; background: rgba(129, 236, 236, 0.2); padding: 8px 16px; border-radius: 15px; font-size: 16px; color: #81ecec; font-weight: 600;">
+                            A4 2ページ構成
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div class="slide">
+    <div class="flags">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+    </div>
+    <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+    
+    <div style="display: flex; align-items: center; gap: 80px; width: 100%; max-width: 1600px;">
+        <div style="flex: 1;">
+            <h1 style="text-align: left;">質疑応答</h1>
+            <h3 style="margin-top: 50px; text-align: left;">궁금한 점이나 의견이 있으시면<br>언제든 편하게 질문해 주세요</h3>
+            
+            <div class="card" style="margin-top: 60px; text-align: left;">
+                <p style="font-size: 36px; color: #81ecec; font-weight: 600;">어떤 내용이든 환영합니다!</p>
+                <p style="font-size: 28px; margin-top: 20px; opacity: 0.9;">한국 시장 진출, 마케팅 전략, 트렌드 활용 등<br>무엇이든 자유롭게 말씀해 주세요</p>
+            </div>
+        </div>
+        
+        <div style="width: 500px; height: 400px;">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2024/02/passport-scaled.jpg" 
+                 alt="Hand raising for questions" 
+                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        </div>
+    </div>
+</div>
 
             <div class="slide">
                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
@@ -1354,14 +1501,30 @@
         let currentSlideIndex = 0;
         let isPrinting = false;
         
+        /* 발표자 모드 판별(전역) */
+        const __IS_PRESENTER__ = new URLSearchParams(location.search).get('presenter') === '1';
+        
+        /* 청중 모드에서 좌측 배너 깜빡임까지 막기 위한 즉시 스타일 주입 */
+        (function earlyHideNavForAudience(){
+          if (!__IS_PRESENTER__) {
+            const st = document.createElement('style');
+            st.id = 'gdEarlyHide';
+            st.textContent = '#gdPresenterNav{display:none!important}';
+            document.head.appendChild(st);
+          }
+        })();
+        
         /* =========================
            1) 화면 스케일 (뷰포트 맞춤)
         ========================= */
         function updateScale() {
           if (isPrinting) return; // 인쇄 중인 경우 스케일 금지
+          const cont = document.querySelector('.presentation-container');
+          const vw = cont ? cont.clientWidth  : window.innerWidth;
+          const vh = cont ? cont.clientHeight : window.innerHeight;
           const scale = Math.min(
-            window.innerWidth  / baseWidth,
-            window.innerHeight / baseHeight
+            vw / baseWidth,
+            vh / baseHeight
           );
           if (presentation) presentation.style.transform = `scale(${scale})`;
         }
@@ -1612,6 +1775,36 @@
           showSlide(currentSlideIndex);
         }
         
+        /* ====== 해시 딥링크(전역) ====== */
+        (function hashDeepLinker(){
+          function parseHash(){
+            const m = location.hash.match(/s=(\d+)/i);
+            if (!m) return null;
+            const n = Math.max(1, parseInt(m[1],10));
+            return Math.min(n, slides.length || n) - 1;
+          }
+          function goFromHash(){
+            const idx = parseHash();
+            if (idx!=null) { currentSlideIndex = idx; showSlide(idx); }
+          }
+          // showSlide 호출 후 주소창 해시 동기화
+          function wrapShow(){
+            const orig = window.showSlide;
+            if (typeof orig !== 'function' || orig.__hashWrapped) return;
+            const wrapped = function(i){
+              orig.call(this, i);
+              try { history.replaceState(null,'', location.pathname + location.search + '#s=' + (i+1)); } catch(e){}
+            };
+            wrapped.__hashWrapped = true;
+            window.showSlide = wrapped;
+          }
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => { wrapShow(); window.addEventListener('hashchange', goFromHash); goFromHash(); });
+          } else {
+            wrapShow(); window.addEventListener('hashchange', goFromHash); goFromHash();
+          }
+        })();
+        
         /* =========================
            8) 초기화
         ========================= */
@@ -1622,6 +1815,11 @@
         
           const totalSlidesEl = document.getElementById('totalSlides');
           if (totalSlidesEl) totalSlidesEl.textContent = slides.length;
+        
+          // 발표자 모드면 좌측 네비 레이아웃 클래스 미리 달아줌
+          if (__IS_PRESENTER__) {
+            document.body.classList.add('gd-with-nav');
+          }
         
           showSlide(0);
           updateScale();
@@ -1907,7 +2105,429 @@
           // 디버그용 수동 호출
           window.__snapshotCountryChart = snapshotCountryChart;
         })();
+        
+        
+        /* =========================
+           11) Presenter Bookmarks (FAB 패널)
+           - 발표자 모드에서 좌측 배너가 있으면 FAB는 만들지 않음(중복 방지)
+           - 청중 모드에서는 FAB 자체를 숨김
+        ========================= */
+        (function(){
+          // 좌측 배너가 있으면(Final Presenter Nav) 이 UI는 건너뜀
+          if (__IS_PRESENTER__ && document.getElementById('gdPresenterNav')) return;
+        
+          // --- 이미 붙어 있으면 중복 방지 ---
+          if (document.getElementById('presenterFab')) return;
+        
+          // 1) CSS를 JS로 주입 (프린트 시 자동 숨김 포함)
+          const css = `
+          #presenterFab{
+            position:fixed; left:26px; bottom:26px; z-index:10000;
+            padding:12px 16px; border-radius:14px; border:1px solid rgba(255,255,255,.2);
+            background:linear-gradient(135deg,#81ecec 0%,#74b9ff 100%);
+            color:#0b1b2b; font-weight:700; font-size:14px; letter-spacing:.2px; cursor:pointer;
+            box-shadow:0 10px 30px rgba(0,0,0,.25);
+          }
+          #presenterPanel{
+            position:fixed; left:0; top:0; bottom:0; width:420px; z-index:10001;
+            transform:translateX(-100%); transition:transform .25s ease;
+            background:rgba(10,10,26,.96); backdrop-filter:blur(12px);
+            border-right:1px solid rgba(255,255,255,.12); color:#fff;
+            display:flex; flex-direction:column;
+          }
+          #presenterPanel.open{ transform:translateX(0); }
+          #pp-head{ padding:16px 18px; display:flex; align-items:center; gap:10px;
+            border-bottom:1px solid rgba(255,255,255,.12); }
+          #pp-head .title{ font-size:15px; font-weight:700; opacity:.95; flex:1; }
+          #pp-close{ background:transparent; border:0; color:#fff; font-size:20px; cursor:pointer; opacity:.7; }
+          #pp-search{ padding:10px 14px; margin:12px 12px 8px; border-radius:12px; border:1px solid rgba(255,255,255,.18);
+            background:rgba(255,255,255,.06); color:#fff; outline:none; width:calc(100% - 24px); }
+          #pp-list{ overflow:auto; padding:4px 8px 12px; }
+          .pp-item{ display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border-radius:12px; cursor:pointer; }
+          .pp-item:hover{ background:rgba(255,255,255,.08); }
+          .pp-num{ min-width:38px; text-align:right; opacity:.7; font-variant-numeric:tabular-nums; }
+          .pp-title{ flex:1; line-height:1.35; }
+          .pp-tag{ font-size:11px; opacity:.7; margin-left:6px; }
+          .pp-active{ outline:2px solid rgba(129,236,236,.9); background:rgba(129,236,236,.08); }
+          @media print{ #presenterFab,#presenterPanel{ display:none !important; } }
+          /* 좌측 배너가 활성화된 경우 혹시 FAB가 만들어졌어도 숨김 */
+          .gd-with-nav #presenterFab, .gd-with-nav #presenterPanel { display:none !important; }
+          `;
+          const style = document.createElement('style');
+          style.textContent = css;
+          document.head.appendChild(style);
+        
+          // 2) 발표자 모드 판별
+          const isPresenter = __IS_PRESENTER__;
+        
+          // 3) 슬라이드 유틸
+          const getSlides = () => (window.slides && window.slides.length)
+              ? window.slides
+              : Array.from(document.querySelectorAll('.slide'));
+        
+          function highlight(i){
+            document.querySelectorAll('#pp-list .pp-item').forEach(el=>{
+              el.classList.toggle('pp-active', Number(el.dataset.idx)===i);
+            });
+          }
+        
+          function safeShow(i){
+            const slides = getSlides();
+            const idx = Math.max(0, Math.min(i, slides.length-1));
+        
+            if (typeof window.showSlide === 'function') {
+              window.currentSlideIndex = idx;
+              window.showSlide(idx);
+            } else {
+              slides.forEach(s=>s.classList.remove('active'));
+              slides[idx]?.classList.add('active');
+              const counter = document.getElementById('currentSlide');
+              if (counter) counter.textContent = String(idx+1);
+            }
+            try { history.replaceState(null,'', location.pathname + location.search + '#s=' + (idx+1)); } catch(e){}
+            highlight(idx);
+          }
+        
+          function parseHash(){
+            const m = location.hash.match(/s=(\d+)/i);
+            if (!m) return null;
+            const n = Math.max(1, parseInt(m[1],10));
+            return Math.min(n, getSlides().length) - 1;
+          }
+        
+          // 4) UI 생성 (FAB + 패널)
+          function buildUI(){
+            // FAB
+            const fab = document.createElement('button');
+            fab.id = 'presenterFab';
+            fab.type = 'button';
+            fab.textContent = 'Bookmarks';
+            document.body.appendChild(fab);
+        
+            // Panel
+            const panel = document.createElement('aside');
+            panel.id = 'presenterPanel';
+            panel.innerHTML = `
+              <div id="pp-head">
+                <div class="title">Presenter Bookmarks</div>
+                <button id="pp-close" title="Close">×</button>
+              </div>
+              <input id="pp-search" type="search" placeholder="검색/필터 (제목·번호)">
+              <div id="pp-list"></div>
+            `;
+            document.body.appendChild(panel);
+        
+            const listEl = panel.querySelector('#pp-list');
+            const searchEl = panel.querySelector('#pp-search');
+        
+            const slides = getSlides();
+            const items = slides.map((s, i) => {
+              const t = s.querySelector('h2,h1,h3');
+              const title = (t ? t.textContent.trim() : `Slide ${i+1}`) || `Slide ${i+1}`;
+              const isBridge = s.classList.contains('bridge-slide');
+              return { i, title, tag: isBridge ? 'Bridge' : '' };
+            });
+        
+            function render(filter=''){
+              listEl.innerHTML = '';
+              const f = filter.trim().toLowerCase();
+              items.forEach(({i,title,tag})=>{
+                if (f && !(title.toLowerCase().includes(f) || String(i+1).includes(f))) return;
+                const div = document.createElement('div');
+                div.className = 'pp-item';
+                div.dataset.idx = i;
+                div.innerHTML = `
+                  <div class="pp-num">${i+1}</div>
+                  <div class="pp-title">${title}${tag?` <span class="pp-tag">(${tag})</span>`:''}</div>
+                `;
+                div.addEventListener('click', ()=> { safeShow(i); closePanel(); });
+                listEl.appendChild(div);
+              });
+              highlight(window.currentSlideIndex ?? 0);
+            }
+        
+            function openPanel(){ panel.classList.add('open'); searchEl.focus({preventScroll:true}); }
+            function closePanel(){ panel.classList.remove('open'); }
+            function togglePanel(){ panel.classList.toggle('open'); if(panel.classList.contains('open')) searchEl.focus({preventScroll:true}); }
+        
+            fab.addEventListener('click', togglePanel);
+            panel.querySelector('#pp-close').addEventListener('click', closePanel);
+            searchEl.addEventListener('input', e => render(e.target.value));
+        
+            // 키보드 토글: ⌘G(맥) / Ctrl+G(윈)
+            document.addEventListener('keydown', (e)=>{
+              const gKey = (e.key||'').toLowerCase()==='g';
+              const toggle = gKey && (e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey;
+              if (toggle){ e.preventDefault(); togglePanel(); }
+            });
+        
+            // 해시 변경으로도 이동
+            window.addEventListener('hashchange', ()=>{
+              const idx = parseHash();
+              if (idx!=null) safeShow(idx);
+            });
+        
+            render();
+        
+            // 초기 해시 반영
+            const initial = parseHash();
+            if (initial!=null) safeShow(initial);
+        
+            // 발표자 모드가 아니면 FAB 숨김 (참가자 화면 깨끗)
+            if (!isPresenter) fab.style.display = 'none';
+        
+            // 외부 전환과 하이라이트 동기화
+            const _origShow = window.showSlide;
+            if (typeof _origShow === 'function') {
+              window.showSlide = function(i){
+                _origShow.call(this, i);
+                try { history.replaceState(null,'', location.pathname + location.search + '#s=' + (i+1)); } catch(e){}
+                highlight(i);
+              };
+            }
+          }
+        
+          // 5) 기존 초기화 이후에 부드럽게 붙이기
+          const start = ()=> setTimeout(buildUI, 60);
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', start);
+          } else {
+            start();
+          }
+        })();
+        
+        
+        /* ===== Minimal Presenter Nav Patch (발표자 전용 / 충돌 없이 추가) ===== */
+        (function(){
+          const isPresenter = __IS_PRESENTER__;
+        
+          // 발표자 모드가 아니면 좌측 배너 제거 & 레이아웃 원복
+          if (!isPresenter) {
+            const nav = document.getElementById('gdPresenterNav');
+            if (nav) nav.style.display = 'none';
+            document.body.classList.remove('gd-with-nav');
+            return; // 청중 모드에서는 네비 생성/패치 불필요
+          }
+        
+          function buildPresenterNav(){
+            const list = document.getElementById('gdPresenterNavList');
+            if (!list) return;
+        
+            // 슬라이드 수집
+            const slides = Array.from(document.querySelectorAll('.slide'));
+            list.innerHTML = '';
+        
+            // 타이틀 규칙: h2 → h1 → h3 → 없으면 "Slide N"
+            function pickTitle(slide, i){
+              const root = slide.querySelector('.slide-body') || slide;
+              const h2 = root.querySelector('h2');
+              const h1 = root.querySelector('h1');
+              const h3 = root.querySelector('h3');
+              let t = (h2?.textContent || h1?.textContent || h3?.textContent || '').trim();
+              if (!t) t = `Slide ${i+1}`;
+              return t.replace(/\s+/g, ' ').slice(0, 140);
+            }
+        
+            slides.forEach((s, i) => {
+              const b = document.createElement('button');
+              b.className = 'gd-nav-item';
+              b.type = 'button';
+              b.dataset.idx = i;
+              b.innerHTML = `<span class="num">${String(i+1).padStart(2,'0')}</span>${pickTitle(s,i)}`;
+              b.addEventListener('click', () => {
+                if (typeof window.currentSlideIndex === 'number') window.currentSlideIndex = i;
+                if (typeof window.showSlide === 'function') window.showSlide(i);
+              });
+              list.appendChild(b);
+            });
+        
+            document.body.classList.add('gd-with-nav');
+            highlight(activeIndex());
+            // 패널 생겼으니 한번 스케일 갱신
+            if (typeof window.updateScale === 'function') setTimeout(window.updateScale, 0);
+          }
+        
+          function activeIndex(){
+            const slides = Array.from(document.querySelectorAll('.slide'));
+            const idx = slides.findIndex(s => s.classList.contains('active'));
+            if (idx >= 0) return idx;
+            return (typeof window.currentSlideIndex === 'number') ? window.currentSlideIndex : 0;
+          }
+        
+          function highlight(i){
+            document.querySelectorAll('#gdPresenterNav .gd-nav-item').forEach(el => {
+              el.classList.toggle('active', Number(el.dataset.idx) === i);
+            });
+            const act = document.querySelector('#gdPresenterNav .gd-nav-item.active');
+            if (act) act.scrollIntoView({block:'nearest', inline:'nearest'});
+          }
+        
+          // === 안전 래핑: 기존 함수는 그대로 호출 + 후처리만 추가 ===
+          function safePatch(){
+            // showSlide 래핑: 원래 로직 실행 후 네비 하이라이트만 추가
+            if (typeof window.showSlide === 'function' && !window.showSlide.__gdPatched) {
+              const _origShow = window.showSlide;
+              window.showSlide = function(i){
+                _origShow.call(this, i);
+                highlight(i);
+              };
+              window.showSlide.__gdPatched = true;
+            }
+        
+            // Ctrl/Cmd+G 로 좌측 배너 토글(기존 FAB 토글 기능 보존의 대체)
+            document.addEventListener('keydown', (e)=>{
+              const gKey = (e.key||'').toLowerCase()==='g';
+              const toggle = gKey && (e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey;
+              if (!toggle) return;
+              e.preventDefault();
+              const nav = document.getElementById('gdPresenterNav');
+              if (!nav) return;
+              const show = nav.style.display !== 'none';
+              if (show) {
+                nav.style.display = 'none';
+                document.body.classList.remove('gd-with-nav');
+              } else {
+                nav.style.display = 'flex';
+                document.body.classList.add('gd-with-nav');
+              }
+              if (typeof window.updateScale === 'function') setTimeout(window.updateScale, 0);
+            });
+        
+            // updateScale 래핑: 스케일 기준을 "컨테이너 가용폭"으로 계산(이미 상단에서 컨테이너 기준)
+            // 별도 래핑 불필요하지만, 중복 방지를 위해 플래그만 부여
+            if (!window.updateScale.__gdPatched) {
+              window.updateScale.__gdPatched = true;
+            }
+        
+            window.addEventListener('resize', () => {
+              if (typeof window.updateScale === 'function') window.updateScale();
+            });
+          }
+        
+          // 초기화
+          document.addEventListener('DOMContentLoaded', () => {
+            safePatch();          // 먼저 래핑
+            buildPresenterNav();  // 리스트 생성
+            highlight(activeIndex());
+          });
+        
+          // 발표자 배너 헤더에 Audience View 버튼 추가
+          (function addAudienceBtn(){
+            function add(){
+              const head = document.querySelector('#gdPresenterNav .nav-head');
+              if (!head || document.getElementById('gd-open-audience')) return;
+              const btn = document.createElement('button');
+              btn.id = 'gd-open-audience';
+              btn.textContent = 'Open Audience View';
+              btn.style.cssText = 'float:right;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;';
+              btn.onclick = () => {
+                const url = new URL(location.href);
+                url.searchParams.delete('presenter');      // 청중창
+                const s = (window.currentSlideIndex || 0) + 1;
+                url.hash = `#s=${s}`;
+                window.open(url.toString(), 'AudienceView');
+              };
+              head.appendChild(btn);
+            }
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', add, { once: true });
+            } else { add(); }
+          })();
+        
+        })();
+        
+        
+        /* ===== 슬라이드 동기화(발표자 → 청중) ===== */
+        (() => {
+          if (window.__gdSlideSyncInstalled) return;
+          window.__gdSlideSyncInstalled = true;
+        
+          const isPresenter = __IS_PRESENTER__;
+        
+          // --- 채널 준비 (BroadcastChannel → localStorage 폴백)
+          const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('gd-slide-sync') : null;
+          const sendLS = (idx) => localStorage.setItem('gdSlideSync', JSON.stringify({ idx, t: Date.now() }));
+        
+          const sendSlide = (idx) => {
+            if (!isPresenter) return;
+            if (bc) bc.postMessage({ type: 'slide', idx });
+            else sendLS(idx);
+          };
+        
+          // --- showSlide 래핑: 발표자에서 넘길 때 브로드캐스트
+          function wrapShowSlide() {
+            const orig = window.showSlide;
+            if (typeof orig !== 'function') return false;
+            if (orig.__wrappedForSync) return true; // 중복 방지
+            const wrapped = function(i) {
+              orig.call(this, i);
+              try { sendSlide(i); } catch(e){}
+            };
+            wrapped.__wrappedForSync = true;
+            window.showSlide = wrapped;
+            return true;
+          }
+          if (!wrapShowSlide()) {
+            document.addEventListener('DOMContentLoaded', wrapShowSlide, { once: true });
+          }
+        
+          // --- 수신 측 처리(청중 창에서만 반영)
+          const go = (idx) => {
+            if (typeof window.showSlide === 'function') window.showSlide(idx);
+          };
+        
+          if (bc) {
+            bc.onmessage = (ev) => {
+              const { type, idx } = ev.data || {};
+              if (type === 'slide' && !isPresenter) go(idx);
+              if (type === 'hello' && isPresenter) {
+                const cur = window.currentSlideIndex || 0;
+                bc.postMessage({ type: 'slide', idx: cur });
+              }
+            };
+          } else {
+            window.addEventListener('storage', (e) => {
+              if (e.key !== 'gdSlideSync' || isPresenter) return;
+              try {
+                const v = JSON.parse(e.newValue || '{}');
+                if (typeof v.idx === 'number') go(v.idx);
+              } catch(e){}
+            });
+          }
+        
+          // 청중 창이 열리면 현재 슬라이드 받도록 핸드셰이크
+          if (!isPresenter && bc) bc.postMessage({ type: 'hello' });
+        
+          // (보조) FAB 패널이 존재한다면 그 헤더에도 Audience View 버튼 추가
+          (function addOpenAudienceButton() {
+            if (!isPresenter) return;
+            function addToFabHeader(){
+              const head = document.getElementById('pp-head');
+              if (!head || head.querySelector('#pp-open-audience')) return;
+              const btn = document.createElement('button');
+              btn.id = 'pp-open-audience';
+              btn.textContent = 'Open Audience View';
+              btn.style.cssText =
+                'margin-left:auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);' +
+                'color:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;';
+              btn.addEventListener('click', () => {
+                const url = new URL(location.href);
+                url.searchParams.delete('presenter');            // 청중 모드(=북마크 없음)
+                const s = (window.currentSlideIndex || 0) + 1;   // 현재 페이지로 맞춰 열기
+                url.hash = `#s=${s}`;
+                window.open(url.toString(), 'AudienceView');
+              });
+              head.appendChild(btn);
+            }
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', addToFabHeader, { once: true });
+            } else {
+              addToFabHeader();
+            }
+          })();
+        })();
         </script>
+        
    
       </body>
       </html>
