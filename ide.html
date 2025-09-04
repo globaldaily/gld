@@ -331,6 +331,27 @@ body > :not(.presentation-container) { display: none !important; }
   flex: 1 1 auto !important;
 }
 }
+/* Ending slide logo — 표지와 동일 스타일 */
+.ending-slide .company-logo { 
+  width: 240px; 
+  margin-bottom: 40px; 
+}
+.ending-slide .company-logo img { 
+  width: 100%; 
+  height: auto; 
+  display: block; 
+}
+/* 모든 슬라이드 풋터를 바닥에 고정 */
+.slide-footer{
+  position: absolute; left: 0; right: 0; bottom: 0; height: 100px;
+}
+
+/* 풋터가 컨텐츠를 덮지 않도록 여유 확보 */
+.slide-content{ padding-bottom: 120px; }
+
+/* (이미 있음) .title-slide / .ending-slide 에서는 풋터 숨김 유지 */
+
+
 </style>
 <link rel="icon" href="data:,">
 
@@ -339,7 +360,7 @@ body > :not(.presentation-container) { display: none !important; }
     <div class="presentation-container">
         
         <div class="slide title-slide active" id="slide0">
-            <div class="company-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="GLD"></div>
+            <div class="company-logo"><img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="GLD"></div>
             <h1 class="main-title">掛け算の組織文化へ</h1>
             <p class="subtitle">「足し算」組織の限界を超え、持続的な成長を創る</p>
             <div class="presenter-info"><div class="role">グローバル・デイリー 営業部</div><div class="name">井出 悠</div></div>
@@ -575,6 +596,10 @@ body > :not(.presentation-container) { display: none !important; }
         </div>
         
         <div class="slide ending-slide" id="slide6">
+            <div class="company-logo">
+                <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Company Logo">
+              </div>
+              
             <div class="slide-index-badge">Slide 6/6</div>
             <h1 class="ending-message" style="margin-bottom: 30px; font-size: 72px;">「個」に依存する時代を終え、<br>「仕組み」で成長する未来へ</h1>
             <p class="ending-subtitle" style="margin-bottom: 50px;">掛け算の文化こそが、私たちの新しいスタンダードです。</p>
