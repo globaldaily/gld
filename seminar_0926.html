@@ -180,45 +180,60 @@
 /* 화면 카운터는 그대로 */
 @media screen { .slide-counter{ display:block; } }
 
-/* ========= 인쇄(라이트 테마, 슬라이드 한 장씩) ========= */
-/* ==== PRINT (統一版) ==== */
+/* ==== PRINT (최종 수정본) ==== */
 @media print {
-  /* 슬라이드 16:9 1페이지씩, 여백 0 */
+  /* 16:9 한 장씩, 여백 0, 배경/색 보존 */
   @page { size: 16in 9in; margin: 0; }
-  .slide-header-fixed, .slide-footer-fixed { z-index: 20 !important; }
- .slide, .slide * { page-break-inside: avoid !important; break-inside: avoid-page !important; }
-
   html, body {
-    background: #fff !important;   /* 라이트 테마 */
+    background: #fff !important;
     color: #000 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     overflow: visible !important;
   }
 
+
+
   /* 화면용 스케일/고정 해제 */
-  .presentation-container { position: static !important; width: auto !important; height: auto !important; }
-  .presentation { transform: none !important; width: auto !important; height: auto !important; background: none !important; overflow: visible !important; }
+  .presentation-container {
+    position: static !important; width: auto !important; height: auto !important;
+  }
+  .presentation {
+    transform: none !important; width: auto !important; height: auto !important;
+    background: none !important; overflow: visible !important;
+  }
 
   /* 각 슬라이드 1페이지 고정 */
-  .slide{
+  .slide {
     display: block !important;
-    position: relative !important;         /* footer absolute 기준 */
+    position: relative !important;           /* footer absolute 기준 */
     width: 16in; height: 9in;
-    background: #fff !important;           /* 다크→라이트 */
+    background: #fff !important;
     color: #000 !important;
-    /* 인쇄용 여백(상/좌우/하: 헤더·풋터 공간 포함) */
-    padding: 40px 90px 120px !important;
+    /* 헤더/풋터와 절대 겹치지 않도록 여유 크게 */
+    padding: 80px 90px 130px !important;    
     page-break-after: always;
     break-inside: avoid-page;
     overflow: hidden !important;
+    align-items: initial !important;
+    justify-content: initial !important;
   }
   .slide:last-child { page-break-after: auto; }
+  .slide.cover { padding-top: 110px !important; } /* 첫 장만 조금 더 아래 */
+  .slide.cover .slide-body { margin-top: 8px !important; }
+ 
+   /* 3페이지(아젠다) 전용 컴팩트 */
+    .slide:nth-of-type(3) .agenda-item { gap: 16px; padding: 14px 20px; }
+    .slide:nth-of-type(3) .agenda-time { min-width: 210px; font-size: 20px; padding: 10px 14px; }
+    .slide:nth-of-type(3) h4 { font-size: 18pt !important; margin-bottom: 6px; }
+    .slide:nth-of-type(3) p, 
+    .slide:nth-of-type(3) li { font-size: 11pt !important; }
+    .slide:nth-of-type(3) .slide-body { margin-top: 4px !important; }
 
   /* 헤더/풋터 강제 노출 + 위치 고정 */
   .slide-header-fixed,
-  .slide-footer-fixed { display:flex !important; position: absolute !important; left: 90px; right: 90px; }
-  .slide-header-fixed { top: 18px; align-items: center; justify-content: space-between; }
+  .slide-footer-fixed { display:flex !important; position: absolute !important; left: 90px; right: 90px; z-index: 20 !important; }
+  .slide-header-fixed { top: 24px; align-items: center; justify-content: space-between; }
   .slide-footer-fixed {
     bottom: 22px; align-items: center; justify-content: space-between;
     padding-top: 8px; border-top: 1px solid rgba(0,0,0,.2) !important;
@@ -229,85 +244,55 @@
   /* 화면 전용 UI 숨김 */
   .slide-counter{ display:none !important; }
 
-  /* 다크 전용 색상들 라이트로 정리 */
-  .card { background: rgba(0,0,0,.04) !important; border: 1px solid rgba(0,0,0,.12) !important; box-shadow: none !important; break-inside: avoid-page; }
-  .agenda-time { background:#000 !important; color:#fff !important; }
-  .source-note { 
-    position: absolute !important; 
-    bottom: 100px !important; left: 50% !important; transform: translateX(-50%) !important;
-    font-size: 9.5pt !important; color:#444 !important; opacity: .95 !important;
+  /* 🔧 핵심: 인쇄 시 transform 모두 제거 — 백지/쏠림 방지 */
+  .slide-body { transform: none !important; }
+  .slide, .slide * { page-break-inside: avoid !important; break-inside: avoid-page !important; }
+  /* 혹시 내부에 남은 transform이 있으면 안전하게 제거 */
+  .slide-body, .slide-body * {
+    transform: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
   }
 
-  /* 이미지/캔버스 과대 높이 방지 */
+  /* 카드/그리드 라이트 톤 */
+  .card { background: rgba(0,0,0,.04) !important; border: 1px solid rgba(0,0,0,.12) !important; box-shadow: none !important; }
+  .agenda-time { background:#000 !important; color:#fff !important; }
+  .source-note {
+    position: absolute !important;
+    bottom: 100px !important; left: 50% !important; transform: translateX(-50%) !important;
+    font-size: 10pt !important; color:#444 !important; opacity: .95 !important;
+  }
+
+  /* 이미지/캔버스 크기 */
   .trend-image { height: 340px !important; }
-  /* 차트 카드가 인라인 스타일로 750px 높이가 있어도 덮어쓰기 */
-  .card[style*="height: 750px"] { height: 480px !important; }
   #countryChart, .card canvas { width: 100% !important; height: 420px !important; }
 
-  /* 타이포(인쇄용 크게 줄임) — pt 기준 */
-  .slide h1 { font-size: 56pt !important; line-height: 1.1 !important; color:#000 !important; text-shadow: none !important; }
-  .slide h2 { font-size: 44pt !important; color:#111 !important; text-shadow: none !important; }
-  .slide h3 { font-size: 30pt !important; color:#222 !important; }
-  .slide h4 { font-size: 22pt !important; color:#222 !important; }
+  /* 타이포(인쇄용) */
+  .slide h1 { font-size: 56pt !important; line-height: 1.12 !important; color:#000 !important; text-shadow: none !important; }
+  .slide h2 { font-size: 44pt !important; color:#111 !important; text-shadow: none !important; margin-bottom: 18px !important; }
+  .slide h3 { font-size: 30pt !important; color:#222 !important; margin-bottom: 14px !important; }
+  .slide h4 { font-size: 22pt !important; color:#0b6b6b !important; }  /* ⬅ 민트 대신 진한 틸 */
   .slide p, .slide li { font-size: 13pt !important; color:#000 !important; }
   .stat-number { font-size: 40pt !important; color:#111 !important; }
   .stat-label  { font-size: 14pt !important; color:#222 !important; }
 
-  /* 컬러 포인트를 라이트 테마 톤으로 다운시킴 */
-  .slide h2, .slide h3, .slide h4, .url-placeholder { color:#111 !important; }
-  .url-placeholder { font-size: 10.5pt !important; opacity: .85 !important; }
+  /* 민트 계열 가독성 ↑ (웹의 #81ecec를 인쇄용 진한 틸로) */
+  .url-placeholder,
+  .trend-content h4,
+  .insight-number { color:#0b6b6b !important; border-color:#0b6b6b !important; }
+}
+/* 아주 연한 민트를 인쇄용 살짝 진한 민트톤으로 보정(선택) */
+    .slide span[style*="#81ecec"] { color: #107a7a !important; }
 
-  /* 오토핏 스케일이 인쇄에서도 적용되도록(글자 짤림 방지) */
-  .slide-body { transform-origin: top center !important; }
+/* 화면: 스냅샷 숨김 */
+#countryChartPrint { display: none; }
+/* 인쇄: 캔버스 숨기고 스냅샷만 출력 */
+@media print {
+  #countryChart { display: none !important; }
+  #countryChartPrint { display: block !important; width: 100% !important; height: auto !important; }
 }
 
-/* === BIG PRIORITY(선택 슬라이드만 크게) === */
-
-/* 여백만 줄여서 실제 표시 스케일을 키움 */
-.slide.tall-slide {
-  padding-top: 120px;   /* 기본 160 → 120 */
-  padding-bottom: 110px;/* 기본 140 → 110 */
-}
-/* 헤더 살짝 낮추고 로고 조금만 작게 */
-.slide.tall-slide .slide-header-fixed { top: 30px; }
-.slide.tall-slide .slide-header-fixed .logo { height: 70px; }
-
-/* 내부 컴팩트: 마진/패딩만 줄이고 폰트 크기는 유지 → 결과적으로 더 크게 보임 */
-.slide.fit-compact h2 { margin-bottom: 28px; }
-.slide.fit-compact h3 { margin-bottom: 16px; }
-.slide.fit-compact .card { padding: 26px 32px; }
-.slide.fit-compact .agenda-item { gap: 28px; padding: 18px 28px; }
-.slide.fit-compact .agenda-time { min-width: 240px; font-size: 26px; padding: 14px 20px; }
-
-/* 8번(차트) 전용: 카드 높이만 살짝 낮춰 오토핏 스케일↑ */
-.slide.chart-dense .card {
-  height: 680px;              /* 기존 750px → 680px */
-  padding: 28px;
-  width: 100%;
-  max-width: 1680px;
-  margin: 0 auto;
-}
-/* 헤더는 오토핏 제외(스케일되지 않게) + 항상 위에 */
-.slide .flags, .slide .logo { z-index: 9; }
-
-/* 8번 차트 전용: 위아래 여백 압축 + 내부 간격 컴팩트 */
-.slide.chart-hero {
-  padding-top: 60px;          /* 기본보다 여백 줄임 */
-  padding-bottom: 110px;      /* 풋터 공간은 유지 */
-}
-.slide.chart-hero h2 { margin-bottom: 8px; }
-.slide.chart-hero h3 { margin: 0 0 12px; font-size: 44px; }
-.slide.chart-hero .card {
-  height: 620px;              /* 카드 자체 높이를 낮춰 전체 스케일을 ↑ */
-  padding: 24px 28px;
-  width: 100%;
-  max-width: 1680px;
-  margin: 6px auto 0;
-}
-/* 차트 슬라이드의 출처 문구는 더 아래로 얇게 */
-.slide.chart-hero .source-note { bottom: 23px; font-size: 18px; opacity: .7; }
-
-    </style>
+</style>
 </head>
 <body>
     <div class="presentation-container">
@@ -1353,46 +1338,58 @@
     </div>
 
     <script>
-        /* ===== 화면/인쇄 공통 상수 ===== */
+        /* =========================
+           공통 상수 (화면/인쇄)
+        ========================= */
         const baseWidth  = 1920;
         const baseHeight = 1080;
-      
-        const P_SIDE   = 120;  // 좌우 패딩
-        const P_TOP    = 160;  // 상단(헤더 포함)
-        const P_BOTTOM = 140;  // 하단(풋터 포함)
-      
-        let slides = [], presentation, currentSlideIndex = 0;
+        
+        // 원본 슬라이드 내부 여백(오토핏 기준)
+        const P_SIDE   = 120;
+        const P_TOP    = 160;
+        const P_BOTTOM = 140;
+        
+        let slides = [];
+        let presentation = null;
+        let currentSlideIndex = 0;
         let isPrinting = false;
-      
-        /* ===== 1) 뷰포트 스케일(화면 전용) ===== */
+        
+        /* =========================
+           1) 화면 스케일 (뷰포트 맞춤)
+        ========================= */
         function updateScale() {
-          if (isPrinting) return; // 인쇄 모드에선 스케일 금지
-          const scale = Math.min(window.innerWidth / baseWidth, window.innerHeight / baseHeight);
+          if (isPrinting) return; // 인쇄 중인 경우 스케일 금지
+          const scale = Math.min(
+            window.innerWidth  / baseWidth,
+            window.innerHeight / baseHeight
+          );
           if (presentation) presentation.style.transform = `scale(${scale})`;
         }
-      
-        /* ===== 2) 헤더/풋터 설치 + 본문 래핑 ===== */
-        function mountHeaderFooterAndBody(){
+        
+        /* =========================
+           2) 헤더/풋터 설치 + 본문 래핑
+        ========================= */
+        function mountHeaderFooterAndBody() {
           slides = [...document.querySelectorAll('.slide')];
-      
-          if (slides.length){
+        
+          if (slides.length) {
             slides[0].classList.add('cover');
-            slides[slides.length-1].classList.add('closing');
+            slides[slides.length - 1].classList.add('closing');
           }
-      
+        
           const LEFT   = 'GLOBAL DAILY';
           const CENTER = 'KOREA INBOUND MARKET SEMINAR 2025' +
                          '<span class="sep">・</span> 参加者限定／配布・転載禁止' +
                          '<span class="sep">・</span> 2025.09.26';
-      
+        
           slides.forEach((s, i) => {
-            // 헤더
+            // --- 헤더(국기+로고를 안전하게 감싼다) ---
             let header = s.querySelector('.slide-header-fixed');
-            if(!header){
+            if (!header) {
               header = document.createElement('div');
               header.className = 'slide-header-fixed';
-              const left = document.createElement('div');  left.className  = 'left';
-              const right= document.createElement('div');  right.className = 'right';
+              const left  = document.createElement('div'); left.className = 'left';
+              const right = document.createElement('div'); right.className = 'right';
               header.appendChild(left); header.appendChild(right);
               s.appendChild(header);
             }
@@ -1400,18 +1397,18 @@
             const logo  = s.querySelector(':scope > .logo');
             if (flags) header.querySelector('.left').appendChild(flags);
             if (logo)  header.querySelector('.right').appendChild(logo);
-      
-            // 풋터
+        
+            // --- 풋터(페이지 x/y) ---
             s.querySelector('.slide-footer-fixed')?.remove();
             const footer = document.createElement('div');
             footer.className = 'slide-footer-fixed';
             footer.innerHTML = `
               <div class="left">${LEFT}</div>
               <div class="center">${CENTER}</div>
-              <div class="right">${i+1} / ${slides.length}</div>`;
+              <div class="right">${i + 1} / ${slides.length}</div>`;
             s.appendChild(footer);
-      
-            // 본문 래핑(.source-note는 래핑 제외)
+        
+            // --- 본문 래핑(.source-note는 제외) ---
             if (!s.querySelector(':scope > .slide-body')) {
               const body = document.createElement('div');
               body.className = 'slide-body';
@@ -1424,61 +1421,67 @@
               });
               s.insertBefore(body, footer);
             }
-      
-            // 3번/8번 크게(여백 컴팩트 + 차트 전용)
-            if (i === 2) s.classList.add('tall-slide','fit-compact');
-            if (i === 7) s.classList.add('tall-slide','fit-compact','chart-hero');
+        
+            // 특정 슬라이드(3번/8번) 여백 컴팩트
+            if (i === 2) s.classList.add('tall-slide', 'fit-compact');            // 아젠다
+            if (i === 7) s.classList.add('tall-slide', 'fit-compact', 'chart-hero'); // 차트
           });
-      
+        
           positionSourceNotes();
         }
-      
-        /* ===== 3) 3번/8번 전용 패딩(오토핏 계산에 반영) ===== */
-        function getPadsFor(index){
+        
+        /* =========================
+           3) 오토핏 패딩 프로파일
+        ========================= */
+        function getPadsFor(index) {
           let top = P_TOP, bottom = P_BOTTOM;
-          if (index === 2) { top = 120; bottom = 120; } // #3
-          if (index === 7) { top = 100; bottom = 120; } // #8(차트)
+          if (index === 2) { top = 120; bottom = 120; } // 3p(아젠다)
+          if (index === 7) { top = 100; bottom = 120; } // 8p(차트)
           return { top, bottom };
         }
-      
-        /* ===== 4) 오토핏(본문을 사용 가능 영역에 scale) ===== */
-        function fitOne(slide){
+        
+        /* =========================
+           4) 오토핏(본문 scale)
+        ========================= */
+        function fitOne(slide) {
           if (!slide || slide.classList.contains('no-fit')) return;
           const body = slide.querySelector('.slide-body');
-          if(!body) return;
-      
+          if (!body) return;
+        
           const idx = slides.indexOf(slide);
           const { top, bottom } = getPadsFor(idx);
-      
+        
           const usableW = baseWidth  - (P_SIDE * 2);
           const usableH = baseHeight - (top + bottom);
-      
+        
           // 측정 전 초기화
           body.style.transform = 'none';
-      
+        
           const contentW = Math.max(body.scrollWidth,  body.offsetWidth,  1);
           const contentH = Math.max(body.scrollHeight, body.offsetHeight, 1);
-      
+        
           const scaleX = usableW / contentW;
           const scaleY = usableH / contentH;
           const scale  = Math.min(1, scaleX, scaleY);
-      
+        
           body.style.transformOrigin = 'top center';
           body.style.transform = `scale(${scale})`;
         }
-        function fitAll(){ slides.forEach(fitOne); }
-      
-        /* ===== 5) 모든 .source-note를 풋터 위로 정렬 ===== */
-        function positionSourceNotes(){
+        function fitAll() { slides.forEach(fitOne); }
+        
+        /* =========================
+           5) 출처노트 자리 맞춤
+        ========================= */
+        function positionSourceNotes() {
           slides.forEach((s, idx) => {
             const note = s.querySelector('.source-note');
             if (!note) return;
             const footer = s.querySelector('.slide-footer-fixed');
             const footerH = footer ? footer.offsetHeight : 0;
-      
-            let gap = 28;                 // 기본 간격
+        
+            let gap = 28;
             if (idx === 6 || idx === 7) gap = 48; // 7·8번은 더 띄움
-      
+        
             Object.assign(note.style, {
               position: 'absolute',
               left: P_SIDE + 'px',
@@ -1490,13 +1493,15 @@
             });
           });
         }
-      
-        /* ===== 6) 차트 ===== */
+        
+        /* =========================
+           6) Chart.js 초기화
+        ========================= */
         function initCountryChart() {
           const ctx = document.getElementById('countryChart');
-          if(!ctx) return;
-          if(ctx.chart) ctx.chart.destroy();
-      
+          if (!ctx) return;
+          if (ctx.chart) ctx.chart.destroy();
+        
           ctx.chart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -1542,9 +1547,9 @@
             }
           });
         }
-      
-        // 인쇄 시 차트 라이트 컬러
-        function setChartForPrint(isPrint){
+        
+        /* (선택) 화면/인쇄 색상 스위치 */
+        function setChartForPrint(isPrint) {
           const canvas = document.getElementById('countryChart');
           if (!canvas || !canvas.chart) return;
           const opt = canvas.chart.options;
@@ -1565,81 +1570,265 @@
           }
           canvas.chart.update();
         }
-      
-        /* ===== 7) 슬라이드 전환 ===== */
+        
+        /* =========================
+           7) 슬라이드 전환
+        ========================= */
         function showSlide(index) {
           slides.forEach(s => s.classList.remove('active'));
           const current = slides[index];
           current.classList.add('active');
-      
+        
           current.classList.remove('slide-transition');
           void current.offsetWidth;
           current.classList.add('slide-transition');
-      
+        
           const counter = document.getElementById('currentSlide');
           if (counter) counter.textContent = index + 1;
-      
-          // 8번(차트) 보정
-          if (index === 7) {
+        
+          // 차트 슬라이드 보정(해당 슬라이드에 캔버스가 있으면)
+          const hasChart = !!current.querySelector('#countryChart');
+          if (hasChart) {
             const card = current.querySelector('.card');
             if (card) { card.style.height = '620px'; card.style.padding = '24px 28px'; }
             const h2 = current.querySelector('h2'); if (h2) h2.style.marginBottom = '8px';
             const h3 = current.querySelector('h3'); if (h3) { h3.style.margin = '0 0 12px'; h3.style.fontSize = '44px'; }
           }
-      
+        
           const chartCanvas = current.querySelector('#countryChart');
           if (chartCanvas && !chartCanvas.chart) {
-            setTimeout(() => { initCountryChart(); fitOne(current); positionSourceNotes(); }, 150);
+            setTimeout(() => { initCountryChart(); fitOne(current); positionSourceNotes(); }, 120);
           } else {
             fitOne(current);
             positionSourceNotes();
           }
         }
-        function nextSlide(){
+        function nextSlide() {
           currentSlideIndex = (currentSlideIndex + 1) % slides.length;
           showSlide(currentSlideIndex);
         }
-        function prevSlide(){
+        function prevSlide() {
           currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
           showSlide(currentSlideIndex);
         }
-      
-        /* ===== 8) 초기화 ===== */
+        
+        /* =========================
+           8) 초기화
+        ========================= */
         document.addEventListener('DOMContentLoaded', () => {
           presentation = document.querySelector('.presentation');
-      
+        
           mountHeaderFooterAndBody();
-      
+        
           const totalSlidesEl = document.getElementById('totalSlides');
           if (totalSlidesEl) totalSlidesEl.textContent = slides.length;
-      
+        
           showSlide(0);
           updateScale();
-      
+        
           window.addEventListener('resize', () => { updateScale(); fitAll(); positionSourceNotes(); });
           document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
             else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
           });
         });
-      
-        /* ===== 9) 프린트 훅 (최종본) ===== */
-        window.addEventListener('beforeprint', () => {
-          isPrinting = true;
-          try { initCountryChart(); } catch(e){}
-          try { setChartForPrint(true); } catch(e){}
-          requestAnimationFrame(() => {
-            try { positionSourceNotes(); } catch(e){}
-            try { fitAll(); } catch(e){}
+        
+        /* ===========================================================
+           9) 하드 프린트 모드(별도 창) — 공백/쏠림/차트 누락 방지 (Shift+P)
+           - 모든 슬라이드를 클론 → 정적화(absolute/transform 제거)
+           - 원본 캔버스 → 이미지 스냅샷으로 교체
+           - 16:9 페이지 안에서 1920x1080 뷰포트로 균등 스케일 + 중앙정렬
+        =========================================================== */
+        (function () {
+          // (A) 숨겨진 슬라이드 강제 렌더(스냅샷 준비용)
+          function forceRenderTemporarily() {
+            const touched = [];
+            document.querySelectorAll('.slide').forEach(s => {
+              const cs = getComputedStyle(s);
+              if (cs.display === 'none') {
+                touched.push(s);
+                s.dataset._prevDisplay = s.style.display || '';
+                s.style.display = 'block';
+              }
+            });
+            return () => {
+              touched.forEach(s => {
+                s.style.display = s.dataset._prevDisplay;
+                delete s.dataset._prevDisplay;
+              });
+            };
+          }
+        
+          // (B) 프린트용 윈도우 오픈
+          function openPrintView() {
+            const restore = forceRenderTemporarily();
+        
+            // 차트 준비
+            try {
+              const c = document.getElementById('countryChart');
+              if (c && !c.chart) initCountryChart();
+              if (c && c.chart) { c.chart.resize(); c.chart.update('none'); }
+            } catch(e) {}
+        
+            const w = window.open('', '_blank');
+            const doc = w.document;
+        
+            const css = `
+              @page { size: 16in 9in; margin: 0; }
+              html, body {
+                margin:0; padding:0; background:#fff; color:#000;
+                -webkit-print-color-adjust: exact; print-color-adjust: exact;
+              }
+              .page {
+                width:16in; height:9in; box-sizing:border-box;
+                padding: 1.2in 1.0in 1.2in; /* 상하좌우 여백(쏠림 방지) */
+                page-break-after: always; overflow:hidden;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Sans", Meiryo, sans-serif;
+                display:flex; align-items:center; justify-content:center;
+              }
+              .viewport {
+                width: 1920px; height: 1080px;
+                transform-origin: center center;
+              }
+              h1,h2,h3,h4,p,li,span,div { text-shadow:none !important; }
+              img { max-width:100%; height:auto; }
+            `;
+        
+            doc.write('<!doctype html><html><head><meta charset="utf-8"><title>Print</title><style>'+css+'</style></head><body></body></html>');
+            doc.close();
+        
+            const srcSlides = Array.from(document.querySelectorAll('.slide'));
+            srcSlides.forEach((s, i) => {
+              // 페이지 래퍼
+              const page = doc.createElement('section');
+              page.className = 'page';
+        
+              // 원본 슬라이드 클론
+              const clone = s.cloneNode(true);
+        
+              // 화면 전용 요소 제거
+              clone.querySelectorAll('.slide-counter').forEach(n => n.remove());
+        
+              // 클론 트리 정적화(absolute/transform 등 제거 → 인쇄 안전)
+              clone.style.display = 'block';
+              clone.style.visibility = 'visible';
+              clone.querySelectorAll('*').forEach(el => {
+                const st = el.style;
+                if (!st) return;
+                if (st.visibility === 'hidden') st.visibility = 'visible';
+                if (st.display === 'none')     st.display    = 'block';
+                st.position = 'static';
+                st.transform = 'none';
+                st.animation = 'none';
+                st.transition = 'none';
+                st.filter = 'none';
+                st.backdropFilter = 'none';
+              });
+        
+              // (핵심) 캔버스 → 이미지 스냅샷(원본에서 찍은 데이터URL 사용)
+              const srcCanvases = s.querySelectorAll('canvas');
+              const cloneCanvases = clone.querySelectorAll('canvas');
+              srcCanvases.forEach((cv, idx) => {
+                try {
+                  // 원본에서 스냅샷
+                  const url = cv.toDataURL('image/png');
+                  const img = doc.createElement('img');
+                  img.src = url;
+                  img.alt = 'chart snapshot';
+                  img.style.width = '100%';
+                  img.style.height = 'auto';
+                  if (cloneCanvases[idx]) cloneCanvases[idx].replaceWith(img);
+                } catch(e) {}
+              });
+        
+              // 1920x1080 뷰포트 안에 클론 삽입
+              const viewport = doc.createElement('div');
+              viewport.className = 'viewport';
+              viewport.appendChild(clone);
+              page.appendChild(viewport);
+              doc.body.appendChild(page);
+        
+              // 페이지의 가용 크기 측정 후 균등 스케일 + 중앙
+              const cs = w.getComputedStyle(page);
+              const pw = page.clientWidth  - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+              const ph = page.clientHeight - parseFloat(cs.paddingTop)  - parseFloat(cs.paddingBottom);
+              const scale = Math.min(pw / baseWidth, ph / baseHeight, 1);
+              viewport.style.transform = `scale(${scale})`;
+            });
+        
+            restore();
+        
+            w.addEventListener('load', () => {
+              w.focus();
+              w.print();
+            });
+          }
+        
+          // 단축키: Shift + P
+          document.addEventListener('keydown', (e) => {
+            if (e.shiftKey && e.key.toLowerCase() === 'p') {
+              e.preventDefault();
+              openPrintView();
+            }
           });
-        });
-      
-        window.addEventListener('afterprint', () => {
-          isPrinting = false;
-          try { setChartForPrint(false); } catch(e){}
-          try { updateScale(); } catch(e){}
-          try { fitAll(); } catch(e){}
-        });
+        
+          // 전역 노출
+          window.openPrintView = openPrintView;
+        })();
+        
+        /* ===========================================================
+           10) 기본 인쇄(Ctrl/Cmd+P) 대응 — 차트 스냅샷만 주입
+           (하드 프린트 모드 사용이 가장 안전하지만,
+            기본 인쇄에서도 그래프 누락 방지)
+        =========================================================== */
+        (function () {
+          function snapshotCountryChart() {
+            const c = document.getElementById('countryChart');
+            if (!c) return;
+        
+            const slide = c.closest('.slide');
+            let revert = null;
+            if (slide && getComputedStyle(slide).display === 'none') {
+              const prev = slide.style.display;
+              slide.style.display = 'block';
+              revert = () => { slide.style.display = prev; };
+            }
+        
+            try {
+              if (!c.chart) initCountryChart();
+              if (c.chart) { c.chart.resize(); c.chart.update('none'); }
+            } catch(e) {}
+        
+            try {
+              const url = c.toDataURL('image/png');
+              let img = document.getElementById('countryChartPrint');
+              if (!img) {
+                img = document.createElement('img');
+                img.id = 'countryChartPrint';
+                img.alt = 'chart snapshot';
+                c.parentNode.insertBefore(img, c); // 캔버스 바로 앞에
+              }
+              img.src = url;
+            } catch(e) {}
+        
+            if (revert) revert();
+          }
+        
+          window.addEventListener('beforeprint', () => {
+            isPrinting = true;
+            snapshotCountryChart();
+            setChartForPrint?.(true);
+          });
+          window.addEventListener('afterprint', () => {
+            isPrinting = false;
+            setChartForPrint?.(false);
+            // 스냅샷 제거(원하면 남겨도 무방)
+            const img = document.getElementById('countryChartPrint');
+            if (img) img.remove();
+          });
+        })();
         </script>
+        
+
       </body>
       </html>
