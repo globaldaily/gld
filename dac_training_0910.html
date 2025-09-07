@@ -6,21 +6,21 @@
   <title>真の組織力とは何か</title>
   <style>
     :root{
-      --highlight-blue: #007AFF; /* 애플의 시그니처 블루 */
-      --highlight-orange: #FF9500; /* 애플의 시그니처 오렌지 */
+      --highlight-blue: 
+      --highlight-orange:
       
-      --bg: #000000; /* 더 깊고 강렬한 블랙 배경 */
-      --fg: #F5F5F7; /* 눈이 편안한 오프화이트 텍스트 */
-      --muted: #86868B; /* 보조 텍스트를 위한 차분한 그레이 */
+      --bg: #000000;
+      --fg: #F5F5F7;
+      --muted: #86868B;
 
-      --card-bg: rgba(28, 28, 30, 0.75); /* 반투명 다크 그레이 카드 배경 (유리 질감 강화) */
-      --card-border: rgba(128, 128, 128, 0.3); /* 카드의 경계를 명확히 하는 은은한 테두리 */
+      --card-bg: rgba(28, 28, 30, 0.75);
+      --card-border: rgba(128, 128, 128, 0.3);
 
       /* ====== SLIDE CANVAS (16:9) ====== */
       --slide-width: 1600px;
       --slide-height: 900px;
 
-      /* ====== LOGO URL（変更可） ====== */
+    
       --logo: url('https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/07/GLD_type02_white_1178_785-2-1.png');
     }
 
@@ -34,7 +34,7 @@
       overflow:hidden;
     }
 
-    /* ====== Deck (スライド全体のステージを16:9固定でスケール) ====== */
+    
     .deck{
       position:fixed;left:50%;top:50%;
       width:var(--slide-width);height:var(--slide-height);
@@ -55,7 +55,7 @@
 
     .content{max-width:1200px;width:100%;position:relative}
 
-    /* ====== Type Scale (16:9基準で見やすく調整) ====== */
+    
     h1{font-size:72px;line-height:1.08;font-weight:650;letter-spacing:-.02em;text-align:center;margin-bottom:24px}
     h2{font-size:44px;line-height:1.16;font-weight:560;letter-spacing:-.01em;margin-bottom:28px}
     .subtitle{font-size:28px;color:var(--muted);text-align:center;margin-top:12px;opacity:0;animation:slideUp 800ms ease-out 200ms forwards}
@@ -93,7 +93,7 @@
     .final-quote .main-question{font-size:44px;font-weight:620;line-height:1.25;margin-bottom:24px;opacity:0;animation:fadeIn .7s ease-out .2s forwards}
     .final-quote .answer{font-size:22px;color:var(--muted);line-height:1.6;opacity:0;animation:fadeIn .7s ease-out .45s forwards}
 
-    /* ====== Header / Footer / Counter ====== */
+
     .deck-header, .deck-footer {
       position: absolute;
       width: 100%;
@@ -169,7 +169,7 @@
       text-align: right;
     }
     
-    /* ====== Animations ====== */
+
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
     @keyframes fadeInUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
@@ -177,7 +177,7 @@
     @keyframes scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
     @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
 
-    /* ====== Responsive (縦長端末などでも安全表示) ====== */
+    
     @media (max-width: 900px){
       .slide{padding:40px 48px}
       .two-column{grid-template-columns:1fr;gap:20px}
@@ -186,7 +186,7 @@
       .point-item p{font-size:16px}
     }
 
-    /* ====== Print / PDF ====== */
+    
     @media print{
       @page {
         size: 16in 9in;
@@ -227,10 +227,10 @@
       }
     }
 
-    /* ======== 업데이트 중 표시를 위한 스타일 ======== */
+  
 .slide:not(:first-of-type) .content {
-  filter: blur(8px); /* 1번 슬라이드를 제외한 모든 슬라이드의 콘텐츠를 블러 처리 */
-  pointer-events: none; /* 블러된 슬라이드는 클릭 등 상호작용 안 되게 설정 */
+  filter: blur(8px); 
+  pointer-events: none; 
 }
 
 .slide:not(:first-of-type)::after {
@@ -242,7 +242,7 @@
   font-size: 48px;
   font-weight: bold;
   color: var(--fg);
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); /* 텍스트가 잘 보이도록 그림자 추가 */
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); 
   z-index: 20;
 }
   </style>
