@@ -6,22 +6,26 @@
   <title>真の組織力とは何か</title>
   <style>
     :root{
-      --highlight-blue: #007AFF;
-      --highlight-orange: #FF9500;
-      
-      --bg: #000000;
-      --fg: #F5F5F7;
-      --muted: #86868B;
+        --highlight-blue: #007AFF;
+        --highlight-orange: #FF9500;
+        
+        --bg: #000000;
+        --fg: #F5F5F7;
+        --muted: #86868B;
 
-      --card-bg: rgba(28, 28, 30, 0.75);
-      --card-border: rgba(128, 128, 128, 0.3);
+        --card-bg: rgba(28, 28, 30, 0.75);
+        --card-border: rgba(128, 128, 128, 0.3);
 
-      /* ====== SLIDE CANVAS (16:9) ====== */
-      --slide-width: 1600px;
-      --slide-height: 900px;
+        /* ====== SLIDE CANVAS (16:9) ====== */
+        --slide-width: 1600px;
+        --slide-height: 900px;
 
-      --logo: url('https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/07/GLD_type02_white_1178_785-2-1.png');
-    }
+        --logo: url('https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/07/GLD_type02_white_1178_785-2-1.png');
+        
+        /* Print optimization */
+        --print-bg: #000000;
+        --print-fg: #F5F5F7;
+        }
 
     *{box-sizing:border-box;margin:0;padding:0}
 
@@ -198,6 +202,23 @@
       width: 64px;
       text-align: right;
     }
+
+    .author-credit {
+      position: relative;
+      margin-top: 40px;
+      text-align: center;
+      font-size: 16px;
+      color: var(--highlight-blue);
+      font-weight: 500;
+      opacity: 0;
+      animation: fadeIn .7s ease-out 1.2s forwards;
+      padding: 8px 16px;
+      border: 1px solid rgba(0, 122, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(0, 122, 255, 0.1);
+      backdrop-filter: blur(10px);
+      display: inline-block;
+    }
     
 
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -224,40 +245,309 @@
         size: 16in 9in;
         margin: 0;
       }
+      
       html, body {
-        width: 100%;
-        height: 100%;
-        overflow: visible;
-        background: var(--bg) !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: visible !important;
+        background: #000000 !important;
+        color: #F5F5F7 !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Hiragino Sans', 'Noto Sans JP', sans-serif !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
       }
+      
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+      
+      .slide *,
+      .slide *:before,
+      .slide *:after {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+      
       .deck {
         position: static !important;
         transform: none !important;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        background: var(--bg) !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #000000 !important;
       }
+      
+      .deck-header, .deck-footer {
+        display: none !important;
+      }
+      
+      .slide-header, .slide-footer {
+        position: absolute !important;
+        display: flex !important;
+        width: calc(100% - 96px) !important;
+        padding: 0 48px !important;
+        z-index: 200 !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        left: 0 !important;
+        right: 0 !important;
+      }
+      
+      .slide-header {
+        top: 32px !important;
+      }
+      
+      .slide-footer {
+        bottom: 28px !important;
+      }
+      
+      .slide-header .company-logo, .slide-footer .company-logo {
+        width: 120px !important;
+        height: 40px !important;
+        background-image: var(--logo) !important;
+        background-size: contain !important;
+        background-position: center left !important;
+        background-repeat: no-repeat !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      
+      .slide-header .presentation-title, .slide-footer .presentation-title {
+        font-size: 18px !important;
+        color: #86868B !important;
+        font-weight: 500 !important;
+      }
+      
+      .slide-footer .footer-text {
+        font-size: 16px !important;
+        color: #888 !important;
+      }
+      
+      .slide-footer .slide-counter {
+        font-size: 16px !important;
+        color: #888 !important;
+      }
+      
+      .slide-header .navigation, .slide-footer .navigation {
+        display: none !important;
+      }
+      
       .slide {
         position: relative !important;
         display: flex !important;
         opacity: 1 !important;
         transform: none !important;
-        width: 100%;
-        height: 100%;
-        background: var(--bg) !important;
-        page-break-after: always;
-        break-after: page;
+        width: 100% !important;
+        height: 100% !important;
+        background: #000000 !important;
+        color: #F5F5F7 !important;
+        padding: 64px 96px !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
       }
+      
       .slide:last-of-type {
-        page-break-after: auto;
-        break-after: auto;
+        page-break-after: auto !important;
+        break-after: auto !important;
       }
-      .deck-header, .deck-footer, .navigation, .slide-counter {
-        display: none !important;
+      
+      .content {
+        max-width: 1200px !important;
+        width: 100% !important;
+        position: relative !important;
+        z-index: 1 !important;
+      }
+      
+      h1 {
+        font-size: 72px !important;
+        line-height: 1.08 !important;
+        font-weight: 650 !important;
+        letter-spacing: -0.02em !important;
+        text-align: center !important;
+        margin-bottom: 24px !important;
+        color: #F5F5F7 !important;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      
+      h2 {
+        font-size: 44px !important;
+        line-height: 1.16 !important;
+        font-weight: 560 !important;
+        letter-spacing: -0.01em !important;
+        margin-bottom: 28px !important;
+        color: #F5F5F7 !important;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      
+      .subtitle {
+        font-size: 28px !important;
+        color: #86868B !important;
+        text-align: center !important;
+        margin-top: 12px !important;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      
+      .author-credit {
+        position: absolute !important;
+        bottom: 160px !important;
+        right: 96px !important;
+        font-size: 16px !important;
+        color: #007AFF !important;
+        font-weight: 500 !important;
+        opacity: 1 !important;
+        animation: none !important;
+        padding: 8px 16px !important;
+        border: 1px solid rgba(0, 122, 255, 0.6) !important;
+        border-radius: 8px !important;
+        background: rgba(0, 122, 255, 0.2) !important;
+        backdrop-filter: none !important;
+      }
+      
+      .glass-card {
+        background: rgba(28, 28, 30, 0.95) !important;
+        border: 1px solid rgba(128, 128, 128, 0.6) !important;
+        border-radius: 20px !important;
+        padding: 28px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        backdrop-filter: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      
+      .stat-card, .point-item {
+        background: rgba(28, 28, 30, 0.95) !important;
+        border: 1px solid rgba(128, 128, 128, 0.6) !important;
+        border-radius: 16px !important;
+        padding: 24px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      
+      .stats-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 24px !important;
+        margin: 28px 0 !important;
+      }
+      
+      .point-grid {
+        display: grid !important;
+        gap: 16px !important;
+        margin-top: 16px !important;
+      }
+      
+      .two-column {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 36px !important;
+        align-items: start !important;
+      }
+      
+      .vs-container {
+        display: flex !important;
+        align-items: center !important;
+        gap: 36px !important;
+        margin: 28px 0 !important;
+      }
+      
+      .vs-item {
+        flex: 1 !important;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      
+      .vs-divider {
+        font-size: 32px !important;
+        font-weight: 200 !important;
+        color: #777 !important;
+        opacity: 1 !important;
+        animation: none !important;
+      }
+      
+      .highlight {
+        color: #007AFF !important;
+        font-weight: 600 !important;
+      }
+      
+      .asset-highlight {
+        color: #FF9500 !important;
+        font-weight: 600 !important;
+      }
+      
+      .stat-number {
+        color: #FF9500 !important;
+        font-size: 48px !important;
+        font-weight: 600 !important;
+        margin-bottom: 8px !important;
+      }
+      
+      .stat-label {
+        font-size: 16px !important;
+        color: #86868B !important;
+      }
+      
+      .big-number {
+        font-size: 128px !important;
+        font-weight: 200 !important;
+        text-align: center !important;
+        color: #FF9500 !important;
+        line-height: 1 !important;
+        margin-bottom: 8px !important;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      
+      .final-quote .main-question {
+        font-size: 44px !important;
+        font-weight: 620 !important;
+        line-height: 1.25 !important;
+        margin-bottom: 24px !important;
+        color: #F5F5F7 !important;
+        opacity: 1 !important;
+        animation: none !important;
+      }
+      
+      .final-quote .answer {
+        font-size: 22px !important;
+        color: #86868B !important;
+        line-height: 1.6 !important;
+        opacity: 1 !important;
+        animation: none !important;
+      }
+      
+      .point-item h4 {
+        color: #007AFF !important;
+        font-size: 22px !important;
+        margin-bottom: 8px !important;
+        font-weight: 600 !important;
+      }
+      
+      .point-item p {
+        color: #d2d2d7 !important;
+        font-size: 18px !important;
+        line-height: 1.6 !important;
       }
     }
   </style>
@@ -282,6 +572,11 @@
       <div class="content">
         <h1>真の組織力とは何か</h1>
         <p class="subtitle">私は組織の真の力になっているだろうか？</p>
+        <div style="text-align: center; margin-top: 40px;">
+          <div class="author-credit">
+            Global Daily Juli Kim
+          </div>
+        </div>
       </div>
     </section>
 
@@ -436,7 +731,7 @@
       </div>
     </section>
 
-    <!-- 7. 選ばれる人の循環 -->
+    <!-- 7. 선ばれる人の循환 -->
     <section class="slide">
       <div class="content">
         <h2 style="text-align:center;">そうなると何が起こるか</h2>
@@ -556,6 +851,34 @@
     // ====== Print: ensure first slide visible for preview before printing ======
     window.addEventListener('beforeprint', ()=>{
       showSlide(0);
+      
+      // PDF용 헤더/푸터를 각 슬라이드에 복사
+      const headerTemplate = document.querySelector('.deck-header').cloneNode(true);
+      const footerTemplate = document.querySelector('.deck-footer').cloneNode(true);
+      
+      slides.forEach((slide, index) => {
+        // 기존 슬라이드 헤더/푸터 제거
+        const existingHeaders = slide.querySelectorAll('.slide-header, .slide-footer');
+        existingHeaders.forEach(el => el.remove());
+        
+        // 새 헤더/푸터 추가
+        const slideHeader = headerTemplate.cloneNode(true);
+        const slideFooter = footerTemplate.cloneNode(true);
+        
+        slideHeader.classList.remove('deck-header');
+        slideHeader.classList.add('slide-header');
+        slideFooter.classList.remove('deck-footer');
+        slideFooter.classList.add('slide-footer');
+        
+        // 슬라이드 번호 업데이트
+        const counter = slideFooter.querySelector('.slide-counter');
+        if(counter) {
+          counter.innerHTML = `${index + 1} / ${totalSlides}`;
+        }
+        
+        slide.appendChild(slideHeader);
+        slide.appendChild(slideFooter);
+      });
     });
   </script>
 </body>
