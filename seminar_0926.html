@@ -1,562 +1,2786 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>真の組織力とは何か</title>
-  <style>
-    :root{
-      --highlight-blue: #007AFF;
-      --highlight-orange: #FF9500;
-      
-      --bg: #000000;
-      --fg: #F5F5F7;
-      --muted: #86868B;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Korea Inbound Market Seminar - Full Presentation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        /* 기본 스타일 및 레이아웃 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', 'Hiragino Sans', 'ヒラギノ角ゴ ProN W3', 'メイリオ', Meiryo, sans-serif;
+            background: #0a0a1a;
+            color: white;
+            overflow: hidden; /* 스크롤바 제거 */
+        }
+        .presentation-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .presentation {
+            width: 1920px; height: 1080px;
+            position: relative;
+            transform-origin: center center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            overflow: hidden;
+        }
+        .slide {
+            width: 100%; height: 100%;
+            display: none;
+            padding: 80px 120px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            text-align: center;
+            position: absolute; top: 0; left: 0;
+            background-color: transparent;
+        }
+        .slide.active { display: flex; }
 
-      --card-bg: rgba(28, 28, 30, 0.75);
-      --card-border: rgba(128, 128, 128, 0.3);
+        /* 타이포그래피 */
+        .slide h1 { font-size: 96px; font-weight: 700; margin-bottom: 30px; line-height: 1.1; color: #fff; text-shadow: 0 0 20px rgba(128, 128, 255, 0.5); }
+        .slide h2 { font-size: 84px; font-weight: 600; margin-bottom: 40px; color: #a29bfe; text-shadow: 1px 1px 4px rgba(0,0,0,0.3); }
+        .slide h3 { font-size: 52px; font-weight: 500; margin-bottom: 25px; color: #f0f0f0; opacity: 0.95; }
+        .slide h4 { font-size: 42px; font-weight: 600; margin-bottom: 20px; color: #81ecec; }
+        .slide p { font-size: 34px; line-height: 1.6; max-width: 1600px; }
 
-      /* ====== SLIDE CANVAS (16:9) ====== */
-      --slide-width: 1600px;
-      --slide-height: 900px;
+        /* 공통 요소 */
+        .logo { position: absolute; top: 50px; right: 70px; height: 80px; z-index: 10; }
+        .flags { position: absolute; top: 50px; left: 70px; display: flex; gap: 20px; z-index: 10; }
+        .flag { width: 80px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .slide-counter { position: fixed; bottom: 30px; right: 30px; background: rgba(162, 155, 254, 0.2); padding: 12px 28px; border-radius: 15px; backdrop-filter: blur(10px); font-size: 24px; font-weight: 500; border: 1px solid rgba(162, 155, 254, 0.3); color: white; z-index: 100; }
+        .source-note { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); font-size: 20px; opacity: 0.6; font-style: italic; }
 
-      --logo: url('https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/07/GLD_type02_white_1178_785-2-1.png');
-    }
+        /* 카드 및 그리드 스타일 */
+        .card { background: rgba(255,255,255,0.06); padding: 30px 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(15px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; width: 100%; max-width: 1700px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; width: 100%; max-width: 1700px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; width: 100%; max-width: 1700px; }
 
-    *{box-sizing:border-box;margin:0;padding:0}
+        /* 특정 슬라이드 요소 스타일 */
+        .agenda-item { display: flex; align-items: center; gap: 40px; padding: 25px 40px; text-align: left; }
+        .agenda-time { background: linear-gradient(135deg, #a29bfe 0%, #74b9ff 100%); padding: 18px 25px; border-radius: 10px; font-size: 28px; font-weight: 600; min-width: 280px; text-align: center; }
+        .agenda-content h4 { font-size: 36px; color: #81ecec; margin-bottom: 8px; }
+        .agenda-content p { font-size: 26px; opacity: 0.9; margin: 0; }
+        
+        .stat-card { text-align: center; }
+        .stat-number { font-size: 90px; font-weight: 700; color: #a29bfe; margin-bottom: 10px; }
+        .stat-label { font-size: 32px; opacity: 0.9; line-height: 1.3; }
 
-    html,body{height:100%}
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Hiragino Sans','Noto Sans JP',sans-serif;
-      background:var(--bg);color:var(--fg);
-      -webkit-font-smoothing:antialiased;
-      overflow:hidden;
-    }
+        .insight-list { display: flex; flex-direction: column; gap: 20px; text-align: left; margin-top: 25px; }
+        .insight-item { display: flex; align-items: center; gap: 20px; font-size: 32px; line-height: 1.4; }
+        .insight-number { background: #81ecec; color: #1a1a2e; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 24px; flex-shrink: 0; }
 
+        .trend-slide-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; text-align: left; width: 100%; max-width: 1700px; }
+        .trend-image { width: 100%; height: 600px; object-fit: cover; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .trend-content h3 { font-size: 64px; color: #a29bfe; margin-bottom: 25px; }
+        .trend-content h4 { font-size: 36px; color: #81ecec; margin-bottom: 15px; border-left: 5px solid #81ecec; padding-left: 15px; }
+        .trend-content p { font-size: 30px; margin-bottom: 20px; }
+        .trend-content ul { font-size: 30px; margin-left: 40px; list-style-position: inside; }
+        .url-placeholder { font-size: 24px; color: #81ecec; margin-top: 20px; opacity: 0.8; }
+        
+        .meme-card { text-align: center; padding: 25px; }
+        .meme-card h4 { font-size: 32px; margin-bottom: 15px;}
+        .meme-card p { font-size: 26px; line-height: 1.5; }
+        .meme-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
+
+
+        /* 브릿지 슬라이드 스타일 */
+        .bridge-slide {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .bridge-slide h2 {
+            font-size: 60px;
+            color: #81ecec;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+        .bridge-slide h1 {
+            font-size: 120px;
+            color: #fff;
+            margin: 20px 0;
+        }
+        .bridge-slide h3 {
+            font-size: 48px;
+            color: #f0f0f0;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        /* 애니메이션 */
+        .fade-in { animation: fadeIn 1s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-transition { animation: slideTransition 0.6s ease-in-out; }
+        @keyframes slideTransition { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     
-    .deck{
-      position:fixed;left:50%;top:50%;
-      width:var(--slide-width);height:var(--slide-height);
-      transform:translate(-50%,-50%) scale(var(--scale,1));
-      transform-origin:center center;
-      background:var(--bg);
-    }
+/* === PRINT & FOOTER (정리본) === */
 
-    /* ====== Slide ====== */
-    .slide{
-      position:absolute;inset:0;
-      display:none;flex-direction:column;justify-content:center;align-items:center;
-      padding:64px 96px;
-      background:var(--bg);
-      opacity:0;transform:translateY(16px);
-      transition:opacity .6s cubic-bezier(.25,.46,.45,.94), transform .6s cubic-bezier(.25,.46,.45,.94);
-    }
-    .slide.active{display:flex;opacity:1;transform:translateY(0);z-index:10}
+/* 본문 슬라이드에선 로고 숨김(커버/엔딩만 노출) */
+.slide:not(.cover):not(.closing) .logo { display: none; }
 
-    .content{max-width:1200px;width:100%;position:relative}
+/* 3분할 고정 풋터 - 화면/인쇄 공통 기본값 */
+.slide { position: relative; }
+.slide-footer-fixed{
+  position:absolute; left:96px; right:96px; bottom:28px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding-top:10px; border-top:1px solid rgba(255,255,255,.10);
+  font-size:18px; color:rgba(255,255,255,.68); letter-spacing:.2px;
+  z-index:5;
+}
+.slide-footer-fixed .left{opacity:.75; white-space:nowrap;}
+.slide-footer-fixed .center{flex:1; text-align:center; opacity:.72; white-space:nowrap;}
+.slide-footer-fixed .right{opacity:.8; font-variant-numeric:tabular-nums; white-space:nowrap;}
+.slide-footer-fixed .sep{margin:0 10px; opacity:.45}
 
-    
-    h1{font-size:72px;line-height:1.08;font-weight:650;letter-spacing:-.02em;text-align:center;margin-bottom:24px}
-    h2{font-size:44px;line-height:1.16;font-weight:560;letter-spacing:-.01em;margin-bottom:28px}
-    .subtitle{font-size:28px;color:var(--muted);text-align:center;margin-top:12px;opacity:0;animation:slideUp 800ms ease-out 200ms forwards}
+/* 화면에서 떠있는 카운터 유지 */
+@media screen { .slide-counter{ display:block; } }
 
-    .highlight{color:var(--highlight-blue);font-weight:600}
-    .asset-highlight{color:var(--highlight-orange);font-weight:600}
+/* ========= 공통 레이아웃(헤더/풋터 고정용 여백 확보) ========= */
+.slide {
+  /* 헤더/풋터가 겹치지 않게 상단/하단 여백을 충분히 확보 */
+  padding: 160px 120px 140px;
+  position: relative;
+}
 
-    .glass-card{
-      background:var(--card-bg);backdrop-filter:blur(20px);
-      border:1px solid var(--card-border);border-radius:20px;
-      padding:28px;transition:all .3s ease;position:relative
-    }
+/* ========= 고정 헤더(국기+로고) ========= */
+.slide-header-fixed{
+  position:absolute; top:40px; left:70px; right:70px; height:100px;
+  display:flex; align-items:center; justify-content:space-between;
+  z-index:6;
+}
+/* 기존 .flags/.logo는 absolute였는데, 헤더 안에 들어가면 static으로 교체 */
+.slide-header-fixed .flags,
+.slide-header-fixed .logo { position: static !important; }
+.slide-header-fixed .flags { display:flex; gap:20px; }
+.slide-header-fixed .logo  { height:80px; }
 
-    .vs-container{display:flex;align-items:center;gap:36px;margin:28px 0}
-    .vs-item{flex:1;opacity:0;transform:translateY(18px);animation:fadeInUp .6s ease-out forwards}
-    .vs-item:nth-child(1){animation-delay:.15s}
-    .vs-item:nth-child(3){animation-delay:.35s}
-    .vs-divider{font-size:32px;font-weight:200;color:#777;opacity:0;animation:pulse .8s ease-out .25s forwards}
+/* 본문을 자동축소할 래퍼 */
+.slide-body { width: 100%; transform-origin: top center; }
 
-    .two-column{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+/* 3분할 고정 풋터(그대로 사용) */
+.slide-footer-fixed{
+  position:absolute; left:96px; right:96px; bottom:28px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding-top:10px; border-top:1px solid rgba(255,255,255,.10);
+  font-size:18px; color:rgba(255,255,255,.68); letter-spacing:.2px;
+  z-index:5;
+}
+.slide-footer-fixed .left{opacity:.75; white-space:nowrap;}
+.slide-footer-fixed .center{flex:1; text-align:center; opacity:.72; white-space:nowrap;}
+.slide-footer-fixed .right{opacity:.8; font-variant-numeric:tabular-nums; white-space:nowrap;}
+.slide-footer-fixed .sep{margin:0 10px; opacity:.45}
 
-    .big-number{font-size:128px;font-weight:200;text-align:center;color:var(--highlight-orange);line-height:1;margin-bottom:8px;opacity:0;animation:scaleIn .7s ease-out forwards}
+/* 화면 카운터는 그대로 */
+@media screen { .slide-counter{ display:block; } }
 
-    .point-grid{display:grid;gap:16px;margin-top:16px}
-    .point-item{
-      background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:20px;
-      opacity:0;transform:translateX(-16px);animation:slideInLeft .6s ease-out forwards
-    }
-    .point-item:nth-child(1){animation-delay:.08s}
-    .point-item:nth-child(2){animation-delay:.18s}
-    .point-item:nth-child(3){animation-delay:.28s}
-    .point-item h4{color:var(--highlight-blue);font-size:22px;margin-bottom:8px;font-weight:600}
-    .point-item p{color:#d2d2d7;font-size:18px;line-height:1.6}
+/* ===== ▼▼▼ [최종 수정] 헤더 및 브레드크럼 스타일 ▼▼▼ ===== */
+.slide-header-fixed .left {
+    display: flex;
+    align-items: center; /* 국기와 텍스트를 세로 중앙 정렬 */
+    gap: 25px; /* 국기와 브레드크럼 사이 간격 */
+}
 
-    .final-quote{text-align:center;position:relative}
-    .final-quote .main-question{font-size:44px;font-weight:620;line-height:1.25;margin-bottom:24px;opacity:0;animation:fadeIn .7s ease-out .2s forwards}
-    .final-quote .answer{font-size:22px;color:var(--muted);line-height:1.6;opacity:0;animation:fadeIn .7s ease-out .45s forwards}
+.slide-breadcrumb {
+    /* position, top, left 등 위치 지정 코드 모두 제거 */
+    font-size: 24px;
+    font-weight: 500;
+    color: #81ecec;
+    opacity: 0.9;
+    padding-left: 25px; /* 구분선과 텍스트 사이 간격 */
+    border-left: 2px solid rgba(129, 236, 236, 0.4); /* 국기와 구분하는 세로선 */
+}
+/* ===== ▲▲▲ 코드 수정 완료 ▲▲▲ ===== */
 
-    .stats-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:24px;
-      margin:28px 0;
-    }
-    .stat-card{
-      background:var(--card-bg);
-      border:1px solid var(--card-border);
-      border-radius:16px;
-      padding:24px;
-      text-align:center;
-      opacity:0;
-      transform:translateY(20px);
-      animation:fadeInUp .6s ease-out forwards;
-    }
-    .stat-card:nth-child(1){animation-delay:.1s}
-    .stat-card:nth-child(2){animation-delay:.2s}
-    .stat-card:nth-child(3){animation-delay:.3s}
-    .stat-number{
-      font-size:48px;
-      font-weight:600;
-      color:var(--highlight-orange);
-      margin-bottom:8px;
-    }
-    .stat-label{
-      font-size:16px;
-      color:var(--muted);
-    }
+/* ==== PRINT (최종 수정본) ==== */
+@media print {
+  /* 16:9 한 장씩, 여백 0, 배경/색 보존 */
+  @page { size: 16in 9in; margin: 0; }
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    overflow: visible !important;
+  }
 
-    .deck-header, .deck-footer {
-      position: absolute;
-      width: 100%;
-      padding: 0 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-      pointer-events: none;
-    }
+  /* 화면용 스케일/고정 해제 */
+  .presentation-container {
+    position: static !important; width: auto !important; height: auto !important;
+  }
+  .presentation {
+    transform: none !important; width: auto !important; height: auto !important;
+    background: none !important; overflow: visible !important;
+  }
 
-    .deck-header {
-      top: 32px;
-    }
+  /* 각 슬라이드 1페이지 고정 */
+  .slide {
+    display: block !important;
+    position: relative !important;          /* footer absolute 기준 */
+    width: 16in; height: 9in;
+    background: #fff !important;
+    color: #000 !important;
+    padding: 80px 90px 130px !important;    
+    page-break-after: always;
+    break-inside: avoid-page;
+    overflow: hidden !important;
+    align-items: initial !important;
+    justify-content: initial !important;
+  }
+  .slide:last-child { page-break-after: auto; }
+  .slide.cover { padding-top: 110px !important; }
+  .slide.cover .slide-body { margin-top: 8px !important; }
+ 
+   /* 3페이지(아젠다) 전용 컴팩트 */
+    .slide:nth-of-type(3) .agenda-item { gap: 16px; padding: 14px 20px; }
+    .slide:nth-of-type(3) .agenda-time { min-width: 210px; font-size: 20px; padding: 10px 14px; }
+    .slide:nth-of-type(3) h4 { font-size: 18pt !important; margin-bottom: 6px; }
+    .slide:nth-of-type(3) p, 
+    .slide:nth-of-type(3) li { font-size: 11pt !important; }
+    .slide:nth-of-type(3) .slide-body { margin-top: 4px !important; }
 
-    .deck-footer {
-      bottom: 28px;
-    }
-    
-    .deck-header > *, .deck-footer > * {
-      pointer-events: auto;
-    }
+  /* 헤더/풋터 강제 노출 + 위치 고정 */
+  .slide-header-fixed,
+  .slide-footer-fixed { display:flex !important; position: absolute !important; left: 90px; right: 90px; z-index: 20 !important; }
+  .slide-header-fixed { top: 24px; align-items: center; justify-content: space-between; }
+  .slide-footer-fixed {
+    bottom: 22px; align-items: center; justify-content: space-between;
+    padding-top: 8px; border-top: 1px solid rgba(0,0,0,.2) !important;
+    font-size: 12pt !important; color:#333 !important;
+  }
+  .slide-footer-fixed .sep { opacity:.45; }
 
-    .company-logo {
-      width: 120px;
-      height: 100px; 
-      background-image: var(--logo);
-      background-size: contain;
-      background-position: center left;
-      background-repeat: no-repeat;
-    }
-    
-    .presentation-title {
-      font-size: 18px;
-      color: var(--muted);
-      font-weight: 500;
-    }
+  /* 화면 전용 UI 숨김 */
+  .slide-counter, .slide-breadcrumb { display:none !important; }
 
-    .footer-text {
-      font-size: 16px;
-      color: #888;
-    }
+  /* 🔧 핵심: 인쇄 시 transform 모두 제거 — 백지/쏠림 방지 */
+  .slide-body { transform: none !important; }
+  .slide, .slide * { page-break-inside: avoid !important; break-inside: avoid-page !important; }
+  .slide-body, .slide-body * {
+    transform: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+  }
 
-    .navigation {
-      position: static;
-      transform: none;
-      display: flex;
-      gap: 10px;
-    }
+  /* 카드/그리드 라이트 톤 */
+  .card { background: rgba(0,0,0,.04) !important; border: 1px solid rgba(0,0,0,.12) !important; box-shadow: none !important; }
+  .agenda-time { background:#000 !important; color:#fff !important; }
+  .source-note {
+    position: absolute !important;
+    bottom: 100px !important; left: 50% !important; transform: translateX(-50%) !important;
+    font-size: 10pt !important; color:#444 !important; opacity: .95 !important;
+  }
 
-    .nav-btn {
-      width: 10px;
-      height: 10px;
-      background: rgba(255, 255, 255, .35);
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all .25s ease;
-    }
-    .nav-btn.active {
-      background: var(--highlight-blue);
-      transform: scale(1.25);
-    }
-    .nav-btn:hover {
-      filter: brightness(1.15);
-    }
+  /* 이미지/캔버스 크기 */
+  .trend-image { height: 340px !important; }
+  #countryChart, .card canvas { width: 100% !important; height: 420px !important; }
 
-    .slide-counter {
-      position: static;
-      font-size: 16px;
-      color: #888;
-      width: 64px;
-      text-align: right;
-    }
-    
+  /* 타이포(인쇄용) */
+  .slide h1 { font-size: 56pt !important; line-height: 1.12 !important; color:#000 !important; text-shadow: none !important; }
+  .slide h2 { font-size: 44pt !important; color:#111 !important; text-shadow: none !important; margin-bottom: 18px !important; }
+  .slide h3 { font-size: 30pt !important; color:#222 !important; margin-bottom: 14px !important; }
+  .slide h4 { font-size: 22pt !important; color:#0b6b6b !important; }
+  .slide p, .slide li { font-size: 13pt !important; color:#000 !important; }
+  .stat-number { font-size: 40pt !important; color:#111 !important; }
+  .stat-label  { font-size: 14pt !important; color:#222 !important; }
 
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-    @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes slideInLeft{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:translateX(0)}}
-    @keyframes scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
-    @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+  .url-placeholder,
+  .trend-content h4,
+  .insight-number { color:#0b6b6b !important; border-color:#0b6b6b !important; }
+}
+.slide span[style*="#81ecec"] { color: #107a7a !important; }
 
-    
-    @media (max-width: 900px){
-      .slide{padding:40px 48px}
-      .two-column{grid-template-columns:1fr;gap:20px}
-      .stats-grid{grid-template-columns:1fr;gap:16px}
-      h1{font-size:56px} h2{font-size:34px} .subtitle{font-size:22px}
-      .big-number{font-size:96px}
-      .point-item p{font-size:16px}
-      .stat-number{font-size:36px}
-    }
+#countryChartPrint { display: none; }
+@media print {
+  #countryChart { display: none !important; }
+  #countryChartPrint { display: block !important; width: 100% !important; height: auto !important; }
+}
+#gdPresenterNav{
+  position:fixed; top:0; left:0; height:100vh; width:264px;
+  background:rgba(25,26,48,.92);
+  border-right:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(10px);
+  z-index:120;
+  display:flex; flex-direction:column;
+}
+#gdPresenterNav .nav-head{
+  padding:14px 16px; font-size:16px; letter-spacing:.3px;
+  color:#81ecec; border-bottom:1px solid rgba(255,255,255,.12);
+}
+#gdPresenterNav .nav-list{ flex:1; overflow:auto; padding:10px 6px 16px; }
+#gdPresenterNav .gd-nav-item{
+  display:block; width:100%; text-align:left;
+  padding:10px 12px; margin:6px 8px; border-radius:12px;
+  border:1px solid transparent; background:transparent; color:#eaeaff;
+  font-size:14px; line-height:1.3; cursor:pointer;
+}
+#gdPresenterNav .gd-nav-item .num{opacity:.6; margin-right:6px; font-variant-numeric:tabular-nums;}
+#gdPresenterNav .gd-nav-item:hover{ background:rgba(162,155,254,.12); border-color:rgba(162,155,254,.28); }
+#gdPresenterNav .gd-nav-item.active{ background:rgba(129,236,236,.12); border-color:rgba(129,236,236,.5); color:#fff; }
 
-    
-    @media print{
-      @page {
-        size: 16in 9in;
-        margin: 0;
-      }
-      html, body {
-        width: 100%;
-        height: 100%;
-        overflow: visible;
-        background: var(--bg) !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-      .deck {
-        position: static !important;
-        transform: none !important;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        background: var(--bg) !important;
-      }
-      .slide {
-        position: relative !important;
-        display: flex !important;
-        opacity: 1 !important;
-        transform: none !important;
-        width: 100%;
-        height: 100%;
-        background: var(--bg) !important;
-        page-break-after: always;
-        break-after: page;
-      }
-      .slide:last-of-type {
-        page-break-after: auto;
-        break-after: auto;
-      }
-      .deck-header, .deck-footer, .navigation, .slide-counter {
-        display: none !important;
-      }
-    }
-  </style>
+.gd-with-nav .presentation-container{
+  left:264px !important; width:calc(100% - 264px) !important;
+}
+
+@media print{
+  #gdPresenterNav{ display:none !important; }
+  .gd-with-nav .presentation-container{
+    left:0 !important; width:100% !important;
+  }
+}
+
+/* ===== ▼▼▼ [수정] 인사이트 박스 스타일 ▼▼▼ ===== */
+:root {
+    --main-color: #a29bfe; /* 기존 보라색 */
+    --accent-color: #FFB347; /* ⬅️ 새로운 강조색 (주황색 계열) 추가 */
+}
+
+.insight-box {
+    background: rgba(162, 155, 254, 0.15); /* ⬅️ 배경색을 살짝 진하게 */
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 25px 40px;
+    font-size: 32px; /* ⬅️ 폰트 크기를 32px로 더 줄입니다. (기존 40px) */
+    line-height: 1.5;
+    border-left: 5px solid var(--accent-color); /* ⬅️ 좌측 테두리 색상을 강조색으로 변경 */
+    text-align: center;
+    color: #f0f0f0; /* ⬅️ 텍스트 색상을 밝은 회색으로 조정하여 가독성 높임 */
+}
+
+/* 인사이트 강조 텍스트 스타일 */
+.insight-label {
+    color: var(--accent-color); /* ⬅️ '인사이트:' 텍스트에만 강조색 적용 */
+    font-weight: bold;
+    margin-right: 8px; /* 텍스트와 내용 사이에 간격 추가 */
+}
+/* ===== ▼▼▼ [최종 수정] main-title 스타일 ▼▼▼ ===== */
+.main-title {
+    /* font-size: 85px;  <- 기존 코드 대신 아래 코드로 교체 */
+    font-size: clamp(50px, 4.5vw, 85px); /* ⬅️ 이 코드로 교체 */
+    font-weight: bold;
+    color: #a29bfe;
+    margin-top: 20px;
+}
+
+
+/* 첫 번째 슬라이드 (현상 제시) 전용 스타일 */
+.intro-phenomenon-slide {
+    background-image: linear-gradient(rgba(10, 10, 26, 0.8), rgba(10, 10, 26, 0.9)), url('https://images.unsplash.com/photo-1610930335328-c1042d13b6cb?q=80&w=1920'); /* 박물관 굿즈 배경 */
+    background-size: cover;
+    background-position: center;
+}
+.intro-phenomenon-slide h2 {
+    font-size: 85px;
+    line-height: 1.2;
+    color: #e0e0e0;
+    text-shadow: 0 0 15px rgba(255, 220, 150, 0.2);
+    margin-bottom: 50px;
+    font-family: serif; /* 명조체 계열 */
+}
+.phenomenon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    width: 100%;
+    max-width: 1800px;
+}
+.phenomenon-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 35px;
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+.phenomenon-card img {
+    width: 100%;
+    max-width: 450px; /* 이미지 최대 크기 */
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border: 2px solid rgba(129, 236, 236, 0.5);
+}
+.phenomenon-card h4 {
+    font-size: 38px;
+    color: #a29bfe;
+    margin-bottom: 15px;
+}
+.phenomenon-card ul {
+    font-size: 26px;
+    line-height: 1.7;
+    text-align: left;
+    list-style-type: none;
+    padding-left: 0;
+}
+.phenomenon-card ul li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+}
+.phenomenon-card ul li::before {
+    content: '›';
+    color: #81ecec;
+    margin-right: 0.7em;
+    font-weight: bold;
+}
+
+/* 두 번째 슬라이드 (인사이트 도출) 전용 스타일 */
+.intro-insight-slide {
+    background-image: linear-gradient(rgba(10, 10, 26, 0.85), rgba(10, 10, 26, 0.95)), url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1920'); /* 비즈니스 미팅 배경 */
+    background-size: cover;
+    background-position: center;
+}
+.intro-insight-slide h2 {
+    font-size: 70px;
+    line-height: 1.3;
+    color: #e0e0e0;
+    text-align: center;
+    margin-bottom: 60px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+.insight-container {
+    width: 100%;
+    max-width: 1600px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 50px 70px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+}
+.insight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 35px;
+}
+.insight-item:last-child {
+    margin-bottom: 0;
+}
+.insight-number {
+    font-size: 55px;
+    font-weight: bold;
+    color: #1a1a2e;
+    background: #81ecec;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(129, 236, 236, 0.3);
+}
+.insight-item h4 {
+    font-size: 36px;
+    color: #a29bfe;
+    margin-bottom: 8px;
+}
+.insight-item p {
+    font-size: 26px;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+.insight-main-message {
+    font-size: 38px;
+    margin-top: 60px;
+    line-height: 1.5;
+    color: #e0e0e0;
+    text-align: center;
+    font-weight: 500;
+}
+/* ===== ▼▼▼ [추가] 주목 슬라이드 전용 스타일 ▼▼▼ ===== */
+.featured-slide {
+    display: flex;
+    justify-content: flex-start; /* 콘텐츠를 왼쪽 정렬 기준으로 */
+    align-items: center;
+    padding: 0 120px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* 배경 이미지 위에 어두운 오버레이를 추가하여 텍스트 가독성 확보 */
+.featured-slide::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(10, 20, 40, 0.7);
+    backdrop-filter: blur(2px);
+}
+
+.content-panel {
+    position: relative; /* 오버레이 위에 콘텐츠가 오도록 */
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 60px;
+    width: 45%; /* 슬라이드 너비의 45% 차지 */
+    text-align: left;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+}
+
+.content-panel .label {
+    font-size: 24px;
+    font-weight: 600;
+    color: #81ecec; /* 민트색 */
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.content-panel h2 {
+    font-size: 64px;
+    line-height: 1.3;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.content-panel ul {
+    font-size: 28px;
+    line-height: 1.8;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.content-panel li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+    margin-bottom: 15px;
+}
+
+.content-panel li::before {
+    content: '✓';
+    color: #81ecec;
+    margin-right: 0.7em;
+}
+    </style>
 </head>
-
-<body data-logo="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png">
-  <div id="deck" class="deck">
-
-    <header class="deck-header">
-      <div class="company-logo" aria-label="Company Logo"></div>
-      <div class="presentation-title">真の組織力とは何か</div>
-    </header>
-
-    <footer class="deck-footer">
-      <div class="footer-text">DAC女性管理職研修2025_September</div>
-      <div class="navigation"></div>
-      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></div>
-    </footer>
-
-    <!-- 1. 根本的な問い -->
-    <section class="slide active">
-      <div class="content">
-        <h1>真の組織力とは何か</h1>
-        <p class="subtitle">私は組織の真の力になっているだろうか？</p>
-      </div>
-    </section>
-
-    <!-- 2. 現在の組織力の実態 -->
-    <section class="slide">
-      <div class="content">
-        <h2 style="text-align:center;margin-bottom:28px;">現在の組織力の実態</h2>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-number">93万円</div>
-            <div class="stat-label">新卒1人補充コスト<br>（2019年度平均）</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">28週</div>
-            <div class="stat-label">新人が同レベルに<br>到達する期間</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">19時間</div>
-            <div class="stat-label">週あたりの<br>非効率な作業時間</div>
-          </div>
-        </div>
-        <div class="glass-card" style="text-align:center;margin-top:28px;">
-          <p style="font-size:24px;margin-bottom:18px;color:#d2d2d7;line-height:1.6;">
-            さらに深刻なのは、<span class="asset-highlight">少数の優秀な営業担当者に組織全体が依存</span>し、<br>
-            他の職種は彼らに寄生しなければ評価されない構造です。
-          </p>
-          <p style="font-size:26px;color:#fff;margin-top:16px;">
-            これが<span class="highlight">真の組織力</span>と言えるでしょうか？
-          </p>
-          <p style="font-size:14px;color:#666;margin-top:16px;">
-            ※出典：リクルート就職白書2020、Oxford Economics & Unum、Panopto調査
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. 真の組織力とは -->
-    <section class="slide">
-      <div class="content">
-        <h2 style="text-align:center;margin-bottom:28px;">真の組織力とは</h2>
-        <div class="point-grid">
-          <div class="point-item">
-            <h4>従来のアプローチ</h4>
-            <p>人材管理強化、制度改善、福利厚生充実。どれも重要だが部分的な解決策</p>
-          </div>
-          <div class="point-item">
-            <h4>一部依存の限界</h4>
-            <p>少数の優秀な人に依存する組織は、真の強さを持たない</p>
-          </div>
-          <div class="point-item">
-            <h4>真の組織力</h4>
-            <p>全ての構成員が組織の力になること。みんなが選ばれる存在になること</p>
-          </div>
-        </div>
-        <div class="glass-card" style="text-align:center;margin-top:28px;">
-          <p style="font-size:28px;color:#fff;margin-bottom:16px;">
-            真の組織力とは
-          </p>
-          <p style="font-size:24px;color:var(--highlight-blue);margin-bottom:12px;">
-            <span class="highlight">全員が各自の領域で選ばれる人になること</span>
-          </p>
-          <p style="font-size:20px;color:var(--muted);">
-            そしてその基盤となるのが組織文化です
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. 私は組織の力になれているか -->
-    <section class="slide">
-      <div class="content two-column">
-        <div>
-          <h2>私は組織の力に<br>なれているか？</h2>
-          <p style="font-size:20px;color:#d2d2d7;line-height:1.6;margin-bottom:18px;">
-            現在は構造的に決められた関係の中でのみ協業が行われています。しかし真の組織力のためには、<span class="highlight">各自の領域で「一緒に仕事をしたいパートナー」</span>になる必要があります。
-          </p>
-          <p style="font-size:18px;color:var(--muted);line-height:1.6;">
-            それは<span class="highlight">自分自身をプロデュースすること</span>。<br>既存構造に安住せず、新しい協力の価値を創り出すことです。<br><br>
-            あなたは組織の真の力になれていますか？
-          </p>
-        </div>
-        <div class="point-grid">
-          <div class="point-item">
-            <h4>構造的な協業</h4>
-            <p>決められた部門同士の固定的な関係。上下関係で便利に回るが発展性に限界。</p>
-          </div>
-          <div class="point-item">
-            <h4>価値による協業</h4>
-            <p>「この人となら」と認められる関係。新しい協力の可能性を創出する。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. 2つのタイプ比較 + 組織への拡大 -->
-    <section class="slide">
-      <div class="content">
-        <h2 style="text-align:center;margin-bottom:28px;">受けた分だけ vs 受けた分以上</h2>
-        <div class="vs-container">
-          <div class="vs-item">
-            <div class="glass-card" style="text-align:center;">
-              <h4 style="font-size:22px;color:#ccc;margin-bottom:16px;">最低限タイプ</h4>
-              <p style="font-size:19px;margin:12px 0;color:#d2d2d7;">
-                ・要請されたことだけ正確に<br>・線を引いて仕事<br>・安全な範囲内でのみ
-              </p>
-              <p style="color:var(--muted);font-size:17px;">構造依存により<br>脆弱性を維持。</p>
+<body>
+    <aside id="gdPresenterNav" aria-label="Presenter navigation">
+        <div class="nav-head">📑 Slides</div>
+        <div class="nav-list" id="gdPresenterNavList"></div>
+    </aside>
+    
+    
+    <div class="presentation-container">
+        <div class="presentation">
+            <div class="slide active">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+                <h1 class="fade-in">2025 Korea Inbound Market Seminar</h1>
+                <h3 class="fade-in" style="animation-delay: 0.2s;">訪日韓国人旅行者の最新動向とリアルなトレンドインサイト</h3>
+                <div class="card fade-in" style="margin-top: 40px; animation-delay: 0.4s;">
+                    <p style="font-size: 48px; font-weight: 700; color: #a29bfe; margin-bottom: 15px;">2025年9月26日(金) 13:00-15:00</p>
+                    <p style="font-size: 32px; opacity: 0.9;">グローバル・デイリー東京本社 | 東京都台東区東上野4-8-1, TIX Tower 13階</p>
+                </div>
             </div>
-          </div>
-          <div class="vs-divider">vs</div>
-          <div class="vs-item">
-            <div class="glass-card" style="border-color:var(--highlight-blue);text-align:center;">
-              <h4 style="font-size:22px;color:var(--highlight-blue);margin-bottom:16px;">期待以上タイプ</h4>
-              <p style="font-size:19px;margin:12px 0;color:#d2d2d7;">
-                ・要請されたこと + α<br>・境界を越えた協力<br>・リスクを取って挑戦
-              </p>
-              <p style="color:var(--muted);font-size:17px;">価値を創出するため<br>組織力強化に寄与。</p>
+
+            <div class="slide intro-slide intro-phenomenon-slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+                
+                <h2> 「ケデホン」をご存知ですか？ </h2>
+            
+                <div class="phenomenon-grid">
+                    <div class="phenomenon-card">
+                        <img src="https://image.news1.kr/system/photos/2025/7/28/7417691/high.jpg/dims/optimize" alt="Netflix K-POP Demon Hunters">
+                        <h4>Netflixアニメ「ケデホン」の大ヒット</h4>
+                        <ul>
+                            <li>Netflixオリジナルアニメ「K-POP Demon Hunters(ケデホン)」が世界中で大ヒット。</li>
+                            <li>作中に登場する韓国の伝統モチーフがMZ世代の注目を集める。</li>
+                        </ul>
+                    </div>
+                    <div class="phenomenon-card">
+                        <img src="https://cphoto.asiae.co.kr/listimglink/1/2025090313181517755_1756873095.jpg" alt="Museum goods sold out">
+                        <h4>国立中央博物館が「聖地」化 & グッズ購入の大行列</h4>
+                        <ul>
+                            <li>博物館が「ケデホン」ファン巡礼の地となり、訪問客数が80年ぶりに過去最多を記録。</li>
+                            <li>8.8万ウォン（約8,800円）の「金冠ブローチ」など、高価な関連商品も即完売する社会現象に。</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="glass-card" style="text-align:center;margin-top:18px;">
-          <p style="font-size:22px;color:#fff;margin-bottom:12px;">人は<span class="highlight">期待以上のことをしてくれる人</span>を組織の力だと認識する</p>
-          <div style="border-top:1px solid rgba(255,255,255,0.2);margin:16px 0;padding-top:16px;">
-            <p style="font-size:20px;color:var(--highlight-orange);margin-bottom:8px;">こんな個人が集まると...</p>
-            <p style="font-size:18px;color:#d2d2d7;">
-              <span style="color:#ccc;">構造に安住する組織</span> → 依存的で脆弱な組織力<br>
-              <span style="color:var(--highlight-blue);">価値を創出する組織</span> → <span class="highlight">真の組織力</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- 6. 具体的な方法 -->
-    <section class="slide">
-      <div class="content two-column">
-        <div>
-          <h2>具体的には<br><span class="highlight">どうするか</span></h2>
-          <p style="font-size:20px;color:#d2d2d7;line-height:1.6;margin-bottom:18px;">
-            組織の力になる人の特徴は、技術的スキルではありません。つまり<span class="highlight">協力したいパートナー</span>の特徴です。もっと根本的な姿勢の問題なのです。
-          </p>
+            <div class="slide intro-slide intro-insight-slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+                
+                <h2>この現象から学ぶべき<br>３つの「MZコード」</h2>
+            
+                <div class="insight-container">
+                    <div class="insight-item">
+                        <div class="insight-number">1</div>
+                        <div>
+                            <h4>物語(IP)が「聖地」を作る</h4>
+                            <p>企業が作った「物語」が、現実の場所を特別な「聖地」に変え、多くの人たちはそれを体験しに集まる。</p>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-number">2</div>
+                        <div>
+                            <h4>グッズは「体験の証」</h4>
+                            <p>商品は、物語の世界観を所有する「証」であり、自分のアイデンティティを表現する高価な消費行動へと繋がる。</p>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-number">3</div>
+                        <div>
+                            <h4>ファン参加型の熱狂</h4>
+                            <p>ファンはVlog投稿等を通じて自らIPを拡散・強化し、公式を巻き込む形でブームを拡大させるパートナーになる。</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="insight-main-message">
+                    本日のセミナーでは、このような韓国の最新「MZコード」を徹底的に読み解き、<br>皆様の訪日プロモーション戦略に活かすためのヒントを探ります。
+                </p>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>本日のアジェンダ</h2>
+                <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 1700px;">
+                    <div class="card agenda-item"><div class="agenda-time">13:00-13:10</div><div class="agenda-content"><h4>オープニング</h4><p>講師紹介、参加者紹介、セミナー目標共有</p></div></div>
+                    <div class="card agenda-item"><div class="agenda-time">13:10-13:40</div><div class="agenda-content"><h4>Session 1: 市場動向分析</h4><p>韓国市場の重要性、訪日韓国人旅行客の最新統計及び特性分析</p></div></div>
+                    <div class="card agenda-item"><div class="agenda-time">13:40-14:20</div><div class="agenda-content"><h4>Session 2-1: 8つのトレンド詳解</h4><p>韓国人の消費行動に影響する核心トレンドの深層分析</p></div></div>
+                    <div class="card agenda-item"><div class="agenda-time">14:20-14:50</div><div class="agenda-content"><h4>Session 2-2: 実務応用戦略</h4><p>業種別の具体的対応方案及び成功事例の紹介</p></div></div>
+                    <div class="card agenda-item"><div class="agenda-time">14:50-15:00</div><div class="agenda-content"><h4>Session 3: Q&A & アクションプラン</h4><p>質疑応答、即時実行可能なアクションプランの提示</p></div></div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>本日セミナーの核心結論</h2>
+                <h3 style="color: #f0f0f0; opacity: 0.9;">本日のセミナーでお伝えしたい3つの重要ポイントです</h3>
+                <div class="card" style="width: 100%; max-width: 1700px; margin-top: 30px;">
+                    <div class="insight-list">
+                        <div class="insight-item"><div class="insight-number">1</div><span><strong>データに基づく意思決定：</strong>「勘」ではなく、正確なデータで韓国市場を攻略する必要があります。</span></div>
+                        <div class="insight-item"><div class="insight-number">2</div><span><strong>トレンドとローカル体験の融合：</strong>グローバルトレンドを日本のユニークなローカル体験と組み合わせる必要があります。</span></div>
+                        <div class="insight-item"><div class="insight-number">3</div><span><strong>デジタルチャネルの最適化：</strong>韓国人が情報を得て共有する方法（SNS）にマーケティングを集中させる必要があります。</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>2時間で得られる成果</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">データに基づく<br>最新動向</h3>
+                        <p style="font-size: 28px;">2025年の最新データを通じて、韓国市場の「今」を正確に把握します。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">8つの主要トレンド</h3>
+                        <p style="font-size: 28px;">消費心理を貫く8つのメガトレンドを通じて、成功戦略の糸口を見つけます。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">すぐに実行可能な<br>戦略</h3>
+                        <p style="font-size: 28px;">明日からすぐに適用できる業種別のカスタマイズされたアクションアイテムを得られます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>参加者自己紹介</h2>
+                <h3>お互いの経験や悩みを共有する時間</h3>
+                <div class="card" style="width: 100%; max-width: 1400px;">
+                    <div class="insight-list">
+                        <div class="insight-item"><div class="insight-number">1</div><span><strong>所属業界と担当業務</strong>は何ですか？</span></div>
+                        <div class="insight-item"><div class="insight-number">2</div><span>韓国インバウンドに関する<strong>現在の最大の悩み</strong>は何ですか？</span></div>
+                        <div class="insight-item"><div class="insight-number">3</div><span>本日のセミナーで<strong>最も得たい情報</strong>は何ですか？</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide bridge-slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>Session 1</h2>
+                <h1>市場動向分析</h1>
+                <h3>最新データで見る韓国市場の「今」</h3>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2><span style="font-size:60px; color: #81ecec;">TEASER</span><br>なぜ今、韓国市場なのか？</h2>
+                <h3>2025年上半期の主要数値</h3>
+                <div class="grid-3" style="margin-top: 50px;">
+                    <div class="stat-card card">
+                        <div class="stat-number">478万</div>
+                        <div class="stat-label">訪日韓国人数<br><strong>(全体1位)</strong></div>
+                    </div>
+                    <div class="stat-card card">
+                        <div class="stat-number">22%</div>
+                        <div class="stat-label">全訪日客における<br><strong>シェア</strong></div>
+                    </div>
+                    <div class="stat-card card">
+                        <div class="stat-number">5,135億</div>
+                        <div class="stat-label">上半期の総消費額<br><strong>(円)</strong></div>
+                    </div>
+                </div>
+                <div class="source-note">*出典: JNTO 2025年1-6月データ (仮想データ)</div>
+            </div>
+            
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2><span style="font-size:50px; opacity:0.8;"></span><br>最新データで見る市場動向</h2>
+                <h3>訪日外客数TOP5（2025年上半期）</h3>
+                <div class="card" style="width: 1600px; height: 750px; padding: 40px;">
+                    <canvas id="countryChart"></canvas>
+                </div>
+                <div class="source-note">*出典: JNTO 2025年上半期データ</div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>韓国人訪問客の特性：年齢及び性別</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>年代別分布</h4>
+                        <div style="font-size: 32px; line-height: 1.8; margin-top:30px;">
+                            <p><strong>20代: 28% (主導層)</strong></p>
+                            <p>30代: 25%</p>
+                            <p>40代: 22%</p>
+                            <p>50代以上: 25%</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4>性別及び旅行スタイル</h4>
+                        <div style="font-size: 32px; line-height: 1.8; margin-top:30px;">
+                            <p>女性: 58% vs 男性: 42%</p>
+                            <p><strong>個人旅行(FIT): 78%</strong></p>
+                            <p>団体旅行: 22%</p>
+                        </div>
+                    </div>
+                </div>
+                <h3 style="margin-top:40px;">インサイト: <span style="color:#81ecec">20代女性</span>が旅行の主導層です。<br>彼女たちがまさに、後のセッションで紹介する<span style="color:#81ecec">「デコ文化」や「ギークシック」</span>といった新しいトレンドを牽引しています。</h3>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>韓国人訪問客の特性：消費パターン</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>平均滞在日数</h4>
+                        <div class="stat-number" style="margin-top: 50px;">5.2日</div>
+                        <p style="font-size: 30px;">3泊4日(35%)、4泊5日(28%)など短期旅行を好む</p>
+                    </div>
+                    <div class="card">
+                        <h4>主な消費項目</h4>
+                        <div style="font-size: 32px; line-height: 1.8; margin-top:30px; text-align: left; padding-left: 50px;">
+                            <p><strong>1. ショッピング: 35%</strong></p>
+                            <p>2. 宿泊: 25%</p>
+                            <p>3. 飲食: 20%</p>
+                            <p>4. 交通: 12%</p>
+                        </div>
+                    </div>
+                </div>
+                <h3 style="margin-top:40px;">インサイト: 短期間で<span style="color:#81ecec">ショッピングに集中</span>する効率的な消費パターン</h3>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>地域別選好度の変化：地方の台頭</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>従来の人気地域</h4>
+                        <p style="font-size: 30px;">1. 東京 (45%)</p>
+                        <p style="font-size: 30px;">2. 大阪 (25%)</p>
+                        <p style="font-size: 30px;">3. 京都 (15%)</p>
+                    </div>
+                    <div class="card">
+                        <h4 style="color:#a29bfe;">新たな人気急上昇地域（前年比）</h4>
+                        <p style="font-size: 30px;">1. 福岡 (+35%)</p>
+                        <p style="font-size: 30px;">2. 札幌 (+28%)</p>
+                        <p style="font-size: 30px;">3. 名古屋 (+22%)</p>
+                    </div>
+                </div>
+                <h3 style="margin-top:40px;">インサイト: 大都市から<span style="color:#81ecec">ユニークな体験</span>を求めて地方へ拡散中です。<br>特に<span style="color:#81ecec">福岡</span>の人気上昇は、後の<span style="color:#81ecec">「ラントリップ」や「1人文化」</span>といったトレンドと密接に関連しています。</h3>
+            </div>
+            
+             <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>季節別トレンドの変化（2024 vs 2025）</h2>
+                <div class="grid-4">
+                    <div class="card stat-card">
+                        <div class="stat-label">春 (3-5月)</div>
+                        <div class="stat-number" style="color:#81ecec;">+13%</div>
+                        <p style="font-size:24px;">桜シーズンの人気が続く</p>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-label">夏 (6-8月)</div>
+                        <div class="stat-number" style="color:#81ecec;">+11%</div>
+                        <p style="font-size:24px;">祭り、ビーチ観光の増加</p>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-label">秋 (9-11月)</div>
+                        <div class="stat-number" style="color:#81ecec;">+9%</div>
+                        <p style="font-size:24px;">紅葉、温泉旅行に集中</p>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-label">冬 (12-2月)</div>
+                        <div class="stat-number" style="color:#81ecec;">+8%</div>
+                        <p style="font-size:24px;">スキー、イルミネーションが人気</p>
+                    </div>
+                </div>
+                <h3 style="margin-top:40px;">インサイト: <span style="color:#81ecec">全シーズンで訪問客が増加。</span> 季節ごとの特化コンテンツの重要性が増大</h3>
+            </div>
+            
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>旅行計画から完了まで：デジタル経験の最適化</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>情報収集チャネル</h4>
+                        <p style="font-size: 30px; margin-top: 20px;">1. <strong>インスタグラム (68%)</strong></p>
+                        <p style="font-size: 30px;">2. ティックトック (45%)</p>
+                        <p style="font-size: 30px;">3. ネイバーブログ (38%)</p>
+                    </div>
+                    <div class="card">
+                        <h4>ホテル・アクティビティ予約</h4>
+                        <p style="font-size: 30px; margin-top: 20px;">1. Booking.com / Agoda</p>
+                        <p style="font-size: 30px;">2. Yanolja / Klook</p>
+                        <p style="font-size: 26px; margin-top: 15px;">※人気レストランは「CATCH TABLE」のような韓国アプリでの予約文化に慣れている。</p>
+                    </div>
+                    <div class="card">
+                        <h4>決済方法</h4>
+                        <p style="font-size: 30px; margin-top: 20px;">1. <strong>クレジットカード</strong></p>
+                        <p style="font-size: 30px;">2. <strong>QR決済 (カカオ/ネイバー)</strong></p>
+                        <p style="font-size: 26px; margin-top: 15px;">※特に若年層において、スマホ一つで完結するQR決済への対応が満足度を左右する。</p>
+                    </div>
+                </div>
+                <h3 style="margin-top:40px;">インサイト: 旅の全過程で<span style="color:#81ecec">「シームレスなデジタル体験」</span>が必須。<br>特に<span style="color:#81ecec">簡単な予約と多様な決済手段</span>が鍵。</h3>
+            </div>
+            
+            <div class="slide bridge-slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>Session 2</h2>
+                <h1>8つのトレンド詳解と実務応用戦略</h1>
+                <h3>韓国人消費者のインサイトを徹底分析</h3>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 1</span><br>ドット柄ファッション</h3>
+                        <h4>トレンドの概要</h4>
+                        <ul>
+                            <li>韓国ファッション界で注目の水玉模様</li>
+                            <li>クラシックでモダンな印象</li>
+                        </ul>
+                        <h4>人気の理由</h4>
+                        <ul>
+                            <li>年代を問わない汎用性</li>
+                            <li>SNS映えする視覚的効果</li>
+                        </ul>
+                        <h4>ビジネス活用ポイント</h4>
+                        <ul>
+                            <li>ドット柄商品の専門コーナー設置</li>
+                            <li>限定デザイン商品の企画</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?w=800&q=80" class="trend-image" alt="Dot pattern fashion">
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?w=800&q=80" class="trend-image" alt="Dot pattern fashion store">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 1</span><br>ドット柄トレンドの実務応用</h3>
+                        <h4>小売店舗での対応</h4>
+                        <ul>
+                            <li>様々なサイズと色のドット柄提供</li>
+                            <li>「日本限定」ドット商品の開発</li>
+                        </ul>
+                        <h4>マーケティング戦略</h4>
+                        <ul>
+                            <li>SNS認証ショットイベント</li>
+                            <li>インフルエンサーとのコラボ</li>
+                        </ul>
+                        <p class="url-placeholder">関連情報: www.example-retail.co.jp</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 2</span><br>トマトブーム</h3>
+                        <h4>トレンドの背景</h4>
+                        <ul>
+                            <li>アンチエイジング効果への高い関心</li>
+                            <li>リコピン成分の健康効能が注目</li>
+                        </ul>
+                        <h4>拡散の様相</h4>
+                        <ul>
+                            <li>飲食、美容、ファッションに拡大</li>
+                        </ul>
+                        <h4>日本旅行での関連ニーズ</h4>
+                        <ul>
+                            <li>日本のプレミアムトマト体験</li>
+                            <li>トマト料理の日本式調理法に関心</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1591372313829-212232915842?w=800&q=80" class="trend-image" alt="Tomatoes">
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&q=80" class="trend-image" alt="Tomato ramen">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 2</span><br>トマトブーム活用戦略</h3>
+                        <h4>飲食店での展開</h4>
+                        <ul>
+                            <li>トマトを活用した日本料理創作 (例: トマトラーメン、トマト牛丼)</li>
+                        </ul>
+                        <h4>観光商品開発</h4>
+                        <ul>
+                            <li>トマト農園体験ツアー</li>
+                            <li>トマト料理クラス</li>
+                        </ul>
+                        <p class="url-placeholder">参考ツアー: www.tomato-farm-tour.jp</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 3</span><br>自己定義文化</h3>
+                        <h4>「エゲン」「テト」とは</h4>
+                        <ul>
+                            <li>エゲン：「私は〜な人」という自己定義</li>
+                            <li>テト：性格や好みを類型に分類</li>
+                        </ul>
+                        <h4>人気の自己定義タイプ</h4>
+                        <ul>
+                            <li>旅行スタイル：「のんびり派 vs きっちり派」</li>
+                            <li>食の好み：「甘じょっぱい派 vs さっぱり派」</li>
+                        </ul>
+                        <div class="card" style="margin-top: 25px; text-align: left; padding: 25px; background: rgba(129, 236, 236, 0.1);">
+                            <h4 style="margin-bottom: 10px; color: #81ecec;">関連ミーム：「〇〇ちゃん、何が好き？」</h4>
+                            <p style="font-size: 26px; margin: 0;">日本のキャラクター「ちいかわ」から派生したこのミームは、個人の好みを尊重し、純粋に知りたいという韓国MZ世代の文化的背景を象徴しています。</p>
+                        </div>
+                        <p style="font-size: 20px; color: rgba(255,255,255,0.65); margin-top: 20px; font-style: italic;">
+                            *根拠：MZ世代は、画一的な集団より個人のアイデンティティと好みを共有する「趣味コミュニティ」での関係性を重視する。(ハンギョンビジネス, 2024.11)
+                        </p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1508672765319-de1e002a2895?w=800&q=80" class="trend-image" alt="Personalization">
+                </div>
+            </div>
+
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1504702933553-534a23512b6e?w=800&q=80" class="trend-image" alt="Custom travel plan">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 3</span><br>パーソナライゼーション機会</h3>
+                        <h4>カスタマイズサービス開発</h4>
+                        <ul>
+                            <li>タイプ別おすすめコース提案</li>
+                            <li>MBTIと連携した旅行商品</li>
+                        </ul>
+                        <h4>ビジネス適用法</h4>
+                        <ul>
+                            <li>簡単なタイプ診断ツールを開発</li>
+                            <li>結果によるパーソナライズ推薦</li>
+                        </ul>
+                        <p class="url-placeholder">診断ツール例: www.your-japan-trip.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                         <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 4</span><br>ラントリップ/ファンラン</h3>
+                        <h4>ラントリップとは</h4>
+                        <ul>
+                            <li>ランニング＋旅行の新しい旅行方式</li>
+                            <li>観光と運動を同時に楽しむ</li>
+                        </ul>
+                        <h4>日本ラントリップの魅力</h4>
+                        <ul>
+                            <li>整備されたランニングコース</li>
+                            <li>四季の美しい風景</li>
+                        </ul>
+                        <h4>韓国での人気要因</h4>
+                        <ul>
+                            <li>体験型旅行への選好</li>
+                            <li>SNS映えする特別なコンテンツ</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1475721027785-f742f57a8d41?w=800&q=80" class="trend-image" alt="Running in Japan">
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=800&q=80" class="trend-image" alt="Running service">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 4</span><br>ラントリップ商品開発</h3>
+                        <h4>地域別コース開発</h4>
+                        <ul>
+                            <li>東京：皇居周辺、隅田川沿い</li>
+                            <li>京都：鴨川、哲学の道</li>
+                        </ul>
+                        <h4>サービス提供方案</h4>
+                        <ul>
+                            <li>コース地図・アプリ提供</li>
+                            <li>荷物保管、シャワー施設案内</li>
+                            <li>ウェア・シューズレンタル</li>
+                        </ul>
+                        <h4 style="color: #a29bfe;">価値消費との連携 (ESG)</h4>
+                        <ul>
+                            <li>「プロギング」コースを提案 (走りながらゴミ拾い)</li>
+                            <li>コース周辺の環境に優しい製品を扱う店や、地元の生産者を応援するカフェを紹介</li>
+                        </ul>
+                        <p style="font-size: 20px; color: rgba(255,255,255,0.65); margin-top: 15px; font-style: italic;">
+                            *根拠：韓国のZ世代の間で「プロギングクルー」など、社会的価値を追求する趣味コミュニティが増加傾向にある。(大学内日20代研究所, 2025.05)
+                        </p>
+                        <p class="url-placeholder">参考サービス: www.run-japan-service.jp</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 5</span><br>一人ビンス（ソロダイニング）</h3>
+                        <h4>一人ビンストレンド</h4>
+                        <ul>
+                            <li>一人でも楽しめる1人分かき氷</li>
+                            <li>「一人飯、一人酒」文化の延長</li>
+                        </ul>
+                        <h4>韓国一人文化の特徴</h4>
+                        <ul>
+                            <li>他人の視線を気にしない</li>
+                            <li>少量・高品質の商品を好む</li>
+                        </ul>
+                        <h4>日本旅行でのニーズ</h4>
+                        <ul>
+                            <li>一人旅でも快適に利用できる空間</li>
+                            <li>写真映えする一人用メニュー</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80" class="trend-image" alt="Solo dining">
+                </div>
+            </div>
+
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1549488344-cbb6c34cf08b?w=800&q=80" class="trend-image" alt="Solo-friendly restaurant">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 5</span><br>一人客フレンドリー環境構築</h3>
+                        <h4>空間設計改善</h4>
+                        <ul>
+                            <li>一人席、カウンター席の積極的な配置</li>
+                            <li>プライバシーを保障する座席配置</li>
+                        </ul>
+                        <h4>メニュー構成変化</h4>
+                        <ul>
+                            <li>一人分に最適化されたメニュー開発</li>
+                            <li>少量多品種のセットメニュー</li>
+                        </ul>
+                        <h4>サービス改善</h4>
+                        <ul>
+                            <li>一人客にも親切な接客</li>
+                            <li>注文システムの簡素化</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 6</span><br>抹茶ブーム</h3>
+                        <h4>ブームの背景</h4>
+                        <ul>
+                            <li>コーヒーの代替としての健康飲料</li>
+                            <li>K-POPスターたちの抹茶愛好</li>
+                        </ul>
+                        <h4>韓国での抹茶熱風</h4>
+                        <ul>
+                            <li>抹茶ラテ専門店が急増</li>
+                            <li>日本の抹茶への高い信頼</li>
+                        </ul>
+                        <h4>日本抹茶の競争優位</h4>
+                        <ul>
+                            <li>伝統と品質の優秀性</li>
+                            <li>本格的な茶道文化との連携</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1563514249-103627038165?w=800&q=80" class="trend-image" alt="Matcha">
+                </div>
+            </div>
+
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1509195602325-7a63a4358721?w=800&q=80" class="trend-image" alt="Matcha experience">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 6</span><br>抹茶体験商品開発</h3>
+                        <h4>体験プログラム企画</h4>
+                        <ul>
+                            <li>抹茶作り体験クラス</li>
+                            <li>伝統的な茶道マナー学習</li>
+                        </ul>
+                        <h4>商品開発アイデア</h4>
+                        <ul>
+                            <li>フォトジェニックな抹茶デザート</li>
+                            <li>家庭で楽しめる抹茶キット</li>
+                        </ul>
+                        <p class="url-placeholder">詳細はこちら: www.real-matcha-experience.jp</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 7</span><br>デコ文化</h3>
+                        <h4>デコ文化とは</h4>
+                        <ul>
+                            <li>スマホケース等を個性的に飾る文化</li>
+                            <li>既製品を自分流にアレンジ</li>
+                        </ul>
+                        <h4>韓国MZ世代のデコ熱風</h4>
+                        <ul>
+                            <li>ステッカー、チャームで装飾</li>
+                            <li>DIY文化の拡散</li>
+                        </ul>
+                        <h4>日本旅行での需要</h4>
+                        <ul>
+                            <li>デコ用品、ステッカーの大量購入</li>
+                            <li>韓国にはない独特なデザインを好む</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1599052951433-35f110738a98?w=800&q=80" class="trend-image" alt="Decoration culture stickers">
+                </div>
+            </div>
+            
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1588581631162-33a215325997?w=800&q=80" class="trend-image" alt="Stationery store">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 7</span><br>デコ文化ビジネス活用</h3>
+                        <h4>商品構成戦略</h4>
+                        <ul>
+                            <li>デコ用小物コーナーの運営</li>
+                            <li>韓国人好みのデザインを選別</li>
+                        </ul>
+                        <h4>体験プログラム運営</h4>
+                        <ul>
+                            <li>店舗での即席デコサービス</li>
+                            <li>日本伝統文様を活用したデコクラス</li>
+                        </ul>
+                        <p class="url-placeholder">参考店舗: www.deco-heaven-tokyo.jp</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 8</span><br>ギークシック</h3>
+                        <h4>ギークシックとは</h4>
+                        <ul>
+                            <li>Geek（専門家）＋Chic（洗練）の造語</li>
+                            <li>知的で独特な魅力を追求</li>
+                        </ul>
+                        <h4>スタイル特徴</h4>
+                        <ul>
+                            <li>個性的なデザインの眼鏡</li>
+                            <li>オーバーサイズのジャケット</li>
+                        </ul>
+                        <h4>韓国での人気要因</h4>
+                        <ul>
+                            <li>画一化されたファッションからの脱却</li>
+                            <li>「平凡でない」ものへの選好</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1621570169595-43a7585098b6?w=800&q=80" class="trend-image" alt="Geek chic fashion">
+                </div>
+            </div>
+            
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80" class="trend-image" alt="Unique glasses">
+                    <div class="trend-content">
+                        <h3><span style="font-size:40px; color:#fff; opacity:0.8;">TREND 8</span><br>ギークシックスタイル提案</h3>
+                        <h4>おすすめアイテム</h4>
+                        <ul>
+                            <li>日本ブランドのユニークな眼鏡</li>
+                            <li>機能性とデザインを兼備したバッグ</li>
+                        </ul>
+                        <h4>店舗陳列戦略</h4>
+                        <ul>
+                            <li>ストーリーテリングで商品を構成</li>
+                            <li>「一般的でない」ものの価値を訴求</li>
+                        </ul>
+                        <p class="url-placeholder">関連ブランド: www.japan-eyewear.jp</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>見逃せない！韓国MZ世代の最新ミーム</h2>
+                <h3>(2025年後半期トレンドプレビュー)</h3>
+                <div class="grid-4" style="align-items: stretch; margin-top: 30px;">
+                    <div class="card meme-card">
+                        <img src="https://images.unsplash.com/photo-1581092580432-82c89163b9d3?w=400&q=80" alt="Friendly robot">
+                        <h4>GPTよしよし体</h4>
+                        <p>AIが使いそうな、少し不自然で優しい言い方を真似する文体。「～しましたか？」など、過保護で丁寧なトーンが特徴で、愛情を込めた皮肉として使われる。</p>
+                    </div>
+                    <div class="card meme-card">
+                        <img src="https://images.unsplash.com/photo-1615962843845-8833419992a7?w=400&q=80" alt="Cute character">
+                        <h4>〇〇ちゃん、何が好き？</h4>
+                        <p>日本のキャラクター「ちいかわ」から派生したミーム。無邪気で少し間の抜けたような質問の仕方で、場の雰囲気を和ませたりする際に使われる。</p>
+                    </div>
+                    <div class="card meme-card">
+                        <img src="https://images.unsplash.com/photo-1599837565318-67429b12a632?w=400&q=80" alt="Pixel art">
+                        <h4>AIピクセルアート作成</h4>
+                        <p>ChatGPT(DALL-E 3)を使い、90年代風のピクセルアート画像を生成する遊び。有名人などをレトロなゲーム画面のように作るのが流行。</p>
+                    </div>
+                    <div class="card meme-card">
+                        <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=400&q=80" alt="Dancing people">
+                        <h4>トロロレラ・チャレンジ</h4>
+                        <p>中毒性の高い子供向け番組の歌に合わせて踊るTikTokのダンスチャレンジ。意味のない歌詞と単純なメロディーが口コミで広がっている。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2><span style="font-size:50px; opacity:0.8;">NEXT BIG THING</span><br>プレビュー：2026年の旅行キーワード</h2>
+                <h3>現在のトレンドの次に注目すべき3つのコンセプト</h3>
+                <div class="grid-3" style="margin-top: 30px; align-items: stretch;">
+                    <div class="card">
+                        <h3 style="color:#a29bfe; font-size: 42px;">スリーポノミクス</h3>
+                        <p style="font-size: 28px;">最高の睡眠と休息を目的とする旅。最高級の寝具を備えたホテル、専門スパ、瞑想プログラムなど、「何もしない贅沢」を求める需要が増加。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe; font-size: 42px;">趣味コミュニティ旅行</h3>
+                        <p style="font-size: 28px;">釣り、キャンプ、工芸、アニメ聖地巡礼など、マイナーな趣味を共有する小規模グループ旅行。専門性の高い体験と仲間との深い交流を重視。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe; font-size: 42px;">ハイパーローカル</h3>
+                        <p style="font-size: 28px;">都市全体ではなく、特定の街に数日間滞在し、地元民のように暮らす旅。有名な観光地より、その街の日常と文化に深く没入。</p>
+                    </div>
+                </div>
+                <p style="font-size: 20px; color: rgba(255,255,255,0.65); margin-top: 25px; text-align: center; font-style: italic; max-width: 1600px;">
+                    *各キーワードは、韓国の主要経済紙や「大学内日20代研究所」などのトレンドレポートで活発に議論されている現象です。(e.g., 이코노미스트 '슬리포노믹스', 대학내일 'Z세대 크루 문화')
+                </p>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>8つのトレンドの共通点</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">パーソナライゼーション</h3>
+                        <p style="font-size: 28px;">すべてのトレンドが「私だけの」ものを追求し、自己表現の欲求が強化されています。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">体験中心</h3>
+                        <p style="font-size: 28px;">単純な購入より意味のある経験を追求し、そのプロセスを楽しむ文化が根付いています。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">健康とウェルビーイング</h3>
+                        <p style="font-size: 28px;">身体的、精神的な健康への関心が高まり、ライフスタイルの質的向上を追求しています。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>地域別適用優先順位</h2>
+                <div class="grid-4">
+                    <div class="card">
+                        <h4>東京</h4>
+                        <p style="font-size: 28px;">ドット柄、ギークシック、デコ文化</p>
+                    </div>
+                    <div class="card">
+                        <h4>大阪</h4>
+                        <p style="font-size: 28px;">トマト、一人ビンス、抹茶</p>
+                    </div>
+                    <div class="card">
+                        <h4>京都</h4>
+                        <p style="font-size: 28px;">抹茶、自己定義、ラントリップ</p>
+                    </div>
+                    <div class="card">
+                        <h4>地方都市</h4>
+                        <p style="font-size: 28px;">ラントリップ、トマト、自己定義</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>成功要因の分析</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">言語対応</h3>
+                        <p style="font-size: 28px;">韓国語サービスの基本対応と文化的背景を理解した接客が重要です。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">個別化サービス</h3>
+                        <p style="font-size: 28px;">顧客の好みに合わせたカスタマイズと「私だけの」体験提供が鍵となります。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">SNS連携</h3>
+                        <p style="font-size: 28px;">インスタ映えする環境を構築し、共有したくなるコンテンツを開発することが不可欠です。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2><span style="font-size:50px; opacity:0.8;">Session 2-2</span><br>業種別アプローチ戦略概要</h2>
+                <div class="card" style="width:100%; max-width:1600px; text-align:left;">
+                    <h4 style="text-align:center;">8つのトレンドを業種別で活用</h4>
+                    <ul style="font-size:30px; line-height:1.8; margin-top:30px;">
+                        <li><b>観光・宿泊業 →</b> 個性表現 + ウェルビーイング体験</li>
+                        <li><b>小売・流通業 →</b> 「私だけの」アイテム発見</li>
+                        <li><b>飲食業 →</b> 一人でも満足 + SNS映え</li>
+                        <li><b>地方自治体 →</b> 個性的な地域体験</li>
+                    </ul>
+                    <hr style="margin: 30px 0; border-color: rgba(255,255,255,0.2);">
+                    <h4 style="text-align:center;">韓国MZ世代 核心キーワード: <span style="color:#a29bfe;">🎯 個性表現欲求 / 健康的楽しみ / 一人中心ライフ</span></h4>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>観光・宿泊業戦略 (1/3)</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">個性表現型サービス</h3>
+                        <h4>エゲン・テト活用</h4>
+                        <ul style="text-align:left; font-size:28px;">
+                           <li>✅ MBTI別日本旅行コース</li>
+                           <li>✅ 「○○型人間専用」パッケージ</li>
+                           <li>✅ 個人カスタマイズ滞在プログラム</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">&nbsp;</h3>
+                        <h4>ラントリップ対応</h4>
+                        <ul style="text-align:left; font-size:28px;">
+                           <li>✅ マラソン大会+観光パッケージ</li>
+                           <li>✅ 東京・大阪名所ランニングガイド</li>
+                           <li>✅ 季節別テーマランニング</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>観光・宿泊業戦略 (2/3)</h2>
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80" class="trend-image" alt="Wellness travel">
+                    <div class="trend-content">
+                        <h3>ウェルビーイング体験</h3>
+                        <h4>抹茶ブーム</h4>
+                        <ul style="font-size:28px;">
+                           <li>✅ 京都茶道体験プログラム</li>
+                           <li>✅ 宇治抹茶農園ツアー</li>
+                           <li>✅ 抹茶デザート作りクラス</li>
+                        </ul>
+                        <h4>トマトブーム</h4>
+                        <ul style="font-size:28px;">
+                           <li>✅ 日本トマト農園体験</li>
+                           <li>✅ 「長寿の秘訣」テーマ旅行</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>観光・宿泊業戦略 (3/3)</h2>
+                <h3>一人客対応強化</h3>
+                <div class="card">
+                    <h4>一人ビンス文化</h4>
+                    <ul style="font-size:28px; list-style:none; padding:0;">
+                       <li>✅ ソロトラベラー向けデザート体験</li>
+                       <li>✅ 「一人グルメ」マップ制作</li>
+                       <li>✅ 一人でも快適な施設環境</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>小売・流通業戦略 (1/3)</h2>
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                        <h3>トレンド商品展開</h3>
+                        <h4>ドット柄ファッション</h4>
+                        <ul style="font-size:28px;">
+                           <li>✅ 原宿ビンテージショップ特集</li>
+                           <li>✅ 「日本限定ドットアイテム」</li>
+                        </ul>
+                        <h4>ギークシック</h4>
+                        <ul style="font-size:28px;">
+                           <li>✅ 秋葉原サブカルツアー</li>
+                           <li>✅ 日本メガネブランド体験</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1529392305459-7aa252b95217?w=800&q=80" class="trend-image" alt="Japanese retail store">
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>小売・流通業戦略 (2/3)</h2>
+                <h3>デコ文化活用</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>DIY体験ショッピング</h4>
+                        <ul style="font-size:28px; text-align:left;">
+                           <li>✅ 日本伝統工芸体験</li>
+                           <li>✅ 原宿デコ小物ツアー</li>
+                           <li>✅ 文具店探訪+DIY</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>店舗内サービス</h4>
+                        <ul style="font-size:28px; text-align:left;">
+                           <li>✅ その場でカスタマイズ</li>
+                           <li>✅ SNS投稿フォトゾーン</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>小売・流通業戦略 (3/3)</h2>
+                <h3>個性化サービス</h3>
+                <div class="card">
+                   <ul style="font-size:28px; list-style:none; padding:0;">
+                      <li>✅ 好み分析→カスタム推薦</li>
+                      <li>✅ 「私だけの」限定商品</li>
+                      <li>✅ 一人ショッピング環境</li>
+                   </ul>
+                </div>
+            </div>
+
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>F&B業界戦略 (1/3)</h2>
+                <div class="trend-slide-layout">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80" class="trend-image" alt="Healthy Japanese food">
+                    <div class="trend-content">
+                        <h3>ウェルビーイングメニュー</h3>
+                        <h4>トマト+抹茶活用</h4>
+                        <ul style="font-size:28px;">
+                           <li>✅ 健康+美味創作メニュー</li>
+                           <li>✅ プレミアム食材体験</li>
+                           <li>✅ 手作り料理クラス</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>F&B業界戦略 (2/3)</h2>
+                <h3>一人ダイニング</h3>
+                <div class="card">
+                   <h4>一人ビンス対応</h4>
+                   <ul style="font-size:28px; list-style:none; padding:0;">
+                      <li>✅ 一人デザートツアー</li>
+                      <li>✅ ソロ客向け空間設計</li>
+                      <li>✅ SNS映え盛り付け</li>
+                   </ul>
+                </div>
+            </div>
+            
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>F&B業界戦略 (3/3)</h2>
+                <div class="trend-slide-layout">
+                    <div class="trend-content">
+                        <h3>体験型F&B</h3>
+                        <h4>手作り+ラントリップ</h4>
+                        <ul style="font-size:28px;">
+                           <li>✅ 料理教室運営</li>
+                           <li>✅ ランニング後特別メニュー</li>
+                           <li>✅ カスタマイズレシピ開発</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1556909172-6ab63f18fd12?w=800&q=80" class="trend-image" alt="Japanese cooking class">
+                </div>
+            </div>
+            
+            <div class="slide">
+                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>地方自治体・DMO戦略</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">8トレンド統合活用</h3>
+                        <ul style="font-size:26px; list-style:none; padding:0; text-align:left;">
+                           <li>🔴 ドット柄 → 地域伝統柄コラボ</li>
+                           <li>🍅 トマト → 特産トマト農園</li>
+                           <li>🍵 抹茶 → 地域茶文化体験</li>
+                           <li>🎨 デコ → 伝統工芸DIY</li>
+                           <li>🏃 ラン → 地域自然コース</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:#a29bfe;">プロモーション戦略</h3>
+                        <h4>SNS活用</h4>
+                        <ul style="font-size:26px; list-style:none; padding:0; text-align:left;">
+                            <li>#私型人間日本旅行</li>
+                            <li>#ヒーリングラン東京</li>
+                            <li>#日本抹茶グルメ</li>
+                        </ul>
+                        <h4>成果指標</h4>
+                        <ul style="font-size:26px; list-style:none; padding:0; text-align:left;">
+                            <li>体験プログラム参加率</li>
+                            <li>SNS投稿量 / リピーター率</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3 style="margin-top:40px;">最終メッセージ: <span style="color:#81ecec">「個性的で健康的な私だけの日本旅行」</span>で韓国MZ世代をターゲティング</h3>
+            </div>
+            
+            <div class="slide bridge-slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>Session 3</h2>
+                <h1>Q&A & アクションプラン</h1>
+                <h3>明日から使える戦略を構築する</h3>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2><span style="font-size:50px; opacity:0.8;">Session 3</span><br>主要インサイトの要約</h2>
+                <div class="card" style="width: 100%; max-width: 1700px;">
+                    <div class="insight-list">
+                        <div class="insight-item"><div class="insight-number">1</div><span><strong>データに基づく意思決定：</strong>「勘」ではなく、正確なデータで韓国市場を攻略する必要があります。</span></div>
+                        <div class="insight-item"><div class="insight-number">2</div><span><strong>トレンドとローカル体験の融合：</strong>グローバルトレンドを日本のユニークなローカル体験と組み合わせる必要があります。</span></div>
+                        <div class="insight-item"><div class="insight-number">3</div><span><strong>デジタルチャネルの最適化：</strong>韓国人が情報を得て共有する方法（SNS）にマーケティングを集中させる必要があります。</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h2>あなただけの「アクションプラン」を作成しましょう</h2>
+                <h3>明日から実行できる第一歩を考える時間です</h3>
+                <div class="card" style="width: 100%; max-width: 1700px; text-align: left; margin-top: 30px;">
+                    <div class="insight-list">
+                        <div class="insight-item">
+                            <div class="insight-number" style="background: #a29bfe;">1</div>
+                            <div>
+                                <h4 style="color: #a29bfe; font-size: 34px; margin-bottom: 10px;">STEP 1: トレンド選定</h4>
+                                <span style="font-size: 30px;">8つのトレンドから、自社に最も関連性の高いトレンドを2つ選んでみましょう。</span>
+                            </div>
+                        </div>
+                        <hr style="margin: 25px 0; border-color: rgba(255,255,255,0.2);">
+                        <div class="insight-item">
+                            <div class="insight-number" style="background: #a29bfe;">2</div>
+                            <div>
+                                <h4 style="color: #a29bfe; font-size: 34px; margin-bottom: 10px;">STEP 2: アイデア具体化</h4>
+                                <span style="font-size: 30px;">選んだトレンドを活用し、1ヶ月以内に実行可能な小さなプロモーションを考えてみましょう。<br><em style="font-size: 24px; opacity: 0.8;">(例：抹茶の新メニュー開発、店のデコレーションコーナー設置)</em></span>
+                            </div>
+                        </div>
+                        <hr style="margin: 25px 0; border-color: rgba(255,255,255,0.2);">
+                        <div class="insight-item">
+                            <div class="insight-number" style="background: #a29bfe;">3</div>
+                            <div>
+                                <h4 style="color: #a29bfe; font-size: 34px; margin-bottom: 10px;">STEP 3: 成功指標 (KPI)</h4>
+                                <span style="font-size: 30px;">そのプロモーションの成功を測るための簡単な指標は何ですか？<br><em style="font-size: 24px; opacity: 0.8;">(例：特定メニューの注文数、SNSでのハッシュタグ投稿数)</em></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="flags">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+                </div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                
+                <h2>参加者限定 3大特典</h2>
+                
+                <div class="grid-3" style="margin-top: 40px;">
+                    <div class="card">
+                        <div style="background: #81ecec; color: #1a1a2e; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 32px; margin: 0 auto 20px;">1</div>
+                        <h4 style="font-size: 32px; margin-bottom: 15px; color: #81ecec;">セミナー資料一式</h4>
+                        <p style="font-size: 26px; line-height: 1.5;">PDF形式でセミナー終了後にメール送付いたします</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div style="background: #81ecec; color: #1a1a2e; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 32px; margin: 0 auto 20px;">2</div>
+                        <h4 style="font-size: 32px; margin-bottom: 15px; color: #81ecec;">韓国トレンド定期レポート</h4>
+                        <p style="font-size: 26px; line-height: 1.5;">10月〜12月の3ヶ月間<br>月1回メールで最新情報をお届け</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div style="background: #81ecec; color: #1a1a2e; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 32px; margin: 0 auto 20px;">3</div>
+                        <h4 style="font-size: 32px; margin-bottom: 15px; color: #81ecec;">講師陣への個別相談</h4>
+                        <p style="font-size: 26px; line-height: 1.5;">30分間のオンライン相談（1回）<br>ご希望の方は個別にご連絡ください</p>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 50px; max-width: 1400px; background: rgba(162, 155, 254, 0.1); border: 2px solid rgba(162, 155, 254, 0.3);">
+                    <p style="font-size: 28px; color: #a29bfe; font-weight: 600;">特典のお受け取りには事後アンケートへのご協力をお願いいたします</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓국" class="flag">
+                </div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                
+                <div style="display: flex; width: 100%; height: 100%; max-width: 1700px; gap: 60px; align-items: center;">
+                    
+                    <div style="flex: 1; text-align: left; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <h2 style="font-size: 72px; margin-bottom: 30px; text-align: left;">韓国トレンド<br>定期レポート</h2>
+                        <h3 style="font-size: 42px; color: #81ecec; margin-bottom: 50px; text-align: left;">参加者特典として<br>3ヶ月間無料でお届け</h3>
+                        
+                        <div style="background: rgba(255,255,255,0.08); padding: 40px; border-radius: 20px; border-left: 5px solid #81ecec;">
+                            <div style="margin-bottom: 25px;">
+                                <h4 style="font-size: 28px; color: #a29bfe; margin-bottom: 10px;">韓国人マーケターによるキュレーション</h4>
+                                <p style="font-size: 24px; opacity: 0.9;">現地の文脈を理解した専門家が厳選</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 25px;">
+                                <h4 style="font-size: 28px; color: #a29bfe; margin-bottom: 10px;">トレンド背景分析</h4>
+                                <p style="font-size: 24px; opacity: 0.9;">なぜ流行するのかの深層心理まで解説</p>
+                            </div>
+                            
+                            <div>
+                                <h4 style="font-size: 28px; color: #a29bfe; margin-bottom: 10px;">日本市場への適用提案</h4>
+                                <p style="font-size: 24px; opacity: 0.9;">業種別の具体的な活用アイデアを提示</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div style="flex: 0.8; height: 100%; display: flex; align-items: center; justify-content: center; position: relative;">
+                        
+                        <div style="position: absolute; top: 15px; left: 20px; background: rgba(255,255,255,0.08); padding: 30px; border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); transform: rotate(-1.5deg); opacity: 0.8;">
+                            <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/09/127.0.0.1_3000_Users_jk_andy_Desktop_HTMLE8ABB8E38085_jkc_HP_test1.html-2.png" 
+                                 alt="Korea Trend Monthly Report Page 2" 
+                                 style="height: 700px; width: auto; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                        </div>
+                        
+                        <div style="position: relative; z-index: 2; background: rgba(255,255,255,0.12); padding: 30px; border-radius: 20px; box-shadow: 0 15px 50px rgba(0,0,0,0.4);">
+                            <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/09/127.0.0.1_3000_Users_jk_andy_Desktop_HTMLE8ABB8E38085_jkc_HP_test1.html-2.png" 
+                                 alt="Korea Trend Monthly Report Page 1" 
+                                 style="height: 700px; width: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.4);">
+                        </div>
+                        
+                        <div style="position: absolute; bottom: -20px; right: 20px; background: rgba(129, 236, 236, 0.2); padding: 8px 16px; border-radius: 15px; font-size: 16px; color: #81ecec; font-weight: 600;">
+                            A4 2ページ構成
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+            <div class="slide">
+                <div class="flags">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+                </div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                
+                <div style="display: flex; align-items: center; gap: 80px; width: 100%; max-width: 1600px;">
+                    <div style="flex: 1;">
+                        <h1 style="text-align: left;">質疑応答</h1>
+                        <h3 style="margin-top: 50px; text-align: left;">궁금한 점이나 의견이 있으시면<br>언제든 편하게 질문해 주세요</h3>
+                        
+                        <div class="card" style="margin-top: 60px; text-align: left;">
+                            <p style="font-size: 36px; color: #81ecec; font-weight: 600;">어떤 내용이든 환영합니다!</p>
+                            <p style="font-size: 28px; margin-top: 20px; opacity: 0.9;">한국 시장 진출, 마케팅 전략, 트렌드 활용 등<br>무엇이든 자유롭게 말씀해 주세요</p>
+                        </div>
+                    </div>
+                    
+                    <div style="width: 500px; height: 400px;">
+                        <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2024/02/passport-scaled.jpg" 
+                             alt="Hand raising for questions" 
+                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
+                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+                <h1>ご清聴ありがとうございました</h1>
+                <h3>皆様の韓国インバウンドビジネスの成功を応援しております。</h3>
+                <div class="card" style="margin-top: 50px; font-size: 30px; text-align: left; max-width: 1000px;">
+                    <p><strong>元正壬 | Korea Insight Analyst</strong><br>Email: wjm@globaldaily.co.jp</p>
+                    <hr style="margin: 20px 0; border-color: rgba(255,255,255,0.2);">
+                    <p><strong>チェ・ひろゆき | Inbound Content Director</strong><br>Email: h.choi@globaldaily.co.jp</p>
+                </div>
+            </div>
+
         </div>
-        <div class="point-grid">
-          <div class="point-item">
-            <h4>一貫した態度</h4>
-            <p>相手が誰であろうと、基本的な姿勢は変わらない。だから安心して協力でき、組織の安定した力となる。</p>
-          </div>
-          <div class="point-item">
-            <h4>エネルギーを惜しまない</h4>
-            <p>損得勘定はするけれど、最終的には組織と人に投資することを楽しんでいる。</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
 
-    <!-- 7. 選ばれる人の循環 -->
-    <section class="slide">
-      <div class="content">
-        <h2 style="text-align:center;">そうなると何が起こるか</h2>
-        <div class="glass-card" style="text-align:center;margin-top:22px;">
-          <h4 style="font-size:26px;color:var(--highlight-blue);margin-bottom:16px;">組織の力となる人の循環</h4>
-          <p style="font-size:20px;color:#d2d2d7;margin-bottom:16px;">
-            重要なプロジェクトに誘われる → より多くの情報が入る → 成果が上がる<br>
-            → さらに信頼される → 組織にとって不可欠な存在になる
-          </p>
-          <p style="font-size:30px;color:#fff;margin:14px 0;font-weight:600;">
-            これが<span class="highlight">真の競争優位</span>
-          </p>
-          <p style="font-size:18px;color:var(--muted);">そして、こんな人が組織に増えていくと...</p>
-        </div>
-      </div>
-    </section>
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">54</span>
+    </div>
 
-    <!-- 8. 結論 -->
-    <section class="slide">
-      <div class="content final-quote">
-        <p class="main-question">一人が変わると<br>組織が変わる</p>
-        <p class="answer">
-          <span class="highlight">組織の力となる人</span>が一人いると、その周りの5人が影響を受ける。<br>
-          その5人がまた周りに影響し、連鎖反応が始まる。<br><br>
-          特定の個人に依存しない、<span class="asset-highlight">全員が各自の領域で力を発揮する組織</span>。<br>
-          それが真の組織力です。<br><br>
-          一人ひとりが『組織の真の力』になること。<br>
-          それが最も確実で持続可能な道なのです。
-        </p>
-      </div>
-    </section>
-  </div>
-
-  <script>
-    // ====== 16:9 Fit to Window ======
-    const deck = document.getElementById('deck');
-    function fitStage(){
-      const sw = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slide-width'));
-      const sh = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slide-height'));
-      const scale = Math.min(window.innerWidth / sw, window.innerHeight / sh);
-      deck.style.setProperty('--scale', scale.toString());
-    }
-    window.addEventListener('resize', fitStage);
-    fitStage();
-
-    // ====== Logo from data attribute (optional override) ======
-    (function(){
-      const url = document.body.getAttribute('data-logo');
-      if(url){
-        document.documentElement.style.setProperty('--logo', `url('${url}')`);
+    <script>
+    /* =========================
+        공통 상수 (화면/인쇄)
+    ========================= */
+    const baseWidth  = 1920;
+    const baseHeight = 1080;
+    
+    const P_SIDE   = 120;
+    const P_TOP    = 160;
+    const P_BOTTOM = 140;
+    
+    let slides = [];
+    let presentation = null;
+    let currentSlideIndex = 0;
+    let isPrinting = false;
+    
+    const __IS_PRESENTER__ = new URLSearchParams(location.search).get('presenter') === '1';
+    
+    (function earlyHideNavForAudience(){
+      if (!__IS_PRESENTER__) {
+        const st = document.createElement('style');
+        st.id = 'gdEarlyHide';
+        st.textContent = '#gdPresenterNav{display:none!important}';
+        document.head.appendChild(st);
       }
     })();
-
-    // ====== Slides / Navigation ======
-    let currentSlide = 0;
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    const totalSlides = slides.length;
-    const navigation = document.querySelector('.navigation');
-
-    document.getElementById('total-slides').textContent = totalSlides.toString();
-
-    for(let i=0;i<totalSlides;i++){
-      const btn = document.createElement('button');
-      btn.classList.add('nav-btn');
-      btn.addEventListener('click',()=>showSlide(i));
-      navigation.appendChild(btn);
+    
+    function updateScale() {
+      if (isPrinting) return;
+      const cont = document.querySelector('.presentation-container');
+      const vw = cont ? cont.clientWidth  : window.innerWidth;
+      const vh = cont ? cont.clientHeight : window.innerHeight;
+      const scale = Math.min(vw / baseWidth, vh / baseHeight);
+      if (presentation) presentation.style.transform = `scale(${scale})`;
     }
-    const navBtns = document.querySelectorAll('.nav-btn');
+    
+    function mountHeaderFooterAndBody() {
+        slides = [...document.querySelectorAll('.slide')];
 
-    function showSlide(n){
-      if(n<0 || n>=totalSlides) return;
-      slides[currentSlide].classList.remove('active');
-      navBtns[currentSlide].classList.remove('active');
-      currentSlide = n;
-      requestAnimationFrame(()=>{
-        slides[currentSlide].classList.add('active');
-        navBtns[currentSlide].classList.add('active');
-        document.getElementById('current-slide').textContent = (currentSlide+1).toString();
+        if (slides.length) {
+            slides[0].classList.add('cover');
+            slides[slides.length - 1].classList.add('closing');
+        }
+
+        const LEFT   = 'GLOBAL DAILY';
+        const CENTER = 'KOREA INBOUND MARKET SEMINAR 2025' +
+                       '<span class="sep">・</span> 参加者限定／配布・転載禁止' +
+                       '<span class="sep">・</span> 2025.09.26';
+
+        slides.forEach((s, i) => {
+            let header = s.querySelector('.slide-header-fixed');
+            if (!header) {
+                header = document.createElement('div');
+                header.className = 'slide-header-fixed';
+                const left  = document.createElement('div'); left.className = 'left';
+                const right = document.createElement('div'); right.className = 'right';
+                header.appendChild(left); header.appendChild(right);
+                s.appendChild(header);
+            }
+            const flags = s.querySelector(':scope > .flags');
+            const logo  = s.querySelector(':scope > .logo');
+            if (flags) header.querySelector('.left').appendChild(flags);
+            if (logo)  header.querySelector('.right').appendChild(logo);
+
+            s.querySelector('.slide-breadcrumb')?.remove();
+            let breadcrumbText = '';
+            const totalSlides = slides.length;
+            
+            if (i >= 1 && i <= 5) breadcrumbText = 'Opening';
+            if (i >= 6 && i <= 13) breadcrumbText = `Session 1: 市場動向分析 > ${s.querySelector('h2')?.innerText.split('\n')[0] || 'データ分析'}`;
+            if (i >= 14 && i <= 34) {
+                 const trendTitle = s.querySelector('h3 > span + br')?.nextSibling?.textContent.trim() || s.querySelector('h2, h3')?.innerText.split('\n')[0];
+                 breadcrumbText = `Session 2: トレンド詳解 > ${trendTitle}`;
+            }
+            if (i >= 35 && i <= 45) breadcrumbText = `Session 2: 実務応用戦略 > ${s.querySelector('h2')?.innerText.split('\n')[0] || '業種別戦略'}`;
+            if (i >= 46 && i < totalSlides - 1) breadcrumbText = `Session 3: Q&A & Action Plan`;
+            
+            if (breadcrumbText) {
+                const breadcrumb = document.createElement('div');
+                breadcrumb.className = 'slide-breadcrumb';
+                breadcrumb.textContent = breadcrumbText;
+                header.querySelector('.left').appendChild(breadcrumb);
+            }
+
+            s.querySelector('.slide-footer-fixed')?.remove();
+            const footer = document.createElement('div');
+            footer.className = 'slide-footer-fixed';
+            footer.innerHTML = `
+              <div class="left">${LEFT}</div>
+              <div class="center">${CENTER}</div>
+              <div class="right">${i + 1} / ${slides.length}</div>`;
+            s.appendChild(footer);
+
+            if (!s.querySelector(':scope > .slide-body')) {
+                const body = document.createElement('div');
+                body.className = 'slide-body';
+                [...s.children].forEach(ch => {
+                    if (!ch.classList.contains('slide-header-fixed') &&
+                        !ch.classList.contains('slide-footer-fixed') &&
+                        !ch.classList.contains('source-note')) {
+                        body.appendChild(ch);
+                    }
+                });
+                s.insertBefore(body, footer);
+            }
+            if (i === 2 || i === 3) s.classList.add('tall-slide', 'fit-compact'); 
+            if (i === 8) s.classList.add('tall-slide', 'fit-compact', 'chart-hero');
+        });
+
+        positionSourceNotes();
+    }
+    
+    function getPadsFor(index) {
+      let top = P_TOP, bottom = P_BOTTOM;
+      if (index === 2 || index === 3) { top = 120; bottom = 120; }
+      if (index === 8) { top = 100; bottom = 120; }
+      return { top, bottom };
+    }
+    
+    function fitOne(slide) {
+      if (!slide || slide.classList.contains('no-fit')) return;
+      const body = slide.querySelector('.slide-body');
+      if (!body) return;
+    
+      const idx = slides.indexOf(slide);
+      const { top, bottom } = getPadsFor(idx);
+    
+      const usableW = baseWidth  - (P_SIDE * 2);
+      const usableH = baseHeight - (top + bottom);
+    
+      body.style.transform = 'none';
+    
+      const contentW = Math.max(body.scrollWidth,  body.offsetWidth,  1);
+      const contentH = Math.max(body.scrollHeight, body.offsetHeight, 1);
+    
+      const scaleX = usableW / contentW;
+      const scaleY = usableH / contentH;
+      const scale  = Math.min(1, scaleX, scaleY);
+    
+      body.style.transformOrigin = 'top center';
+      body.style.transform = `scale(${scale})`;
+    }
+    function fitAll() { slides.forEach(fitOne); }
+    
+    function positionSourceNotes() {
+      slides.forEach((s, idx) => {
+        const note = s.querySelector('.source-note');
+        if (!note) return;
+        const footer = s.querySelector('.slide-footer-fixed');
+        const footerH = footer ? footer.offsetHeight : 0;
+    
+        let gap = 28;
+        if (idx === 7 || idx === 8) gap = 48;
+    
+        Object.assign(note.style, {
+          position: 'absolute',
+          left: P_SIDE + 'px',
+          right: P_SIDE + 'px',
+          textAlign: 'center',
+          transform: 'none',
+          zIndex: 6,
+          bottom: (footerH + gap) + 'px'
+        });
       });
     }
-    function nextSlide(){ if(currentSlide < totalSlides-1) showSlide(currentSlide+1); }
-    function prevSlide(){ if(currentSlide > 0) showSlide(currentSlide-1); }
-
-    // 초기화
-    showSlide(0);
-
-    // ====== Controls ======
-    document.addEventListener('keydown',(e)=>{
-      if(e.key==='ArrowRight' || e.key===' ' || e.key==='PageDown' || e.key==='ArrowDown'){ e.preventDefault(); nextSlide(); }
-      else if(e.key==='ArrowLeft' || e.key==='PageUp' || e.key==='ArrowUp'){ e.preventDefault(); prevSlide(); }
-      else if(e.key.toLowerCase()==='a'){ // Auto-advance toggle (약22초/枚 ≒ 3분/8枚)
-        toggleAutoplay();
+    
+    function initCountryChart() {
+      const ctx = document.getElementById('countryChart');
+      if (!ctx) return;
+      if (ctx.chart) ctx.chart.destroy();
+    
+      ctx.chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['韓国', '中国', '台湾', '米国', '香港'],
+          datasets: [{
+            label: '訪問者数 (万人)',
+            data: [478, 364, 298, 197, 156],
+            backgroundColor: 'rgba(162, 155, 254, 0.8)',
+            borderColor: 'rgba(162, 155, 254, 1)',
+            borderWidth: 2,
+            yAxisID: 'y'
+          }, {
+            label: '消費額 (億円)',
+            data: [5135, 4892, 3201, 3456, 1876],
+            type: 'line',
+            borderColor: 'rgba(129, 236, 236, 1)',
+            backgroundColor: 'rgba(129, 236, 236, 1)',
+            borderWidth: 4,
+            fill: false,
+            yAxisID: 'y1',
+            tension: 0.2
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend:  { labels: { color: 'white', font: { size: 22 } } },
+            tooltip: { titleFont: { size: 20 }, bodyFont: { size: 18 } }
+          },
+          scales: {
+            x:  { ticks: { color: 'white', font: { size: 20 } },
+                  grid:  { color: 'rgba(255,255,255,0.1)' } },
+            y:  { type:'linear', position:'left',
+                  ticks:{ color:'rgba(162,155,254,1)', font:{size:18} },
+                  grid:{ color:'rgba(255,255,255,0.1)' },
+                  title:{ display:true, text:'訪問者数 (万人)', color:'rgba(162,155,254,1)', font:{size:20} } },
+            y1: { type:'linear', position:'right',
+                  ticks:{ color:'rgba(129,236,236,1)', font:{size:18} },
+                  grid:{ drawOnChartArea:false },
+                  title:{ display:true, text:'消費額 (億円)', color:'rgba(129,236,236,1)', font:{size:20} } }
+          }
+        }
+      });
+    }
+    
+    function setChartForPrint(isPrint) {
+      const canvas = document.getElementById('countryChart');
+      if (!canvas || !canvas.chart) return;
+      const opt = canvas.chart.options;
+      if (isPrint) {
+        opt.plugins.legend.labels.color = '#000';
+        opt.scales.x.ticks.color = '#000';
+        opt.scales.y.ticks.color  = '#000';
+        opt.scales.y1.ticks.color = '#000';
+        opt.scales.x.grid.color   = 'rgba(0,0,0,.1)';
+        opt.scales.y.grid.color   = 'rgba(0,0,0,.1)';
+      } else {
+        opt.plugins.legend.labels.color = 'white';
+        opt.scales.x.ticks.color = 'white';
+        opt.scales.y.ticks.color  = 'rgba(162,155,254,1)';
+        opt.scales.y1.ticks.color = 'rgba(129,236,236,1)';
+        opt.scales.x.grid.color   = 'rgba(255,255,255,.1)';
+        opt.scales.y.grid.color   = 'rgba(255,255,255,.1)';
       }
-    });
-
-    document.addEventListener('click',(e)=>{
-      if(!(e.target instanceof HTMLElement)) return;
-      if(!e.target.classList.contains('nav-btn') && !e.target.closest('.deck-header, .deck-footer')) {
-        nextSlide();
+      canvas.chart.update();
+    }
+    
+    function showSlide(index) {
+      slides.forEach(s => s.classList.remove('active'));
+      const current = slides[index];
+      current.classList.add('active');
+    
+      current.classList.remove('slide-transition');
+      void current.offsetWidth;
+      current.classList.add('slide-transition');
+    
+      const counter = document.getElementById('currentSlide');
+      if (counter) counter.textContent = index + 1;
+    
+      const hasChart = !!current.querySelector('#countryChart');
+      if (hasChart) {
+        const card = current.querySelector('.card');
+        if (card) { card.style.height = '620px'; card.style.padding = '24px 28px'; }
+        const h2 = current.querySelector('h2'); if (h2) h2.style.marginBottom = '8px';
+        const h3 = current.querySelector('h3'); if (h3) { h3.style.margin = '0 0 12px'; h3.style.fontSize = '44px'; }
       }
-    });
-
-    // ====== Auto Play (~3min total) ======
-    let autoplayTimer=null;
-    const perSlideMs = 22500; // 약22.5초/枚
-    function toggleAutoplay(){
-      if(autoplayTimer){
-        clearInterval(autoplayTimer); autoplayTimer=null;
-      }else{
-        autoplayTimer = setInterval(()=>{
-          if(currentSlide >= totalSlides-1){ clearInterval(autoplayTimer); autoplayTimer=null; }
-          else{ nextSlide(); }
-        }, perSlideMs);
+    
+      const chartCanvas = current.querySelector('#countryChart');
+      if (chartCanvas && !chartCanvas.chart) {
+        setTimeout(() => { initCountryChart(); fitOne(current); positionSourceNotes(); }, 120);
+      } else {
+        fitOne(current);
+        positionSourceNotes();
       }
     }
+    function nextSlide() {
+      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+      showSlide(currentSlideIndex);
+    }
+    function prevSlide() {
+      currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+      showSlide(currentSlideIndex);
+    }
+    
+    (function hashDeepLinker(){
+      function parseHash(){
+        const m = location.hash.match(/s=(\d+)/i);
+        if (!m) return null;
+        const n = Math.max(1, parseInt(m[1],10));
+        return Math.min(n, slides.length || n) - 1;
+      }
+      function goFromHash(){
+        const idx = parseHash();
+        if (idx!=null) { currentSlideIndex = idx; showSlide(idx); }
+      }
+      function wrapShow(){
+        const orig = window.showSlide;
+        if (typeof orig !== 'function' || orig.__hashWrapped) return;
+        const wrapped = function(i){
+          orig.call(this, i);
+          try { history.replaceState(null,'', location.pathname + location.search + '#s=' + (i+1)); } catch(e){}
+        };
+        wrapped.__hashWrapped = true;
+        window.showSlide = wrapped;
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => { wrapShow(); window.addEventListener('hashchange', goFromHash); goFromHash(); });
+      } else {
+        wrapShow(); window.addEventListener('hashchange', goFromHash); goFromHash();
+      }
+    })();
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      presentation = document.querySelector('.presentation');
+    
+      mountHeaderFooterAndBody();
 
-    // ====== Print: ensure first slide visible for preview before printing ======
-    window.addEventListener('beforeprint', ()=>{
-      showSlide(0);
+      slides.forEach(slide => {
+        const insightH3 = slide.querySelector('h3');
+        if (insightH3 && insightH3.textContent.includes('インサイト:')) {
+            insightH3.classList.add('insight-box');
+
+            // 'インサイト:' 텍스트만 찾아서 span으로 감싸고 스타일 적용
+            const originalText = insightH3.innerHTML;
+            const newText = originalText.replace('インサイト:', '<span class="insight-label">インサイト:</span>');
+            insightH3.innerHTML = newText;
+        }
     });
-  </script>
-</body>
-</html>
+    
+      const totalSlidesEl = document.getElementById('totalSlides');
+      if (totalSlidesEl) totalSlidesEl.textContent = slides.length;
+    
+      if (__IS_PRESENTER__) {
+        document.body.classList.add('gd-with-nav');
+      }
+    
+      showSlide(0);
+      updateScale();
+    
+      window.addEventListener('resize', () => { updateScale(); fitAll(); positionSourceNotes(); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+        else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
+      });
+    });
+    
+    (function () {
+      function forceRenderTemporarily() {
+        const touched = [];
+        document.querySelectorAll('.slide').forEach(s => {
+          const cs = getComputedStyle(s);
+          if (cs.display === 'none') {
+            touched.push(s);
+            s.dataset._prevDisplay = s.style.display || '';
+            s.style.display = 'block';
+          }
+        });
+        return () => {
+          touched.forEach(s => {
+            s.style.display = s.dataset._prevDisplay;
+            delete s.dataset._prevDisplay;
+          });
+        };
+      }
+    
+      function snapshotCanvasToImage(canvas) {
+        try {
+          canvas.width = 1600; canvas.height = 500;
+          if (canvas.chart) {
+            canvas.chart.options.responsive = false;
+            canvas.chart.options.animation = false;
+            canvas.chart.options.animations = { duration: 0 };
+            canvas.chart.resize();
+            canvas.chart.update('none');
+          }
+          return canvas.toDataURL('image/png');
+        } catch(e) {
+          return null;
+        }
+      }
+    
+      async function openPrintView() {
+        const restore = forceRenderTemporarily();
+    
+        try {
+          const c = document.getElementById('countryChart');
+          if (c && !c.chart) initCountryChart();
+          if (c && c.chart) {
+            c.width = 1600; c.height = 500;
+            c.chart.options.responsive = false;
+            c.chart.options.animation = false;
+            c.chart.options.animations = { duration: 0 };
+            c.chart.resize();
+            c.chart.update('none');
+          }
+        } catch(e) {}
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    
+        const w = window.open('', '_blank');
+        const doc = w.document;
+        const css = `
+          @page { size: 16in 9in; margin: 0; }
+          html, body {
+            margin:0; padding:0; background:#fff; color:#000;
+            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+          }
+          .page {
+            width:16in; height:9in; box-sizing:border-box;
+            padding: 1.2in 1.0in 1.2in;
+            page-break-after: always; overflow:hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Sans", Meiryo, sans-serif;
+            display:flex; align-items:center; justify-content:center;
+          }
+          .viewport { width: 1920px; height: 1080px; transform-origin: center center; }
+          h1,h2,h3,h4,p,li,span,div { text-shadow:none !important; }
+          img { max-width:100%; height:auto; }
+        `;
+    
+        doc.write('<!doctype html><html><head><meta charset="utf-8"><title>Print</title><style>'+css+'</style></head><body></body></html>');
+        doc.close();
+    
+        const srcSlides = Array.from(document.querySelectorAll('.slide'));
+        srcSlides.forEach((s, i) => {
+          const page = doc.createElement('section');
+          page.className = 'page';
+    
+          const clone = s.cloneNode(true);
+    
+          clone.style.display = 'block';
+          clone.style.visibility = 'visible';
+          clone.querySelectorAll('*').forEach(el => {
+            const st = el.style;
+            if (!st) return;
+            if (st.visibility === 'hidden') st.visibility = 'visible';
+            if (st.display === 'none')     st.display    = 'block';
+            st.transform = 'none';
+            st.animation = 'none';
+            st.transition = 'none';
+            st.filter = 'none';
+            st.backdropFilter = 'none';
+            if (st.position === 'absolute' || st.position === 'fixed') st.position = 'relative';
+          });
+    
+          const srcCanvases = s.querySelectorAll('canvas');
+          const cloneCanvases = clone.querySelectorAll('canvas');
+          srcCanvases.forEach((cv, idx) => {
+            const url = snapshotCanvasToImage(cv);
+            if (url && cloneCanvases[idx]) {
+              const img = doc.createElement('img');
+              img.src = url;
+              img.alt = 'chart snapshot';
+              img.style.width = '100%';
+              cloneCanvases[idx].replaceWith(img);
+            }
+          });
+    
+          const viewport = doc.createElement('div');
+          viewport.className = 'viewport';
+          viewport.appendChild(clone);
+          page.appendChild(viewport);
+          doc.body.appendChild(page);
+    
+          const cs = w.getComputedStyle(page);
+          const pw = page.clientWidth  - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+          const ph = page.clientHeight - parseFloat(cs.paddingTop)  - parseFloat(cs.paddingBottom);
+          const scale = Math.min(pw / baseWidth, ph / baseHeight, 1);
+          viewport.style.transform = `scale(${scale})`;
+        });
+    
+        restore();
+    
+        w.addEventListener('load', () => {
+          w.focus();
+          w.print();
+        });
+      }
+    
+      document.addEventListener('keydown', (e) => {
+        if (e.shiftKey && e.key.toLowerCase() === 'p') {
+          e.preventDefault();
+          openPrintView();
+        }
+      });
+    
+      window.openPrintView = openPrintView;
+    })();
+    
+    (function () {
+      function ensureCountryChartReady() {
+        const c = document.getElementById('countryChart');
+        if (!c) return null;
+        try {
+          if (!c.chart && typeof Chart !== 'undefined') {
+            if (typeof initCountryChart === 'function') initCountryChart();
+          }
+          return c;
+        } catch (e) { return c; }
+      }
+    
+      function snapshotCountryChart() {
+        const c = ensureCountryChartReady();
+        if (!c) return;
+    
+        let revert = null;
+        const slide = c.closest('.slide');
+        if (slide && getComputedStyle(slide).display === 'none') {
+          const prev = slide.style.display;
+          slide.style.display = 'block';
+          revert = () => { slide.style.display = prev; };
+        }
+    
+        try {
+          if (!c.chart) initCountryChart();
+          if (c.chart) {
+            c.width = 1600;
+            c.height = 500;
+            c.chart.options.responsive = false;
+            c.chart.options.animation = false;
+            c.chart.options.animations = { duration: 0 };
+            c.chart.resize();
+            c.chart.update('none');
+          }
+        } catch (e) {}
+    
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            try {
+              const url = c.toDataURL('image/png');
+              let img = document.getElementById('countryChartPrint');
+              if (!img) {
+                img = document.createElement('img');
+                img.id = 'countryChartPrint';
+                img.alt = 'chart snapshot';
+                c.parentNode.insertBefore(img, c);
+              }
+              img.src = url;
+            } catch (e) {}
+            if (revert) revert();
+          });
+        });
+      }
+    
+      function beforePrint() {
+        isPrinting = true;
+        if (typeof setChartForPrint === 'function') setChartForPrint(true);
+        snapshotCountryChart();
+    
+        document.querySelectorAll('.slide').forEach(s => {
+          s.setAttribute('data-print-prev-display', s.style.display || '');
+          s.style.display = 'block';
+          s.style.position = 'relative';
+        });
+    
+        const pc = document.querySelector('.presentation-container');
+        const pr = document.querySelector('.presentation');
+        if (pc) { pc.style.position = 'static'; pc.style.width = 'auto'; pc.style.height = 'auto'; }
+        if (pr) { pr.style.transform = 'none'; pr.style.width = 'auto'; pr.style.height = 'auto'; pr.style.overflow = 'visible'; }
+    
+        fitAll();
+        positionSourceNotes();
+      }
+    
+      function afterPrint() {
+        isPrinting = false;
+        if (typeof setChartForPrint === 'function') setChartForPrint(false);
+    
+        document.querySelectorAll('.slide').forEach(s => {
+          const prev = s.getAttribute('data-print-prev-display');
+          if (prev !== null) {
+            s.style.display = prev;
+            s.removeAttribute('data-print-prev-display');
+          }
+        });
+    
+        const c = document.getElementById('countryChart');
+        if (c && c.chart) {
+          c.chart.options.responsive = true;
+          c.chart.resize();
+        }
+    
+        updateScale();
+        fitAll();
+        positionSourceNotes();
+      }
+    
+      if ('matchMedia' in window) {
+        const mql = window.matchMedia('print');
+        (mql.addEventListener ? mql.addEventListener.bind(mql, 'change') : mql.addListener).call(mql, (e) => {
+          if (e.matches) beforePrint(); else afterPrint();
+        });
+      }
+      window.addEventListener('beforeprint', beforePrint);
+      window.addEventListener('afterprint', afterPrint);
+    
+      window.__snapshotCountryChart = snapshotCountryChart;
+    })();
+    
+    (function(){
+      if (__IS_PRESENTER__ && document.getElementById('gdPresenterNav')) return;
+    
+      if (document.getElementById('presenterFab')) return;
+    
+      const css = `
+      #presenterFab{
+        position:fixed; left:26px; bottom:26px; z-index:10000;
+        padding:12px 16px; border-radius:14px; border:1px solid rgba(255,255,255,.2);
+        background:linear-gradient(135deg,#81ecec 0%,#74b9ff 100%);
+        color:#0b1b2b; font-weight:700; font-size:14px; letter-spacing:.2px; cursor:pointer;
+        box-shadow:0 10px 30px rgba(0,0,0,.25);
+      }
+      #presenterPanel{
+        position:fixed; left:0; top:0; bottom:0; width:420px; z-index:10001;
+        transform:translateX(-100%); transition:transform .25s ease;
+        background:rgba(10,10,26,.96); backdrop-filter:blur(12px);
+        border-right:1px solid rgba(255,255,255,.12); color:#fff;
+        display:flex; flex-direction:column;
+      }
+      #presenterPanel.open{ transform:translateX(0); }
+      #pp-head{ padding:16px 18px; display:flex; align-items:center; gap:10px;
+        border-bottom:1px solid rgba(255,255,255,.12); }
+      #pp-head .title{ font-size:15px; font-weight:700; opacity:.95; flex:1; }
+      #pp-close{ background:transparent; border:0; color:#fff; font-size:20px; cursor:pointer; opacity:.7; }
+      #pp-search{ padding:10px 14px; margin:12px 12px 8px; border-radius:12px; border:1px solid rgba(255,255,255,.18);
+        background:rgba(255,255,255,.06); color:#fff; outline:none; width:calc(100% - 24px); }
+      #pp-list{ overflow:auto; padding:4px 8px 12px; }
+      .pp-item{ display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border-radius:12px; cursor:pointer; }
+      .pp-item:hover{ background:rgba(255,255,255,.08); }
+      .pp-num{ min-width:38px; text-align:right; opacity:.7; font-variant-numeric:tabular-nums; }
+      .pp-title{ flex:1; line-height:1.35; }
+      .pp-tag{ font-size:11px; opacity:.7; margin-left:6px; }
+      .pp-active{ outline:2px solid rgba(129,236,236,.9); background:rgba(129,236,236,.08); }
+      @media print{ #presenterFab,#presenterPanel{ display:none !important; } }
+      .gd-with-nav #presenterFab, .gd-with-nav #presenterPanel { display:none !important; }
+      `;
+      const style = document.createElement('style');
+      style.textContent = css;
+      document.head.appendChild(style);
+    
+      const isPresenter = __IS_PRESENTER__;
+    
+      const getSlides = () => (window.slides && window.slides.length)
+          ? window.slides
+          : Array.from(document.querySelectorAll('.slide'));
+    
+      function highlight(i){
+        document.querySelectorAll('#pp-list .pp-item').forEach(el=>{
+          el.classList.toggle('pp-active', Number(el.dataset.idx)===i);
+        });
+      }
+    
+      function safeShow(i){
+        const slides = getSlides();
+        const idx = Math.max(0, Math.min(i, slides.length-1));
+    
+        if (typeof window.showSlide === 'function') {
+          window.currentSlideIndex = idx;
+          window.showSlide(idx);
+        } else {
+          slides.forEach(s=>s.classList.remove('active'));
+          slides[idx]?.classList.add('active');
+          const counter = document.getElementById('currentSlide');
+          if (counter) counter.textContent = String(idx+1);
+        }
+        try { history.replaceState(null,'', location.pathname + location.search + '#s=' + (idx+1)); } catch(e){}
+        highlight(idx);
+      }
+    
+      function parseHash(){
+        const m = location.hash.match(/s=(\d+)/i);
+        if (!m) return null;
+        const n = Math.max(1, parseInt(m[1],10));
+        return Math.min(n, getSlides().length) - 1;
+      }
+    
+      function buildUI(){
+        const fab = document.createElement('button');
+        fab.id = 'presenterFab';
+        fab.type = 'button';
+        fab.textContent = 'Bookmarks';
+        document.body.appendChild(fab);
+    
+        const panel = document.createElement('aside');
+        panel.id = 'presenterPanel';
+        panel.innerHTML = `
+          <div id="pp-head">
+            <div class="title">Presenter Bookmarks</div>
+            <button id="pp-close" title="Close">×</button>
+          </div>
+          <input id="pp-search" type="search" placeholder="검색/필터 (제목·번호)">
+          <div id="pp-list"></div>
+        `;
+        document.body.appendChild(panel);
+    
+        const listEl = panel.querySelector('#pp-list');
+        const searchEl = panel.querySelector('#pp-search');
+    
+        const slides = getSlides();
+        const items = slides.map((s, i) => {
+          const t = s.querySelector('h2,h1,h3');
+          const title = (t ? t.textContent.trim() : `Slide ${i+1}`) || `Slide ${i+1}`;
+          const isBridge = s.classList.contains('bridge-slide');
+          return { i, title, tag: isBridge ? 'Bridge' : '' };
+        });
+    
+        function render(filter=''){
+          listEl.innerHTML = '';
+          const f = filter.trim().toLowerCase();
+          items.forEach(({i,title,tag})=>{
+            if (f && !(title.toLowerCase().includes(f) || String(i+1).includes(f))) return;
+            const div = document.createElement('div');
+            div.className = 'pp-item';
+            div.dataset.idx = i;
+            div.innerHTML = `
+              <div class="pp-num">${i+1}</div>
+              <div class="pp-title">${title}${tag?` <span class="pp-tag">(${tag})</span>`:''}</div>
+            `;
+            div.addEventListener('click', ()=> { safeShow(i); closePanel(); });
+            listEl.appendChild(div);
+          });
+          highlight(window.currentSlideIndex ?? 0);
+        }
+    
+        function openPanel(){ panel.classList.add('open'); searchEl.focus({preventScroll:true}); }
+        function closePanel(){ panel.classList.remove('open'); }
+        function togglePanel(){ panel.classList.toggle('open'); if(panel.classList.contains('open')) searchEl.focus({preventScroll:true}); }
+    
+        fab.addEventListener('click', togglePanel);
+        panel.querySelector('#pp-close').addEventListener('click', closePanel);
+        searchEl.addEventListener('input', e => render(e.target.value));
+    
+        document.addEventListener('keydown', (e)=>{
+          const gKey = (e.key||'').toLowerCase()==='g';
+          const toggle = gKey && (e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey;
+          if (toggle){ e.preventDefault(); togglePanel(); }
+        });
+    
+        window.addEventListener('hashchange', ()=>{
+          const idx = parseHash();
+          if (idx!=null) safeShow(idx);
+        });
+    
+        render();
+    
+        const initial = parseHash();
+        if (initial!=null) safeShow(initial);
+    
+        if (!isPresenter) fab.style.display = 'none';
+    
+        const _origShow = window.showSlide;
+        if (typeof _origShow === 'function') {
+          window.showSlide = function(i){
+            _origShow.call(this, i);
+            try { history.replaceState(null,'', location.pathname + location.search + '#s=' + (i+1)); } catch(e){}
+            highlight(i);
+          };
+        }
+      }
+    
+      const start = ()=> setTimeout(buildUI, 60);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+      } else {
+        start();
+      }
+    })();
+    
+    (function(){
+      const isPresenter = __IS_PRESENTER__;
+    
+      if (!isPresenter) {
+        const nav = document.getElementById('gdPresenterNav');
+        if (nav) nav.style.display = 'none';
+        document.body.classList.remove('gd-with-nav');
+        return;
+      }
+    
+      function buildPresenterNav(){
+        const list = document.getElementById('gdPresenterNavList');
+        if (!list) return;
+    
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        list.innerHTML = '';
+    
+        function pickTitle(slide, i){
+          const root = slide.querySelector('.slide-body') || slide;
+          const h2 = root.querySelector('h2');
+          const h1 = root.querySelector('h1');
+          const h3 = root.querySelector('h3');
+          let t = (h2?.textContent || h1?.textContent || h3?.textContent || '').trim();
+          if (!t) t = `Slide ${i+1}`;
+          return t.replace(/\s+/g, ' ').slice(0, 140);
+        }
+    
+        slides.forEach((s, i) => {
+          const b = document.createElement('button');
+          b.className = 'gd-nav-item';
+          b.type = 'button';
+          b.dataset.idx = i;
+          b.innerHTML = `<span class="num">${String(i+1).padStart(2,'0')}</span>${pickTitle(s,i)}`;
+          b.addEventListener('click', () => {
+            if (typeof window.currentSlideIndex === 'number') window.currentSlideIndex = i;
+            if (typeof window.showSlide === 'function') window.showSlide(i);
+          });
+          list.appendChild(b);
+        });
+    
+        document.body.classList.add('gd-with-nav');
+        highlight(activeIndex());
+        if (typeof window.updateScale === 'function') setTimeout(window.updateScale, 0);
+      }
+    
+      function activeIndex(){
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const idx = slides.findIndex(s => s.classList.contains('active'));
+        if (idx >= 0) return idx;
+        return (typeof window.currentSlideIndex === 'number') ? window.currentSlideIndex : 0;
+      }
+    
+      function highlight(i){
+        document.querySelectorAll('#gdPresenterNav .gd-nav-item').forEach(el => {
+          el.classList.toggle('active', Number(el.dataset.idx) === i);
+        });
+        const act = document.querySelector('#gdPresenterNav .gd-nav-item.active');
+        if (act) act.scrollIntoView({block:'nearest', inline:'nearest'});
+      }
+    
+      function safePatch(){
+        if (typeof window.showSlide === 'function' && !window.showSlide.__gdPatched) {
+          const _origShow = window.showSlide;
+          window.showSlide = function(i){
+            _origShow.call(this, i);
+            highlight(i);
+          };
+          window.showSlide.__gdPatched = true;
+        }
+    
+        document.addEventListener('keydown', (e)=>{
+          const gKey = (e.key||'').toLowerCase()==='g';
+          const toggle = gKey && (e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey;
+          if (!toggle) return;
+          e.preventDefault();
+          const nav = document.getElementById('gdPresenterNav');
+          if (!nav) return;
+          const show = nav.style.display !== 'none';
+          if (show) {
+            nav.style.display = 'none';
+            document.body.classList.remove('gd-with-nav');
+          } else {
+            nav.style.display = 'flex';
+            document.body.classList.add('gd-with-nav');
+          }
+          if (typeof window.updateScale === 'function') setTimeout(window.updateScale, 0);
+        });
+    
+        if (!window.updateScale.__gdPatched) {
+          window.updateScale.__gdPatched = true;
+        }
+    
+        window.addEventListener('resize', () => {
+          if (typeof window.updateScale === 'function') window.updateScale();
+        });
+      }
+    
+      document.addEventListener('DOMContentLoaded', () => {
+        safePatch();
+        buildPresenterNav();
+        highlight(activeIndex());
+      });
+    
+      (function addAudienceBtn(){
+        function add(){
+          const head = document.querySelector('#gdPresenterNav .nav-head');
+          if (!head || document.getElementById('gd-open-audience')) return;
+          const btn = document.createElement('button');
+          btn.id = 'gd-open-audience';
+          btn.textContent = 'Open Audience View';
+          btn.style.cssText = 'float:right;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;';
+          btn.onclick = () => {
+            const url = new URL(location.href);
+            url.searchParams.delete('presenter');
+            const s = (window.currentSlideIndex || 0) + 1;
+            url.hash = `#s=${s}`;
+            window.open(url.toString(), 'AudienceView');
+          };
+          head.appendChild(btn);
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', add, { once: true });
+        } else { add(); }
+      })();
+    
+    })();
+    
+    (() => {
+      if (window.__gdSlideSyncInstalled) return;
+      window.__gdSlideSyncInstalled = true;
+    
+      const isPresenter = __IS_PRESENTER__;
+    
+      const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('gd-slide-sync') : null;
+      const sendLS = (idx) => localStorage.setItem('gdSlideSync', JSON.stringify({ idx, t: Date.now() }));
+    
+      const sendSlide = (idx) => {
+        if (!isPresenter) return;
+        if (bc) bc.postMessage({ type: 'slide', idx });
+        else sendLS(idx);
+      };
+    
+      function wrapShowSlide() {
+        const orig = window.showSlide;
+        if (typeof orig !== 'function') return false;
+        if (orig.__wrappedForSync) return true;
+        const wrapped = function(i) {
+          orig.call(this, i);
+          try { sendSlide(i); } catch(e){}
+        };
+        wrapped.__wrappedForSync = true;
+        window.showSlide = wrapped;
+        return true;
+      }
+      if (!wrapShowSlide()) {
+        document.addEventListener('DOMContentLoaded', wrapShowSlide, { once: true });
+      }
+    
+      const go = (idx) => {
+        if (typeof window.showSlide === 'function') window.showSlide(idx);
+      };
+    
+      if (bc) {
+        bc.onmessage = (ev) => {
+          const { type, idx } = ev.data || {};
+          if (type === 'slide' && !isPresenter) go(idx);
+          if (type === 'hello' && isPresenter) {
+            const cur = window.currentSlideIndex || 0;
+            bc.postMessage({ type: 'slide', idx: cur });
+          }
+        };
+      } else {
+        window.addEventListener('storage', (e) => {
+          if (e.key !== 'gdSlideSync' || isPresenter) return;
+          try {
+            const v = JSON.parse(e.newValue || '{}');
+            if (typeof v.idx === 'number') go(v.idx);
+          } catch(e){}
+        });
+      }
+    
+      if (!isPresenter && bc) bc.postMessage({ type: 'hello' });
+    
+      (function addOpenAudienceButton() {
+        if (!isPresenter) return;
+        function addToFabHeader(){
+          const head = document.getElementById('pp-head');
+          if (!head || head.querySelector('#pp-open-audience')) return;
+          const btn = document.createElement('button');
+          btn.id = 'pp-open-audience';
+          btn.textContent = 'Open Audience View';
+          btn.style.cssText =
+            'margin-left:auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);' +
+            'color:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;';
+          btn.addEventListener('click', () => {
+            const url = new URL(location.href);
+            url.searchParams.delete('presenter');
+            const s = (window.currentSlideIndex || 0) + 1;
+            url.hash = `#s=${s}`;
+            window.open(url.toString(), 'AudienceView');
+          });
+          head.appendChild(btn);
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', addToFabHeader, { once: true });
+        } else {
+          addToFabHeader();
+        }
+      })();
+    })();
+    </script>
+    
+    
+    </body>
+    </html>
