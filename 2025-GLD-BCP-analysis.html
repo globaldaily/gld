@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLD事業継続性への懸念</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* ================= */
+        /* == 기본 웹 스타일 == */
+        /* ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background: white; /* Print 시 깨끗하게 보이도록 기본 배경 white */
+            color: #2a2a2a;
+            line-height: 1.4;
+        }
+        
+        .slide {
+            width: 100vw;
+            height: 100vh; /* 웹에서는 화면 전체 사용 */
+            padding: 80px 100px 60px 100px;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            position: relative;
+            border-bottom: 1px solid #ddd; /* 슬라이드 구분선 */
+        }
+        
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .slide-header {
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            right: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        
+        .logo {
+            height: 28px;
+            object-fit: contain;
+        }
+        
+        .slide-number {
+            font-size: 16px;
+            color: #888;
+        }
+        
+        .slide-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50px;
+            right: 50px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            border-top: 1px solid #e9ecef;
+            padding-top: 10px;
+        }
+        
+        .slide-title {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: -1.5px;
+        }
+        
+        .slide-subtitle {
+            font-size: 22px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 35px;
+            font-weight: 300;
+        }
+        
+        .title-slide .slide-content { justify-content: center; text-align: center; }
+        .author-info { margin-top: 40px; font-size: 18px; color: #888; font-weight: 300; }
+        .author-name { font-size: 24px; color: #2a2a2a; font-weight: 400; margin-top: 20px; }
+
+        .content-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; flex: 1; }
+        .risk-card { background: #f8f9fa; border-radius: 4px; padding: 25px 15px; text-align: center; border: 1px solid #e9ecef; }
+        .risk-card.critical { border-left: 5px solid #dc3545; }
+        .risk-card.high { border-left: 5px solid #fd7e14; }
+        .risk-card.medium { border-left: 5px solid #6c757d; }
+        .risk-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+        .risk-title { font-size: 20px; font-weight: 500; margin-bottom: 10px; }
+        .risk-number { font-size: 48px; font-weight: 200; margin: 10px 0; letter-spacing: -2px; }
+        .risk-description { font-size: 16px; color: #666; }
+        
+        .chart-container { height: 400px; background: #f8f9fa; border-radius: 4px; padding: 15px; border: 1px solid #e9ecef; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; flex: 1; }
+        .strategy-card { background: #f8f9fa; border-radius: 4px; padding: 20px; height: fit-content; border: 1px solid #e9ecef; }
+        .strategy-title { font-size: 20px; font-weight: 400; color: #1a1a1a; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #2a2a2a; }
+        .strategy-item { margin-bottom: 12px; padding: 10px; background: white; border-radius: 4px; border-left: 3px solid #666666; border: 1px solid #e9ecef; }
+        .strategy-item h4 { font-size: 14px; color: #1a1a1a; margin-bottom: 5px; font-weight: 500; }
+        .strategy-item p { color: #666; line-height: 1.4; font-size: 12px; }
+        
+        .comparison-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 15px 0; }
+        .comparison-card { background: #f8f9fa; border-radius: 4px; padding: 15px 10px; text-align: center; border: 1px solid #e9ecef; }
+        .comparison-card.gld { border-left: 4px solid #2a2a2a; background: #ffffff; }
+        .comparison-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; }
+        .comparison-value { font-size: 28px; font-weight: 200; color: #2a2a2a; margin: 6px 0; }
+        .comparison-label { font-size: 11px; color: #666; }
+        
+        .insight-box { background: #2a2a2a; color: white; padding: 20px; border-radius: 4px; margin: 25px 0; text-align: center; }
+        .insight-box h3 { font-size: 20px; margin-bottom: 10px; font-weight: 500; }
+        .insight-box p { font-size: 16px; font-weight: 300; }
+        
+        .historical-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 12px 0; }
+        .historical-item { background: white; padding: 10px 6px; border-radius: 4px; text-align: center; border: 2px solid #e9ecef; }
+        .historical-item.crisis { border-color: #dc3545; background: #fff5f5; }
+        .historical-item.recovery { border-color: #28a745; background: #f8fff8; }
+        .historical-item.growth { border-color: #007bff; background: #f8f9ff; }
+        .historical-item.stable { border-color: #6c757d; background: #f8f9fa; }
+        .historical-year { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+        .historical-value { font-size: 16px; font-weight: 500; margin-bottom: 3px; }
+        .historical-growth { font-size: 10px; opacity: 0.8; }
+        
+        .detailed-analysis { background: #fff8dc; border: 1px solid #f4c430; border-radius: 4px; padding: 20px; margin: 15px 0; position: relative; }
+        .detailed-analysis::before { content: "⚠"; position: absolute; top: -8px; left: 15px; background: #f4c430; color: white; padding: 4px 8px; border-radius: 50%; font-size: 14px; }
+        .detailed-analysis h3 { color: #8b4513; margin: 0 0 10px 25px; font-size: 18px; }
+        .detailed-analysis ul { margin-left: 25px; color: #666; }
+        .detailed-analysis li { margin-bottom: 5px; font-size: 14px; }
+        
+        .business-structure-grid { display: grid; grid-template-columns: 55% 45%; gap: 20px; margin: 15px 0; }
+        
+        .revenue-box { background: #f8f9fa; border-radius: 4px; padding: 12px 8px; text-align: center; border: 1px solid #e9ecef; }
+        .revenue-box.target { background: #2a2a2a; color: white; border-color: #2a2a2a; }
+        .revenue-year { font-size: 12px; font-weight: 500; margin-bottom: 6px; text-transform: uppercase; }
+        .revenue-amount { font-size: 22px; font-weight: 200; margin: 6px 0; }
+        .revenue-breakdown { font-size: 10px; opacity: 0.8; line-height: 1.2; }
+        
+        .conclusion-slide { background: #2a2a2a; color: white; }
+        .conclusion-slide .slide-content { justify-content: center; text-align: center; }
+        .conclusion-slide .slide-title { color: white; }
+        .conclusion-slide .slide-header { border-bottom-color: rgba(255,255,255,0.3); }
+        .conclusion-slide .slide-number, .conclusion-slide .slide-footer { color: #ccc; }
+        .conclusion-slide .slide-footer { border-top-color: rgba(255,255,255,0.3); }
+        .conclusion-content { font-size: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; font-weight: 300; }
+        .conclusion-highlight { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 4px; margin: 25px 0; border-left: 3px solid white; }
+
+        .pdf-print-button {
+            position: fixed; top: 20px; right: 20px; z-index: 1001; 
+            background: #007bff; color: white; border: none; 
+            padding: 10px 20px; border-radius: 5px; cursor: pointer; 
+            font-size: 16px; font-family: inherit;
+        }
+
+        @page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+@media print {
+  html, body {
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .slide {
+    display: block;
+    width: 297mm;   /* A4 가로 */
+    height: 210mm;  /* A4 세로 */
+    margin: 0 auto;
+    background: white;
+    overflow: hidden;
+
+    page-break-before: always;
+    page-break-after: always;
+  }
+
+  .slide:first-child { page-break-before: auto; }
+  .slide:last-child { page-break-after: auto; }
+
+  /* 인쇄용 폰트 스케일 업 */
+  body { font-size: 12pt; }
+  .slide-title { font-size: 28pt; }
+  .slide-subtitle { font-size: 16pt; }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title with Juli Kim -->
+    <div class="slide title-slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">1 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <h1 class="slide-title">グローバル・デイリー事業継続性確保に向けた論点整理と私案</h1>
+            <p class="slide-subtitle">将来予想される3つの重大リスクと対応策</p>
+            <div class="author-info">
+                株式会社グローバルデイリー<br>
+                事業継続性確保のための分析資料
+            </div>
+            <div class="author-name">
+                Global Daily Juli Kim
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 2: Overview -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">2 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <h2 class="slide-title">将来予想される重大懸念</h2>
+            <p class="slide-subtitle">GLDが直面する3つの構造的リスク</p>
+            
+            <div class="content-grid">
+                <div class="risk-card critical">
+                    <span class="risk-icon">⚠</span>
+                    <h3 class="risk-title">反復的外部ショック</h3>
+                    <div class="risk-number">-58%</div>
+                    <p class="risk-description">3-4年周期での危機再発<br>インバウンド市場の構造的不安定性</p>
+                </div>
+                
+                <div class="risk-card high">
+                    <span class="risk-icon">🎯</span>
+                    <h3 class="risk-title">顧客関係の脆弱性</h3>
+                    <div class="risk-number">82%</div>
+                    <p class="risk-description">M社依存の危険<br>契約変更時の事業存続リスク</p>
+                </div>
+                
+                <div class="risk-card medium">
+                    <span class="risk-icon">📊</span>
+                    <h3 class="risk-title">競争力低下懸念</h3>
+                    <div class="risk-number">50%</div>
+                    <p class="risk-description">業界平均の生産性<br>将来的市場シェア失墜</p>
+                </div>
+            </div>
+            
+            <div class="insight-box">
+                <h3>懸念の核心：事業継続性への重大な脅威</h3>
+                <p>現在の構造では、予測不可能な外部ショック発生時に 50-60%の売上急減リスクが常に存在し、事前対策が急務<br>
+                将来の持続可能性確保のための先制的対応が急務</p>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 3: External Shock Analysis -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">3 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <div>
+                <h2 class="slide-title">懸念①：反復的外部ショック露出</h2>
+                <p class="slide-subtitle">インバウンド市場の構造的不安定性による将来リスク</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 60% 40%; gap: 20px; margin: 15px 0;">
+                <div class="chart-container">
+                    <canvas id="shockChart"></canvas>
+                </div>
+                
+                <div style="background: #f8f9fa; border-radius: 4px; padding: 15px; border: 1px solid #e9ecef;">
+                    <h4 style="color: #2a2a2a; margin-bottom: 12px; font-size: 16px;">データ一覧</h4>
+                    <table style="width: 100%; font-size: 12px;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid #2a2a2a;">
+                                <th style="text-align: left; padding: 6px; color: #2a2a2a;">年度</th>
+                                <th style="text-align: right; padding: 6px; color: #dc3545;">観光客(万人)</th>
+                                <th style="text-align: right; padding: 6px; color: #2a2a2a;">GLD売上(億円)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td style="padding: 4px;">2018</td><td style="text-align: right; padding: 4px; color: #dc3545;">3,119</td><td style="text-align: right; padding: 4px;">11.2</td></tr>
+                            <tr><td style="padding: 4px;">2019</td><td style="text-align: right; padding: 4px; color: #dc3545;">3,188</td><td style="text-align: right; padding: 4px;">11.6</td></tr>
+                            <tr style="background: #fff5f5;"><td style="padding: 4px;">2020</td><td style="text-align: right; padding: 4px; color: #dc3545;">412</td><td style="text-align: right; padding: 4px;">4.9</td></tr>
+                            <tr style="background: #fff5f5;"><td style="padding: 4px;">2021</td><td style="text-align: right; padding: 4px; color: #dc3545;">25</td><td style="text-align: right; padding: 4px;">3.1</td></tr>
+                            <tr style="background: #fff5f5;"><td style="padding: 4px;">2022</td><td style="text-align: right; padding: 4px; color: #dc3545;">383</td><td style="text-align: right; padding: 4px;">2.6</td></tr>
+                            <tr style="background: #f8fff8;"><td style="padding: 4px;">2023</td><td style="text-align: right; padding: 4px; color: #dc3545;">2,507</td><td style="text-align: right; padding: 4px;">5.4</td></tr>
+                            <tr style="background: #f8fff8;"><td style="padding: 4px;">2024</td><td style="text-align: right; padding: 4px; color: #dc3545;">3,687</td><td style="text-align: right; padding: 4px;">9.0</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="detailed-analysis">
+                <h3>今後3-5年間で予想される危険シナリオ</h3>
+                <ul>
+                    <li><strong>地政学的紛争激化：</strong>韓中日関係悪化時の訪日観光急減可能性</li>
+                    <li><strong>新種パンデミック発生：</strong>コロナ19再流行または新感染症拡散</li>
+                    <li><strong>経済危機再発：</strong>グローバル景気後退による旅行需要萎縮</li>
+                    <li><strong>日本内社会変化：</strong>オーバーツーリズム反発、入国規制強化等</li>
+                    <li><strong>為替急変動：</strong>円安深刻化による訪日旅行費用上昇、または円高転換による国内消費減少</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 4: Customer Risk Analysis -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">4 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <h2 class="slide-title">懸念②：顧客関係の脆弱性</h2>
+            <p class="slide-subtitle">M社依存による将来事業リスク</p>
+            
+            <div class="two-column">
+                <div class="strategy-card">
+                    <h3 class="strategy-title">現在の顧客構造（2025年1-8月実績）</h3>
+                    <div class="strategy-item">
+                        <h4>M社（グループ全体） 82%</h4>
+                        <p>M、M製菓、Mホールディングス<br>関連会社からの受注が圧倒的多数</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>その他クライアント 18%</h4>
+                        <p>散発的プロジェクト<br>継続性・安定性に欠ける</p>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <h3 class="strategy-title">将来予想されるリスクシナリオ</h3>
+                    <div class="strategy-item">
+                        <h4>契約終了・縮小</h4>
+                        <p>M社（グループ）の方針変更<br>→ 即座に売上80%減</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>担当者変更</h4>
+                        <p>キーパーソンの異動・退職<br>→ 関係性リセットのリスク</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>内製化・競合切替</h4>
+                        <p>社内体制強化や他社選定<br>→ アウトソーシング需要消失</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detailed-analysis">
+                <h3>データ出所及び危険性分析</h3>
+                <ul>
+                    <li><strong>分析期間：</strong>2025年1月-8月売上額基準（8.8億円）</li>
+                    <li><strong>明治グループ依存度：</strong>全売上の82%（約7.2億円）</li>
+                    <li><strong>その他顧客：</strong>18%（約1.6億円）、単発性プロジェクト中心</li>
+                    <li><strong>危険水準分析：</strong>GLD現在状況：明治グループ依存度82%、一般的危険基準：特定顧客依存度70%以上時高危険分類、日本広告代理店業界平均：最大顧客依存度35-45%</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 5: Growth Limitations -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">5 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <h2 class="slide-title">懸念③：成長限界とリスク集中</h2>
+            <p class="slide-subtitle">単一事業モデルの構造的制約と将来展望</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card gld">
+                    <div class="comparison-title">GLD効率性</div>
+                    <div class="comparison-value">20.5</div>
+                    <div class="comparison-label">百万円/人 (8位/14社)</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-title">業界平均</div>
+                    <div class="comparison-value">50.0</div>
+                    <div class="comparison-label">百万円/人</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-title">業界中央値</div>
+                    <div class="comparison-value">20.5</div>
+                    <div class="comparison-label">百万円/人</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-title">上位企業*</div>
+                    <div class="comparison-value">280.0</div>
+                    <div class="comparison-label">百万円/人 (最高値)</div>
+                </div>
+            </div>
+            
+            <div class="detailed-analysis">
+                <h3>単一事業構造による成長制約とリスク集中</h3>
+                <ul>
+                    <li><strong>上位競合との効率性格差：</strong>トップ企業比13.7倍、平均比2.4倍の生産性差</li>
+                    <li><strong>M社依存との二重リスク：</strong>顧客集中82% + 事業集中100%</li>
+                    <li><strong>単一事業モデルの成長限界：</strong>インバウンド市場のみでは規模拡大に制約</li>
+                    <li><strong>競争環境激化への対応力不足：</strong>新規参入企業・AI活用企業との差別化困難</li>
+                </ul>
+            </div>
+            
+            <div class="insight-box">
+                <h3>戦略的課題：持続的成長とリスク分散の必要性</h3>
+                <p>業界中位の現在ポジションから、上位競合レベルへの成長と<br>
+                M社依存リスクの分散を同時に実現する新たな事業展開が必要</p>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 6: Historical Track Record and Future Goals -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">6 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <div>
+                <h2 class="slide-title">8年間の軌跡と将来目標</h2>
+                <p class="slide-subtitle">危機からの回復実績を基に構築する成長戦略</p>
+                
+                <div class="historical-grid">
+                    <div class="historical-item stable">
+                        <div class="historical-year">2018年</div>
+                        <div class="historical-value">11.2億円</div>
+                        <div class="historical-growth">安定期</div>
+                    </div>
+                    
+                    <div class="historical-item crisis">
+                        <div class="historical-year">2020年</div>
+                        <div class="historical-value">4.9億円</div>
+                        <div class="historical-growth">-58%</div>
+                    </div>
+                    
+                    <div class="historical-item crisis">
+                        <div class="historical-year">2022年</div>
+                        <div class="historical-value">2.6億円</div>
+                        <div class="historical-growth">最低点</div>
+                    </div>
+                    
+                    <div class="historical-item recovery">
+                        <div class="historical-year">2024年</div>
+                        <div class="historical-value">9.0億円</div>
+                        <div class="historical-growth">+246%</div>
+                    </div>
+                    
+                    <div class="historical-item growth">
+                        <div class="historical-year">目標</div>
+                        <div class="historical-value">リスク分散</div>
+                        <div class="historical-growth">持続成長</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #e9ecef;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 2px solid #2a2a2a; padding-bottom: 6px;">
+                    <h3 style="font-size: 18px; color: #2a2a2a; font-weight: 500;">現状と短期目標（2024-2025）</h3>
+                    <span style="font-size: 12px; color: #666; font-weight: 300;">基盤事業の安定化</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="revenue-box" style="background: white; border: 2px solid #28a745;">
+                        <div class="revenue-year">2024年実績</div>
+                        <div class="revenue-amount">9.0億円</div>
+                        <div class="revenue-breakdown">インバウンド100%<br>前年比+67%成長</div>
+                    </div>
+                    <div class="revenue-box" style="background: white; border: 2px solid #007bff;">
+                        <div class="revenue-year">2025年目標</div>
+                        <div class="revenue-amount">12.0億円</div>
+                        <div class="revenue-breakdown">8月まで10.7億円<br>推定+33%成長<br>新規事業準備</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #2a2a2a; color: white; padding: 15px; border-radius: 8px;">
+                <div style="margin-bottom: 12px; border-bottom: 2px solid white; padding-bottom: 6px;">
+                    <h3 style="font-size: 18px; font-weight: 500;">リスク分散戦略（2026-2028）</h3>
+                    <span style="font-size: 12px; opacity: 0.8; font-weight: 300;">新規事業による事業継続性確保</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <div class="revenue-box target" style="background: rgba(255,255,255,0.1); border: 2px solid white;">
+                        <div class="revenue-year">2026年</div>
+                        <div class="revenue-amount">15.0億円</div>
+                        <div class="revenue-breakdown">
+                            インバウンド14.9億<br>
+                            <strong>新規事業開始</strong><br>
+                            ・グローバル進出支援 800万<br>
+                            ・多言語サービス 200万
+                        </div>
+                    </div>
+                    <div class="revenue-box target" style="background: rgba(255,255,255,0.1); border: 2px solid white;">
+                        <div class="revenue-year">2027年</div>
+                        <div class="revenue-amount">20.0億円</div>
+                        <div class="revenue-breakdown">
+                            インバウンド19.5億<br>
+                            <strong>新規事業展開</strong><br>
+                            ・グローバル進出支援 4千万<br>
+                            ・多言語サービス 1千万
+                        </div>
+                    </div>
+                    <div class="revenue-box target" style="background: rgba(255,255,255,0.1); border: 2px solid white;">
+                        <div class="revenue-year">2028年</div>
+                        <div class="revenue-amount">30.0億円</div>
+                        <div class="revenue-breakdown">
+                            インバウンド29.0億<br>
+                            <strong>新規事業確立</strong><br>
+                            ・グローバル進出支援 8千万<br>
+                            ・多言語サービス 2千万
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 7: Structural Vulnerability Solution Strategy -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">7 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <h2 class="slide-title">構造的脆弱性からの脱却戦略</h2>
+            <p class="slide-subtitle">既存ノウハウを活用したビジネスモデル転換</p>
+            
+            <div class="two-column">
+                <div class="strategy-card">
+                    <h3 class="strategy-title">現在のビジネス構造の根本的限界</h3>
+                    <div class="strategy-item">
+                        <h4>営業依存型モデル</h4>
+                        <p>個人関係・担当者変更による事業リスク<br>M社82%依存の危険な構造</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>単発プロジェクト中心</h4>
+                        <p>継続性・安定性不足<br>予測困難な売上変動</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>外部ショック脆弱性</h4>
+                        <p>インバウンド市場100%依存<br>危機時の生存能力不足</p>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <h3 class="strategy-title">既存専門性活用による構造転換</h3>
+                    <div class="strategy-item">
+                        <h4>専門性ベースモデル</h4>
+                        <p>17年間蓄積したインバウンド専門知識<br>多国籍スタッフのネットワーク活用</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>継続パートナーシップ</h4>
+                        <p>コンサルティング型長期関係<br>クライアント成長と共に発展</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>リスク分散ポートフォリオ</h4>
+                        <p>インバウンド+アウトバウンド<br>市場変動への耐性確保</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insight-box">
+                <h3>戦略的転換の核心：「新規事業」ではなく「既存強みの拡張」</h3>
+                <p>全く新しいことを始めるのではなく、これまで培ったインバウンドマーケティングの専門性を<br>
+                <strong>逆方向（アウトバウンド）にも活用</strong>し、営業依存から専門性依存への構造転換を実現</p>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 8: Three Service Area Expansion Strategy -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">8 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <h2 class="slide-title">既存ノウハウ活用による3つのサービス領域拡張</h2>
+            <p class="slide-subtitle">段階的専門チーム構築とポートフォリオ多角化</p>
+            
+            <div class="content-grid">
+                <div class="strategy-card">
+                    <h3 class="strategy-title">インバウンド<br>マーケティング</h3>
+                    <div class="strategy-item">
+                        <h4>基盤事業として強化</h4>
+                        <p>現在のノウハウ・人材・関係性をフル活用<br>年間12-20億円の安定収益確保</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>他領域への橋渡し</h4>
+                        <p>M社以外クライアント(18%)との関係深化<br>新サービス展開の足がかり構築</p>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <h3 class="strategy-title">グローバル<br>進出支援</h3>
+                    <div class="strategy-item">
+                        <h4>既存ネットワークの逆活用</h4>
+                        <p>韓国・中国・台湾の現地パートナー<br>多国籍スタッフの母国コネクション</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>段階的サービス展開</h4>
+                        <p>2026年：市場調査・パートナー開拓<br>2027年：販路拡大・プロモーション支援</p>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <h3 class="strategy-title">多言語・文化<br>コンサルティング</h3>
+                    <div class="strategy-item">
+                        <h4>専門性の特化発展</h4>
+                        <p>技術文書翻訳・ローカライズ<br>異文化コミュニケーション研修</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>スタッフ専門性活用</h4>
+                        <p>前職IT・医療・製造業経験者<br>業界特化型サービス構築</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="business-structure-grid">
+                <div class="strategy-card">
+                    <h3 class="strategy-title">段階的実行スケジュール</h3>
+                    <div class="strategy-item">
+                        <h4>2025年：基盤強化・準備期</h4>
+                        <p>既存クライアント関係深化、スタッフスキル棚卸し、市場調査開始</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>2026年：サービス拡張開始</h4>
+                        <p>新領域パイロット案件実施、専門チーム段階的構築</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>2027-2028年：本格展開</h4>
+                        <p>3領域ポートフォリオ完成、リスク分散効果実現</p>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                    <div style="background: #f8f9fa; border: 2px solid #007bff; border-radius: 8px; padding: 12px; text-align: center;">
+                        <div style="font-size: 14px; font-weight: 600; color: #2a2a2a; margin-bottom: 6px;">2025年</div>
+                        <div style="font-size: 24px; font-weight: 300; color: #007bff; margin: 6px 0;">12.0億</div>
+                        <div style="font-size: 10px; color: #666; line-height: 1.3;">インバウンド100%<br><strong>新規事業準備中</strong></div>
+                    </div>
+                    <div style="background: #fff5f5; border: 2px solid #fd7e14; border-radius: 8px; padding: 12px; text-align: center;">
+                        <div style="font-size: 14px; font-weight: 600; color: #2a2a2a; margin-bottom: 6px;">2026年</div>
+                        <div style="font-size: 24px; font-weight: 300; color: #fd7e14; margin: 6px 0;">15.0億</div>
+                        <div style="font-size: 10px; color: #666; line-height: 1.3;">新規1千万<br>グローバル800万<br>多言語200万</div>
+                    </div>
+                    <div style="background: #f8fff8; border: 2px solid #28a745; border-radius: 8px; padding: 12px; text-align: center;">
+                        <div style="font-size: 14px; font-weight: 600; color: #2a2a2a; margin-bottom: 6px;">2027年</div>
+                        <div style="font-size: 24px; font-weight: 300; color: #28a745; margin: 6px 0;">20.0億</div>
+                        <div style="font-size: 10px; color: #666; line-height: 1.3;">新規5千万<br>グローバル4千万<br>多言語1千万</div>
+                    </div>
+                    <div style="background: #2a2a2a; color: white; border: 2px solid #2a2a2a; border-radius: 8px; padding: 12px; text-align: center;">
+                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 6px;">2028年</div>
+                        <div style="font-size: 24px; font-weight: 300; margin: 6px 0;">30.0億</div>
+                        <div style="font-size: 10px; opacity: 0.9; line-height: 1.3;">新規1億<br>グローバル8千万<br>多言語2千万</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insight-box">
+                <h3>実現可能性の根拠：ゼロからのスタートではない</h3>
+                <p>5年間で培った専門知識、多国籍スタッフの実績、既存クライアントとの信頼関係を<br>
+                活用することで、<strong>低リスク・高成功確率の事業拡張</strong>を実現</p>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 9: KPI and Risk Scenarios -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">9 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <h2 class="slide-title">実行管理とリスク分散効果</h2>
+            <p class="slide-subtitle">段階別KPIと危機時セーフティネット検証</p>
+            
+            <div class="two-column">
+                <div class="strategy-card">
+                    <h3 class="strategy-title">段階別実行KPI</h3>
+                    <div class="strategy-item">
+                        <h4>2025年：基盤強化期</h4>
+                        <p><strong>目標：</strong>既存事業安定化 + 新領域準備<br>
+                        ・M社以外クライアント関係深化（5社以上）<br>
+                        ・スタッフスキル棚卸し完了<br>
+                        ・市場調査レポート3分野完成</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>2026年：拡張開始期</h4>
+                        <p><strong>目標：</strong>新領域1千万円達成<br>
+                        ・グローバル進出支援：パイロット案件3件<br>
+                        ・多言語コンサル：専門翻訳案件5件<br>
+                        ・顧客満足度90%以上維持</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>2027-2028年：本格展開期</h4>
+                        <p><strong>目標：</strong>新領域5千万→1億円<br>
+                        ・継続クライアント比率70%以上<br>
+                        ・新領域専門チーム各2名体制確立<br>
+                        ・M社依存度70%以下に低減</p>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <h3 class="strategy-title">危機耐性の構造的改善</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0;">
+                        <div class="comparison-card">
+                            <div class="comparison-title">現在構造</div>
+                            <div class="comparison-value" style="color: #dc3545;">4.5億</div>
+                            <div class="comparison-label">危機時売上<br>(-58%)</div>
+                        </div>
+                        <div class="comparison-card" style="background: #f8fff8; border-left: 4px solid #28a745;">
+                            <div class="comparison-title">2028年構造</div>
+                            <div class="comparison-value" style="color: #28a745;">13.8億</div>
+                            <div class="comparison-label">危機時売上<br>(-54%)</div>
+                        </div>
+                    </div>
+                    <div style="background: #fff8dc; border: 1px solid #f4c430; border-radius: 4px; padding: 12px; margin: 12px 0;">
+                        <h4 style="color: #8b4513; margin: 0 0 6px 0; font-size: 14px;">セーフティネット効果</h4>
+                        <p style="color: #666; margin: 0; font-size: 11px; line-height: 1.3;">
+                            危機時でも13.8億円確保により：<br>
+                            ・全社員雇用維持可能<br>
+                            ・基本運営継続可能<br>
+                            ・次回復期への体制保持
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insight-box">
+                <h3>構造転換による企業体質強化</h3>
+                <p>単純な売上増加ではなく、<strong>営業依存→専門性依存</strong>への構造転換により<br>
+                外部ショックに対する根本的な耐性を獲得</p>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 10: Initial Action Plan -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">10 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <h2 class="slide-title">2025年度具体的アクションプラン</h2>
+            <p class="slide-subtitle">既存資産フル活用による低リスクスタート</p>
+            
+            <div class="business-structure-grid">
+                <div class="strategy-card">
+                    <h3 class="strategy-title">既存クライアント深耕戦略</h3>
+                    <div class="strategy-item">
+                        <h4>M社以外18%との関係強化</h4>
+                        <p>現在の取引先に対し、海外展開ニーズの詳細ヒアリング実施。インバウンド実績を活かした信頼関係をベースに新サービス提案。</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>サービス拡張の足がかり構築</h4>
+                        <p>既存案件完了時に「次のステップ」として海外進出支援を自然な流れで提案。無理な営業ではなく、コンサルタント型アプローチ。</p>
+                    </div>
+                </div>
+                
+                <div class="strategy-card">
+                    <h3 class="strategy-title">社内リソース最大活用</h3>
+                    <div class="strategy-item">
+                        <h4>多国籍スタッフの専門性棚卸し</h4>
+                        <p>各スタッフの前職経験（IT・医療・製造業等）、母国でのネットワーク、専門資格を詳細調査し、業界特化型サービス設計の基礎資料作成。</p>
+                    </div>
+                    <div class="strategy-item">
+                        <h4>逆方向ネットワーク活用準備</h4>
+                        <p>インバウンド業務で築いた韓国・中国・台湾の現地パートナーとの関係を、日本企業の海外進出支援に活用する体制を段階的に構築。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detailed-analysis">
+                <h3>2025年第4四半期までの具体的マイルストーン</h3>
+                <ul>
+                    <li><strong>10月：</strong>全スタッフスキル・ネットワーク調査完了、専門分野マップ作成</li>
+                    <li><strong>11月：</strong>既存クライアント5社への新サービスニーズヒアリング実施</li>
+                    <li><strong>12月：</strong>パイロット案件1件獲得、2026年新領域開始準備完了</li>
+                    <li><strong>1-3月：</strong>新サービス価格体系・提供プロセス確立、専門チーム体制設計</li>
+                </ul>
+            </div>
+            
+            <div class="insight-box">
+                <h3>成功の鍵：「拡張」であって「転換」ではない</h3>
+                <p>インバウンド事業は継続強化しながら、そこで培った専門性を<br>
+                新しい方向にも活用することで、<strong>リスクを最小化しながら成長を実現</strong></p>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 11: Risk Scenario Analysis -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">11 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <div>
+                <h2 class="slide-title">構造転換効果の定量的検証</h2>
+                <p class="slide-subtitle">危機シナリオにおける事業継続性比較</p>
+            </div>
+            
+            <div class="chart-container" style="margin: 15px 0;">
+                <canvas id="riskChart"></canvas>
+            </div>
+            
+            <div class="content-grid">
+                <div class="risk-card critical">
+                    <h3 class="risk-title">現在構造の限界</h3>
+                    <div class="risk-number">-58%</div>
+                    <p class="risk-description">インバウンド100%依存<br>12.0億円 → 5.0億円<br><strong>運営継続困難</strong></p>
+                </div>
+                
+                <div class="risk-card high">
+                    <h3 class="risk-title">2026年過渡期</h3>
+                    <div class="risk-number">-56%</div>
+                    <p class="risk-description">新領域1千万円開始<br>15.0億円 → 6.6億円<br><strong>最低限運営可能</strong></p>
+                </div>
+                
+                <div class="risk-card medium">
+                    <h3 class="risk-title">2028年完成形</h3>
+                    <div class="risk-number">-54%</div>
+                    <p class="risk-description">新領域1億円確立<br>30.0億円 → 13.8億円<br><strong>安定運営可能</strong></p>
+                </div>
+            </div>
+            
+            <div class="insight-box">
+                <h3>戦略的価値：小さな投資で絶大なセーフティネット効果</h3>
+                <p>新領域は全体の3.3%に過ぎないが、危機時には<strong>会社存続を左右する決定的な差</strong>を創出。<br>
+                低リスク・高効果の構造改善として最適な戦略</p>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <!-- Slide 12: Conclusion -->
+    <div class="slide conclusion-slide">
+        <div class="slide-header">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
+            <div class="slide-number">12 / 12</div>
+        </div>
+        
+        <div class="slide-content">
+            <h2 class="slide-title">結論</h2>
+            
+            <div class="conclusion-content">
+                <p>現在の構造は次回危機時に再び50%以上の売上減少を招く<br><strong>根本的な脆弱性</strong>を内包している。</p>
+                
+                <div class="conclusion-highlight">
+                    <p><strong>対策案：既存強みの戦略的拡張</strong><br>
+                    全く新しい事業ではなく、5年間培った専門性を<br>
+                    <strong>逆方向にも活用する構造転換</strong></p>
+                </div>
+                
+                <p>2026年1千万円から2028年1億円への段階的拡張により、<br>
+                <strong>営業依存から専門性依存への根本的な体質改善と<br>
+                危機耐性を備えた持続可能な企業体制を実現</strong></p>
+                
+                <div style="margin-top: 25px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 4px; border-left: 3px solid white;">
+                    <p style="font-size: 16px; font-weight: 400; margin: 0;">
+                        小さく始めて確実に育てる。<br>
+                        リスクを抑えながら、未来への保険を構築する。
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            2025年秋季社員研修資料
+        </div>
+    </div>
+
+    <script>
+        // Chart initialization for PDF
+        function initShockChart() {
+            const ctx = document.getElementById('shockChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2018年', '2019年', '2020年', '2021年', '2022年', '2023年', '2024年'],
+                    datasets: [{
+                        label: '訪日外国人数（万人）',
+                        data: [3119, 3188, 412, 25, 383, 2507, 3687],
+                        borderColor: '#dc3545',
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        tension: 0.2
+                    }, {
+                        label: 'GLD売上（億円）',
+                        data: [11.2, 11.6, 4.9, 3.1, 2.6, 5.4, 9.0],
+                        borderColor: '#2a2a2a',
+                        backgroundColor: 'rgba(42, 42, 42, 0.1)',
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        yAxisID: 'y1',
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            enabled: false
+                        },
+                        title: {
+                            display: true,
+                            text: '訪日外国人数とGLD売上の連動性',
+                            color: '#333',
+                            font: { size: 16 }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: { 
+                                color: '#333',
+                                font: { size: 12 }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '訪日外国人数（万人）',
+                                color: '#333',
+                                font: { size: 12 }
+                            },
+                            grid: { color: '#e0e0e0' },
+                            ticks: { 
+                                color: '#666',
+                                font: { size: 10 }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'GLD売上（億円）',
+                                color: '#333',
+                                font: { size: 12 }
+                            },
+                            grid: { drawOnChartArea: false },
+                            ticks: { 
+                                color: '#666',
+                                font: { size: 10 }
+                            }
+                        },
+                        x: {
+                            grid: { color: '#e0e0e0' },
+                            ticks: { 
+                                color: '#666',
+                                font: { size: 10 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initRiskChart() {
+            const ctx = document.getElementById('riskChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['通常時', '市場危機発生時（-58%想定）'],
+                    datasets: [{
+                        label: '現在構造（インバウンド100%）',
+                        data: [10.7, 4.5],
+                        borderColor: '#dc3545',
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        borderWidth: 3,
+                        pointRadius: 6
+                    }, {
+                        label: '2026年構造（新規事業1千万円）',
+                        data: [15.0, 6.6],
+                        borderColor: '#fd7e14',
+                        backgroundColor: 'rgba(253, 126, 20, 0.1)',
+                        borderWidth: 3,
+                        pointRadius: 6
+                    }, {
+                        label: '2028年構造（新規事業1億円）',
+                        data: [30.0, 13.8],
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        borderWidth: 3,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            enabled: false
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: { 
+                                color: '#333',
+                                font: { size: 12 }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: '新規事業の戦略的価値：危機時の絶対的セーフティネット',
+                            color: '#333',
+                            font: { size: 16 }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            grid: { color: '#e0e0e0' },
+                            ticks: { 
+                                color: '#666',
+                                font: { size: 10 }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#e0e0e0' },
+                            title: {
+                                display: true,
+                                text: '売上高（億円）',
+                                color: '#333',
+                                font: { size: 12 }
+                            },
+                            ticks: { 
+                                color: '#666',
+                                font: { size: 10 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize charts when page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                initShockChart();
+                initRiskChart();
+            }, 500);
+        });
+
+        // Print function
+        function printPDF() {
+            window.print();
+        }
+    </script>
+
+    <!-- PDF 출력 버튼 (화면에서만 보임) -->
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+        <button onclick="printPDF()" style="
+            background: #2a2a2a; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+        ">PDF로 저장</button>
+    </div>
+
+    <style>
+        @media print {
+            button {
+                display: none !important;
+            }
+        }
+    </style>
+</body>
+</html>
