@@ -6,8 +6,8 @@
   <title>真の組織力とは何か</title>
   <style>
     :root{
-      --highlight-blue: 
-      --highlight-orange:
+      --highlight-blue: #007AFF;
+      --highlight-orange: #FF9500;
       
       --bg: #000000;
       --fg: #F5F5F7;
@@ -20,7 +20,6 @@
       --slide-width: 1600px;
       --slide-height: 900px;
 
-    
       --logo: url('https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/07/GLD_type02_white_1178_785-2-1.png');
     }
 
@@ -40,7 +39,7 @@
       width:var(--slide-width);height:var(--slide-height);
       transform:translate(-50%,-50%) scale(var(--scale,1));
       transform-origin:center center;
-      background:transparent;
+      background:var(--bg);
     }
 
     /* ====== Slide ====== */
@@ -48,6 +47,7 @@
       position:absolute;inset:0;
       display:none;flex-direction:column;justify-content:center;align-items:center;
       padding:64px 96px;
+      background:var(--bg);
       opacity:0;transform:translateY(16px);
       transition:opacity .6s cubic-bezier(.25,.46,.45,.94), transform .6s cubic-bezier(.25,.46,.45,.94);
     }
@@ -86,6 +86,7 @@
     }
     .point-item:nth-child(1){animation-delay:.08s}
     .point-item:nth-child(2){animation-delay:.18s}
+    .point-item:nth-child(3){animation-delay:.28s}
     .point-item h4{color:var(--highlight-blue);font-size:22px;margin-bottom:8px;font-weight:600}
     .point-item p{color:#d2d2d7;font-size:18px;line-height:1.6}
 
@@ -93,6 +94,35 @@
     .final-quote .main-question{font-size:44px;font-weight:620;line-height:1.25;margin-bottom:24px;opacity:0;animation:fadeIn .7s ease-out .2s forwards}
     .final-quote .answer{font-size:22px;color:var(--muted);line-height:1.6;opacity:0;animation:fadeIn .7s ease-out .45s forwards}
 
+    .stats-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:24px;
+      margin:28px 0;
+    }
+    .stat-card{
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      border-radius:16px;
+      padding:24px;
+      text-align:center;
+      opacity:0;
+      transform:translateY(20px);
+      animation:fadeInUp .6s ease-out forwards;
+    }
+    .stat-card:nth-child(1){animation-delay:.1s}
+    .stat-card:nth-child(2){animation-delay:.2s}
+    .stat-card:nth-child(3){animation-delay:.3s}
+    .stat-number{
+      font-size:48px;
+      font-weight:600;
+      color:var(--highlight-orange);
+      margin-bottom:8px;
+    }
+    .stat-label{
+      font-size:16px;
+      color:var(--muted);
+    }
 
     .deck-header, .deck-footer {
       position: absolute;
@@ -117,14 +147,14 @@
       pointer-events: auto;
     }
 
-.company-logo {
-  width: 120px;
-  height: 100px; 
-  background-image: var(--logo);
-  background-size: contain;
-  background-position: center left;
-  background-repeat: no-repeat;
-}
+    .company-logo {
+      width: 120px;
+      height: 100px; 
+      background-image: var(--logo);
+      background-size: contain;
+      background-position: center left;
+      background-repeat: no-repeat;
+    }
     
     .presentation-title {
       font-size: 18px;
@@ -181,9 +211,11 @@
     @media (max-width: 900px){
       .slide{padding:40px 48px}
       .two-column{grid-template-columns:1fr;gap:20px}
+      .stats-grid{grid-template-columns:1fr;gap:16px}
       h1{font-size:56px} h2{font-size:34px} .subtitle{font-size:22px}
       .big-number{font-size:96px}
       .point-item p{font-size:16px}
+      .stat-number{font-size:36px}
     }
 
     
@@ -196,7 +228,7 @@
         width: 100%;
         height: 100%;
         overflow: visible;
-        background: #fff;
+        background: var(--bg) !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
@@ -207,6 +239,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        background: var(--bg) !important;
       }
       .slide {
         position: relative !important;
@@ -215,6 +248,7 @@
         transform: none !important;
         width: 100%;
         height: 100%;
+        background: var(--bg) !important;
         page-break-after: always;
         break-after: page;
       }
@@ -226,25 +260,6 @@
         display: none !important;
       }
     }
-
-  
-.slide:not(:first-of-type) .content {
-  filter: blur(8px); 
-  pointer-events: none; 
-}
-
-.slide:not(:first-of-type)::after {
-  content: 'Updating...'; /* 표시할 텍스트 */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 48px;
-  font-weight: bold;
-  color: var(--fg);
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); 
-  z-index: 20;
-}
   </style>
 </head>
 
@@ -262,6 +277,7 @@
       <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></div>
     </footer>
 
+    <!-- 1. 根本的な問い -->
     <section class="slide active">
       <div class="content">
         <h1>真の組織力とは何か</h1>
@@ -269,151 +285,186 @@
       </div>
     </section>
 
+    <!-- 2. 現在の組織力の実態 -->
     <section class="slide">
       <div class="content">
-        <div class="big-number">1.5倍</div>
-        <h2 style="text-align:center;">組織力の現実</h2>
-        <div class="glass-card" style="text-align:center;margin-top:18px;">
+        <h2 style="text-align:center;margin-bottom:28px;">現在の組織力の実態</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">93万円</div>
+            <div class="stat-label">新卒1人補充コスト<br>（2019年度平均）</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">28週</div>
+            <div class="stat-label">新人が同レベルに<br>到達する期間</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">19時間</div>
+            <div class="stat-label">週あたりの<br>非効率な作業時間</div>
+          </div>
+        </div>
+        <div class="glass-card" style="text-align:center;margin-top:28px;">
           <p style="font-size:24px;margin-bottom:18px;color:#d2d2d7;line-height:1.6;">
-            優秀な人材が一人辞めると、補充コストは年収の1.5倍。<br>
-            しかし本当の損失は、その人を中心に回っていた<span class="asset-highlight">情報共有・問題解決・意思決定</span>が止まること。
+            さらに深刻なのは、<span class="asset-highlight">少数の優秀な営業担当者に組織全体が依存</span>し、<br>
+            他の職種は彼らに寄生しなければ評価されない構造です。
           </p>
-          <p style="font-size:26px;margin:14px 0;">
-            新しい人が来ても、この<span class="highlight">見えないネットワーク</span>は簡単には復旧できません。
+          <p style="font-size:26px;color:#fff;margin-top:16px;">
+            これが<span class="highlight">真の組織力</span>と言えるでしょうか？
           </p>
-          <p style="font-size:20px;color:var(--muted);">では、真の組織力とは何でしょうか？</p>
+          <p style="font-size:14px;color:#666;margin-top:16px;">
+            ※出典：リクルート就職白書2020、Oxford Economics & Unum、Panopto調査
+          </p>
         </div>
       </div>
     </section>
 
+    <!-- 3. 真の組織力とは -->
     <section class="slide">
       <div class="content">
-        <h2 style="text-align:center;margin-bottom:24px;">経営書に書かれていること<br>vs<br>現場の現実</h2>
-        <div class="vs-container">
-          <div class="vs-item">
-            <div class="glass-card">
-              <h3 style="font-size:26px;margin-bottom:14px;color:#ccc;">理論</h3>
-              <p style="font-size:20px;color:#d2d2d7;margin-bottom:8px;">全員の力を結集してシナジー効果を</p>
-              <p style="font-size:18px;color:var(--muted);">正しいが、<br>どうやって？が抜けている。</p>
-            </div>
+        <h2 style="text-align:center;margin-bottom:28px;">真の組織力とは</h2>
+        <div class="point-grid">
+          <div class="point-item">
+            <h4>従来のアプローチ</h4>
+            <p>人材管理強化、制度改善、福利厚生充実。どれも重要だが部分的な解決策</p>
           </div>
-          <div class="vs-divider">vs</div>
-          <div class="vs-item">
-            <div class="glass-card" style="border-color:var(--highlight-orange);">
-              <h3 style="font-size:26px;margin-bottom:14px;color:var(--highlight-orange);">現実</h3>
-              <p style="font-size:20px;color:#d2d2d7;margin-bottom:8px;">どうやって自発的に協力したくなるか</p>
-              <p style="font-size:18px;color:var(--muted);">ここが解決すれば、<br>理論は自然に実現する。</p>
-            </div>
+          <div class="point-item">
+            <h4>一部依存の限界</h4>
+            <p>少数の優秀な人に依存する組織は、真の強さを持たない</p>
+          </div>
+          <div class="point-item">
+            <h4>真の組織力</h4>
+            <p>全ての構成員が組織の力になること。みんなが選ばれる存在になること</p>
           </div>
         </div>
-        <div class="glass-card" style="text-align:center;margin-top:22px;">
-          <p style="font-size:26px;">制度による協力 vs <span class="asset-highlight">内発的な協力</span></p>
+        <div class="glass-card" style="text-align:center;margin-top:28px;">
+          <p style="font-size:28px;color:#fff;margin-bottom:16px;">
+            真の組織力とは
+          </p>
+          <p style="font-size:24px;color:var(--highlight-blue);margin-bottom:12px;">
+            <span class="highlight">全員が各自の領域で選ばれる人になること</span>
+          </p>
+          <p style="font-size:20px;color:var(--muted);">
+            そしてその基盤となるのが組織文化です
+          </p>
         </div>
       </div>
     </section>
 
+    <!-- 4. 私は組織の力になれているか -->
     <section class="slide">
       <div class="content two-column">
         <div>
-          <h2>考えてみてください</h2>
+          <h2>私は組織の力に<br>なれているか？</h2>
           <p style="font-size:20px;color:#d2d2d7;line-height:1.6;margin-bottom:18px;">
-            あなたの周りで、本当に<span class="highlight">「この人と一緒に仕事がしたい」</span>と思った人がいませんか？
+            現在は構造的に決められた関係の中でのみ協業が行われています。しかし真の組織力のためには、<span class="highlight">各自の領域で「一緒に仕事をしたいパートナー」</span>になる必要があります。
           </p>
           <p style="font-size:18px;color:var(--muted);line-height:1.6;">
-            その人は何が違ったでしょうか？<br>技術力？経験？それとも...<br><br>
-            答えは、協力を求める側ではなく、<br><span class="highlight">協力したくなる相手</span>だったことです。
+            それは<span class="highlight">自分自身をプロデュースすること</span>。<br>既存構造に安住せず、新しい協力の価値を創り出すことです。<br><br>
+            あなたは組織の真の力になれていますか？
           </p>
         </div>
         <div class="point-grid">
           <div class="point-item">
-            <h4>発想の転換</h4>
-            <p>「どうやって協力してもらうか」ではなく「どうやって協力したくなる人になるか」。この視点の違いが全てを変えます。</p>
+            <h4>構造的な協業</h4>
+            <p>決められた部門同士の固定的な関係。上下関係で便利に回るが発展性に限界。</p>
           </div>
           <div class="point-item">
-            <h4>個人の魅力 = 組織の競争力</h4>
-            <p>一人ひとりが「選ばれる人」になることで、自然と強い組織が生まれる。これが真の組織力の源泉です。</p>
+            <h4>価値による協業</h4>
+            <p>「この人となら」と認められる関係。新しい協力の可能性を創出する。</p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 5. 2つのタイプ比較 + 組織への拡大 -->
     <section class="slide">
       <div class="content">
         <h2 style="text-align:center;margin-bottom:28px;">受けた分だけ vs 受けた分以上</h2>
         <div class="vs-container">
           <div class="vs-item">
             <div class="glass-card" style="text-align:center;">
-              <h4 style="font-size:22px;color:#ccc;margin-bottom:16px;">距離を置くタイプ</h4>
+              <h4 style="font-size:22px;color:#ccc;margin-bottom:16px;">最低限タイプ</h4>
               <p style="font-size:19px;margin:12px 0;color:#d2d2d7;">
                 ・要請されたことだけ正確に<br>・線を引いて仕事<br>・安全な範囲内でのみ
               </p>
-              <p style="color:var(--muted);font-size:17px;">リスクは少ないが、<br>印象も薄い。</p>
+              <p style="color:var(--muted);font-size:17px;">構造依存により<br>脆弱性を維持。</p>
             </div>
           </div>
           <div class="vs-divider">vs</div>
           <div class="vs-item">
             <div class="glass-card" style="border-color:var(--highlight-blue);text-align:center;">
-              <h4 style="font-size:22px;color:var(--highlight-blue);margin-bottom:16px;">積極的に関わるタイプ</h4>
+              <h4 style="font-size:22px;color:var(--highlight-blue);margin-bottom:16px;">期待以上タイプ</h4>
               <p style="font-size:19px;margin:12px 0;color:#d2d2d7;">
                 ・要請されたこと + α<br>・境界を越えた協力<br>・リスクを取って挑戦
               </p>
-              <p style="color:var(--muted);font-size:17px;">危険もあるが、<br>強い印象を残す。</p>
+              <p style="color:var(--muted);font-size:17px;">価値を創出するため<br>組織力強化に寄与。</p>
             </div>
           </div>
         </div>
         <div class="glass-card" style="text-align:center;margin-top:18px;">
-          <p style="font-size:24px;color:#fff;">人は<span class="highlight">期待以上のことをしてくれる人</span>を忘れない</p>
+          <p style="font-size:22px;color:#fff;margin-bottom:12px;">人は<span class="highlight">期待以上のことをしてくれる人</span>を組織の力だと認識する</p>
+          <div style="border-top:1px solid rgba(255,255,255,0.2);margin:16px 0;padding-top:16px;">
+            <p style="font-size:20px;color:var(--highlight-orange);margin-bottom:8px;">こんな個人が集まると...</p>
+            <p style="font-size:18px;color:#d2d2d7;">
+              <span style="color:#ccc;">構造に安住する組織</span> → 依存的で脆弱な組織力<br>
+              <span style="color:var(--highlight-blue);">価値を創出する組織</span> → <span class="highlight">真の組織力</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- 6. 具体的な方法 -->
     <section class="slide">
       <div class="content two-column">
         <div>
           <h2>具体的には<br><span class="highlight">どうするか</span></h2>
           <p style="font-size:20px;color:#d2d2d7;line-height:1.6;margin-bottom:18px;">
-            協力したくなる人の特徴は、技術的スキルではありません。もっと根本的な姿勢の問題です。
+            組織の力になる人の特徴は、技術的スキルではありません。つまり<span class="highlight">協力したいパートナー</span>の特徴です。もっと根本的な姿勢の問題なのです。
           </p>
         </div>
         <div class="point-grid">
           <div class="point-item">
             <h4>一貫した態度</h4>
-            <p>相手が誰であろうと、基本的な姿勢は変わらない。だから安心して協力できる。</p>
+            <p>相手が誰であろうと、基本的な姿勢は変わらない。だから安心して協力でき、組織の安定した力となる。</p>
           </div>
           <div class="point-item">
             <h4>エネルギーを惜しまない</h4>
-            <p>損得勘定はするけれど、最終的には人に投資することを楽しんでいる。</p>
+            <p>損得勘定はするけれど、最終的には組織と人に投資することを楽しんでいる。</p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 7. 選ばれる人の循環 -->
     <section class="slide">
       <div class="content">
         <h2 style="text-align:center;">そうなると何が起こるか</h2>
         <div class="glass-card" style="text-align:center;margin-top:22px;">
-          <h4 style="font-size:26px;color:var(--highlight-blue);margin-bottom:16px;">選ばれる人の循環</h4>
+          <h4 style="font-size:26px;color:var(--highlight-blue);margin-bottom:16px;">組織の力となる人の循環</h4>
           <p style="font-size:20px;color:#d2d2d7;margin-bottom:16px;">
-            良いプロジェクトに誘われる → 重要な情報が入る → 成果が上がる<br>
-            → さらに信頼される → また良い機会が来る
+            重要なプロジェクトに誘われる → より多くの情報が入る → 成果が上がる<br>
+            → さらに信頼される → 組織にとって不可欠な存在になる
           </p>
           <p style="font-size:30px;color:#fff;margin:14px 0;font-weight:600;">
             これが<span class="highlight">真の競争優位</span>
           </p>
-          <p style="font-size:18px;color:var(--muted);">そして、こんな人が一人、また一人と増えていくと...</p>
+          <p style="font-size:18px;color:var(--muted);">そして、こんな人が組織に増えていくと...</p>
         </div>
       </div>
     </section>
 
+    <!-- 8. 結論 -->
     <section class="slide">
       <div class="content final-quote">
         <p class="main-question">一人が変わると<br>組織が変わる</p>
         <p class="answer">
-          <span class="highlight">選ばれる人</span>が一人いると、その周りの5人が影響を受ける。<br>
+          <span class="highlight">組織の力となる人</span>が一人いると、その周りの5人が影響を受ける。<br>
           その5人がまた周りに影響し、連鎖反応が始まる。<br><br>
-          新しい制度も、トップダウンの指示も要りません。<br>
-          ただ、<span class="asset-highlight">一人ひとりが「協力したくなる人」</span>になること。<br><br>
-          それが、真の組織力を築く最も確実で、最も持続可能な道です。
+          特定の個人に依存しない、<span class="asset-highlight">全員が各自の領域で力を発揮する組織</span>。<br>
+          それが真の組織力です。<br><br>
+          一人ひとりが『組織の真の力』になること。<br>
+          それが最も確実で持続可能な道なのです。
         </p>
       </div>
     </section>
@@ -469,14 +520,14 @@
     function nextSlide(){ if(currentSlide < totalSlides-1) showSlide(currentSlide+1); }
     function prevSlide(){ if(currentSlide > 0) showSlide(currentSlide-1); }
 
-    // 初期化
+    // 초기화
     showSlide(0);
 
     // ====== Controls ======
     document.addEventListener('keydown',(e)=>{
       if(e.key==='ArrowRight' || e.key===' ' || e.key==='PageDown' || e.key==='ArrowDown'){ e.preventDefault(); nextSlide(); }
       else if(e.key==='ArrowLeft' || e.key==='PageUp' || e.key==='ArrowUp'){ e.preventDefault(); prevSlide(); }
-      else if(e.key.toLowerCase()==='a'){ // Auto-advance toggle (約22秒/枚 ≒ 3分/8枚)
+      else if(e.key.toLowerCase()==='a'){ // Auto-advance toggle (약22초/枚 ≒ 3분/8枚)
         toggleAutoplay();
       }
     });
@@ -490,7 +541,7 @@
 
     // ====== Auto Play (~3min total) ======
     let autoplayTimer=null;
-    const perSlideMs = 22500; // 約22.5秒/枚
+    const perSlideMs = 22500; // 약22.5초/枚
     function toggleAutoplay(){
       if(autoplayTimer){
         clearInterval(autoplayTimer); autoplayTimer=null;
