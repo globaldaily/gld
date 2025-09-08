@@ -5,97 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GLD事業継続性への懸念</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        /* ================= */
-        /* == 기본 웹 스타일 == */
-        /* ================= */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+   <style>
+    /* ======================================= */
+        /* == 웹 플레이어 & 인쇄 호환 최종 스타일 == */
+        /* ======================================= */
+        :root {
+            --slide-max-width: 96vw;
+            --slide-max-height: 96vh;
         }
-        
-        body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            background: white; /* Print 시 깨끗하게 보이도록 기본 배경 white */
-            color: #2a2a2a;
-            line-height: 1.4;
-        }
-        
-        .slide {
-            width: 100vw;
-            height: 100vh; /* 웹에서는 화면 전체 사용 */
-            padding: 80px 100px 60px 100px;
-            display: flex;
-            flex-direction: column;
-            background: white;
-            position: relative;
-            border-bottom: 1px solid #ddd; /* 슬라이드 구분선 */
-        }
-        
-        .slide-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            max-width: 1600px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        
-        .slide-header {
-            position: absolute;
-            top: 30px;
-            left: 50px;
-            right: 50px;
+
+        /* 1. 기본 스타일 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; line-height: 1.4; color: #2a2a2a; }
+
+        /* 2. 웹 플레이어 모드 스타일 */
+        body.gld-player {
+            background: #1f2329; /* 어두운 배경 */
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #e9ecef;
-            padding-bottom: 10px;
+            justify-content: center;
+            height: 100vh;
+            
         }
         
-        .logo {
-            height: 28px;
-            object-fit: contain;
+        /* 모든 슬라이드는 기본적으로 숨김 */
+        .gld-player .slide {
+            display: none; 
         }
-        
-        .slide-number {
-            font-size: 16px;
-            color: #888;
+
+        /* 활성화된 슬라이드만 16:9 비율로 표시 */
+        .gld-player .slide.active {
+            display: flex; 
+            flex-direction: column;
+            width: calc(min(var(--slide-max-width), var(--slide-max-height) * 16 / 9));
+            height: calc(min(var(--slide-max-height), var(--slide-max-width) * 9 / 16));
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
-        
-        .slide-footer {
-            position: absolute;
-            bottom: 20px;
-            left: 50px;
-            right: 50px;
-            text-align: center;
-            font-size: 14px;
-            color: #888;
-            border-top: 1px solid #e9ecef;
-            padding-top: 10px;
+
+        /* 3. 슬라이드 내부 공통 스타일 */
+        .slide {
+            padding: 80px 100px 60px 100px;
+            color: #2a2a2a;
         }
-        
-        .slide-title {
-            font-size: 48px;
-            font-weight: 300;
-            margin-bottom: 20px;
-            text-align: center;
-            letter-spacing: -1.5px;
+        .slide-content { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            width: 100%; 
+            max-width: 1600px; 
+            margin: 0 auto; 
+            overflow-y: auto; /* 내용 길어지면 스크롤 */
         }
-        
-        .slide-subtitle {
-            font-size: 22px;
-            color: #666;
-            text-align: center;
-            margin-bottom: 35px;
-            font-weight: 300;
-        }
-        
+        .slide-header { position: absolute; top: 30px; left: 50px; right: 50px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e9ecef; padding-bottom: 10px; }
+        .slide-footer { position: absolute; bottom: 20px; left: 50px; right: 50px; text-align: center; font-size: 14px; color: #888; border-top: 1px solid #e9ecef; padding-top: 10px; }
+        .logo { height: 28px; object-fit: contain; }
+        .slide-number { font-size: 16px; color: #888; }
+        .slide-title { font-size: 48px; font-weight: 300; margin-bottom: 20px; text-align: center; letter-spacing: -1.5px; }
+        .slide-subtitle { font-size: 22px; color: #666; text-align: center; margin-bottom: 35px; font-weight: 300; }
         .title-slide .slide-content { justify-content: center; text-align: center; }
         .author-info { margin-top: 40px; font-size: 18px; color: #888; font-weight: 300; }
         .author-name { font-size: 24px; color: #2a2a2a; font-weight: 400; margin-top: 20px; }
-
         .content-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; flex: 1; }
         .risk-card { background: #f8f9fa; border-radius: 4px; padding: 25px 15px; text-align: center; border: 1px solid #e9ecef; }
         .risk-card.critical { border-left: 5px solid #dc3545; }
@@ -105,26 +78,22 @@
         .risk-title { font-size: 20px; font-weight: 500; margin-bottom: 10px; }
         .risk-number { font-size: 48px; font-weight: 200; margin: 10px 0; letter-spacing: -2px; }
         .risk-description { font-size: 16px; color: #666; }
-        
-        .chart-container { height: 400px; background: #f8f9fa; border-radius: 4px; padding: 15px; border: 1px solid #e9ecef; }
+        .chart-container { min-height: 400px; background: #f8f9fa; border-radius: 4px; padding: 15px; border: 1px solid #e9ecef; }
         .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; flex: 1; }
         .strategy-card { background: #f8f9fa; border-radius: 4px; padding: 20px; height: fit-content; border: 1px solid #e9ecef; }
         .strategy-title { font-size: 20px; font-weight: 400; color: #1a1a1a; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #2a2a2a; }
         .strategy-item { margin-bottom: 12px; padding: 10px; background: white; border-radius: 4px; border-left: 3px solid #666666; border: 1px solid #e9ecef; }
         .strategy-item h4 { font-size: 14px; color: #1a1a1a; margin-bottom: 5px; font-weight: 500; }
         .strategy-item p { color: #666; line-height: 1.4; font-size: 12px; }
-        
         .comparison-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 15px 0; }
         .comparison-card { background: #f8f9fa; border-radius: 4px; padding: 15px 10px; text-align: center; border: 1px solid #e9ecef; }
         .comparison-card.gld { border-left: 4px solid #2a2a2a; background: #ffffff; }
         .comparison-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; }
         .comparison-value { font-size: 28px; font-weight: 200; color: #2a2a2a; margin: 6px 0; }
         .comparison-label { font-size: 11px; color: #666; }
-        
         .insight-box { background: #2a2a2a; color: white; padding: 20px; border-radius: 4px; margin: 25px 0; text-align: center; }
         .insight-box h3 { font-size: 20px; margin-bottom: 10px; font-weight: 500; }
         .insight-box p { font-size: 16px; font-weight: 300; }
-        
         .historical-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 12px 0; }
         .historical-item { background: white; padding: 10px 6px; border-radius: 4px; text-align: center; border: 2px solid #e9ecef; }
         .historical-item.crisis { border-color: #dc3545; background: #fff5f5; }
@@ -134,72 +103,48 @@
         .historical-year { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
         .historical-value { font-size: 16px; font-weight: 500; margin-bottom: 3px; }
         .historical-growth { font-size: 10px; opacity: 0.8; }
-        
         .detailed-analysis { background: #fff8dc; border: 1px solid #f4c430; border-radius: 4px; padding: 20px; margin: 15px 0; position: relative; }
         .detailed-analysis::before { content: "⚠"; position: absolute; top: -8px; left: 15px; background: #f4c430; color: white; padding: 4px 8px; border-radius: 50%; font-size: 14px; }
         .detailed-analysis h3 { color: #8b4513; margin: 0 0 10px 25px; font-size: 18px; }
         .detailed-analysis ul { margin-left: 25px; color: #666; }
         .detailed-analysis li { margin-bottom: 5px; font-size: 14px; }
-        
         .business-structure-grid { display: grid; grid-template-columns: 55% 45%; gap: 20px; margin: 15px 0; }
-        
         .revenue-box { background: #f8f9fa; border-radius: 4px; padding: 12px 8px; text-align: center; border: 1px solid #e9ecef; }
         .revenue-box.target { background: #2a2a2a; color: white; border-color: #2a2a2a; }
         .revenue-year { font-size: 12px; font-weight: 500; margin-bottom: 6px; text-transform: uppercase; }
         .revenue-amount { font-size: 22px; font-weight: 200; margin: 6px 0; }
         .revenue-breakdown { font-size: 10px; opacity: 0.8; line-height: 1.2; }
-        
-        .conclusion-slide { background: #2a2a2a; color: white; }
+        .conclusion-slide { background: #2a2a2a;}
         .conclusion-slide .slide-content { justify-content: center; text-align: center; }
-        .conclusion-slide .slide-title { color: white; }
+        .conclusion-slide .slide-title { color: rgb(21, 18, 18); }
         .conclusion-slide .slide-header { border-bottom-color: rgba(255,255,255,0.3); }
         .conclusion-slide .slide-number, .conclusion-slide .slide-footer { color: #ccc; }
         .conclusion-slide .slide-footer { border-top-color: rgba(255,255,255,0.3); }
         .conclusion-content { font-size: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; font-weight: 300; }
         .conclusion-highlight { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 4px; margin: 25px 0; border-left: 3px solid white; }
+        .pdf-print-button { position: fixed; top: 20px; right: 20px; z-index: 1001; background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; font-family: inherit; }
 
-        .pdf-print-button {
-            position: fixed; top: 20px; right: 20px; z-index: 1001; 
-            background: #007bff; color: white; border: none; 
-            padding: 10px 20px; border-radius: 5px; cursor: pointer; 
-            font-size: 16px; font-family: inherit;
+        /* 4. 인쇄 모드 스타일 */
+        @page { size: A4 landscape; margin: 0; }
+        @media print {
+            body, .gld-player { background: white !important; display: block; height: auto; overflow: visible; }
+            .slide, .gld-player .slide.active, .gld-player .slide {
+                display: flex !important;
+                flex-direction: column;
+                width: 297mm; height: 167.0625mm; /* 16:9 비율 */
+                margin: 10mm auto;
+                box-shadow: none; border-radius: 0; border: none;
+                page-break-after: always;
+                overflow: visible !important;
+            }
+            .slide:last-child { page-break-after: avoid; }
+            .pdf-print-button { display: none; }
+            /* 인쇄용 폰트 크기 등 세부 조정 */
+            .slide { padding: 40px 60px; }
+            .slide-title { font-size: 28pt; }
+            .slide-subtitle { font-size: 14pt; }
         }
-
-        @page {
-  size: A4 landscape;
-  margin: 0;
-}
-
-@media print {
-  html, body {
-    margin: 0;
-    padding: 0;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .slide {
-    display: block;
-    width: 297mm;   /* A4 가로 */
-    height: 210mm;  /* A4 세로 */
-    margin: 0 auto;
-    background: white;
-    overflow: hidden;
-
-    page-break-before: always;
-    page-break-after: always;
-  }
-
-  .slide:first-child { page-break-before: auto; }
-  .slide:last-child { page-break-after: auto; }
-
-  /* 인쇄용 폰트 스케일 업 */
-  body { font-size: 12pt; }
-  .slide-title { font-size: 28pt; }
-  .slide-subtitle { font-size: 16pt; }
-}
-
-    </style>
+   </style>
 </head>
 <body>
     <!-- Slide 1: Title with Juli Kim -->
@@ -210,11 +155,11 @@
         </div>
         
         <div class="slide-content">
-            <h1 class="slide-title">グローバル・デイリー事業継続性確保に向けた論点整理と私案</h1>
-            <p class="slide-subtitle">将来予想される3つの重大リスクと対応策</p>
+            <h1 class="slide-title">グローバル・デイリーの持続的成長に向けた<br>事業継続性に関する一考察</h1>
+            <p class="slide-subtitle">3つの将来リスク分析と構造転換の提案</p>
             <div class="author-info">
                 株式会社グローバルデイリー<br>
-                事業継続性確保のための分析資料
+                2025年度 秋季社員研修 提出資料
             </div>
             <div class="author-name">
                 Global Daily Juli Kim
@@ -247,9 +192,9 @@
                 
                 <div class="risk-card high">
                     <span class="risk-icon">🎯</span>
-                    <h3 class="risk-title">顧客関係の脆弱性</h3>
-                    <div class="risk-number">82%</div>
-                    <p class="risk-description">M社依存の危険<br>契約変更時の事業存続リスク</p>
+                    <h3 class="risk-title">顧客集中度の脆弱性</h3>
+                    <div class="risk-number">85%</div>
+                    <p class="risk-description">業界別上位顧客集中リスク<br>契約変更時の事業存続危険</p>
                 </div>
                 
                 <div class="risk-card medium">
@@ -338,20 +283,20 @@
         </div>
         
         <div class="slide-content">
-            <h2 class="slide-title">懸念②：顧客関係の脆弱性</h2>
-            <p class="slide-subtitle">M社依存による将来事業リスク</p>
+            <h2 class="slide-title">懸念②：顧客集中度の脆弱性</h2>
+            <p class="slide-subtitle">業界別特定顧客依存による将来事業リスク</p>
             
             <div class="two-column">
                 <div class="strategy-card">
-                    <h3 class="strategy-title">現在の顧客構造（2025年1-8月実績）</h3>
-                    <div class="strategy-item">
-                        <h4>M社（グループ全体） 82%</h4>
-                        <p>M、M製菓、Mホールディングス<br>関連会社からの受注が圧倒的多数</p>
-                    </div>
-                    <div class="strategy-item">
-                        <h4>その他クライアント 18%</h4>
-                        <p>散発的プロジェクト<br>継続性・安定性に欠ける</p>
-                    </div>
+                    <h3 class="strategy-title">現在の顧客構造（業界別集中度）</h3>
+                        <div class="strategy-item">
+                            <h4>食品メーカー：上位顧客85%</h4>
+                            <p>メイジ関連企業への高集中<br>単一グループ依存の危険性</p>
+                        </div>
+                        <div class="strategy-item">
+                            <h4>その他業界：上位2社50-61%</h4>
+                            <p>交通機関61%、アパレル61%<br>医薬品56%の集中構造</p>
+                        </div>
                 </div>
                 
                 <div class="strategy-card">
@@ -372,12 +317,12 @@
             </div>
             
             <div class="detailed-analysis">
-                <h3>データ出所及び危険性分析</h3>
+                <h3>業界別顧客集中度と危険性分析</h3>
                 <ul>
-                    <li><strong>分析期間：</strong>2025年1月-8月売上額基準（8.8億円）</li>
-                    <li><strong>明治グループ依存度：</strong>全売上の82%（約7.2億円）</li>
-                    <li><strong>その他顧客：</strong>18%（約1.6億円）、単発性プロジェクト中心</li>
-                    <li><strong>危険水準分析：</strong>GLD現在状況：明治グループ依存度82%、一般的危険基準：特定顧客依存度70%以上時高危険分類、日本広告代理店業界平均：最大顧客依存度35-45%</li>
+                    <li><strong>分析期間：</strong>2025年1月-8月売上額基準</li>
+                    <li><strong>食品業界：</strong>メイジ関連84.7%の極端集中</li>
+                    <li><strong>他業界平均：</strong>上位2社で50-61%集中</li>
+                    <li><strong>リスク水準：</strong>特定顧客50%超時高リスク、業界平均35-45%を大幅超過</li>
                 </ul>
             </div>
         </div>
@@ -425,7 +370,7 @@
                 <h3>単一事業構造による成長制約とリスク集中</h3>
                 <ul>
                     <li><strong>上位競合との効率性格差：</strong>トップ企業比13.7倍、平均比2.4倍の生産性差</li>
-                    <li><strong>M社依存との二重リスク：</strong>顧客集中82% + 事業集中100%</li>
+                    <li><strong>顧客集中との二重リスク：</strong>業界別集中50-85% + 事業集中100%</li>
                     <li><strong>単一事業モデルの成長限界：</strong>インバウンド市場のみでは規模拡大に制約</li>
                     <li><strong>競争環境激化への対応力不足：</strong>新規参入企業・AI活用企業との差別化困難</li>
                 </ul>
@@ -434,7 +379,7 @@
             <div class="insight-box">
                 <h3>戦略的課題：持続的成長とリスク分散の必要性</h3>
                 <p>業界中位の現在ポジションから、上位競合レベルへの成長と<br>
-                M社依存リスクの分散を同時に実現する新たな事業展開が必要</p>
+                特定顧客依存リスクの分散を同時に実現する新たな事業展開が必要</p>
             </div>
         </div>
         
@@ -568,7 +513,7 @@
                     <h3 class="strategy-title">現在のビジネス構造の根本的限界</h3>
                     <div class="strategy-item">
                         <h4>営業依存型モデル</h4>
-                        <p>個人関係・担当者変更による事業リスク<br>M社82%依存の危険な構造</p>
+                    <p>個人関係・担当者変更による事業リスク<br>業界別50-85%の顧客集中構造</p>
                     </div>
                     <div class="strategy-item">
                         <h4>単発プロジェクト中心</h4>
@@ -728,7 +673,8 @@
                     <div class="strategy-item">
                         <h4>2025年：基盤強化期</h4>
                         <p><strong>目標：</strong>既存事業安定化 + 新領域準備<br>
-                        ・M社以外クライアント関係深化（5社以上）<br>
+                            ・新規クライアント関係深化（5社以上）<br>
+                            ・顧客集中度70%以下に分散<br>
                         ・スタッフスキル棚卸し完了<br>
                         ・市場調査レポート3分野完成</p>
                     </div>
@@ -801,8 +747,8 @@
                 <div class="strategy-card">
                     <h3 class="strategy-title">既存クライアント深耕戦略</h3>
                     <div class="strategy-item">
-                        <h4>M社以外18%との関係強化</h4>
-                        <p>現在の取引先に対し、海外展開ニーズの詳細ヒアリング実施。インバウンド実績を活かした信頼関係をベースに新サービス提案。</p>
+                        <h4>既存顧客ポートフォリオの拡張</h4>
+<p>現在の取引先に対し、海外展開ニーズの詳細ヒアリング実施。インバウンド実績を活かした信頼関係をベースに新サービス提案。</p>
                     </div>
                     <div class="strategy-item">
                         <h4>サービス拡張の足がかり構築</h4>
@@ -894,7 +840,6 @@
         </div>
     </div>
 
-    <!-- Slide 12: Conclusion -->
     <div class="slide conclusion-slide">
         <div class="slide-header">
             <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" class="logo">
@@ -932,209 +877,125 @@
     </div>
 
     <script>
-        // Chart initialization for PDF
-        function initShockChart() {
-            const ctx = document.getElementById('shockChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['2018年', '2019年', '2020年', '2021年', '2022年', '2023年', '2024年'],
-                    datasets: [{
-                        label: '訪日外国人数（万人）',
-                        data: [3119, 3188, 412, 25, 383, 2507, 3687],
-                        borderColor: '#dc3545',
-                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
-                        borderWidth: 2,
-                        pointRadius: 4,
-                        tension: 0.2
-                    }, {
-                        label: 'GLD売上（億円）',
-                        data: [11.2, 11.6, 4.9, 3.1, 2.6, 5.4, 9.0],
-                        borderColor: '#2a2a2a',
-                        backgroundColor: 'rgba(42, 42, 42, 0.1)',
-                        borderWidth: 2,
-                        pointRadius: 4,
-                        yAxisID: 'y1',
-                        tension: 0.2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        tooltip: {
-                            enabled: false
-                        },
-                        title: {
-                            display: true,
-                            text: '訪日外国人数とGLD売上の連動性',
-                            color: '#333',
-                            font: { size: 16 }
-                        },
-                        legend: {
-                            position: 'bottom',
-                            labels: { 
-                                color: '#333',
-                                font: { size: 12 }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: '訪日外国人数（万人）',
-                                color: '#333',
-                                font: { size: 12 }
-                            },
-                            grid: { color: '#e0e0e0' },
-                            ticks: { 
-                                color: '#666',
-                                font: { size: 10 }
-                            }
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            title: {
-                                display: true,
-                                text: 'GLD売上（億円）',
-                                color: '#333',
-                                font: { size: 12 }
-                            },
-                            grid: { drawOnChartArea: false },
-                            ticks: { 
-                                color: '#666',
-                                font: { size: 10 }
-                            }
-                        },
-                        x: {
-                            grid: { color: '#e0e0e0' },
-                            ticks: { 
-                                color: '#666',
-                                font: { size: 10 }
-                            }
-                        }
-                    }
+    // Chart.js 인스턴스 보관
+    const chartInstances = {};
+
+    function initOrUpdateChart(canvasId, config) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (chartInstances[canvasId]) {
+            chartInstances[canvasId].destroy();
+        }
+        chartInstances[canvasId] = new Chart(ctx, config);
+    }
+
+    // 각 차트 설정 함수
+    function initShockChart() {
+        initOrUpdateChart('shockChart', {
+            type: 'line',
+            data: {
+                labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                datasets: [{
+                    label: '訪日外国人数(万人)',
+                    data: [3119, 3188, 412, 25, 383, 2507, 3687],
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                    yAxisID: 'y',
+                }, {
+                    label: 'GLD売上(億円)',
+                    data: [11.2, 11.6, 4.9, 3.1, 2.6, 5.4, 9.0],
+                    borderColor: '#2a2a2a',
+                    backgroundColor: 'rgba(42, 42, 42, 0.1)',
+                    yAxisID: 'y1',
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { title: { display: true, text: '訪日外国人数とGLD売上の連動性' } },
+                scales: {
+                    y: { position: 'left', title: { display: true, text: '訪日外国人数(万人)'} },
+                    y1: { position: 'right', title: { display: true, text: 'GLD売上(億円)'}, grid: { drawOnChartArea: false } }
                 }
+            }
+        });
+    }
+
+    function initRiskChart() {
+        initOrUpdateChart('riskChart', {
+            type: 'line',
+            data: {
+                labels: ['通常時', '市場危機発生時(-58%想定)'],
+                datasets: [{
+                    label: '現在構造', data: [10.7, 4.5], borderColor: '#dc3545',
+                }, {
+                    label: '2026年構造', data: [15.0, 6.6], borderColor: '#fd7e14',
+                }, {
+                    label: '2028年構造', data: [30.0, 13.8], borderColor: '#28a745',
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { title: { display: true, text: '新規事業のセーフティネット効果' } },
+                scales: { y: { beginAtZero: true, title: { display: true, text: '売上高(億円)' } } }
+            }
+        });
+    }
+
+    // ===== 슬라이드 플레이어 =====
+    (function setupDeck() {
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        if (!slides.length) return;
+
+        document.body.classList.add('gld-player');
+
+        let index = 0;
+        let locked = false;
+
+        function showSlide(i) {
+            index = (i + slides.length) % slides.length;
+            slides.forEach((s, n) => s.classList.toggle('active', n === index));
+            history.replaceState(null, '', '#s=' + (index + 1));
+
+            const activeSlide = slides[index];
+            // 차트가 보이는 슬라이드에서만 차트를 다시 그림
+            requestAnimationFrame(() => {
+                if (activeSlide.querySelector('#shockChart')) initShockChart();
+                if (activeSlide.querySelector('#riskChart')) initRiskChart();
             });
         }
 
-        function initRiskChart() {
-            const ctx = document.getElementById('riskChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['通常時', '市場危機発生時（-58%想定）'],
-                    datasets: [{
-                        label: '現在構造（インバウンド100%）',
-                        data: [10.7, 4.5],
-                        borderColor: '#dc3545',
-                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
-                        borderWidth: 3,
-                        pointRadius: 6
-                    }, {
-                        label: '2026年構造（新規事業1千万円）',
-                        data: [15.0, 6.6],
-                        borderColor: '#fd7e14',
-                        backgroundColor: 'rgba(253, 126, 20, 0.1)',
-                        borderWidth: 3,
-                        pointRadius: 6
-                    }, {
-                        label: '2028年構造（新規事業1億円）',
-                        data: [30.0, 13.8],
-                        borderColor: '#28a745',
-                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
-                        borderWidth: 3,
-                        pointRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        tooltip: {
-                            enabled: false
-                        },
-                        legend: {
-                            position: 'bottom',
-                            labels: { 
-                                color: '#333',
-                                font: { size: 12 }
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: '新規事業の戦略的価値：危機時の絶対的セーフティネット',
-                            color: '#333',
-                            font: { size: 16 }
-                        }
-                    },
-                    scales: {
-                        x: { 
-                            grid: { color: '#e0e0e0' },
-                            ticks: { 
-                                color: '#666',
-                                font: { size: 10 }
-                            }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: '#e0e0e0' },
-                            title: {
-                                display: true,
-                                text: '売上高（億円）',
-                                color: '#333',
-                                font: { size: 12 }
-                            },
-                            ticks: { 
-                                color: '#666',
-                                font: { size: 10 }
-                            }
-                        }
-                    }
-                }
-            });
+        function guard(action) {
+            if (locked) return;
+            locked = true;
+            action();
+            setTimeout(() => { locked = false; }, 200);
         }
 
-        // Initialize charts when page loads
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                initShockChart();
-                initRiskChart();
-            }, 500);
+        window.addEventListener('keydown', (e) => {
+            if (e.target.tagName.match(/INPUT|TEXTAREA|SELECT/)) return;
+            if (e.key === 'ArrowRight' || e.key === ' ') guard(() => showSlide(index + 1));
+            if (e.key === 'ArrowLeft' || e.key === 'Backspace') guard(() => showSlide(index - 1));
         });
 
-        // Print function
-        function printPDF() {
-            window.print();
-        }
-    </script>
+        // 터치 스와이프 기능 추가
+        let touchX = null;
+        window.addEventListener('touchstart', (e) => { touchX = e.changedTouches[0].clientX; }, {passive:true});
+        window.addEventListener('touchend', (e) => {
+            if (touchX === null) return;
+            const dx = e.changedTouches[0].clientX - touchX;
+            if (Math.abs(dx) > 40) { guard(() => { dx < 0 ? showSlide(index + 1) : showSlide(index - 1); }); }
+            touchX = null;
+        }, {passive:true});
 
-    <!-- PDF 출력 버튼 (화면에서만 보임) -->
-    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
-        <button onclick="printPDF()" style="
-            background: #2a2a2a; 
-            color: white; 
-            border: none; 
-            padding: 10px 20px; 
-            border-radius: 4px; 
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 14px;
-        ">PDF로 저장</button>
-    </div>
-
-    <style>
-        @media print {
-            button {
-                display: none !important;
-            }
+        // URL 해시(#s=2)로 직접 접근 시 해당 슬라이드 표시
+        const initialSlide = parseInt(new URL(window.location).hash.substring(3), 10) - 1;
+        if (initialSlide >= 0 && initialSlide < slides.length) {
+            index = initialSlide;
         }
-    </style>
+        showSlide(index);
+    })();
+</script>
+  
 </body>
 </html>
