@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社員ヒアリング結果 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, 'Helvetica Neue', 'Hiragino Sans', sans-serif;
+            background: #000;
+            color: #2c2c2c;
+            line-height: 1.4;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+        }
+
+        .slide {
+            min-width: 100vw;
+            height: 100vh;
+            padding: 3% 4%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: white;
+            scroll-snap-align: start;
+            overflow: hidden;
+        }
+
+        /* タイトルスライド */
+        .title-slide {
+            background: #000;
+            color: white;
+            justify-content: center;
+            padding-left: 8%;
+        }
+
+        .title-slide h1 {
+            font-size: 5vw;
+            font-weight: 800;
+            margin-bottom: 0.5em;
+            letter-spacing: -0.03em;
+            line-height: 0.95;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.8vw;
+            opacity: 0.7;
+            margin-bottom: 3em;
+            font-weight: 300;
+        }
+
+        .survey-item {
+            font-size: 1.5vw;
+            opacity: 0.85;
+            margin: 0.5em 0;
+        }
+
+        /* ヘッダー */
+        .slide-header {
+            margin-bottom: 2%;
+        }
+
+        .slide-title {
+            font-size: 2.8vw;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 0.2em;
+            letter-spacing: -0.02em;
+        }
+
+        .slide-desc {
+            font-size: 1.2vw;
+            color: #666;
+        }
+
+        /* メインコンテンツ */
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* 3カラムグリッド */
+        .three-cols {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2%;
+            height: 100%;
+        }
+
+        .col-box {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .col-header {
+            font-size: 1.3vw;
+            font-weight: 700;
+            padding-bottom: 0.5em;
+            margin-bottom: 0.8em;
+            border-bottom: 1px solid #000;
+        }
+
+        .col-items {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5em;
+        }
+
+        .col-items::-webkit-scrollbar {
+            width: 2px;
+        }
+
+        .col-items::-webkit-scrollbar-thumb {
+            background: #ccc;
+        }
+
+        .col-item {
+            font-size: 0.95vw;
+            padding: 0.4em 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            line-height: 1.3;
+        }
+
+        .col-item.highlight {
+            font-weight: 700;
+        }
+
+        /* 2カラムグリッド */
+        .two-cols {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3%;
+            height: 100%;
+        }
+
+        .large-box {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .large-box-header {
+            font-size: 1.6vw;
+            font-weight: 700;
+            padding-bottom: 0.5em;
+            margin-bottom: 1em;
+            border-bottom: 2px solid #000;
+        }
+
+        .large-box-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5em;
+        }
+
+        .detail-item {
+            margin-bottom: 1em;
+            padding-bottom: 0.8em;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .detail-title {
+            font-size: 1.1vw;
+            font-weight: 700;
+            margin-bottom: 0.3em;
+        }
+
+        .detail-desc {
+            font-size: 0.9vw;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* ページ番号 */
+        .page-num {
+            position: absolute;
+            bottom: 2%;
+            right: 3%;
+            font-size: 0.9vw;
+            color: #999;
+        }
+
+        /* 危機スライド用 */
+        .crisis-slide .slide-title::before {
+            content: "⚠ ";
+            opacity: 0.3;
+        }
+
+        /* 理想スライド用 */
+        .vision-slide .slide-title::before {
+            content: "◎ ";
+            opacity: 0.3;
+        }
+
+        /* 役割スライド用 */
+        .role-slide .slide-title::before {
+            content: "▪ ";
+            opacity: 0.3;
+        }
+
+        /* メトリクスバッジ */
+        .metric {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 0.1em 0.5em;
+            font-size: 0.8em;
+            margin-left: 0.5em;
+        }
+
+        /* インパクト表示 */
+        .impact {
+            display: inline-block;
+            border: 1px solid #000;
+            padding: 0.1em 0.4em;
+            font-size: 0.7em;
+            margin-left: 0.5em;
+        }
+
+        /* 共通課題スライド */
+        .highlight-box {
+            background: #fffbf0;
+            border: 2px solid #ffb800;
+            padding: 2%;
+            margin-bottom: 2%;
+        }
+
+        .highlight-box-title {
+            font-size: 1.4vw;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+            color: #ff8c00;
+        }
+
+        .highlight-box-content {
+            font-size: 0.95vw;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        /* 組織再編スライド */
+        .org-structure {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3%;
+            margin: 2% 0;
+        }
+
+        .org-box {
+            padding: 2%;
+            background: #f8f8f8;
+            border-left: 4px solid #000;
+        }
+
+        .org-title {
+            font-size: 1.4vw;
+            font-weight: 700;
+            margin-bottom: 1em;
+        }
+
+        .org-content {
+            font-size: 0.95vw;
+            line-height: 1.5;
+        }
+
+        .arrow-down {
+            text-align: center;
+            font-size: 1.5vw;
+            margin: 1% 0;
+            color: #666;
+        }
+
+        .conclusion-box {
+            background: #e3f2fd;
+            padding: 2%;
+            text-align: center;
+            margin-top: 2%;
+        }
+
+        .conclusion-text {
+            font-size: 1.1vw;
+            color: #1976d2;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- スライド1: タイトル -->
+        <div class="slide title-slide">
+            <h1>社員ヒアリング<br>結果レポート</h1>
+            <p class="subtitle">全社員アンケート集計</p>
+            <div>
+                <div class="survey-item">1. 会社の未来の危機について</div>
+                <div class="survey-item">2. なりたい未来について</div>
+                <div class="survey-item">3. セクション別の役割について</div>
+            </div>
+        </div>
+
+        <!-- スライド2: 危機1 - 解決できないこと -->
+        <div class="slide crisis-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">会社の未来の危機</h2>
+                <p class="slide-desc">【解決できないこと】外部環境の構造的問題</p>
+            </div>
+            <div class="slide-content">
+                <div class="three-cols">
+                    <div class="col-box">
+                        <div class="col-header">社会・インフラ問題</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">日本人の「外国人嫌悪」の増加</div>
+                            <div class="col-item">インバウンド政策へのブレーキ</div>
+                            <div class="col-item">インバウンドがきすぎる事による社会的反発</div>
+                            <div class="col-item highlight">インフラ環境整備が他国より劣っている</div>
+                            <div class="col-item">タイパの悪さにより、満足度が下がる</div>
+                            <div class="col-item">リピーターが来なくなる</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">市場の不確実性</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">インバウンド市場の不確実性</div>
+                            <div class="col-item">為替・国際情勢・感染症リスクなど外的要因に左右</div>
+                            <div class="col-item highlight">3-4年周期での危機再発</div>
+                            <div class="col-item">インバウンド市場の構造的不安定性</div>
+                            <div class="col-item">需要が変わる？消費形態の変化</div>
+                            <div class="col-item">付加価値の行方が不透明</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">天災・労働市場</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">富士山噴火、南海トラフ地震などの天災</div>
+                            <div class="col-item">天変地異：旅行心理を左右（予言、説の影響）</div>
+                            <div class="col-item highlight">世界基準で見たときの賃金低下</div>
+                            <div class="col-item">外国人雇用が難しくなる</div>
+                            <div class="col-item">治安のあまり良くない国からしか人員確保できない</div>
+                            <div class="col-item">サービスの質の低下→働き手の不足</div>
+                            <div class="col-item">クライアントの人員不足（インバウンド専任担当不在）</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">2/19</span>
+        </div>
+
+        <!-- スライド3: 危機2 - 対外的（知識・中抜き） -->
+        <div class="slide crisis-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">会社の未来の危機</h2>
+                <p class="slide-desc">【対外的】競争環境の激変 - 知識格差と中抜き</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-cols">
+                    <div class="large-box">
+                        <div class="large-box-header">知識格差の消滅</div>
+                        <div class="large-box-content">
+                            <div class="detail-item">
+                                <div class="detail-title">クライアントの知識向上</div>
+                                <div class="detail-desc">外国人採用強化、AI活用の発展により、クライアントに知恵が付き、GLDよりも詳しくなっていく</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">大手企業の参入</div>
+                                <div class="detail-desc">国内大手営業会社（デロイト等）がIB知識を蓄積</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">専門企業の台頭</div>
+                                <div class="detail-desc">国、メディア別の専門性の高い競合が出てくる（うちの強みは幅広い範囲。幅広い範囲を浅くでなく専門性をいかに身につけるか、クライアントに伝えられるかが大事）</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">競合の知識蓄積</div>
+                                <div class="detail-desc">競合会社に知識がつく、クライアントだけでなく、ライバルも知識を蓄えていく</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-box">
+                        <div class="large-box-header">中抜き構造の崩壊</div>
+                        <div class="large-box-content">
+                            <div class="detail-item">
+                                <div class="detail-title">直接取引の増加</div>
+                                <div class="detail-desc">クライアントがダイレクトに問い合わせできる機能が増える（AI・翻訳等）、代理店としての立ち位置</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">インフルエンサー直接契約</div>
+                                <div class="detail-desc">クライアントとインフルエンサーの直接取引増加</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">インフラの消滅</div>
+                                <div class="detail-desc">固定電話がなくなる</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">予算の流出</div>
+                                <div class="detail-desc">クライアントが海外進出し、予算が海外に流れる</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">3/19</span>
+        </div>
+
+        <!-- スライド4: 危機3 - 対外的（競争激化） -->
+        <div class="slide crisis-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">会社の未来の危機</h2>
+                <p class="slide-desc">【対外的】競争の激化</p>
+            </div>
+            <div class="slide-content">
+                <div class="three-cols">
+                    <div class="col-box">
+                        <div class="col-header">競合の増加</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">競合他社の凄まじい増加</div>
+                            <div class="col-item">かつては中国市場のみ→現在は韓国・台湾でも他社PR活動が目立つ</div>
+                            <div class="col-item">他社との差別化を図らなければ競争環境は一層厳しく</div>
+                            <div class="col-item">大手クライアントに参入してくる</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">価格競争</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">競合他社との価格競争</div>
+                            <div class="col-item">クライアントの知識もついてきて、価格重視のクライアントが増える</div>
+                            <div class="col-item">業界平均の生産性　将来的市場シェア失墜</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">競合の戦略</div>
+                        <div class="col-items">
+                            <div class="col-item">各業界の特化した代理店がGLDの既存クライアントを攻めに来る</div>
+                            <div class="col-item">他代理店から新しい打ち出し方、アイデア戦</div>
+                            <div class="col-item">データ分析の深堀した競合他社が増加している中</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">4/19</span>
+        </div>
+
+        <!-- スライド5: 危機4 - GLD内（商品・人材） -->
+        <div class="slide crisis-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">会社の未来の危機</h2>
+                <p class="slide-desc">【GLD内】内部課題 - 商品と人材</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-cols">
+                    <div class="large-box">
+                        <div class="large-box-header">商品・サービスの課題</div>
+                        <div class="large-box-content">
+                            <div class="detail-item">
+                                <div class="detail-title">商材の陳腐化<span class="impact">critical</span></div>
+                                <div class="detail-desc">クライアントがGLDの商材に飽きる</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">データ分析の弱さ<span class="impact">high</span></div>
+                                <div class="detail-desc">深堀した競合他社が増加している中での弱点</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">オウンドメディアの限界</div>
+                                <div class="detail-desc">コンテンツはいいが、数字の不透明さがあり、知識をつけてきたクライアントに対して、提案がしずらい</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">新サービスの必要性</div>
+                                <div class="detail-desc">販促にはなりますが、ノバルカのECのようにクライアント売上を見える化できるサービスを考えるべきでは？</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-box">
+                        <div class="large-box-header">組織・人材の課題</div>
+                        <div class="large-box-content">
+                            <div class="detail-item">
+                                <div class="detail-title">六角形型人材の不足<span class="impact">critical</span></div>
+                                <div class="detail-desc">多言語・多媒体・多プランを強みとしているが、それを現場で臨機応変に活用し、的確に対応できる人材が不足。武器は多いが、それを使い切れていない</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">専門知識の不足</div>
+                                <div class="detail-desc">大手企業は現地メディアとの接触や多国籍人材の採用を進めており、高度な現地知識を持つケースが増えている</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">人材流動リスク</div>
+                                <div class="detail-desc">離職・人材流出、少人数がゆえに属人化の分散をどこまでするのか、入ってきた人の即戦力化をどのくらい早められるのか</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">5/19</span>
+        </div>
+
+        <!-- スライド6: 危機5 - GLD内（事業構造・将来） -->
+        <div class="slide crisis-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">会社の未来の危機</h2>
+                <p class="slide-desc">【GLD内】ブランド・事業構造・将来リスク</p>
+            </div>
+            <div class="slide-content">
+                <div class="three-cols">
+                    <div class="col-box">
+                        <div class="col-header">ブランド・事業構造</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">業界別上位顧客集中リスク</div>
+                            <div class="col-item">契約変更時の事業存続危険</div>
+                            <div class="col-item">ブランド認知の課題（業界内は高いが一般認知度低い）</div>
+                            <div class="col-item">存在感が埋もれる可能性がある</div>
+                            <div class="col-item">広告予算の季節的偏り</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">独自リソースの課題</div>
+                        <div class="col-items">
+                            <div class="col-item">在留外国人スタッフは活かせるが売上貢献難しい</div>
+                            <div class="col-item">JKはクライアントへ売上貢献は難しい</div>
+                            <div class="col-item">korekokoは多国向けは魅力だが、1カ国に絞るクライアントが殆どの為他社でもできてしまう</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">将来の不確実性</div>
+                        <div class="col-items">
+                            <div class="col-item">メディアの変化：KOLは果たしてどう深化していくのか？そもそも次の潮流はなに？</div>
+                            <div class="col-item">ウチが持つ独自リソースで太刀打ちできるのか？</div>
+                            <div class="col-item">新規媒体の開拓を常にし続ける難しさ</div>
+                            <div class="col-item">国別の広告規制強化＆変化</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">6/19</span>
+        </div>
+
+        <!-- スライド7: 理想1 - 対外的ポジション -->
+        <div class="slide vision-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">なりたい未来</h2>
+                <p class="slide-desc">【対外】市場でのポジション</p>
+            </div>
+            <div class="slide-content">
+                <div class="three-cols">
+                    <div class="col-box">
+                        <div class="col-header">市場リーダーシップ</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">業界№1の売上・実績を持つ会社</div>
+                            <div class="col-item">社員が専門家としてTVで取り上げられる</div>
+                            <div class="col-item">インバウンドにおいて、〇〇のグローバルデイリーという立ち位置</div>
+                            <div class="col-item">国際的なイベント等の宣伝</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">社会的価値</div>
+                        <div class="col-items">
+                            <div class="col-item">観光立国推進や地域活性化において信頼されるパートナー</div>
+                            <div class="col-item highlight">集客や売上だけではなく、価値を共創できる会社へ転換</div>
+                            <div class="col-item">広告を超えたストーリーテリング制作会社</div>
+                            <div class="col-item">SDGs・ESG対応のサステナブルな広告代理店</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">採用ブランド</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">新卒の倍率20倍<span class="metric">目標</span></div>
+                            <div class="col-item">他業種からGLDに入りたいと思われる会社</div>
+                            <div class="col-item">社員が多国籍で、海外の文化・消費者心理を深く理解するチーム</div>
+                            <div class="col-item">オウンド、在留スタッフなんでも良いが肩書と独自性を持った方が良い</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">7/19</span>
+        </div>
+
+        <!-- スライド8: 理想2 - 働き方改革 -->
+        <div class="slide vision-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">なりたい未来</h2>
+                <p class="slide-desc">【GLD内／待遇】理想の労働環境</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-cols">
+                    <div class="large-box">
+                        <div class="large-box-header">働き方の自由</div>
+                        <div class="large-box-content">
+                            <div class="detail-item">
+                                <div class="detail-title">残業ゼロ<span class="metric">目標</span></div>
+                                <div class="detail-desc">残業なし、残業０の実現</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">フルリモートも可能</div>
+                                <div class="detail-desc">場所・時間問わず、どこでも働ける環境</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">地方、海外でも仕事ができる</div>
+                                <div class="detail-desc">前に陳さんが言っていた、どこでも仕事ができるのが理想です</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">年4週は長距離テレワーク</div>
+                                <div class="detail-desc">ライフ＆ワークのバランスを大切にしながら、年4週は長距離テレワークできる会社</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">働く時間や場所に制限がない会社</div>
+                                <div class="detail-desc">ON/OFFをしっかりとれる会社</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-box">
+                        <div class="large-box-header">待遇・福利厚生</div>
+                        <div class="large-box-content">
+                            <div class="detail-item">
+                                <div class="detail-title">平均年収650万円<span class="metric">目標</span></div>
+                                <div class="detail-desc">競争力のある給与水準の実現</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">有給消化率70％以上<span class="metric">目標</span></div>
+                                <div class="detail-desc">平日の有給時に連絡がこない環境</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">介護の長期化支援</div>
+                                <div class="detail-desc">介護の長期化の場合の休暇及び長期間のテレワーク保障</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">不妊治療支援</div>
+                                <div class="detail-desc">不妊治療の際の休暇及び、希望日のテレワーク対応</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">8/19</span>
+        </div>
+
+        <!-- スライド9: 理想3 - 組織文化 -->
+        <div class="slide vision-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">なりたい未来</h2>
+                <p class="slide-desc">【GLD内】理想の組織文化</p>
+            </div>
+            <div class="slide-content">
+                <div class="three-cols">
+                    <div class="col-box">
+                        <div class="col-header">働き方の質</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">Googleのような会社</div>
+                            <div class="col-item">自発的に動き、仕事ができる社員でできている会社</div>
+                            <div class="col-item">社員全員が誇りをもって仕事をしている</div>
+                            <div class="col-item">時間内での働き方</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">多様性と柔軟性</div>
+                        <div class="col-items">
+                            <div class="col-item">多様性を尊重する組織文化</div>
+                            <div class="col-item highlight">副業が多様な会社（専門性がもっと尊重される会社）</div>
+                            <div class="col-item">失敗を恐れず挑戦を歓迎する風土</div>
+                            <div class="col-item">外国人メンバーが、自国から「送日アウトバウンド」でも働ける会社</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">効率的な運営</div>
+                        <div class="col-items">
+                            <div class="col-item highlight">連絡に追われない。1日100通のメールの中に自分あての急ぎの案件が多いこの状況をなくしたい</div>
+                            <div class="col-item">テクノロジー活用による少人数・高効率運営</div>
+                            <div class="col-item">各セクションの役割分担が明確で、シームレスな連携</div>
+                            <div class="col-item">役割分担がはっきりできている組織</div>
+                            <div class="col-item">チームでの仕事の連携強化（1人が休職、退職で崩れないチーム体制）</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">9/19</span>
+        </div>
+
+        <!-- スライド10: 理想4 - 事業構造 -->
+        <div class="slide vision-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">なりたい未来</h2>
+                <p class="slide-desc">【GLD内／事業構造】ビジネスモデルの進化</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-cols">
+                    <div class="large-box">
+                        <div class="large-box-header">収益モデルの多様化</div>
+                        <div class="large-box-content">
+                            <div class="detail-item">
+                                <div class="detail-title">相談ベース（コンサル）でもお金が取れる仕組み</div>
+                                <div class="detail-desc">コンサルティング力をつける</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">広告以外の収入源を増やす</div>
+                                <div class="detail-desc">新規事業ではなく、今ある領域の中で広告以外の収入源を増やす（セミナー事業、コンサル事業、他社との連携事業など）</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">自社媒体が何もせずに発注が大量に来る</div>
+                                <div class="detail-desc">営業せずに企業から積極的にやりたいと言われる媒体</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-box">
+                        <div class="large-box-header">提供価値の進化</div>
+                        <div class="large-box-content">
+                            <div class="detail-item">
+                                <div class="detail-title">マーケティングデータ分析と心を動かすコンテンツ制作</div>
+                                <div class="detail-desc">両輪で提供できる存在</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">訪日を起点にグローバル市場で勝つ仕組み</div>
+                                <div class="detail-desc">訪日を起点にグローバル市場で勝つ仕組みをつくれる会社へ</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">日本人芸能人の活用</div>
+                                <div class="detail-desc">日本人の芸能人で海外に認知がある芸能人を起用、日本人でその国に影響力がある有名人と仕事</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-title">全員が高い基準で成果をあげられる会社</div>
+                                <div class="detail-desc">定時でも帰れる・海外駐在でも働ける会社</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">10/19</span>
+        </div>
+
+        <!-- スライド11: 理想5 - 組織再編 -->
+        <div class="slide vision-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">なりたい未来</h2>
+                <p class="slide-desc">【GLD内／事業構造】チーム体制の再編案</p>
+            </div>
+            <div class="slide-content">
+                <div class="detail-item" style="text-align: center; margin-bottom: 2%;">
+                    <div class="detail-desc">実績が全てだとは思いますが、労働環境の見直し及びチーム性による仕事の見える化、タスク振分ができれば理想です。</div>
+                </div>
+                
+                <div class="org-structure">
+                    <div class="org-box">
+                        <div class="org-title">固定顧客部署：安定収入を得る</div>
+                        <div class="org-content">
+                            <strong>営業がAMになる：</strong>アカウントマネージャーとして既存顧客管理<br><br>
+                            <strong>媒体がコンサルになる：</strong>専門的な価値提供
+                        </div>
+                    </div>
+                    <div class="org-box">
+                        <div class="org-title">新規顧客部署：仕事の刺激性・やりがい</div>
+                        <div class="org-content">
+                            <strong>営業は新規獲得のみに注力する</strong><br><br>
+                            <strong>媒体は新規営業に適する商材を仕入れ</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="arrow-down">↓</div>
+                
+                <div class="conclusion-box">
+                    <div class="conclusion-text">
+                        新規チーム担当の顧客が一定な年間売上になったら既存チームに変更
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">11/19</span>
+        </div>
+
+        <!-- スライド12: 役割1 - 役員 -->
+        <div class="slide role-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">セクション別の役割：役員</h2>
+                <p class="slide-desc">経営層への期待と責任範囲</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-cols">
+                    <div class="large-box">
+                        <div class="large-box-header">役割</div>
+                        <div class="large-box-content">
+                            <div class="col-item">未来を想像した経営方針の策定</div>
+                            <div class="col-item">グループ対応</div>
+                            <div class="col-item">同業他社との連携及び情報収集</div>
+                            <div class="col-item">明確なビジョンと方向性の提示、建設的なフィードバックの提供</div>
+                            <div class="col-item">リスクマネジメントと危機対応力</div>
+                            <div class="col-item">双方向のコミュニケーション</div>
+                            <div class="col-item">部門間の対立調整能力</div>
+                            <div class="col-item">社外への看板的活動</div>
+                        </div>
+                    </div>
+                    <div class="large-box">
+                        <div class="large-box-header">意識・要望</div>
+                        <div class="large-box-content">
+                            <strong style="font-size: 1.1vw;">意識</strong>
+                            <div class="col-item">モチベーションを高めるリーダーシップ</div>
+                            <div class="col-item">プロセスの尊重</div>
+                            <div class="col-item">迅速かつ透明な意思決定</div>
+                            <br>
+                            <strong style="font-size: 1.1vw;">要望</strong>
+                            <div class="col-item">役員３名の役割の明確化</div>
+                            <br>
+                            <strong style="font-size: 1.1vw;">個別責任範囲</strong>
+                            <div class="col-item">荒井／資金運営計画</div>
+                            <div class="col-item">アンディ／システム導入、内勤管理</div>
+                            <div class="col-item">大坂／営業、SPC</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">12/19</span>
+        </div>
+
+        <!-- スライド13: 役割2 - 営業 -->
+        <div class="slide role-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">セクション別の役割：営業</h2>
+                <p class="slide-desc">フロント部門の責任と意識</p>
+            </div>
+            <div class="slide-content">
+                <div class="three-cols">
+                    <div class="col-box">
+                        <div class="col-header">役割</div>
+                        <div class="col-items">
+                            <div class="col-item">粗利年間目標の達成</div>
+                            <div class="col-item">正確な数字管理（台帳）</div>
+                            <div class="col-item">GLDのコンサルティングとしてハイレベルのIB知識を持つ</div>
+                            <div class="col-item">SPCと連携し、業務の潤滑な進行</div>
+                            <div class="col-item">他セクションとのスピーディーな対応（期限を守る）</div>
+                            <div class="col-item">長期的なクライアント関係構築</div>
+                            <div class="col-item">サービス・コンテンツの正確な理解と説明</div>
+                            <div class="col-item">フィードバックに基づく提案改善</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">意識</div>
+                        <div class="col-items">
+                            <div class="col-item">業績、達成を当たり前にすること</div>
+                            <div class="col-item">会社の顔として外へ出ていることを忘れずに、自分の発言や言動が会社の価値を下げることになっていないか、改めて意識が必要</div>
+                            <div class="col-item">勘違いしてはいけないことは、自分のクライアントではない、GLD会社のクライアントであるという意識を持つこと</div>
+                            <div class="col-item">課長以上のメンバーの役割の明確化</div>
+                            <div class="col-item">若手メンバーには「やりきること」を覚えてほしい</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">要望・課題</div>
+                        <div class="col-items">
+                            <strong>要望</strong>
+                            <div class="col-item">提供ネタ、提案書へのフィードバック</div>
+                            <div class="col-item">クライアントの声の社内フィードバック</div>
+                            <div class="col-item">ニッチ市場への提案力</div>
+                            <strong style="margin-top: 1em; display: block;">課題</strong>
+                            <div class="col-item">正確な計上（コード記入含め）</div>
+                            <div class="col-item">申込書の早い提出</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: #f8f8f8; padding: 1.5%; margin-top: 2%;">
+                    <strong>マネージャーに求めること：</strong>グループ及びチームの粗利年間目標の達成、チームメンバーのマネジメント（勤怠・目標／数字）、企画の質問に対しての対応、毎週木曜、正確に全体管理に計上、戦略シートの把握
+                </div>
+            </div>
+            <span class="page-num">13/19</span>
+        </div>
+
+        <!-- スライド14: 役割3 - SPC -->
+        <div class="slide role-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">セクション別の役割：SPC</h2>
+                <p class="slide-desc">Sales Performance Coordinatorへの進化</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-cols">
+                    <div class="large-box">
+                        <div class="large-box-header">役割</div>
+                        <div class="large-box-content">
+                            <div class="col-item">営業が営業に集中できるように、見積書・契約書を自主的に作成</div>
+                            <div class="col-item">GLDの社員としての自覚を強く持ち、クライアントと商談</div>
+                            <div class="col-item">メディア管理と連携し、原稿の進行業務</div>
+                            <div class="col-item">営業と同等のインバウンド及び企画の知識</div>
+                            <div class="col-item">営業やメディア管理に確認しなくても、クライアントの質問に回答</div>
+                            <div class="col-item">プロジェクトの優先順位管理</div>
+                            <div class="col-item">丁寧なチェックと責任感</div>
+                            <div class="col-item">営業の業務内容の分析（営業集中させるために）</div>
+                        </div>
+                    </div>
+                    <div class="large-box">
+                        <div class="large-box-header">意識・課題</div>
+                        <div class="large-box-content">
+                            <strong style="font-size: 1.1vw;">意識</strong>
+                            <div class="col-item">サポートという概念を捨て、施策をメインで動かす組織として必要なコミュニケーションを活発的に取って欲しい</div>
+                            <div class="col-item">与えられた業務以外にプラスアルファを考えられる組織になってほしい</div>
+                            <div class="col-item highlight">営業サポートからSales Performance Coordinatorになる</div>
+                            <br>
+                            <strong style="font-size: 1.1vw;">課題</strong>
+                            <div class="col-item">人数がたくさん増えて、生産性があまり上がっていないイメージ</div>
+                            <div class="col-item">メンバーのスキル統一。進行のやり方に個人差が出てきている</div>
+                            <div class="col-item">Asanaだけのコミュニケーションで終わらせず、必要であれば電話や直接声をかける</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: #f8f8f8; padding: 1.5%; margin-top: 2%;">
+                    <strong>マネージャーに求めること：</strong>効率的な仕組み作り、システム化、チームメンバーのマネジメント（勤怠・目標）
+                </div>
+            </div>
+            <span class="page-num">14/19</span>
+        </div>
+
+        <!-- スライド15: 役割4 - メディア管理 -->
+        <div class="slide role-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">セクション別の役割：メディア管理</h2>
+                <p class="slide-desc">仕入れと関係構築の専門性</p>
+            </div>
+            <div class="slide-content">
+                <div class="three-cols">
+                    <div class="col-box">
+                        <div class="col-header">役割</div>
+                        <div class="col-items">
+                            <div class="col-item">担当している国（企画）の売上目標の達成</div>
+                            <div class="col-item">他社より好条件で仕入れる</div>
+                            <div class="col-item">営業と連携し、有効的なメディアの仕入れ及び全体への告知</div>
+                            <div class="col-item">SPCと連携し、原稿の進行業務</div>
+                            <div class="col-item">現地情報の共有</div>
+                            <div class="col-item">オリエン時の通訳業務</div>
+                            <div class="col-item">マーケと連携して、効果的なメディアを仕入れる</div>
+                            <div class="col-item">プラットフォームポリシーへの即応力</div>
+                            <div class="col-item">発注管理への正確な記入及び仕入れ・請求書のチェック</div>
+                            <div class="col-item">媒体の業界平均の料金の調査</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">意識・要望</div>
+                        <div class="col-items">
+                            <strong>意識</strong>
+                            <div class="col-item">KOL、マイクロKOLとの関係値作り</div>
+                            <strong style="margin-top: 1em; display: block;">要望</strong>
+                            <div class="col-item">事例の更新（カテゴリー別で整理）</div>
+                            <div class="col-item">タイ以外の東南アジア情報</div>
+                            <div class="col-item">媒体資料がペラしかなく、すごさが伝わらない。個別企画書を用意してほしい</div>
+                            <div class="col-item">旅マエ、旅ナカ、旅アトなどのフェーズ事、KOL、メディア、運用広告などの訴求別カテゴリで媒体を纏める</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">課題</div>
+                        <div class="col-items">
+                            <div class="col-item">属人化の解消</div>
+                            <div class="col-item">どんな媒体があるかがアップデートされない</div>
+                            <br>
+                            <strong>マネージャーに求めること</strong>
+                            <div class="col-item">GLDに有意な仕入れ条件の獲得</div>
+                            <div class="col-item">効率的な仕組み作り、システム化</div>
+                            <div class="col-item">チームメンバーのマネジメント</div>
+                            <div class="col-item">毎週金曜に発注管理に記入しているかのチェック</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">15/19</span>
+        </div>
+
+        <!-- スライド16: 役割5 - JAPANKURU -->
+        <div class="slide role-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">セクション別の役割：JAPANKURU</h2>
+                <p class="slide-desc">オウンドメディアの価値向上</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-cols">
+                    <div class="large-box">
+                        <div class="large-box-header">役割・意識</div>
+                        <div class="large-box-content">
+                            <strong>役割</strong>
+                            <div class="col-item">JAPANKURUの価値向上</div>
+                            <div class="col-item">PV、エンゲージ、滞在時間、離脱率など数字の向上</div>
+                            <div class="col-item">インサイトデーターから読み取れる情報の全体共有</div>
+                            <div class="col-item">GLDの代表としての世間一般への認知確立</div>
+                            <br>
+                            <strong>意識</strong>
+                            <div class="col-item">売上数字への意識と責任を持つこと</div>
+                            <div class="col-item">オウンド独自の企画立案（korekokoと一緒でもok）</div>
+                            <div class="col-item">JAPANKURUの事例＝GLDの事例であるという自覚</div>
+                        </div>
+                    </div>
+                    <div class="large-box">
+                        <div class="large-box-header">要望・課題</div>
+                        <div class="large-box-content">
+                            <strong>要望</strong>
+                            <div class="col-item">記者団・リポーター制度の導入</div>
+                            <div class="col-item">繁体字正社員ライターの採用</div>
+                            <div class="col-item">マルチフォーマット対応の柔軟な企画力</div>
+                            <div class="col-item">数字の不透明さを無くす（国別PV数、ターゲティング、KPI設定）</div>
+                            <div class="col-item">売上向上のための企画の立案（ライターから積極的に）</div>
+                            <div class="col-item">成果につながった際の分析と横展開の企画の実施</div>
+                            <br>
+                            <strong>課題</strong>
+                            <div class="col-item">アンディーさんへの属人化をどう無くしていくか？</div>
+                            <div class="col-item">営業せずに企業から積極的にやりたいと言われる媒体になるために</div>
+                            <div class="col-item">成果につなげるための運用広告の導入</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: #f8f8f8; padding: 1.5%; margin-top: 2%;">
+                    <strong>マネージャーに求めること：</strong>チームメンバーのマネジメント（勤怠・目標）、同業他社の情報収集、JAPANKURUをどうすべきか。という各国へのブランドマネージャー的視点
+                </div>
+            </div>
+            <span class="page-num">16/19</span>
+        </div>
+
+        <!-- スライド17: 役割6 - マーケティング -->
+        <div class="slide role-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">セクション別の役割：マーケティング</h2>
+                <p class="slide-desc">企画と分析の専門機能</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-cols">
+                    <div class="large-box">
+                        <div class="large-box-header">マーケティング（企画）</div>
+                        <div class="large-box-content">
+                            <strong>役割</strong>
+                            <div class="col-item">営業の要望を汲み取った上で、マーケットにあった企画書作成</div>
+                            <div class="col-item">分析チームと連携し、KPIの策定・報告書の作成</div>
+                            <div class="col-item">メディア管理との連携で、効果的なメディア資料の作成</div>
+                            <div class="col-item">GLDならではの企画立案</div>
+                            <br>
+                            <strong>要望</strong>
+                            <div class="col-item">今あるマーケットに対し、企画立案を積極的に</div>
+                            <div class="col-item">VIPクライアントへのアイディア出し</div>
+                            <div class="col-item">ガッツリ反響がこれなら出る！の企画提案</div>
+                            <div class="col-item">反響が出た企画の横展開</div>
+                        </div>
+                    </div>
+                    <div class="large-box">
+                        <div class="large-box-header">マーケティング（分析）</div>
+                        <div class="large-box-content">
+                            <strong>役割</strong>
+                            <div class="col-item">効果を最大限出すための分析</div>
+                            <div class="col-item">KPIの設定及び施策後の分析</div>
+                            <div class="col-item">クライアントから再契約いただくための分析</div>
+                            <div class="col-item">GLD独自のIBプロモーション成功の指針策定</div>
+                            <div class="col-item">調査からみる危機管理（この成分NGになりました等）</div>
+                            <br>
+                            <strong>意識</strong>
+                            <div class="col-item">GLDの行動指針になるセクションであるという自覚</div>
+                            <br>
+                            <strong>要望</strong>
+                            <div class="col-item">定性データの背景にある意味を読み解く力</div>
+                            <div class="col-item">効果的なキーワードに合ったクライアントを営業に提案</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">17/19</span>
+        </div>
+
+        <!-- スライド18: 役割7 - 経理・広報 -->
+        <div class="slide role-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">セクション別の役割：経理・広報</h2>
+                <p class="slide-desc">バックオフィスと対外発信</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-cols">
+                    <div class="large-box">
+                        <div class="large-box-header">経理</div>
+                        <div class="large-box-content">
+                            <strong>役割</strong>
+                            <div class="col-item">正確な数字管理</div>
+                            <div class="col-item">正確に請求書を送り、入金させる</div>
+                            <div class="col-item">年間支出の計画（人件費・税金・グループ経費・備品）</div>
+                            <div class="col-item">経費の不備、不正チェック</div>
+                            <div class="col-item">借受金、カードの照らし合わせ</div>
+                            <div class="col-item">グループ経費項目のチェック、理解</div>
+                            <div class="col-item">助成金獲得</div>
+                            <div class="col-item">予算フローの透明性</div>
+                            <div class="col-item">ミスのない経理処理</div>
+                        </div>
+                    </div>
+                    <div class="large-box">
+                        <div class="large-box-header">広報</div>
+                        <div class="large-box-content">
+                            <strong>役割</strong>
+                            <div class="col-item">GLDの社外にPR（SEO、TV取り上げ）</div>
+                            <div class="col-item">問い合わせ案件の増加</div>
+                            <div class="col-item">採用活動</div>
+                            <div class="col-item">デザイン・表現のアップデートによる刷新感</div>
+                            <div class="col-item">誇張のない信頼性ある情報発信</div>
+                            <div class="col-item">定期的なニュース・お知らせの更新</div>
+                            <div class="col-item">社員紹介やカルチャーコンテンツの運用</div>
+                            <br>
+                            <strong>要望・課題</strong>
+                            <div class="col-item">業界内でのJAPANKURU、korekokoの認知度向上（グローバルデイリーとは別軸）</div>
+                            <div class="col-item">看板になる人材の不明確さ</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: #f8f8f8; padding: 1.5%; margin-top: 2%;">
+                    <strong>各セクションの協力：</strong>郵送の手配、法務局などの必要書類取得 ⇒各セクション協力し合い、アルバイトなどを活用する
+                </div>
+            </div>
+            <span class="page-num">18/19</span>
+        </div>
+
+        <!-- スライド19: 共通課題 -->
+        <div class="slide role-slide">
+            <div class="slide-header">
+                <h2 class="slide-title">セクション間の共通課題</h2>
+                <p class="slide-desc">複数部門から指摘された重要事項</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <div class="highlight-box-title">利益最大化に関する共通認識（営業・SPC・メディア管理の3部門から同じ指摘）</div>
+                    <div class="highlight-box-content">
+                        「利益を最大限するために、低NET高グロスでサービスを提供している。クライアントには高いクオリティのサービスを要求されるのが当たり前。ただ、媒体側にはその高いクオリティに合わせた料金を払ってないケースが多い。その分の責任は進行にある。ここは営業・SPC・メディア三者の努力が必要不可欠。その反面、値引きされた案件はクライアントの言いなりにならないように営業の方にも心かけてほしい。」
+                    </div>
+                </div>
+                
+                <div class="three-cols">
+                    <div class="col-box">
+                        <div class="col-header">属人化の問題</div>
+                        <div class="col-items">
+                            <div class="col-item">メディア管理：属人化の解消が課題</div>
+                            <div class="col-item">JAPANKURU：アンディーさんへの属人化</div>
+                            <div class="col-item">SPC：進行のやり方に個人差</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">マネージャー共通要望</div>
+                        <div class="col-items">
+                            <div class="col-item">チームメンバーのマネジメント（勤怠・目標）</div>
+                            <div class="col-item">効率的な仕組み作り、システム化</div>
+                            <div class="col-item">売上目標の達成責任</div>
+                        </div>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-header">セクション間連携</div>
+                        <div class="col-items">
+                            <div class="col-item">双方向のフィードバック不足</div>
+                            <div class="col-item">Asanaだけでなく直接対話の必要性</div>
+                            <div class="col-item">情報共有のアップデート不足</div>
+                            <div class="col-item">メンバーのスキル統一が必要</div>
+                            <div class="col-item">役割分担の明確化</div>
+                            <div class="col-item">タスクの可視化</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num">19/19</span>
+        </div>
+    </div>
+</body>
+</html>
