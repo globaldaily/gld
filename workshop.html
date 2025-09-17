@@ -2,8 +2,10 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>グローバル・デイリー 2025年秋期社員研修</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>グローバル・デイリー 2025年秋期社員研修 - Revised</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
         
@@ -19,6 +21,9 @@
             line-height: 1.4;
             color: #1d1d1f;
             font-weight: 400;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
         }
         
         .page {
@@ -40,6 +45,7 @@
             background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
             color: white;
             padding: 20px;
+            padding-bottom: 50px;
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
@@ -119,6 +125,42 @@
         .detail-value {
             font-size: 13px;
             font-weight: 500;
+        }
+        
+        /* Instructor Info - Better positioned */
+        .instructor-info {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .instructor-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 1);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .instructor-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFFFFF;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .divider-dot {
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
         }
         
         .content {
@@ -413,6 +455,51 @@
             padding: 0 8px;
         }
         
+        .free-members-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 8px 0;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .free-members-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 3px;
+        }
+        
+        .free-members-subtitle {
+            font-size: 10px;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+        
+        .free-members-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #007AFF;
+        }
+        
+        .free-member {
+            padding: 4px 12px;
+            background: white;
+            border-radius: 15px;
+            border: 1px solid #007AFF;
+        }
+        
+        .free-member-separator {
+            color: #adb5bd;
+            font-weight: 300;
+        }
+        
         .rooms-section {
             background: #f5f5f7;
             padding: 14px;
@@ -464,6 +551,243 @@
             color: #1d1d1f;
         }
         
+        .room.vip {
+            background: #f0f5ff;
+            border: 1px solid #007AFF;
+        }
+        
+        .room.vip .room-number {
+            color: #007AFF;
+            font-weight: 600;
+        }
+        
+        /* Mobile Responsive Design */
+        @media screen and (max-width: 768px) {
+            .page {
+                width: 100%;
+                height: auto;
+                margin: 0;
+                border-radius: 0;
+                page-break-after: auto;
+            }
+            
+            .header {
+                padding: 15px;
+                padding-bottom: 60px;
+            }
+            
+            .logo-container {
+                position: static;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            
+            .logo {
+                width: 80px;
+            }
+            
+            .title-section {
+                max-width: 100%;
+                padding: 0 10px;
+            }
+            
+            .main-title {
+                font-size: 18px;
+                margin-bottom: 8px;
+            }
+            
+            .subtitle {
+                font-size: 12px;
+            }
+            
+            .event-details {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                max-width: 100%;
+            }
+            
+            .instructor-info {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-top: 15px;
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .purpose-section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+            }
+            
+            .purpose-description {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+            
+            .schedule-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .day-header {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+            
+            .schedule-table td {
+                padding: 6px 8px;
+                font-size: 10px;
+            }
+            
+            .time-col {
+                width: 70px;
+                font-size: 10px;
+            }
+            
+            /* Page 2 Mobile */
+            .teams-page {
+                padding: 20px 15px;
+                height: auto;
+            }
+            
+            .teams-title {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+            
+            .team-sections {
+                gap: 10px;
+            }
+            
+            .team-section-header {
+                font-size: 12px;
+                padding: 10px 12px 2px 12px;
+            }
+            
+            .team-section-subtitle {
+                font-size: 10px;
+                padding: 0 12px 10px 12px;
+            }
+            
+            .team-content {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .team-group-title {
+                font-size: 11px;
+            }
+            
+            .team-members {
+                font-size: 9px;
+                line-height: 1.5;
+            }
+            
+            .free-members-section {
+                padding: 10px;
+                margin: 10px 0;
+            }
+            
+            .free-members-title {
+                font-size: 12px;
+            }
+            
+            .free-members-subtitle {
+                font-size: 9px;
+            }
+            
+            .free-members-list {
+                font-size: 11px;
+                flex-wrap: wrap;
+            }
+            
+            .free-member {
+                padding: 3px 10px;
+                margin: 2px;
+            }
+            
+            .rooms-section {
+                padding: 12px;
+            }
+            
+            .rooms-title {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .hotel-layout {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5px;
+                max-width: 100%;
+            }
+            
+            .room {
+                min-height: 40px;
+                padding: 6px;
+            }
+            
+            .room-number {
+                font-size: 9px;
+            }
+            
+            .room-guests {
+                font-size: 8px;
+            }
+            
+            .footer {
+                padding: 10px;
+            }
+            
+            .footer-text {
+                font-size: 10px;
+            }
+        }
+        
+        /* Small Mobile Optimization */
+        @media screen and (max-width: 480px) {
+            .main-title {
+                font-size: 16px;
+            }
+            
+            .subtitle {
+                font-size: 11px;
+            }
+            
+            .purpose-description {
+                font-size: 12px;
+            }
+            
+            .schedule-table td {
+                padding: 5px 6px;
+                font-size: 9px;
+            }
+            
+            .time-col {
+                width: 60px;
+                font-size: 9px;
+            }
+            
+            .team-section-header {
+                font-size: 11px;
+            }
+            
+            .hotel-layout {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 4px;
+            }
+        }
+        
         @media print {
             body { 
                 background: white;
@@ -489,6 +813,13 @@
     <!-- Page 1: Schedules -->
     <div class="page">
         <div class="header">
+            <div class="instructor-info">
+                <span class="instructor-label">講師</span>
+                <span class="instructor-name">石原先生</span>
+                <div class="divider-dot"></div>
+                <span class="instructor-label">DACグループ顧問</span>
+            </div>
+            
             <div class="logo-container">
                 <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/07/GLD_type02_white_1178_785-2-1.png" alt="Global Daily Logo" class="logo">
                 
@@ -509,7 +840,7 @@
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">参加者</div>
-                        <div class="detail-value">全社員 26名</div>
+                        <div class="detail-value">全社員 26名+1名（🇬🇧）</div>
                     </div>
                 </div>
             </div>
@@ -556,7 +887,7 @@
                             </tr>
                             <tr>
                                 <td class="time-col">10:00～11:00</td>
-                                <td class="content-col">セクション毎に役割を明文化</td>
+                                <td class="content-col">セクション毎に役割を明確化</td>
                             </tr>
                             <tr>
                                 <td class="time-col">11:00～12:00</td>
@@ -679,7 +1010,7 @@
                         </div>
                         <div class="team-group">
                             <div class="team-group-title">交通機関</div>
-                            <div class="team-members">田邊、菅野、笹本、大久保、ソフィア、白、ウイルケン、大河原、小池、アンディ、チェ</div>
+                            <div class="team-members">田邊、菅野、笹本、大久保、ソフィア、白、ウイルケン、大河原、小池、アンディ、チェ、藤田</div>
                         </div>
                     </div>
                 </div>
@@ -694,7 +1025,7 @@
                         </div>
                         <div class="team-group">
                             <div class="team-group-title">代理店</div>
-                            <div class="team-members">菅野、笹本、田中、大久保、ソフィア、高、ナオミ、ジュリ、小池、大坂、田村</div>
+                            <div class="team-members">菅野、笹本、田中、大久保、ソフィア、高、ナオミ、ジュリ、小池、大坂、田村、藤田</div>
                         </div>
                     </div>
                 </div>
@@ -709,9 +1040,21 @@
                         </div>
                         <div class="team-group">
                             <div class="team-group-title">複合商業施設</div>
-                            <div class="team-members">菅野、笹本、田中、大久保、ソフィア、白、ウイルケン、大河原、小池、アンディ、田村</div>
+                            <div class="team-members">菅野、笹本、田中、大久保、ソフィア、白、ウイルケン、大河原、小池、アンディ、田村、藤田</div>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <div class="free-members-section">
+                <div class="free-members-title">フリー参加メンバー</div>
+                <div class="free-members-subtitle">全ての業界討議に参加</div>
+                <div class="free-members-list">
+                    <span class="free-member">荒井</span>
+                    <span class="free-member-separator">・</span>
+                    <span class="free-member">ジョン</span>
+                    <span class="free-member-separator">・</span>
+                    <span class="free-member">ピーポ</span>
                 </div>
             </div>
             
@@ -720,6 +1063,10 @@
             <div class="rooms-section">
                 <h2 class="rooms-title">部屋割</h2>
                 <div class="hotel-layout">
+                    <div class="room vip">
+                        <div class="room-number">講師</div>
+                        <div class="room-guests">石原先生</div>
+                    </div>
                     <div class="room">
                         <div class="room-number">1</div>
                         <div class="room-guests">荒井</div>
