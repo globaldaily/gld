@@ -5,153 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>グローバルデイリー 広報部採用計画</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-            background: #000;
-            overflow: hidden;
-            color: #fff;
+            box-sizing: border-box;
         }
 
-        .slide-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
         }
 
         .slide {
             width: 100vw;
             height: 100vh;
-            padding: 80px;
-            box-sizing: border-box;
+            padding: 60px 80px;
             display: none;
+            flex-direction: column;
             position: relative;
-            overflow: hidden;
         }
 
         .slide.active {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            animation: fadeIn 0.8s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: rgba(255,255,255,0.3);
+            font-size: 16px;
         }
 
         h1 {
-            font-size: 72px;
+            font-size: 56px;
             font-weight: 700;
-            margin-bottom: 48px;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
+            margin-bottom: 40px;
         }
 
         h2 {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 600;
-            margin: 40px 0;
-            letter-spacing: -0.01em;
-            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
         }
 
         h3 {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 500;
-            margin: 32px 0;
-            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
         }
 
         p {
-            font-size: 32px;
-            line-height: 1.5;
-            color: rgba(255,255,255,0.85);
-            margin: 24px 0;
-        }
-
-        .big-question {
-            font-size: 88px;
-            font-weight: 700;
-            text-align: center;
-            margin: 60px 0;
-            background: linear-gradient(90deg, #fff, #aaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .impact-list {
-            font-size: 36px;
-            line-height: 1.8;
-            margin: 40px 0;
-        }
-
-        .impact-list li {
-            margin: 20px 0;
-            opacity: 0;
-            animation: slideInLeft 0.5s ease-out forwards;
-        }
-
-        .impact-list li:nth-child(1) { animation-delay: 0.2s; }
-        .impact-list li:nth-child(2) { animation-delay: 0.4s; }
-        .impact-list li:nth-child(3) { animation-delay: 0.6s; }
-        .impact-list li:nth-child(4) { animation-delay: 0.8s; }
-        .impact-list li:nth-child(5) { animation-delay: 1.0s; }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            font-size: 24px;
+            line-height: 1.6;
         }
 
         .highlight {
             background: #fff;
             color: #000;
-            padding: 8px 24px;
-            border-radius: 8px;
-            font-weight: 700;
-            display: inline-block;
-            margin: 8px 0;
+            padding: 4px 16px;
+            border-radius: 4px;
+            font-weight: 600;
         }
 
         .dim {
             color: rgba(255,255,255,0.5);
         }
 
-        .bright {
-            color: #fff;
-            font-weight: 700;
-        }
-
         .navigation {
             position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: flex;
-            gap: 16px;
+            bottom: 30px;
+            right: 30px;
             z-index: 1000;
+            display: flex;
+            gap: 10px;
         }
 
         button {
             background: rgba(255,255,255,0.1);
             color: white;
             border: 1px solid rgba(255,255,255,0.2);
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-size: 18px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
 
@@ -164,338 +103,303 @@
             cursor: not-allowed;
         }
 
-        .slide-number {
-            position: absolute;
-            top: 40px;
-            right: 40px;
-            color: rgba(255,255,255,0.4);
-            font-size: 20px;
-        }
-
-        .vision-statement {
-            font-size: 48px;
+        /* Slide specific layouts */
+        .title-slide {
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            margin: 60px 0;
-            font-weight: 300;
-            letter-spacing: 0.05em;
         }
 
-        .metric-grid {
+        .content-slide {
+            justify-content: flex-start;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            flex: 1;
+            align-content: center;
+        }
+
+        .grid-3col {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 48px;
-            margin: 60px 0;
+            gap: 40px;
+            flex: 1;
+            align-content: center;
         }
 
-        .metric-item {
+        .box {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .metric {
             text-align: center;
         }
 
         .metric-number {
-            font-size: 96px;
+            font-size: 64px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
         .metric-label {
-            font-size: 28px;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .role-flow {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 60px 0;
-        }
-
-        .role-box {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .role-title {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 24px;
-        }
-
-        .role-detail {
-            font-size: 24px;
-            color: rgba(255,255,255,0.7);
-            line-height: 1.6;
-        }
-
-        .arrow {
-            font-size: 48px;
-            color: rgba(255,255,255,0.3);
-        }
-
-        .split-view {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            margin: 60px 0;
-        }
-
-        .side-content h3 {
-            font-size: 42px;
-            margin-bottom: 32px;
-        }
-
-        .side-content ul {
-            font-size: 28px;
-            line-height: 1.8;
-            list-style: none;
-            padding: 0;
-        }
-
-        .side-content li {
-            margin: 16px 0;
-            padding-left: 32px;
-            position: relative;
-        }
-
-        .side-content li:before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: rgba(255,255,255,0.5);
-        }
-
-        .final-message {
-            text-align: center;
-            margin: 80px 0;
-        }
-
-        .final-message h1 {
-            font-size: 64px;
-            margin-bottom: 32px;
-        }
-
-        .final-message p {
-            font-size: 36px;
-            color: rgba(255,255,255,0.8);
-        }
-
-        .brand-showcase {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            margin: 60px 0;
-        }
-
-        .brand-item {
-            text-align: center;
-        }
-
-        .brand-name {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .brand-desc {
-            font-size: 24px;
+            font-size: 20px;
             color: rgba(255,255,255,0.6);
+        }
+
+        .logo-footer {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .logo-footer img {
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .logo-footer p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.4);
         }
     </style>
 </head>
 <body>
-    <!-- Slide 1: 挑発的な問い -->
-    <div class="slide active">
-        <div class="slide-number">1 / 7</div>
-        <div class="big-question">
-            もし、グローバルデイリーに<br>
-            広報部門が存在しなかったら？
-        </div>
-        <div style="position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); text-align: center;">
-            <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/logo.png" alt="Global Daily" style="height: 80px; margin-bottom: 24px; filter: invert(1);">
-            <div style="font-size: 24px; color: rgba(255,255,255,0.7);">
-                広報部　ジュリ金<br>
-                2025年9月
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 2: ネガティブシナリオ -->
-    <div class="slide">
-        <div class="slide-number">2 / 7</div>
-        <h1>広報不在＝会社ではなく「人」の集合体</h1>
-        <ul class="impact-list">
-            <li>🎭 統一されたブランドイメージの欠如</li>
-            <li>👤 「〇〇さんの会社」という属人的な認識</li>
-            <li>🎲 営業個人の力量に依存する不安定な成果</li>
-            <li>📢 バラバラなメッセージで市場が混乱</li>
-            <li>🏢 組織としての信頼感が構築できない</li>
-        </ul>
-        <p style="text-align: center; margin-top: 60px; font-size: 36px;">
-            <span class="dim">プロフェッショナルな</span><span class="highlight">組織</span><span class="dim">ではなく</span><br>
-            <span class="dim">ただの</span><span class="highlight">個人商店の集まり</span><span class="dim">に見える</span>
-        </p>
-    </div>
-
-    <!-- Slide 3: 外注の問題 -->
-    <div class="slide">
-        <div class="slide-number">3 / 7</div>
-        <h1>全てを外注に任せたら起きること</h1>
-        <ul class="impact-list">
-            <li>💸 月150〜200万円の外注費、でも問い合わせゼロ</li>
-            <li>🤖 テンプレート的な発信で差別化できない</li>
-            <li>⏱️ スピード感の欠如、機会損失の連続</li>
-            <li>📊 データは外注先のもの、社内に蓄積なし</li>
-            <li>🎯 当事者意識なき運用で成果が出ない</li>
-        </ul>
-        <p style="text-align: center; margin-top: 60px;">
-            <span class="dim">外注は</span><span class="highlight">コスト</span><br>
-            <span class="dim">内製は</span><span class="highlight">資産</span>
-        </p>
-    </div>
-
-    <!-- Slide 4: なぜ広報が必要か -->
-    <div class="slide">
-        <div class="slide-number">4 / 7</div>
-        <h1>広報部門の本質的ミッション</h1>
-        
-        <div class="vision-statement">
-            営業が初回訪問する前に<br>
-            <span class="highlight">「あの会社ですね」</span><br>
-            と言われる状態を創る
-        </div>
-
-        <div class="brand-showcase">
-            <div class="brand-item">
-                <div class="brand-name">JAPANKURU</div>
-                <div class="brand-desc">訪日メディア</div>
-            </div>
-            <div class="brand-item">
-                <div class="brand-name">korekoko</div>
-                <div class="brand-desc">インバウンド専門</div>
-            </div>
-            <div class="brand-item">
-                <div class="brand-name">Global Daily</div>
-                <div class="brand-desc">統合ブランド</div>
-            </div>
-        </div>
-
-        <p style="text-align: center; font-size: 36px; margin-top: 60px;">
-            3つのブランドを武器に<br>
-            <span class="bright">市場の認知を独占する</span>
-        </p>
-    </div>
-
-    <!-- Slide 5: 広報のビジョンと戦略 -->
-    <div class="slide">
-        <div class="slide-number">5 / 7</div>
-        <h1>広報が創る未来</h1>
-        
-        <div class="split-view">
-            <div class="side-content">
-                <h3>定量目標</h3>
-                <ul>
-                    <li>月5件~10件の有効問い合わせ</li>
-                    <li>四半期20件のメディア露出</li>
-                    <li>営業成約率30%向上</li>
-                    <li>ウェブトラフィック3倍</li>
-                </ul>
-            </div>
-            <div class="side-content">
-                <h3>定性目標</h3>
-                <ul>
-                    <li>業界で最初に名前が挙がる会社</li>
-                    <li>セミナー講師として招待される</li>
-                    <li>採用応募が自然に集まる</li>
-                    <li>パートナーから提携依頼が来る</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="vision-statement" style="font-size: 42px;">
-            広報は<span class="highlight">コスト</span>ではない<br>
-            未来への<span class="highlight">投資</span>である
-        </div>
-    </div>
-
-    <!-- Slide 6: 組織体制と実行計画 -->
-    <div class="slide">
-        <div class="slide-number">6 / 7</div>
-        <h1>最強の広報チームを創る</h1>
-        
-        <div class="role-flow">
-            <div class="role-box">
-                <div class="role-title">広報責任者</div>
-                <div class="role-detail">
-                    戦略50%<br>
-                    パートナーシップ<br>
-                    メディア関係構築
+    <!-- Slide 1: New Opening Impact Slide -->
+    <div class="slide active title-slide">
+        <div class="slide-number">1 / 8</div>
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
+            <h1 style="font-size: 72px; margin-bottom: 60px; line-height: 1.2;">
+                私たちの強みを<br>
+                <span style="color: #FFD700;">誰も説明できない</span>
+            </h1>
+            
+            <div style="display: flex; gap: 80px; margin-bottom: 60px;">
+                <div>
+                    <p style="font-size: 48px; font-weight: 700; margin-bottom: 20px;">JapanKuru</p>
+                    <p style="font-size: 24px; color: rgba(255,255,255,0.5);">何をするメディア？</p>
+                </div>
+                <div>
+                    <p style="font-size: 48px; font-weight: 700; margin-bottom: 20px;">korekoko</p>
+                    <p style="font-size: 24px; color: rgba(255,255,255,0.5);">誰のためのプラットフォーム？</p>
                 </div>
             </div>
-            <div class="arrow">→</div>
-            <div class="role-box">
-                <div class="role-title">広報スタッフ</div>
-                <div class="role-detail">
-                    実務80%<br>
-                    デジタルマーケティング<br>
-                    コンテンツ制作
-                </div>
+            
+            <p style="font-size: 32px; color: rgba(255,255,255,0.8); line-height: 1.5;">
+                ブランディング不在<br>
+                ポジショニング不明確<br>
+                <span style="background: #FFD700; color: #000; padding: 4px 16px; font-weight: 600;">言語化されていない価値</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Title -->
+    <div class="slide title-slide">
+        <div class="slide-number">2 / 8</div>
+        <h1 style="font-size: 80px; margin-bottom: 30px;">広報部採用計画</h1>
+        <p style="font-size: 32px; color: rgba(255,255,255,0.8);">2026年 売上15億円達成への戦略</p>
+        <div class="logo-footer">
+            <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/07/GLD_type02_white_1178_785-2-1.png" alt="Global Daily">
+            <p>広報部 ジュリ金 / korekoko</p>
+        </div>
+    </div>
+
+    <!-- Slide 3: Problem -->
+    <div class="slide content-slide">
+        <div class="slide-number">3 / 8</div>
+        <h1>広報がない会社の現実</h1>
+        <div class="grid-2col">
+            <div class="box">
+                <h3>営業の現場</h3>
+                <p>「グローバルデイリー？」<br>
+                「聞いたことないですね」<br>
+                「何をしている会社？」<br>
+                <span class="dim">→ 毎回ゼロから説明</span></p>
             </div>
-            <div class="arrow">→</div>
-            <div class="role-box">
-                <div class="role-title">制作プロフェッショナル</div>
-                <div class="role-detail">
-                    部門横断<br>
-                    成功事例発掘<br>
-                    ナレッジ共有
+            <div class="box">
+                <h3>市場の認識</h3>
+                <p>統一感のないメッセージ<br>
+                個人に依存した営業<br>
+                組織としての信頼なし<br>
+                <span class="dim">→ ブランド価値ゼロ</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Outsourcing Issues -->
+    <div class="slide content-slide">
+        <div class="slide-number">4 / 8</div>
+        <h1>外注依存のリスク</h1>
+        <div class="grid-2col">
+            <div class="box">
+                <h3>コスト問題</h3>
+                <p>月額200万円の外注費<br>
+                効果測定不可能<br>
+                改善提案なし<br>
+                <span class="highlight">コストだけが蓄積</span></p>
+            </div>
+            <div class="box">
+                <h3>資産問題</h3>
+                <p>ノウハウが社内に残らない<br>
+                データは外注先が保有<br>
+                スピード感の欠如<br>
+                <span class="highlight">資産がゼロ</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Mission -->
+    <div class="slide content-slide">
+        <div class="slide-number">5 / 8</div>
+        <h1>広報部門のミッション</h1>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+            <h2 style="text-align: center; margin-bottom: 60px;">
+                営業が訪問する前に<br>
+                <span class="highlight">「あの会社ですね」</span>と言われる状態を創る
+            </h2>
+            <div class="grid-3col">
+                <div class="box" style="text-align: center;">
+                    <h3>JapanKuru</h3>
+                    <p class="dim">訪日メディア</p>
+                </div>
+                <div class="box" style="text-align: center;">
+                    <h3>corecolor</h3>
+                    <p class="dim">インバウンド専門</p>
+                </div>
+                <div class="box" style="text-align: center;">
+                    <h3>Global Daily</h3>
+                    <p class="dim">統合ブランド</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <h2 style="text-align: center; margin-top: 80px;">
-            3ヶ月で基盤構築<br>
-            6ヶ月で成果創出<br>
-            12ヶ月で<span class="highlight">業界トップ認知</span>
+    <!-- Slide 6: Strategic Initiatives -->
+    <div class="slide content-slide">
+        <div class="slide-number">6 / 8</div>
+        <h1 style="font-size: 48px; margin-bottom: 30px;">2026年 広報部の戦略的取り組み</h1>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 15px;">
+            <div class="box" style="padding: 15px;">
+                <h3 style="font-size: 24px; margin-bottom: 10px;"><span style="background: #FFD700; color: #000; padding: 2px 10px;">施策1</span> 年間セミナーカレンダーの戦略設計</h3>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                    <div style="background: rgba(255,215,0,0.1); padding: 8px; border-radius: 4px;">
+                        <p style="font-size: 14px; line-height: 1.3;"><strong>ソリューション別</strong><br>
+                        SNS広告/MEO<br>インフルエンサー</p>
+                    </div>
+                    <div style="background: rgba(255,215,0,0.1); padding: 8px; border-radius: 4px;">
+                        <p style="font-size: 14px; line-height: 1.3;"><strong>市場別</strong><br>
+                        中国/韓国<br>欧米/東南アジア</p>
+                    </div>
+                    <div style="background: rgba(255,215,0,0.1); padding: 8px; border-radius: 4px;">
+                        <p style="font-size: 14px; line-height: 1.3;"><strong>業種別</strong><br>
+                        宿泊/飲食<br>小売/観光</p>
+                    </div>
+                    <div style="background: rgba(255,215,0,0.1); padding: 8px; border-radius: 4px;">
+                        <p style="font-size: 14px; line-height: 1.3;"><strong>パートナー共同</strong><br>
+                        JNTO連携<br>決済会社コラボ</p>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 14px; margin-top: 8px; color: #FFD700;">月1回定期開催 → 年間12回で業界の定番化</p>
+            </div>
+            
+            <div class="box" style="padding: 15px;">
+                <h3 style="font-size: 24px; margin-bottom: 10px;"><span style="background: #FFD700; color: #000; padding: 2px 10px;">施策2</span> オウンドメディア主催イベント</h3>
+                <div style="display: flex; justify-content: space-around;">
+                    <div style="text-align: center;">
+                        <p style="font-size: 16px; line-height: 1.3;"><strong style="color: #FFD700;">JapanKuru</strong><br>
+                        <span style="font-size: 14px;">モニターツアー<br>体験型イベント</span></p>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="font-size: 16px; line-height: 1.3;"><strong style="color: #FFD700;">korekoko</strong><br>
+                        <span style="font-size: 14px;">在留外国人向け<br>（企画中）</span></p>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="font-size: 16px; line-height: 1.3;"><strong style="color: #FFD700;">Awards 2026</strong><br>
+                        <span style="font-size: 14px;">優秀事例表彰<br>年次イベント</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="box" style="padding: 15px;">
+                <h3 style="font-size: 24px; margin-bottom: 10px;"><span style="background: #FFD700; color: #000; padding: 2px 10px;">施策3</span> アワード戦略</h3>
+                <p style="font-size: 14px; line-height: 1.3;">国内外の観光・マーケティングアワードへ積極エントリー → 第三者評価でブランド力向上</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Hiring Requirements -->
+    <div class="slide content-slide">
+        <div class="slide-number">7 / 8</div>
+        <h1>求める人材</h1>
+        <div class="grid-3col" style="margin-top: 60px;">
+            <div class="box" style="border: 2px solid #FFD700;">
+                <h3 style="background: #FFD700; color: #000; margin: -30px -30px 20px -30px; padding: 15px; text-align: center;">必須条件</h3>
+                <p style="text-align: center; line-height: 2;">正社員採用<br>
+                日本人<br>
+                ビジネス日本語</p>
+            </div>
+            <div class="box" style="border: 2px solid #FFD700;">
+                <h3 style="background: #FFD700; color: #000; margin: -30px -30px 20px -30px; padding: 15px; text-align: center;">スキル</h3>
+                <p style="text-align: center; line-height: 2;">デジタルネイティブ<br>
+                SNS運用経験<br>
+                基礎的分析力</p>
+            </div>
+            <div class="box" style="border: 2px solid #FFD700;">
+                <h3 style="background: #FFD700; color: #000; margin: -30px -30px 20px -30px; padding: 15px; text-align: center;">人物像</h3>
+                <p style="text-align: center; line-height: 2;">好奇心旺盛<br>
+                チームプレイヤー<br>
+                成長意欲</p>
+            </div>
+        </div>
+        <h2 style="text-align: center; margin-top: 60px; font-size: 48px;">
+            経験より<span style="background: #FFD700; color: #000; padding: 4px 16px;">ポテンシャル</span>
         </h2>
     </div>
 
-    <!-- Slide 7: 最終メッセージ -->
-    <div class="slide">
-        <div class="slide-number">7 / 7</div>
-        <div class="final-message">
-            <h1>2026年 売上15億円達成への貢献</h1>
-            
-            <div class="metric-grid">
-                <div class="metric-item">
-                    <div class="metric-number">4.2億</div>
-                    <div class="metric-label">売上貢献</div>
+    <!-- Slide 7: ROI -->
+    <div class="slide content-slide">
+        <div class="slide-number">8 / 8</div>
+        <h1 style="font-size: 48px; margin-bottom: 25px;">投資効果（極めて保守的な試算）</h1>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-start;">
+            <div class="grid-3col" style="margin-bottom: 25px;">
+                <div class="metric">
+                    <div class="metric-number" style="font-size: 56px;">1.5億</div>
+                    <div class="metric-label" style="font-size: 18px;">売上貢献</div>
                 </div>
-                <div class="metric-item">
-                    <div class="metric-number">875%</div>
-                    <div class="metric-label">ROI</div>
+                <div class="metric">
+                    <div class="metric-number" style="font-size: 56px;">250%</div>
+                    <div class="metric-label" style="font-size: 18px;">ROI</div>
                 </div>
-                <div class="metric-item">
-                    <div class="metric-number">28%</div>
-                    <div class="metric-label">目標貢献率</div>
+                <div class="metric">
+                    <div class="metric-number" style="font-size: 56px;">10%</div>
+                    <div class="metric-label" style="font-size: 18px;">目標貢献率</div>
                 </div>
             </div>
-
-            <div style="background: rgba(255,255,255,0.1); padding: 40px; border-radius: 12px; margin: 60px auto; max-width: 1000px;">
-                <h3 style="font-size: 32px; margin-bottom: 24px;">4.2億円の内訳</h3>
-                <p style="font-size: 24px; text-align: left; line-height: 1.8;">
-                    • 直接売上 1.2億円（新規12件×1,000万円）<br>
-                    • 営業効率 2.0億円（成約率10%UP×既存営業）<br>
-                    • 顧客維持 1.0億円（離脱防止2社×5,000万円）
+            <div class="box" style="padding: 20px;">
+                <h3 style="text-align: center; font-size: 24px; margin-bottom: 15px;">算出根拠（全て実績ベース）</h3>
+                <p style="text-align: left; margin-top: 15px; font-size: 18px; line-height: 1.5;">
+                    <strong>直接売上 3,000万円</strong>：月0.5件×12ヶ月×500万円<br>
+                    <span class="dim" style="font-size: 14px;">（現状の月1-2件問合せから保守的に50%を成約と仮定）</span><br><br>
+                    <strong>営業効率 7,000万円</strong>：成約率5%向上×既存売上14億円<br>
+                    <span class="dim" style="font-size: 14px;">（42名の営業が各自年1件追加成約の半分）</span><br><br>
+                    <strong>顧客維持 3,000万円</strong>：離脱リスク1社×年間3,000万円<br>
+                    <span class="dim" style="font-size: 14px;">（年間離脱2-3社を1社削減）</span><br><br>
+                    <strong>メディア効果 2,000万円</strong>：認知向上による自然流入<br>
+                    <span class="dim" style="font-size: 14px;">（年4件×500万円の最低ライン）</span>
                 </p>
             </div>
-
-            <p style="font-size: 48px; margin-top: 60px;">
-                今、広報に投資するか<br>
-                永遠に<span class="dim">「知られざる会社」</span>でいるか
-            </p>
-            
-            <div style="margin-top: 60px;">
-                <span class="highlight" style="font-size: 36px; padding: 20px 40px;">
-                    選択は、今ここにある
-                </span>
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="font-size: 18px; color: rgba(255,255,255,0.6);">
+                    年間投資600万円（人件費400万円＋運営費200万円）<br>
+                    ＋ 持続可能な体制構築（属人化リスクゼロ）
+                </p>
             </div>
         </div>
     </div>
@@ -523,7 +427,6 @@
             showSlide(currentSlide + direction);
         }
 
-        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
                 changeSlide(1);
@@ -532,28 +435,7 @@
             }
         });
 
-        // Initialize
         showSlide(0);
-
-        // Auto-animate elements on slide change
-        const observer = new MutationObserver(() => {
-            const activeSlide = document.querySelector('.slide.active');
-            if (activeSlide) {
-                const animatedElements = activeSlide.querySelectorAll('.impact-list li');
-                animatedElements.forEach((el, index) => {
-                    el.style.animation = 'none';
-                    setTimeout(() => {
-                        el.style.animation = `slideInLeft 0.5s ease-out forwards`;
-                        el.style.animationDelay = `${index * 0.2}s`;
-                    }, 10);
-                });
-            }
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
     </script>
 </body>
 </html>
