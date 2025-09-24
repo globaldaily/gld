@@ -451,6 +451,27 @@ body {
     .presentation-timer { display: none !important; } 
 }
 
+/* ==== wide grid & media helpers (for meme slides etc.) ==== */
+.grid-wide {
+  max-width: 1800px;                     /* 1700 → 1800 */
+  grid-template-columns: 1.2fr 0.8fr;    /* 좌 텍스트 넓게, 우 이미지 크게 */
+  gap: 60px;                              /* 시각적 여유 */
+}
+
+.media-tall {
+  width: 100%;
+  height: 560px;                          /* 이미지를 확 키움 */
+  object-fit: contain;                    /* 왜곡 없이 */
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+
+/* 제목이 너무 위로 붙는 현상 완화: 해당 슬라이드에서만 쓸 여백 */
+.title-breathe h2 {
+  margin-bottom: 28px !important;         /* 기본보다 여유 */
+}
+
+
     </style>
 </head>
 <body>
@@ -1136,49 +1157,75 @@ body {
             </div>
         </div>
 
-        <div class="slide">
-            <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-            <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-            <h2>見逃せない！韓国MZ世代の最新ミーム</h2>
-            <div class="grid-2">
-                <div class="card">
-                    <h4>昔 ○○がいたスン(옛날에 OO가 잇엇은)</h4>
-                    <p style="font-size: 28px; margin-bottom: 20px;">Z世代の間で、文章の語尾に「（いたスン）～슨/SUN」をつける言い回しが流行中。</p>
-                    <div style="margin-top: 20px;">
-                        <p><strong>利用方法：</strong></p>
-                        <p>✔ 「昔 ○○がいたスン（옛날에 ○○가 잇엇은）」と置き換えてブランドコピーにも応用可能</p>
-                    </div>
-                    <div style="margin-top: 20px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
-                        <p><strong>現地応用事例：</strong> カカオフレンズ×マクドナルド「さつまいもモッツアレラバーガー」キャンペーンで「昔、農夫がいて さつまいもをいっぱい食べたスン」と使用</p>
-                    </div>
-                </div>
-                <div class="card" style="display: flex; align-items: center; justify-content: center;">
-                    <img src="https://pbs.twimg.com/media/GJzLKc-bgAA9Ojp.jpg" alt="昔がいたスン meme" style="width: 100%; max-height: 400px; object-fit: contain; border-radius: 15px;">
-                </div>
-            </div>
-        </div>
+        <!-- ============================== 31p ============================== -->
+<div class="slide title-breathe">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
 
-        <div class="slide">
-            <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-            <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-            <h2>見逃せない！韓国MZ世代の最新ミーム</h2>
-            <div class="grid-2">
-                <div class="card">
-                    <h4>ママが知らないだけで最近の子はこう着るよ(엄마가 모르셔서 그렇지 요즘은 다들 이렇게 입어요)</h4>
-                    <p style="font-size: 28px; margin-bottom: 20px;">強烈なカラーのフーディー＆金チェーン姿で「お母さんは知らないけど、今はみんなこう着てるよ」と主張する古典的なネタ画像がZ世代の間で再流行。</p>
-                    <div style="margin-top: 20px;">
-                        <p><strong>利用方法：</strong></p>
-                        <p>✔ ファッション以外にも「ママが知らないだけで最近は皆 ○○」と趣味・食べ物・場所紹介に応用</p>
-                    </div>
-                    <div style="margin-top: 20px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
-                        <p><strong>現地応用事例：</strong> 「ママが知らないけど、最近は皆IDIYAのスイカジュースを飲むよ」</p>
-                    </div>
-                </div>
-                <div class="card" style="display: flex; align-items: center; justify-content: center;">
-                    <img src="https://i.hd-r.cn/883275e1283642f8686f885d88254923.png" alt="ママが知らない meme" style="width: 100%; max-height: 400px; object-fit: contain; border-radius: 15px;">
-                </div>
-            </div>
-        </div>
+  <h2>見逃せない！韓国MZ世代の最新ミーム</h2>
+
+  <div class="grid-2 grid-wide">
+    <div class="card">
+      <h4>昔 ○○がいたスン(옛날에 OO가 잇엇은)</h4>
+      <p style="font-size: 28px; margin-bottom: 20px;">
+        Z世代の間で、文章の語尾に「（いたスン）～슨/SUN」をつける言い回しが流行中。
+      </p>
+
+      <div style="margin-top: 20px;">
+        <p><strong>利用方法：</strong></p>
+        <p>✔ 「昔 ○○がいたスン（옛날에 ○○가 잇엇은）」と置き換えてブランドコピーにも応用可能</p>
+      </div>
+
+      <div style="margin-top: 20px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+        <p><strong>現地応用事例：</strong> カカオフレンズ×マクドナルド「さつまいもモッツアレラバーガー」キャンペーンで「昔、農夫がいて さつまいもをいっぱい食べたスン」と使用</p>
+      </div>
+    </div>
+
+    <div class="card" style="display: flex; align-items: center; justify-content: center;">
+      <img class="media-tall"
+           src="https://pbs.twimg.com/media/GJzLKc-bgAA9Ojp.jpg"
+           alt="昔がいたスン meme">
+    </div>
+  </div>
+</div>
+
+<!-- ============================== 32p ============================== -->
+<div class="slide title-breathe">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
+
+  <h2>見逃せない！韓国MZ世代の最新ミーム</h2>
+
+  <div class="grid-2 grid-wide" style="align-items: center; gap: 60px;">
+    <div class="card">
+      <h4>ママが知らないだけで最近の子はこう着るよ(엄마가 모르셔서 그렇지 요즘은 다들 이렇게 입어요)</h4>
+      <p style="font-size: 28px; margin-bottom: 20px;">
+        強烈なカラーのフーディー＆金チェーン姿で「お母さんは知らないけど、今はみんなこう着てるよ」と主張する古典的なネタ画像がZ世代の間で再流行。
+      </p>
+
+      <div style="margin-top: 20px;">
+        <p><strong>利用方法：</strong></p>
+        <p>✔ ファッション以外にも「ママが知らないだけで最近は皆 ○○」と趣味・食べ物・場所紹介に応用</p>
+      </div>
+
+      <div style="margin-top: 20px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+        <p><strong>現地応用事例：</strong> 「ママが知らないけど、最近は皆IDIYAのスイカジュースを飲むよ」</p>
+      </div>
+    </div>
+
+    <div class="card" style="display: flex; align-items: center; justify-content: center;">
+      <img class="media-tall"
+           src="https://i.hd-r.cn/883275e1283642f8686f885d88254923.png"
+           alt="ママが知らない meme">
+    </div>
+  </div>
+</div>
 
         <div class="slide">
             <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
@@ -1233,7 +1280,23 @@ body {
             <div class="source-note">*出典: 韓国政府公式祝日発表 (2025-2026)</div>
         </div>
             
-            
+        <!-- ▼ NEW: Session 2-2 Title Only (insert between Session 2 bridge and Session 2-2 overview) ▼ -->
+<div class="slide bridge-slide" data-section="session2-2-title">
+  <!-- flags/logo는 헤더로 자동 이동 -->
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+
+  <h2>Session 2-2</h2>
+  <h1>業種別アプローチ戦略</h1>
+</div>
+
+   
+        
+
+
             <div class="slide">
                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
                 <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo" style="height:100px;">
@@ -1250,157 +1313,199 @@ body {
                     <h4 style="text-align:center;">韓国MZ世代 核心キーワード: <span style="color:#a29bfe;">🎯 個性表現欲求 / 健康的楽しみ / 一人中心ライフ</span></h4>
                 </div>
             </div>
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>観光・宿泊業戦略 (1/3)</h2>
-                <div class="grid-2">
-                    <div class="card">
-                        <h4>キャラクターマッチング</h4>
-                        <p>✅ 旅行先・旅行環境：小都市観光・街歩きマップ、地域交流ガイド</p>
-                        <p>✅ アクティビティの細分化：インフラツーリズム、ユニーク体験、学術紀行など</p>
-                        <p>✅ 趣味趣向・コミュニティ交流</p>
-                        <div class="url-placeholder">参考：tripsoda.com/community/country/12</div>
-                    </div>
-                    <div class="card">
-                        <h4>ラントリップ対応</h4>
-                        <p>✅ ローカル大会＋観光</p>
-                        <p>✅ ランステ情報の多言語化</p>
-                        <p>✅ 宿泊先のランニングスポット開発</p>
-                        <div class="url-placeholder">참고：naeiltour.co.kr/sub/view.asp?good_cd=2JLJ22<br>runnet.jp/runtes/kokyo/index.html</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>観光・宿泊業 실제 사례</h2>
-                <div class="grid-2">
-                    <img src="https://www.jalan.net/news/img/2023/03/20230329_localtrip_01.jpg" alt="지역 관광 체험" class="trend-image">
-                    <img src="https://runnet.jp/runtes/kokyo/img/kokyo_main.jpg" alt="도쿄 황궁 런닝 코스" class="trend-image">
-                </div>
-            </div>
+            <!-- 観光・宿泊業（1/3）キャラクターマッチング -->
+<div class="slide">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+  <div class="trend-slide-layout">
+    <div class="trend-content">
+      <h3><span style="font-size:40px;opacity:.8;color:#fff;">TOURISM / HOTEL</span><br>観光・宿泊業（1/3）キャラクターマッチング</h3>
+      <h4>「推し活×街歩き」導線</h4>
+      <ul>
+        <li><strong>小都市観光・街歩きマップ</strong>：撮影スポット／巡礼ルート</li>
+        <li><strong>地域交流ガイド</strong>：体験予約QR・SNSハッシュタグ同梱</li>
+        <li><strong>ユニーク体験</strong>：インフラツーリズム／学術紀行</li>
+      </ul>
+    </div>
+    <img class="trend-image" src="https://mamamoana.jp/wp-content/uploads/2022/05/idetomato_02.jpg" alt="街歩きと体験導線の例">
+  </div>
+</div>
 
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>観光・宿泊業戦略 (2/3)</h2>
-                <h3>ウェルビーイング体験</h3>
-                <div class="card">
-                    <p>✅ リアル抹茶体験（農園ツアー、茶道など）</p>
-                    <p>✅ トマト狩り、品種食べ比べ、農家交流</p>
-                    <p>✅ 朝摘み・地産地消の朝食メニュー提供</p>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>観光・宿泊業戦略 (3/3)</h2>
-                <h3>一人客対応強化</h3>
-                <div class="card">
-                    <p>✅ ソロトラベラー向けアクティビティ（ソロキャンプ、レンタルバイクなど）</p>
-                    <p>✅ ホテルのシングルユース専用サービス拡充（ルームサイズなど）</p>
-                    <p>✅ 「お一人様」サービス（特化メニュー、撮影可能席など）</p>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>小売・流通業戦略 (1/3)</h2>
-                <h3>トレンド商品展開</h3>
-                <div class="card">
-                    <p>✅ 古着・ヴィンテージセレクトショップ</p>
-                    <p>✅ 草間彌生、村上隆など「グローバルなJ-POPカルチャー」との接点強化</p>
-                    <p>✅ サブカルチャー（マイクロトレンド）とメガトレンドを意識</p>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>小売・流通業 실제 사례</h2>
-                <div class="grid-2">
-                    <img src="https://www.jalan.net/news/img/2023/08/20230815_vintage_shop_01.jpg" alt="빈티지 셀렉트샵" class="trend-image">
-                    <img src="https://www.jalan.net/news/img/2023/09/20230920_deco_stickers_01.jpg" alt="데코 아이템 코너" class="trend-image">
-                </div>
-            </div>
+<!-- 観光・宿泊業（2/3）ラントリップ対応 -->
+<div class="slide">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+  <div class="trend-slide-layout">
+    <div class="trend-content">
+      <h3><span style="font-size:40px;opacity:.8;color:#fff;">TOURISM / HOTEL</span><br>観光・宿泊業（2/3）ラントリップ</h3>
+      <h4>コース設計と受け皿</h4>
+      <ul>
+        <li>皇居／隅田川・鴨川・哲学の道など<strong>定番コース</strong>を多言語化</li>
+        <li><strong>荷物預かり・シャワー</strong>・ランステ案内／レンタル</li>
+        <li>ラン×観光×<strong>ESG（プロギング）</strong>連携</li>
+      </ul>
+    </div>
+    <img class="trend-image" src="https://static.moshicom.com/www/2025/08/org_757638d24371054ac3b8948541448aabd7865616.jpg" alt="日本のランニングイベント">
+  </div>
+</div>
 
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>小売・流通業戦略 (2/3)</h2>
-                <h3>デコ文化の取込み</h3>
-                <div class="card">
-                    <p>✅ 伝統文様モチーフのアイテム展開</p>
-                    <p>✅ 100均、小物雑貨店、文具店などの「デコアイテム」コーナー開設・情報拡散</p>
-                    <p>✅ ホームセンターのインバウンドPR強化</p>
-                    <div class="url-placeholder">参考：naisouzairyou-annai.jp/pattern/tradition/index.html</div>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>小売・流通業戦略 (3/3)</h2>
-                <h3>超個人化向けサービス</h3>
-                <div class="card">
-                    <p>✅ AIレコメンデーション強化</p>
-                    <p>✅ 刻印サービスの多言語化</p>
-                    <p>✅ きめ細かなフィッティングサービス（靴、眼鏡など）</p>
-                    <div class="url-placeholder">参考：brain.jins.com<br>company.newbalance.jp/store/shop-service/fitting<br>minit.co.jp/service/shoe_repair/fitting</div>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>F&B業界戦略 (1/3)</h2>
-                <h3>ウェルビーイングメニュー</h3>
-                <div class="card">
-                    <p>✅ シュガーレス・血糖値ケアメニュー</p>
-                    <p>✅ 野菜メインの定番日本食メニュー（スープカレーなど）</p>
-                    <p>✅ 産地に特化した健康メニュー（宇治抹茶＆○○産ソイラテなど）</p>
-                </div>
-            </div>
+<!-- 観光・宿泊業（3/3）一人客対応 -->
+<div class="slide">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+  <div class="trend-slide-layout">
+    <div class="trend-content">
+      <h3><span style="font-size:40px;opacity:.8;color:#fff;">TOURISM / HOTEL</span><br>観光・宿泊業（3/3）ソロフレンドリー</h3>
+      <h4>プロダクト/サービス</h4>
+      <ul>
+        <li><strong>シングルユース</strong>向けアメニティ・レイトチェックイン</li>
+        <li><strong>ソロ向けアクティビティ</strong>（ソロキャンプ／レンタルバイク）</li>
+        <li>館内<strong>映え撮影スポット</strong>・セルフ撮影導線</li>
+      </ul>
+    </div>
+    <img class="trend-image" src="https://image.hanssem.com/hsimg/gds/550/991/991439_A1.jpg?v=20241018153929" alt="ソロ客に配慮した空間">
+  </div>
+</div>
 
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>F&B업계 실제 사례</h2>
-                <div class="grid-2">
-                    <img src="https://www.jalan.net/news/img/2023/11/20231115_healthy_japanese_food_01.jpg" alt="건강한 일본 요리" class="trend-image">
-                    <img src="https://www.jalan.net/news/img/2023/12/20231205_solo_dining_setup_01.jpg" alt="1인 다이닝 설정" class="trend-image">
-                </div>
-            </div> 
             
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>F&B業界戦略 (2/3)</h2>
-                <h3>一人ダイニング</h3>
-                <div class="card">
-                    <p>✅ 飲み比べ・食べ比べメニュー</p>
-                    <p>✅ オーバーヘッドラック（映えどり用）</p>
-                    <p>✅ 一人席・テーブルキオスクの多言語化</p>
-                    <div class="url-placeholder">参考：isuta.jp/621525</div>
-                </div>
-            </div>
+            <!-- 小売・流通業（1/3）トレンド商品展開 -->
+<div class="slide">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+  <div class="trend-slide-layout">
+    <div class="trend-content">
+      <h3><span style="font-size:40px;opacity:.8;color:#fff;">RETAIL</span><br>小売・流通業（1/3）トレンド商品展開</h3>
+      <h4>編集と見せ方</h4>
+      <ul>
+        <li><strong>ヴィンテージ/アーカイブ</strong>の常設棚</li>
+        <li>草間彌生・村上隆など<strong>J-POPカルチャー連動</strong></li>
+        <li><strong>メガトレンド×マイクロ</strong>（季節・SNS由来）の同時展開</li>
+      </ul>
+    </div>
+    <img class="trend-image" src="https://ztylez.com/wp-content/uploads/2022/11/4-3.jpg" alt="ヴィンテージセレクト">
+  </div>
+</div>
+
+<!-- 小売・流通業（2/3）デコ文化の取り込み -->
+<div class="slide">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+  <div class="trend-slide-layout">
+    <div class="trend-content">
+      <h3><span style="font-size:40px;opacity:.8;color:#fff;">RETAIL</span><br>小売・流通業（2/3）デコ文化の取り込み</h3>
+      <h4>売場作り</h4>
+      <ul>
+        <li><strong>デコ用小物/ステッカー</strong>の体験コーナー</li>
+        <li><strong>伝統文様</strong>モチーフのオリジナル小物</li>
+        <li><strong>その場デコ</strong>（即席サービス・UGC誘発）</li>
+      </ul>
+    </div>
+    <img class="trend-image" src="https://i.ytimg.com/vi/Xo4oOczpA24/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDG62s2nfxF5mIC4VqeaywrIzmCIQ" alt="デコアイテム売場">
+  </div>
+</div>
+
+<!-- 小売・流通業（3/3）超個人化サービス -->
+<div class="slide">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+  <div class="trend-slide-layout">
+    <div class="trend-content">
+      <h3><span style="font-size:40px;opacity:.8;color:#fff;">RETAIL</span><br>小売・流通業（3/3）超個人化サービス</h3>
+      <h4>UX/サービス</h4>
+      <ul>
+        <li><strong>AIレコメンド</strong>＋在庫連動（多言語）</li>
+        <li><strong>刻印/名入れ</strong>の多言語UI・即時受取</li>
+        <li><strong>精密フィッティング</strong>（靴/眼鏡）で体験価値</li>
+      </ul>
+    </div>
+    <img class="trend-image" src="https://chosun-chosun-prod.web.arc-cdn.net/resizer/v2/XM56AQCSKFD5PFU3XPTSFTIRVA.jpg?auth=78a49af8acc41f6335e557e9307411b3bbbf9612409065194aa5268810dca50f&width=1380&height=702&smart=true" alt="フィッティングの体験価値">
+  </div>
+</div>
+
             
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>F&B業界戦略 (3/3)</h2>
-                <h3>体験型F&B</h3>
-                <div class="card">
-                    <p>✅ レシピ付き弁当</p>
-                    <p>✅ ランナー向けリカバリーメニュー</p>
-                    <p>✅ コンビニアレンジメニュー</p>
-                    <div class="url-placeholder">参考：kinnikushokudo.jp<br>blog.naver.com/ryota0/223483452585<br>nikomist.tokyo/seven-eleven-recipe</div>
-                </div>
-            </div>
+          
+            
+            <!-- F&B（1/3）ウェルビーイングメニュー -->
+<div class="slide">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+  <div class="trend-slide-layout">
+    <div class="trend-content">
+      <h3><span style="font-size:40px;opacity:.8;color:#fff;">F&amp;B</span><br>F&amp;B業界（1/3）ウェルビーイング</h3>
+      <h4>商品方針</h4>
+      <ul>
+        <li><strong>シュガーレス／血糖ケア</strong>の定番化</li>
+        <li><strong>野菜中心×和</strong>（例：スープカレー）</li>
+        <li><strong>産地軸メニュー</strong>（宇治抹茶×ソイ 等）</li>
+      </ul>
+    </div>
+    <img class="trend-image" src="https://www.glico.com/assets/images/original/%E3%80%90%E7%AB%8B%E4%BD%93%E7%94%BB%E5%83%8F%E3%80%91%E3%83%A1%E3%83%B3%E3%82%BF%E3%83%AB%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B9%E3%83%81%E3%83%A7%E3%82%B3%E3%83%AC%E3%83%BC%E3%83%88%EF%BC%A7%EF%BC%A1%EF%BC%A2%EF%BC%A1%EF%BC%9C%E3%83%9F%E3%83%AB%E3%82%AF%EF%BC%9E%E3%82%B9%E3%82%BF%E3%83%B3%E3%83%89%E3%83%91%E3%82%A6%E3%83%81_20250410.jpg" alt="ウェルビーイング提案">
+  </div>
+</div>
+
+<!-- F&B（2/3）一人ダイニング -->
+<div class="slide">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+  <div class="trend-slide-layout">
+    <div class="trend-content">
+      <h3><span style="font-size:40px;opacity:.8;color:#fff;">F&amp;B</span><br>F&amp;B業界（2/3）一人ダイニング</h3>
+      <h4>座席/メニュー/撮影</h4>
+      <ul>
+        <li><strong>一人席</strong>・テーブルキオスクの多言語化</li>
+        <li><strong>飲み/食べ比べ</strong>の小容量セット</li>
+        <li><strong>オーバーヘッド撮影台</strong>でUGC促進</li>
+      </ul>
+    </div>
+    <img class="trend-image" src="https://www.lemon8-app.com/seo/image?item_id=7428505815168090629&index=0&sign=85935113e7174da33170c65fc9d6af6e" alt="一人でも楽しめる構成">
+  </div>
+</div>
+
+<!-- F&B（3/3）体験型F&B -->
+<div class="slide">
+  <div class="flags">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag">
+  </div>
+  <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/02/GLD_type02_white_1536_864.png" alt="Global Daily" class="logo" style="height:100px;">
+  <div class="trend-slide-layout">
+    <div class="trend-content">
+      <h3><span style="font-size:40px;opacity:.8;color:#fff;">F&amp;B</span><br>F&amp;B業界（3/3）体験型</h3>
+      <h4>商品/導線</h4>
+      <ul>
+        <li><strong>レシピ付き弁当</strong>・コンビニアレンジ</li>
+        <li><strong>ランナー向けリカバリー</strong>（タンパク質・電解質）</li>
+        <li><strong>店内ワークショップ</strong>（抹茶・だし・漬物）</li>
+      </ul>
+    </div>
+    <img class="trend-image" src="https://cdn.mkhealth.co.kr/news/photo/202508/74843_82747_1516.jpg" alt="体験型の場づくり">
+  </div>
+</div>
+
             
             <div class="slide">
                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
@@ -1429,15 +1534,6 @@ body {
                 </div>
             </div>
 
-            <div class="slide">
-                <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
-                <img src="https://via.placeholder.com/250x100/81ecec/1a1a2e?text=Global+Daily" alt="Global Daily" class="logo">
-                <h2>地方自治体 실제 사례</h2>
-                <div class="grid-2">
-                    <img src="https://www.jalan.net/news/img/2024/02/20240215_regional_tourism_01.jpg" alt="지역 관광 트렌드 융합" class="trend-image">
-                    <img src="https://www.jalan.net/news/img/2024/02/20240215_local_tea_experience_01.jpg" alt="지역 차 체험" class="trend-image">
-                </div>
-            </div>
             
             <div class="slide bridge-slide">
                 <div class="flags"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本" class="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="韓国" class="flag"></div>
