@@ -1630,9 +1630,9 @@ body {
                         <h5>成果指標</h5>
                         <p>体験プログラム参加率<br>SNS投稿量 / リピーター率</p>
                     </div>
-                </div>
+                </div><br><br>
                 <div class="insight-box">
-                    <p><span class="insight-label">最終メッセージ：</span>「個性的で健康的な私だけの日本旅行」で韓国MZ世代をターゲティング</p>
+                    <p><span class="insight-label">💡</span>「個性的で健康的な私だけの日本旅行」で韓国MZ世代をターゲティング</p>
                 </div>
             </div>
 
@@ -2069,15 +2069,18 @@ body {
                   // 아젠다 슬라이드는 breadcrumb 생성하지 않음
               } else if (i >= 1 && i <= 5) {
                   breadcrumbText = 'Opening';
-              } else if (i >= 6 && i <= 13) {
-                  breadcrumbText = `Session 1: 市場動向分析 > ${s.querySelector('h2')?.innerText.split('\n')[0] || 'データ分석'}`;
-              }
-            if (i >= 14 && i <= 34) {
-                 const trendTitle = s.querySelector('h3 > span + br')?.nextSibling?.textContent.trim() || s.querySelector('h2, h3')?.innerText.split('\n')[0];
-                 breadcrumbText = `Session 2: トレンド詳解 > ${trendTitle}`;
-            }
-            if (i >= 35 && i <= 45) breadcrumbText = `Session 2: 実務応用戦略 > ${s.querySelector('h2')?.innerText.split('\n')[0] || '業種別戦略'}`;
-            if (i >= 46 && i < totalSlides - 1) breadcrumbText = `Session 3: Q&A & Action Plan`;
+                } else if (i >= 6 && i <= 15) {
+    breadcrumbText = `Session 1: 市場動向分析 > ${s.querySelector('h2')?.innerText.split('\n')[0] || 'データ分析'}`;
+}
+if (i >= 16 && i <= 34) {
+     const trendTitle = s.querySelector('h3 > span + br')?.nextSibling?.textContent.trim() || s.querySelector('h2, h3')?.innerText.split('\n')[0];
+     breadcrumbText = `Session 2: トレンド詳解 > ${trendTitle}`;
+}
+if (i >= 35 && i <= 37) {
+    breadcrumbText = 'Session 2: 2026トレンド予測';
+}
+if (i >= 38 && i <= 49) breadcrumbText = `Session 2: 実務応用戦略 > 業種別戦略`;
+if (i >= 50 && i < totalSlides - 1) breadcrumbText = `Session 3: Q&A & Action Plan`;
             
             if (breadcrumbText) {
                 const breadcrumb = document.createElement('div');
