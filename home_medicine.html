@@ -1072,7 +1072,7 @@ font-size: 1.8rem;
         
               <!-- 1: Title -->
               <section class="slide hero" data-title="表紙" role="region">
-                <img src="https://www.japankuru.com/gld-kanri/data/uploads/2025/09/D05_2819-1-2048x1365.jpg" alt="Japan Night View" class="hero-bg">
+                <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070" alt="Japan Night View" class="hero-bg">
                 <div class="center">
                   <h2 style="font-weight: 500; color:#a1a1a6;">現地の声で読み解くインバウンド市場</h2>
                   <h1>各国SNS調査から見える医薬品消費トレンド</h1>
@@ -2674,6 +2674,117 @@ function initVisitorChart() {
   });
 }
 
+(() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  const titleEl = document.getElementById('slideTitle');
+  const numEl = document.getElementById('slideNumber');
+  const nextBtn = document.createElement('button');
+  const prevBtn = document.createElement('button');
+
+  // ── ナビボタン作成
+  nextBtn.className = 'nav-btn next'; nextBtn.setAttribute('aria-label','次のスライド');
+  prevBtn.className = 'nav-btn prev'; prevBtn.setAttribute('aria-label','前のスライド');
+  nextBtn.textContent = '›'; prevBtn.textContent = '‹';
+  document.querySelector('.main').append(prevBtn, nextBtn);
+
+  let idx = 0;
+  const clamp = i => (i + slides.length) % slides.length;
+
+  function setActive(i, pushHash = true) {
+    idx = clamp(i);
+    slides.forEach((s,j) => s.classList.toggle('active', j === idx));
+    const t = slides[idx].dataset.title || `スライド ${idx+1}`;
+    const pg = `${idx+1} / ${slides.length}`;
+    if (titleEl) titleEl.textContent = t;
+    if (numEl) numEl.textContent = pg;
+
+    // ヒーロー内の進捗バーを更新（あれば）
+    const bar = slides[idx].querySelector('.progress-bar');
+    if (bar) {
+      const pct = Math.round(((idx+1) / slides.length) * 100);
+      bar.style.width = `${pct}%`;
+      bar.setAttribute('aria-valuenow', pct);
+    }
+
+    // ハッシュ同期（直接リンク可）
+    if (pushHash) location.hash = `#${idx+1}`;
+  }
+
+  function go(n) { setActive(idx + n); }
+  nextBtn.addEventListener('click', () => go(1));
+  prevBtn.addEventListener('click', () => go(-1));
+
+  // キー操作 ←→ / PgUp PgDn / Home End
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowRight','PageDown'].includes(e.key)) { e.preventDefault(); go(1); }
+    else if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); go(-1); }
+    else if (e.key === 'Home') { e.preventDefault(); setActive(0); }
+    else if (e.key === 'End') { e.preventDefault(); setActive(slides.length-1); }
+  });
+
+  // クリックで進む（背景クリック時のみ）
+  document.querySelector('.main').addEventListener('click', (e) => {
+    const clickable = e.target.closest('a,button,input,textarea,select,details,summary');
+    if (!clickable) go(1);
+  });
+
+  // ハッシュ（#5 等）で特定ページへ
+  function initFromHash() {
+    const m = location.hash.match(/^#(\d+)$/);
+    const n = m ? parseInt(m[1],10) - 1 : 0;
+    setActive(isFinite(n) ? n : 0, false);
+  }
+  window.addEventListener('hashchange', initFromHash);
+  initFromHash();
+
+  // ── Chart.js（#visitorChart に描画）
+  const vc = document.getElementById('visitorChart');
+  if (vc && window.Chart) {
+    // 例：2019/2023/2024 実績 + 2025予測（月別の概形）
+    const labels = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    const data2019 = [268, 259, 276, 292, 277, 288, 299, 252, 227, 266, 244, 240]; // 万人相当の概形
+    const data2024 = [320, 298, 340, 355, 360, 365, 370, 340, 330, 350, 360, 349]; // 概形（例）
+    const data2025 = [330, 315, 360, 370, 380, 390, 400, 370, 360, 380, 390, 435]; // 予測（例）
+    // 単位は見た目合わせの相対値。正確な値を入れる場合は差し替えてください。
+
+    new Chart(vc.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: '2019（実績・概形）', data: data2019, borderWidth: 2, fill: false, tension: .25 },
+          { label: '2024（実績・概形）', data: data2024, borderWidth: 2, fill: false, tension: .25 },
+          { label: '2025（予測・概形）', data: data2025, borderWidth: 2, fill: false, borderDash:[6,4], tension: .25 },
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'nearest', intersect: false },
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: { callbacks: {
+            label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}（相対）`
+          }}
+        },
+        scales: {
+          y: { beginAtZero: false, ticks: { callback: v => v } },
+          x: { ticks: { autoSkip: true, maxRotation: 0 } }
+        }
+      }
+    });
+  }
+
+  // ── アクセシビリティ小改善
+  document.querySelector('.header')?.setAttribute('role', 'banner');
+  document.querySelector('.footer')?.setAttribute('role', 'contentinfo');
+  slides.forEach(s => s.setAttribute('tabindex','0')); // フォーカス可能に
+})();
+
+
+
 </script>
+
+
         </body>
         </html>
