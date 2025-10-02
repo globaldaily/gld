@@ -579,8 +579,479 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
   text-align: center;
 }
 
+ /* 트렌드 카드 그리드 */
+.trend-grid {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 1.5rem;
+margin-top: 2.5rem;
+margin-bottom: 2rem;
+}
+
+.trend-card {
+background: var(--card-bg);
+border-radius: 1rem;
+padding: 1.5rem;
+text-align: center;
+position: relative;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+border: 2px solid var(--border-color);
+}
+
+.trend-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.trend-card:nth-child(1) { border-color: #90a4ae; background: #e3f2fd; }
+.trend-card:nth-child(2) { border-color: #81c784; background: #f1f8e9; }
+.trend-card:nth-child(3) { border-color: #ffb74d; background: #fff8e1; }
+.trend-card:nth-child(4) { border-color: #ba68c8; background: #f3e5f5; }
+.trend-card:nth-child(5) { border-color: #e57373; background: #ffebee; }
+
+.trend-number {
+position: absolute;
+top: -10px;
+right: -10px;
+color: white;
+width: 35px;
+height: 35px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+font-size: 1.2rem;
+}
+
+.trend-card:nth-child(1) .trend-number { background: #90a4ae; }
+.trend-card:nth-child(2) .trend-number { background: #81c784; }
+.trend-card:nth-child(3) .trend-number { background: #ffb74d; }
+.trend-card:nth-child(4) .trend-number { background: #ba68c8; }
+.trend-card:nth-child(5) .trend-number { background: #e57373; }
+
+.trend-title {
+font-size: 1.4rem;
+font-weight: 600;
+margin-bottom: 0.8rem;
+color: var(--text-primary);
+line-height: 1.3;
+}
+
+.trend-desc {
+font-size: 1rem;
+color: var(--text-secondary);
+line-height: 1.4;
+text-align: left;
+margin: 0;
+}
+
+/* 하단 인사이트 섹션 */
+.insight-section {
+margin-top: 2rem;
+padding: 1.5rem;
+background: rgba(108, 117, 125, 0.1);
+border-radius: 1rem;
+border-left: 5px solid #6c757d;
+}
+
+.insight-title {
+font-size: 1.6rem;
+font-weight: 600;
+color: #6c757d;
+margin-bottom: 0.8rem;
+text-align: center;
+}
+
+.insight-text {
+font-size: 1.1rem;
+color: var(--text-primary);
+line-height: 1.6;
+text-align: center;
+margin: 0;
+}
+
+/* 반응형 */
+@media (max-width: 1200px) {
+.trend-grid {
+grid-template-columns: repeat(3, 1fr);
+gap: 1rem;
+}
+.trend-card {
+padding: 1.2rem;
+}
+.trend-title {
+font-size: 1.2rem;
+}
+.trend-desc {
+font-size: 0.9rem;
+}
+}
+
+@media (max-width: 768px) {
+.trend-grid {
+grid-template-columns: 1fr;
+gap: 1rem;
+}
+.slide h2 {
+font-size: 1.8rem;
+}
+}
 
 
+.enhanced-strategy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.enhanced-strategy-card {
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  border: 2px solid #e9ecef;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.enhanced-strategy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,122,255,0.15);
+  border-color: var(--accent-color);
+}
+
+.strategy-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.proposal-label {
+  background: var(--accent-color);
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+.proposal-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.proposal-list li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.proposal-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+.strategy-number {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--accent-color), #5856d6);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 auto 1.5rem auto;
+}
+
+.enhanced-strategy-card:nth-child(1) .strategy-number { background: linear-gradient(135deg, #007aff, #5856d6); }
+.enhanced-strategy-card:nth-child(2) .strategy-number { background: linear-gradient(135deg, #5856d6, #af52de); }
+.enhanced-strategy-card:nth-child(3) .strategy-number { background: linear-gradient(135deg, #af52de, #ff9500); }
+.enhanced-strategy-card:nth-child(4) .strategy-number { background: linear-gradient(135deg, #ff9500, #ff6b6b); }
+
+/* 또는 아이콘 폰트 사용 */
+.strategy-icon-alt {
+  width: 60px;
+  height: 60px;
+  background: var(--accent-color);
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0 auto 1.5rem auto;
+}
+
+.strategy-icon-alt::before {
+  content: "📊"; /* 차트 */
+  /* 또는 content: "▲"; 간단한 기하학적 도형 */
+  /* 또는 content: "●"; 원형 */
+}
+
+.visible-strategy-card {
+  background: #ffffff;
+  border: 3px solid #007aff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,122,255,0.15);
+  transition: all 0.3s ease;
+}
+
+.visible-strategy-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,122,255,0.25);
+  border-color: #5856d6;
+}
+
+.strategy-number {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #007aff, #5856d6);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 auto 1rem auto;
+  box-shadow: 0 3px 8px rgba(0,122,255,0.3);
+}
+
+.visible-strategy-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #1d1d1f;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.visible-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.visible-list li {
+  padding: 0.4rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: #1d1d1f;
+  font-weight: 500;
+}
+
+.visible-list li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  color: #007aff;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.thailand-strategy-card {
+  background: #ffffff;
+  border: 2px solid #ff6b35;
+  border-radius: 1rem;
+  padding: 1.3rem;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(255,107,53,0.15);
+  transition: all 0.3s ease;
+}
+
+.thailand-strategy-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255,107,53,0.25);
+}
+
+.strategy-number-thai {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #ff6b35, #f39c12);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 auto 1rem auto;
+}
+
+.thailand-strategy-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #ff6b35;
+  font-weight: 700;
+}
+
+.challenge-solution {
+  text-align: left;
+}
+
+.challenge-item {
+  background: #fff3f0;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.solution-item {
+  background: #f0f8ff;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.challenge-item strong {
+  color: #d63384;
+}
+
+.solution-item strong {
+  color: #0d6efd;
+}
+
+.thailand-strategy-card-large {
+  background: #ffffff;
+  border: 3px solid #ff6b35;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(255,107,53,0.2);
+}
+
+.strategy-number-thai-large {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #ff6b35, #f39c12);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 auto 1rem auto;
+}
+
+.thailand-strategy-card-large h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #ff6b35;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.challenge-solution-large {
+  text-align: left;
+}
+
+.challenge-item-large {
+  background: #fff3f0;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.solution-item-large {
+  background: #f0f8ff;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.challenge-item-large strong {
+  color: #d63384;
+  font-size: 1.3rem;
+}
+
+.solution-item-large strong {
+  color: #0d6efd;
+  font-size: 1.3rem;
+}
+
+.thailand-strategy-card-balanced {
+  background: #ffffff;
+  border: 3px solid #ff6b35;
+  border-radius: 1rem;
+  padding: 1.3rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(255,107,53,0.2);
+}
+
+.strategy-number-thai-balanced {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #ff6b35, #f39c12);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 auto 0.8rem auto;
+}
+
+.thailand-strategy-card-balanced h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: #ff6b35;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.challenge-solution-balanced {
+  text-align: left;
+}
+
+.challenge-item-balanced {
+  background: #fff3f0;
+  padding: 0.8rem;
+  border-radius: 0.6rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.solution-item-balanced {
+  background: #f0f8ff;
+  padding: 0.8rem;
+  border-radius: 0.6rem;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.challenge-item-balanced strong {
+  color: #d63384;
+  font-size: 1.15rem;
+}
+
+.solution-item-balanced strong {
+  color: #0d6efd;
+  font-size: 1.15rem;
+}
 </style>
 </head>
 <body>
@@ -776,7 +1247,7 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
               </section>
         
               <!-- 9: 市場概観⑥ 情報源 -->
-                    <div class="slide">
+              <div class="slide" data-title="【市場概観⑥】旅行前の情報収集実態">
                         <div class="center">
                             <h2 style="font-weight: 500;">【市場概観⑥】旅行前の情報収集実態</h2>
                             <p>公式調査とSNS時代の情報収集パターンの変化</p>
@@ -812,6 +1283,67 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
                             <p class="source">左: JNTO「日本の観光統計データ」(2024年) / 右: 業界実務者の共通認識</p>
                         </div>
                     </div>
+
+
+                <!-- 8: 市場概観⑧ 消費パターンの変化予測 -->
+<section class="slide" data-title="【市場概観⑧】消費パターンの変化予測">
+    <div class="center">
+    
+    <h2 style="font-weight: 500;">【市場概観⑧】消費パターンの変化予測</h2>
+    <p>各種調査・業界レポートから読み取れる変化の兆候</p>
+    
+    <div class="trend-grid">
+    <!-- トレンド1: 体験型消費 -->
+    <div class="trend-card">
+    <div class="trend-number">1</div>
+    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=60&h=60&fit=crop&crop=center" alt="消費パターン" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 1rem; object-fit: cover;">
+    <div class="trend-title">モノ→コト→<br>体験型消費</div>
+    <div class="trend-desc">単純な商品購入から「日本の健康文化体験」へのシフト。現地文化や日常生活に触れる学びの旅への需要拡大</div>
+    </div>
+    
+    <!-- トレンド2: デジタル決済 -->
+    <div class="trend-card">
+    <div class="trend-number">2</div>
+    <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=60&h=60&fit=crop&crop=center" alt="デジタル決済" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 1rem; object-fit: cover;">
+    <div class="trend-title">キャッシュレス<br>対応の重要性</div>
+    <div class="trend-desc">特にアジア圏では現金を持たない客が増加。対応店舗での消費額が明らかに高い傾向</div>
+    </div>
+    
+    <!-- トレンド3: サステナビリティ -->
+    <div class="trend-card">
+    <div class="trend-number">3</div>
+    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=60&h=60&fit=crop&crop=center" alt="環境配慮" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 1rem; object-fit: cover;">
+    <div class="trend-title">自然派・環境配慮<br>への関心</div>
+    <div class="trend-desc">欧米圏を中心に「化学的でない」「環境に優しい」商品への問い合わせが目立って増加</div>
+    </div>
+    
+    <!-- トレンド4: パーソナライゼーション -->
+    <div class="trend-card">
+    <div class="trend-number">4</div>
+    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=60&h=60&fit=crop&crop=center" alt="個別対応" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 1rem; object-fit: cover;">
+    <div class="trend-title">「自分向け」の<br>提案を求める声</div>
+    <div class="trend-desc">「私の症状には何が良い？」といった個別相談的なニーズが高まっている</div>
+    </div>
+    
+    <!-- トレンド5: 単価向上 -->
+    <div class="trend-card">
+    <div class="trend-number">5</div>
+    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=60&h=60&fit=crop&crop=center" alt="成長チャート" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 1rem; object-fit: cover;">
+    <div class="trend-title">客単価上昇への<br>期待と課題</div>
+    <div class="trend-desc">政府目標達成には1人当たり支出の底上げが不可欠。付加価値をどう作るかが鍵</div>
+    </div>
+    </div>
+    
+    <div class="insight-section">
+    <div class="insight-title">これらの変化から考えられること</div>
+    <div class="insight-text"><strong>国籍別のニーズ把握</strong>に基づき、関心と興味を引くコンテンツ制作が注目されそうです。日本現地の受け入れ現場では、<strong>商品の体験価値向上</strong>を考慮した接客サービスや陳列方法の工夫、さらに使用後の満足レビューに繋がる仕組みづくりなど、<strong>購入前から購入後まで一貫した体験設計</strong>が求められるのでは</div>
+    </div>
+    
+    <p class="source" style="margin-top:1rem; font-size: 0.7rem; line-height: 1.2;">※参考：インバウンドマーケティング総合研究所「データで読み解く、2025年のインバウンド需要予測」、PwC「ペイメント2025 & Beyond」、観光庁「インバウンド消費動向調査2025年4-6月期」、JTB総合研究所「2025年旅行動向見通し」、やまとごころ.jp市場分析より</p>
+    
+    </div>
+    </section>
+                    
         
               <!-- 10: 市場概観⑦ サマリー -->
               <section class="slide hero" data-title="【市場概観⑦】まとめ">
@@ -973,8 +1505,8 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
               <!-- 17: China caution -->
               <section class="slide" data-title="パート2-⑦ 中国：法的リスク">
                 <div class="center" style="max-width: 65rem; margin: 0 auto;">
-                  <h2 style="font-weight: 500;">パート2-⑦：【中国市場】プロモーション時の最重要注意点</h2>
-                  <h1 style="color: var(--danger-color); font-size: 3.2rem;">⚠️ 医薬品の個人携帯・郵送に関する法的リスク</h1>
+                  <h2 style="font-weight: 500;">パート2-⑦：【中国市場】プロモーション時の<br>最重要注意点</h2>
+                  <h1 style="color: var(--danger-color); font-size: 2rem;">⚠️ 医薬品の個人携帯・郵送に関する法的リスク</h1>
                   <p>中国への医薬品持ち込みには厳格なルールが存在します。知らないままPRを行うと、顧客に大きな不利益を与える可能性があります。</p>
                   <div class="split" style="margin-top: 2rem; gap: 2rem; align-items: start;">
                     <div class="card" style="border-color: var(--danger-color); background: #fff5f5;">
@@ -1211,20 +1743,28 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
                   <p>購入動機を分析すると、「痛み止め・貼付剤」カテゴリーが強い牽引役です。</p>
                   <div class="cards" style="grid-template-columns: 1fr 1fr; margin-top: 1rem; align-items: stretch;">
                     <div class="card" style="border-color: var(--korea-color); background: #f0f6ff;">
-                      <h3>鎮痛・貼付 (6/15)</h3>
+                      <h3>痛み止め・鎮痛・貼付剤 (6/15)</h3>
                       <p>サロンパス, ピップエレキバン, ロイヒつぼ膏, イブ, バファリン, ロキソニンS</p>
                     </div>
                     <div class="card">
-                      <h3>眼科・皮膚 (3/15)</h3>
-                      <p>Vロート, ペアアクネクリームW, ムヒパッチA</p>
+                      <h3>美容・皮膚・眼科ケア (3/15)</h3>
+                      <p>キャベジンコーワα, Vロートプレミアム, ペアアクネクリームW</p>
                     </div>
                     <div class="card">
-                      <h3>胃腸・口腔 (3/15)</h3>
-                      <p>キャベジン, 口内炎パッチ, 太田胃散</p>
+                      <h3>風邪薬・のど・炎症ケア (2/15)</h3>
+                      <p>龍角散, 口内炎パッチ大正クイックケア</p>
                     </div>
                     <div class="card">
-                      <h3>のど・下痢止め・乗り物酔い (3/15)</h3>
-                      <p>龍角散, ストッパ下痢止めEX, アネロン</p>
+                      <h3>胃腸薬・下痢止め (2/15)</h3>
+                      <p>太田胃散, ストッパ下痢止めEX</p>
+                    </div>
+                    <div class="card">
+                      <h3>乗り物酔い止め (1/15)</h3>
+                      <p>アネロン ニスキャップ</p>
+                    </div>
+                    <div class="card">
+                      <h3>その他 (1/15)</h3>
+                      <p>ムヒパッチA</p>
                     </div>
                   </div>
                 </div>
@@ -1238,19 +1778,19 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
                   <div class="cards" style="grid-template-columns: 1fr 1fr; align-items: stretch; gap: 1.5rem;">
                     <div class="voice-card">
                       <img src="https://placehold.co/150x150/d6eaff/0047a0?text=イブ" alt="EVE">
-                      <div><p>「タイレノールよりイブが即効です。韓国の鎮痛剤は効かないんですよ…(涙) <strong>心理的なものもあるかも</strong>しれませんが。」<span class="author">- 2025.09.08</span></p></div>
+                      <div><p>「タイレノールよりイブの方が即効性があります。韓国の鎮痛剤は効かないんです…心理的なものもあるかもしれませんが。」<span class="author">- 2025.09.08</span></p></div>
                     </div>
                     <div class="voice-card">
                       <img src="https://placehold.co/150x150/d6eaff/0047a0?text=太田胃散" alt="Ohta Isan">
-                      <div><p>「本当に味はひどいけど<strong>効果はすごい！</strong>その味を我慢して食べているうちに…だんだん中毒になります…」<span class="author">- 8ヶ月前</span></p></div>
+                      <div><p>「本当に味はひどいけど効果はすごい！その味を我慢して飲んでいるうちに…だんだん癖になります…」<span class="author">- 8ヶ月前</span></p></div>
                     </div>
                     <div class="voice-card">
                       <img src="https://placehold.co/150x150/d6eaff/0047a0?text=龍角散" alt="Ryukakusan">
-                      <div><p>「ひどい時は薬のようには効かないけど、喉がイガイガする時は効果がよくて、喉の痛みが和らぐ感じです〜！」<span class="author">- 2025.04.04</span></p></div>
+                      <div><p>「ひどい時は薬ほどには効かないけど、喉がイガイガする時は効果がよくて、喉の痛みが和らぐ感じです〜！」<span class="author">- 2025.04.04</span></p></div>
                     </div>
                     <div class="voice-card">
                       <img src="https://placehold.co/150x150/d6eaff/0047a0?text=アネロン" alt="Aneron">
-                      <div><p>「私も<strong>アネロン</strong>を飲んで船酔いとバイバイしました。これを飲む前は、船に乗ると半分死んだようになってました(笑)」<span class="author">- 2025.01.11</span></p></div>
+                      <div><p>「私もアネロンを飲んで船酔いとバイバイしました。これを飲む前は、船に乗ると半分死んだようになってました（笑）」<span class="author">- 2025.01.11</span></p></div>
                     </div>
                   </div>
                 </div>
@@ -1279,26 +1819,35 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
               </section>
         
               <!-- 31: Korea proposals -->
-              <section class="slide" data-title="パート2-㉑ 韓国：販売強化提案">
-                <div class="center">
-                  <h2 style="font-weight: 500;">パート2-㉑：【韓国市場】販売強化のための施策提案</h2>
-                  <p>韓国市場の特性に合わせた<strong style="color:var(--accent-color)">「信頼性」「分かりやすさ」「利便性」</strong>の3要素が鍵となります。</p>
-                  <div class="split" style="margin-top: 2rem; align-items: start;">
-                    <div class="strategy-box" style="flex: 1;">
-                      <h3>韓国市場向け施策提案</h3>
-                      <ul>
-                        <li><strong>信頼性の高いコンテンツ制作:</strong> 最新の規制情報などを公的メディアで発信。公式サイトに特設ページを開設。</li>
-                        <li><strong>販売場所での分かりやすい案内:</strong> 韓国語対応の案内パネルや、症状別のおすすめ表示を強化。QRコードによる詳細ガイドも有効。</li>
-                        <li><strong>購入体験の利便性向上:</strong> イブとサロンパスなど、人気の鎮痛剤をセット化。レジ横に「人気ランキング棚」を設置。</li>
-                      </ul>
-                    </div>
-                    <div class="warning-box" style="flex: 0.8;">
-                      <h3 style="color: var(--text-primary);">📝 参考：実際の声</h3>
-                      <p style="text-align: left;">「3番目のロクソニンパスもいいですよ。うちの母は効果がいいと言って、ずっと買い続けています。」</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
+<section class="slide" data-title="パート2-㉑ 韓国：販売強化提案">
+    <div class="center">
+      <h2 style="font-weight: 500;">パート2-㉑：【韓国市場】販売強化のための施策提案</h2>
+      <p>韓国市場の特性に合わせた<strong style="color:var(--accent-color)">「信頼性」「分かりやすさ」「利便性」</strong>の3要素が鍵となります。</p>
+      
+      <div class="cards" style="grid-template-columns: repeat(3, 1fr); margin-top: 2rem; align-items: stretch;">
+        <div class="strategy-card">
+          <h3>① 信頼性の高い情報発信</h3>
+          <p>最新の規制情報を韓国語で分かりやすく案内。公式サイトに韓国語特設ページを開設し、安全な購入方法を明示する。</p>
+        </div>
+        
+        <div class="strategy-card">
+          <h3>② 店舗での利便性向上</h3>
+          <p>韓国語対応の症状別案内パネルを設置。QRコードで詳細情報にアクセス可能にし、迷わず選択できる環境を構築する。</p>
+        </div>
+        
+        <div class="strategy-card">
+          <h3>③ リピート購入促進</h3>
+          <p>人気TOP商品のセット販売と、大容量パックの割引表示。レジ横に「韓国人気ランキング棚」を常設する。</p>
+        </div>
+      </div>
+  
+      <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0,122,255,0.1); border-radius: 1rem; border: 2px solid rgba(0,122,255,0.3);">
+        <p style="font-size: 1.2rem; text-align: center; margin: 0; color: var(--accent-color); font-weight: 600;">
+          韓国市場における販売強化には、信頼性・分かりやすさ・利便性の3要素が鍵となります。
+        </p>
+      </div>
+    </div>
+  </section>
         
               <!-- 32: Thailand intro -->
               <section class="slide hero" data-title="パート2-㉒ タイ市場（イントロ）">
@@ -1400,28 +1949,56 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
                 </div>
               </section>
         
-              <!-- 37: Thailand proposals -->
-              <section class="slide" data-title="パート2-㉗ タイ：施策提案">
-                <div class="center">
-                  <h2 style="font-weight: 500;">パート2-㉗：【タイ市場】販売強化のための施策提案</h2>
-                  <p>タイの消費者はSNS、口コミ、希少性、分かりやすさに強く反応します。これらの特性に合わせたアプローチが不可欠です。</p>
-                  <div class="split" style="margin-top: 1.5rem; align-items: start; gap: 1.5rem;">
-                    <div class="strategy-box" style="flex: 1;">
-                      <h3>① SNSプロモーション強化</h3>
-                      <p style="font-size: 1.1rem; text-align: left; color: var(--text-secondary);"><strong>課題：</strong>日本の薬に対する信頼性への不安。<br><strong>施策：</strong>タイ語インフルエンサーを起用し、実際の使用感やレビューで信頼性を向上。日本での購入メリット（価格、限定品）を強調する。</p>
-                    </div>
-                    <div class="strategy-box" style="flex: 1;">
-                      <h3>② 店頭・購入案内の改善</h3>
-                      <p style="font-size: 1.1rem; text-align: left; color: var(--text-secondary);"><strong>課題：</strong>薬の種類や使用法が日本語中心で分かりにくい。<br><strong>施策：</strong>タイ語の案内パネルや症状別のおすすめ表示を設置。QRコードで使用方法の動画へ誘導し、迷わず選べる環境を作る。</p>
-                    </div>
-                    <div class="strategy-box" style="flex: 1;">
-                      <h3>③ トライアルパッケージ販売</h3>
-                      <p style="font-size: 1.1rem; text-align: left; color: var(--text-secondary);"><strong>課題：</strong>高価な日本薬は初回購入のハードルが高い。<br><strong>施策：</strong>少量で試せるミニサイズやサンプル、症状別セット（例：日焼け対策セット）を販売し、購入のハードルを下げる。</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
+            <!-- 37: Thailand proposals -->
+<section class="slide" data-title="パート2-㉗ タイ：施策提案">
+    <div class="center">
+      <h2 style="font-weight: 500; font-size: 2.2rem; margin-bottom: 1rem;">パート2-㉗：【タイ市場】販売強化のための施策提案</h2>
+      <p style="font-size: 1.4rem; margin-bottom: 1.5rem;">タイの消費者はSNS、口コミ、希少性、分かりやすさに強く反応します。</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
         
+        <div class="thailand-strategy-card-balanced">
+          <div class="strategy-number-thai-balanced">①</div>
+          <h3>SNSプロモーション強化</h3>
+          <div class="challenge-solution-balanced">
+            <div class="challenge-item-balanced">
+              <strong>課題：</strong>日本の薬に対する信頼性への不安
+            </div>
+            <div class="solution-item-balanced">
+              <strong>施策：</strong>タイ語インフルエンサーを起用し、実際の使用感やレビューで信頼性を向上。日本での購入メリット（価格、限定品）を強調
+            </div>
+          </div>
+        </div>
+        
+        <div class="thailand-strategy-card-balanced">
+          <div class="strategy-number-thai-balanced">②</div>
+          <h3>店頭・購入案内の改善</h3>
+          <div class="challenge-solution-balanced">
+            <div class="challenge-item-balanced">
+              <strong>課題：</strong>薬の種類や使用法が日本語中心で分かりにくい
+            </div>
+            <div class="solution-item-balanced">
+              <strong>施策：</strong>タイ語の案内パネルや症状別表示を設置。QRコードで使用方法の動画へ誘導し、迷わず選べる環境を作る
+            </div>
+          </div>
+        </div>
+        
+        <div class="thailand-strategy-card-balanced">
+          <div class="strategy-number-thai-balanced">③</div>
+          <h3>トライアルパッケージ販売</h3>
+          <div class="challenge-solution-balanced">
+            <div class="challenge-item-balanced">
+              <strong>課題：</strong>高価な日本薬は初回購入のハードルが高い
+            </div>
+            <div class="solution-item-balanced">
+              <strong>施策：</strong>少量で試せるミニサイズやサンプル、症状別セット（例：日焼け対策セット）を販売し、購入のハードルを下げる
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
               <!-- 38: US/EU intro -->
               <section class="slide hero" data-title="パート2-㉘ 欧米市場（イントロ）">
                 <div class="center">
@@ -1649,32 +2226,34 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
               </section>
         
               <!-- 45: Short-term -->
-              <section class="slide" data-title="パート3-① 短期実施施策（〜6ヶ月）">
-                <div class="center">
-                  <h2 style="font-weight: 500;">パート3-①：短期実施可能施策（〜6ヶ月）</h2>
-                  <p>各国調査で判明した購買動機に直接対応する店舗施策</p>
-                  <div class="cards" style="grid-template-columns: repeat(3, 1fr); margin-top: 2rem; align-items: stretch;">
-                    <div class="strategy-card">
-                      <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200&fit=crop" alt="国別陳列" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
-                      <h3>国別特性に応じた陳列最適化</h3>
-                      <p>韓国：鎮痛剤コーナー拡充、台湾：価格メリット表示、中国：定番ブランド前面、タイ：気候対応商品を集約陳列</p>
-                      <div class="implementation-tag">コンプライアンス：✓</div>
-                    </div>
-                    <div class="strategy-card">
-                      <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop" alt="多言語案内" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
-                      <h3>購買理由に特化した多言語案内</h3>
-                      <p>「なぜ日本で買うのか」の理由別에 맞춘 안내. 가격 차, 품질/성분 차, 일본 한정성 등 동기를 현장에서 가시화</p>
-                      <div class="implementation-tag">コンプライアンス：✓</div>
-                    </div>
-                    <div class="strategy-card">
-                      <img src="https://images.unsplash.com/photo-1586473219010-2ffc57b0d282?w=300&h=200&fit=crop" alt="セット販売" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
-                      <h3>用途別セット商品の展開</h3>
-                      <p>「旅行常備薬セット」「家族向けベーシックセット」 등 씬(사용 상황)별 묶음으로 선택 스트레스↓</p>
-                      <div class="implementation-tag">コンプライアンス：✓</div>
-                    </div>
-                  </div>
-                </div>
-              </section>
+<section class="slide" data-title="パート3-① 短期実施施策（〜6ヶ月）">
+    <div class="center">
+      <h2 style="font-weight: 500;">パート3-①：短期実施可能施策のご提案（〜6ヶ月）</h2>
+      <p>各国調査で判明した購買動機に対応する、メーカー・小売店双方で検討可能な施策例です</p>
+      <div class="cards" style="grid-template-columns: repeat(3, 1fr); margin-top: 2rem; align-items: stretch;">
+        <div class="strategy-card">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200&fit=crop" alt="国別陳列" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <h3>国別特性に応じた陳列の工夫</h3>
+          <p>韓国：鎮痛剤コーナーの拡充検討、<br>台湾：価格優位性の表示、<br>中国：定番ブランドの前面配置、<br>タイ：気候対応商品の集約陳列など</p>
+        </div>
+        <div class="strategy-card">
+          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop" alt="多言語案内" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <h3>購買理由に特化した多言語案内</h3>
+          <p>「なぜ日本で購入するのか」の理由別案内の充実。価格差、品質・成分の特徴、日本限定性など、動機の見える化を検討</p>
+        </div>
+        <div class="strategy-card">
+          <img src="https://images.unsplash.com/photo-1586473219010-2ffc57b0d282?w=300&h=200&fit=crop" alt="セット販売" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <h3>用途別セット商品の展開</h3>
+          <p>「旅行常備薬セット」「家族向けベーシックセット」など、使用場面別の商品構成により選択負担の軽減を図る</p>
+        </div>
+      </div>
+      <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 0.5rem; border-left: 4px solid #6c757d;">
+        <p style="font-size: 1rem; color: #6c757d; margin: 0; text-align: center;">
+          ※すべての施策は各国の薬機法・広告規制の遵守が必須の前提となります<div class=""></div>
+        </p>
+      </div>
+    </div>
+  </section>
         
               <!-- 46: Country-specific -->
               <section class="slide" data-title="パート3-② 国別特化戦略">
@@ -1684,7 +2263,7 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
                   <div class="country-strategies" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;">
                     <div class="country-strategy-box china-accent">
                       <h3>🇨🇳 中国市場向け</h3>
-                      <p><strong>法的リスク啓発の徹底</strong><br>郵送リスクや代理購入の注意点を明記し、店頭購入の安全性をアピール。KOL推薦商品の優先陳列</p>
+                      <p><strong>法的リスク啓発の徹底</strong><br>郵送リスクや代理購入の注意点を明記し、店頭購入の安全性をアピール。<br>KOL推薦商品の優先陳列</p>
                     </div>
                     <div class="country-strategy-box taiwan-accent">
                       <h3>🇹🇼 台湾市場向け</h3>
@@ -1702,40 +2281,78 @@ body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !
                 </div>
               </section>
         
-              <!-- 47: Long-term brand -->
-              <section class="slide" data-title="パート3-③ 中長期ブランド戦略">
-                <div class="center">
-                  <h2 style="font-weight: 500;">パート3-③：中長期ブランド価値向上戦略</h2>
-                  <div class="split" style="align-items: start; gap: 2rem;">
-                    <div class="strategy-box">
-                      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop" alt="信頼性向上" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;">
-                      <h3>「日本品質」ブランドの確立</h3>
-                      <p>製造工程の透明性、品質管理基準、安全性データの多言語での情報公開。各国の健康志向トレンドに合わせた自然派・オーガニック訴求の強化</p>
-                      <div class="timeline-tag">実装時期：6〜12ヶ月</div>
-                    </div>
-                    <div class="strategy-box">
-                      <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=200&fit=crop" alt="教育コンテンツ" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;">
-                      <h3>教育的コンテンツマーケティング</h3>
-                      <p>「日本の家庭医学知識」「症状別セルフケア」など、販促ではなく教育に重点を置いたコンテンツで信頼関係を構築</p>
-                      <div class="timeline-tag">実装時期：3〜6ヶ月</div>
-                    </div>
-                  </div>
-                  <div class="warning-box" style="margin-top: 2rem;">
-                    <h3>重要な留意点</h3>
-                    <p>すべての施策において各国の薬機法・広告規制を遵守し、医療従事者の指導のもとで実施することが前提となります。</p>
-                  </div>
-                </div>
-              </section>
+         <!-- 47: Long-term brand -->
+<section class="slide" data-title="パート3-③ 中長期ブランド戦略">
+    <div class="center">
+      <h2 style="font-weight: 500; margin-bottom: 1.5rem;">パート3-③：中長期的なブランド価値向上のご提案</h2>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;">
         
-              <!-- 48: Part4 intro -->
-              <section class="slide hero" data-title="パート4 モニタリング（イントロ）">
-                <div class="center">
-                  <h2 style="font-weight: 500;">パート4：継続的市場モニタリングの必要性</h2>
-                  <h1>変化こそが、唯一の不変。</h1>
-                  <p style="font-size: 1.3rem; margin-top: 1rem;">インバウンド市場は生き物です。一度の成功に安住せず、<br>常に変化の兆候を捉え、先手を打つ体制こそが最大の競争力となります。</p>
-                  <p style="font-size: 1.2rem; margin-top: 2.5rem; color: #a1a1a6;">弊社マーケティング・リサーチチームは、そのための羅針盤となります。</p>
-                </div>
-              </section>
+        <div class="visible-strategy-card">
+          <div class="strategy-number">01</div>
+          <h3>継続的市場モニタリング体制</h3>
+          <ul class="visible-list">
+            <li>四半期ごとのSNS動向レポート作成</li>
+            <li>競合価格・商品ラインナップの定期調査</li>
+            <li>各国規制変更の月次アラート体制構築</li>
+          </ul>
+        </div>
+        
+        <div class="visible-strategy-card">
+          <div class="strategy-number">02</div>
+          <h3>段階的市場拡大アプローチ</h3>
+          <ul class="visible-list">
+            <li>既存3市場でのシェア拡大施策を優先実施</li>
+            <li>タイ・欧米市場でのテストマーケティング</li>
+            <li>年1-2回の新規市場開拓検討</li>
+          </ul>
+        </div>
+        
+        <div class="visible-strategy-card">
+          <div class="strategy-number">03</div>
+          <h3>データ蓄積による精度向上</h3>
+          <ul class="visible-list">
+            <li>店舗POSデータとSNS反応データの連携分析</li>
+            <li>購買者アンケートの定期実施（年2回）</li>
+            <li>効果測定指標の標準化</li>
+          </ul>
+        </div>
+        
+        <div class="visible-strategy-card">
+          <div class="strategy-number">04</div>
+          <h3>パートナーシップ強化</h3>
+          <ul class="visible-list">
+            <li>各国インフルエンサーとの長期契約締結</li>
+            <li>主要ドラッグストアチェーンとの戦略的提携</li>
+            <li>観光業界との共同プロモーション企画</li>
+          </ul>
+        </div>
+        
+      </div>
+      
+      
+    </div>
+  </section>
+        
+             <!-- 48: Part4 intro -->
+<section class="slide hero" data-title="パート4 モニタリング（イントロ）">
+  <div class="center">
+    <h2 style="font-weight: 500;">パート4：継続的市場モニタリングの必要性</h2>
+    <h1>データに基づく<br>市場監視体制の検討</h1>
+    <p style="font-size: 1.3rem; margin-top: 1rem;">インバウンド市場の変化スピードを考慮すると、<br>継続的な市場動向の把握と戦略調整の仕組みが<br>競争優位の維持に寄与する可能性があります。</p>
+    <div class="stats" style="justify-content: center; gap: 3rem; margin-top: 3rem;">
+      <div class="stat-item">
+        <div class="stat-number" style="font-size: 3.5rem;">3ヶ月</div>
+        <div class="stat-label">想定される変化サイクル</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" style="font-size: 3.5rem;">5つ</div>
+        <div class="stat-label">推奨監視項目</div>
+      </div>
+    </div>
+    <p style="font-size: 1.2rem; margin-top: 2rem; color: #a1a1a6;">このような監視体制の構築について、グローバル・デイリーがご相談に応じます。</p>
+  </div>
+</section>
         
               <!-- 49: Part4 factors -->
               <section class="slide" data-title="パート4-① 監視すべき変化要因">
