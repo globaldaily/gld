@@ -2,10 +2,6 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>【市場分析資料】2025年9月インバウンド市場の現状と対策</title>
-<!-- Chart.js CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
@@ -256,7 +252,7 @@ padding: 2.5vw 4vw;
 .bar-chart-item { display: flex; align-items: center; gap: 1rem; }
 .bar-chart-label { width: 12rem; text-align: right; font-size: 1.3rem; font-weight: 500; display: flex; align-items: center; justify-content: flex-end; gap: 1rem;}
 .bar-chart-bar-wrapper { flex: 1; background: var(--card-bg); border-radius: 0.5rem; height: 2.8rem;}
-.bar-chart-bar { height: 100%; border-radius: 0.5rem; display: flex; align-items: center; justify-content: flex-end; padding-right: 1rem; color: white; font-weight: 700; font-size: 1.1rem; animation: bar-fill 1s ease-out; }
+
 @keyframes bar-fill { from { width: 0; } }
 
 .reason-card { background: white; border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.2rem; }
@@ -1052,6 +1048,246 @@ font-size: 1.8rem;
   color: #0d6efd;
   font-size: 1.15rem;
 }
+/* ===== 조사 방법 안내 박스 ===== */
+.research-method-box {
+    background: #f0f6ff; /* A light blue, suggests information/data */
+    border-left: 5px solid var(--accent-color);
+    padding: 1.2rem 1.5rem;
+    margin: 0 auto 2rem auto; /* 상단 마진 제거, 하단 여백 확보 */
+    border-radius: 0.8rem;
+    max-width: 95%;
+    text-align: left;
+}
+
+.research-method-box p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+    text-align: left;
+}
+
+.research-method-box p::before {
+    content: '🔍';
+    margin-right: 0.7rem;
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
+
+.research-method-box strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* === 화면/컨테이너 보정 === */
+.screen-view {
+  width: 100vw;
+  height: 100dvh;            /* 100vh → 100dvh */
+  overflow: hidden;          /* 그대로 OK */
+}
+
+.container {
+  width: 100vw;
+  height: 56.25vw;
+  max-height: 100dvh;        /* 100vh → 100dvh */
+  max-width: 177.77dvh;      /* vh → dvh로 통일 */
+}
+
+/* 메인 영역은 슬라이드가 자체 스크롤하므로 overflow: visible|auto 가 안전 */
+.main {
+  overflow: visible;          /* 기존 hidden → visible (슬라이드 내부 스크롤 유지) */
+}
+
+/* 슬라이드가 헤더/푸터와 겹치지 않게 최소 안쪽 여백 보정 */
+.slide {
+  padding-bottom: max(2.5vw, 1.2rem); /* 하단 잘림 방지용 여유 */
+}
+/* === 엔딩 섹션 카드 폭 안정화 === */
+.closing-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;             /* 중앙 정렬 유지 */
+}
+
+.contact-box, .newsletter-box {
+  flex: 1 1 min(420px, 100%);          /* 기본 너비 제안 */
+  min-width: 320px;                    /* 과도한 압축 방지 (기존 300px보다 살짝 여유) */
+  max-width: 520px;                    /* 넓은 화면에서 너무 길어지지 않도록 상한 확장 */
+}
+
+/* 아주 작은 화면에서 1열로 안전하게 내려가기 */
+@media (max-width: 720px) {
+  .contact-box, .newsletter-box {
+    flex: 1 1 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+/* ===== STABILITY HOTFIX (append at the very end) ===== */
+
+/* 1) .center 블록의 정중앙 정렬을 강제 (split의 좌정렬 규칙과 충돌 방지) */
+.slide .center h1,
+.slide .center h2,
+.slide .center p {
+  text-align: center !important;
+}
+
+/* 2) 엔딩(블러) 카드 폭 급좁아짐 방지: 줄바꿈 + 최소/최대 폭 가드 */
+.closing-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.contact-box,
+.newsletter-box {
+  flex: 1 1 min(420px, 100%);
+  min-width: 320px;
+  max-width: 520px;
+}
+
+/* 3) 번호배지 범위 스코프 고정: 전역 .strategy-number 오버라이드 해소 */
+.visible-strategy-card .strategy-number {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #007aff, #5856d6);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 auto 1rem auto;
+  box-shadow: 0 3px 8px rgba(0, 122, 255, 0.3);
+}
+
+/* 4) 모바일/앱 브라우저에서의 뷰포트 잘림을 dvh로 확정 */
+.screen-view { height: 100dvh; }
+.container    { max-height: 100dvh; max-width: 177.77dvh; }
+
+/* 5) 슬라이드 하단 여유 (푸터 겹침/잘림 방지) */
+.slide { padding-bottom: max(2.5vw, 1.2rem); }
+
+/* ===== For Slide 9: Stay Duration Animation on Bar (CENTERED) ===== */
+/* ===== For Slide 9: Stay Duration Animation on Bar (INFINITE BLINK) ===== */
+
+/* This rule ensures absolute positioning works correctly ONLY within the intended parent */
+.bar-chart-item .bar-chart-bar-wrapper {
+  position: relative;
+}
+
+/* This rule now uses TWO animations */
+.bar-chart-item .stay-duration-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  
+  opacity: 0; /* Initially hidden */
+  pointer-events: none;
+  
+  /* ▼▼▼ KEY CHANGE HERE ▼▼▼ */
+  /* Animation 1: Fades in once. Animation 2: Blinks infinitely after the first one ends. */
+  animation: 
+    reveal-label 0.7s 1.2s forwards,
+    constant-blink 1.8s 1.9s infinite;
+}
+
+.stay-duration-label strong {
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+
+/* ▼▼▼ REPLACE old keyframes with these TWO new ones ▼▼▼ */
+
+/* Keyframe 1: For the initial appearance */
+@keyframes reveal-label {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Keyframe 2: For the infinite blinking */
+@keyframes constant-blink {
+  0% { background-color: rgba(0, 0, 0, 0.5); }
+  50% { background-color: rgba(255, 59, 48, 0.8); } /* Blinks with --danger-color */
+  100% { background-color: rgba(0, 0, 0, 0.5); }
+}
+/* Find and replace this rule */
+.bar-chart-bar { 
+  height: 100%; 
+  border-radius: 0.5rem; 
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-end; 
+  
+  /* Adjustments for better readability */
+  padding-right: 0.8rem;  /* Reduced right padding */
+  color: white; 
+  font-weight: 700; 
+  font-size: 1.05rem;     /* Slightly reduced font size */
+  white-space: nowrap;    /* Prevent text from wrapping */
+  overflow: hidden;       /* Hide overflow just in case */
+
+  animation: bar-fill 1s ease-out; 
+}
+/* ===== [1] 헤더 타이틀: 한 줄 고정 + 말줄임 + 페이지 번호는 항상 노출 ===== */
+.header { gap: 1rem; }
+.logo   { flex: 0 0 auto; }
+
+.header .slide-info {
+  /* 헤더 오른쪽 영역이 남는 만큼 쓰되, 필요 시 줄어들 수 있게 */
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .5rem;
+  min-width: 0;                 /* flex 컨테이너에서 말줄임 동작 필수 */
+}
+
+/* 긴 제목은 … 처리 (페이지 번호는 살리고 제목만 줄이기) */
+#slideTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#slideNumber {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* 화면이 좁을 때 헤더 글자가 살짝만 줄도록 (높이 고정 유지) */
+.slide-info, .page-number {
+  line-height: 1.2;
+  font-size: clamp(1.0rem, 1.1rem, 1.2rem);
+}
+
+/* ===== [2] 해당 슬라이드(韓国：人気医薬品TOP15)만 상단 정렬로 고정 ===== */
+/* 기본은 가운데 정렬인데, 이 슬라이드는 콘텐츠가 길어 위쪽이 잘려 보일 수 있어 상단 고정 */
+.slide[data-title*="韓国：人気医薬品TOP15"] {
+  justify-content: flex-start !important;
+}
+
 </style>
 </head>
 <body>
@@ -1076,7 +1312,7 @@ font-size: 1.8rem;
                 <div class="center">
                   <h2 style="font-weight: 500; color:#a1a1a6;">現地の声で読み解くインバウンド市場</h2>
                   <h1>各国SNS調査から見える医薬品消費トレンド</h1>
-                  <p>2025.10.03</p>
+                  <p>2025.10.03　金</p>
                   <p>グローバル・デイリー広報部</p>
                 </div>
               </section>
@@ -1115,7 +1351,46 @@ font-size: 1.8rem;
                   </div>
                 </div>
               </section>
-        
+
+              <section class="slide" data-title="会社概要">
+                <div class="split" style="align-items: center; gap: 2.5rem;">
+                  
+                  <div style="display: flex; flex-direction: column; justify-content: center;">
+                    
+                    <h2 style="text-align: left; font-weight: 500; font-size: 2rem; margin-bottom: 0.5rem;">DACグループ：インバウンド事業領域</h2>
+                    <h1 style="text-align: left; font-size: 2.6rem; margin-bottom: 1rem; line-height: 1.2;">株式会社グローバル・デイリー</h1>
+                    
+                    <p style="text-align: left; max-width: none; font-size: 1.1rem; line-height: 1.65; margin-bottom: 1.5rem;">
+                      2008年の訪日事業開始から<strong style="color:var(--accent-color)">17年</strong>。DACグループのインバウンド専門広告会社として、「現地目線」のプロモーションを追求。独自のインサイトとネットワークを武器に、調査から実行までをワンストップで提供します。
+                    </p>
+                    
+                    <div class="cards" style="grid-template-columns: 1fr 1fr; text-align: left; margin-top: 0; gap: 0.8rem;">
+                      <div class="card" style="text-align: center; padding: 1.2rem 1rem;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; line-height: 1.3;">🌐 グローバルネットワーク</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.4; margin:0;">海外メディア・インフルエンサーとの直接提携で、スピード・コスト・正確性を実現</p>
+                      </div>
+                      <div class="card" style="text-align: center; padding: 1.2rem 1rem;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; line-height: 1.3;">📈 ワンストップ支援</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.4; margin:0;">市場調査、メディア、SNS、イベントまで一気通貫で課題を解決</p>
+                      </div>
+                      <div class="card" style="text-align: center; padding: 1.2rem 1rem;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; line-height: 1.3;">📊 独自インサイト</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.4; margin:0;">7カ国籍の社員、140万フォロワーの自社メディア、在留外国人組織から得る一次情報が強み</p>
+                      </div>
+                      <div class="card" style="text-align: center; padding: 1.2rem 1rem;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; line-height: 1.3;">🏆 業界随一の実績</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.4; margin:0;">17年にわたる業界の"老舗"として、大手企業から官公庁まで取引実績多数</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/about_linkImages.jpg" alt="Global Network and Data Analysis" style="height: 100%; object-fit: cover; border-radius: 1rem;">
+                  </div>
+    
+                </div>
+              </section>
+
               <!-- 3: 市場概観① 訪日外客数 -->
               <section class="slide" data-title="【市場概観①】訪日外客数の推移">
                 <div class="center">
@@ -1227,20 +1502,35 @@ font-size: 1.8rem;
                 </div>
               </section>
         
-              <!-- 8: 市場概観⑤ 国籍別買物代 -->
               <section class="slide" data-title="【市場概観⑤】国籍別1人当たり買物代">
                 <div class="center">
                   <h1>国籍別 1人当たり「買物代」トップ8</h1>
                   <p>買物における消費額は、依然として中国が他国を圧倒的な差でリードしています。</p>
                   <div class="bar-chart">
-                    <div class="bar-chart-item"><div class="bar-chart-label"><span>🇨🇳</span> 中国</div><div class="bar-chart-bar-wrapper"><div class="bar-chart-bar" style="width: 100%; background-color: var(--china-color);">97,942 円</div></div></div>
+                    
+                    <div class="bar-chart-item">
+                      <div class="bar-chart-label"><span>🇨🇳</span> 中国</div>
+                      <div class="bar-chart-bar-wrapper">
+                        <div class="bar-chart-bar" style="width: 100%; background-color: var(--china-color);">97,162 円</div>
+                        <div class="stay-duration-label">平均 <strong>8.3</strong>泊</div>
+                      </div>
+                    </div>
+                    
                     <div class="bar-chart-item"><div class="bar-chart-label"><span>🇸🇬</span> シンガポール</div><div class="bar-chart-bar-wrapper"><div class="bar-chart-bar" style="width: 72.5%; background-color: var(--singapore-color);">71,052 円</div></div></div>
                     <div class="bar-chart-item"><div class="bar-chart-label"><span>🇦🇺</span> オーストラリア</div><div class="bar-chart-bar-wrapper"><div class="bar-chart-bar" style="width: 71.7%; background-color: var(--australia-color);">70,204 円</div></div></div>
                     <div class="bar-chart-item"><div class="bar-chart-label"><span>🇫🇷</span> フランス</div><div class="bar-chart-bar-wrapper"><div class="bar-chart-bar" style="width: 67.6%; background-color: var(--france-color);">66,197 円</div></div></div>
                     <div class="bar-chart-item"><div class="bar-chart-label"><span>🇭🇰</span> 香港</div><div class="bar-chart-bar-wrapper"><div class="bar-chart-bar" style="width: 67.5%; background-color: var(--hk-color);">66,098 円</div></div></div>
                     <div class="bar-chart-item"><div class="bar-chart-label"><span>🇻🇳</span> ベトナム</div><div class="bar-chart-bar-wrapper"><div class="bar-chart-bar" style="width: 65.9%; background-color: #DA251D;">64,543 円</div></div></div>
                     <div class="bar-chart-item"><div class="bar-chart-label"><span>🇹🇼</span> 台湾</div><div class="bar-chart-bar-wrapper"><div class="bar-chart-bar" style="width: 62.1%; background-color: var(--taiwan-color);">60,837 円</div></div></div>
-                    <div class="bar-chart-item"><div class="bar-chart-label"><span>🇰🇷</span> 韓国</div><div class="bar-chart-bar-wrapper"><div class="bar-chart-bar" style="width: 25.0%; background-color: var(--korea-color);">24,507 円</div></div></div>
+                    
+                    <div class="bar-chart-item">
+                      <div class="bar-chart-label"><span>🇰🇷</span> 韓国</div>
+                      <div class="bar-chart-bar-wrapper">
+                        <div class="bar-chart-bar" style="width: 25.0%; background-color: var(--korea-color);">24,507 円</div>
+                        <div class="stay-duration-label">平均 <strong>3.7</strong>泊</div>
+                      </div>
+                    </div>
+              
                   </div>
                   <p class="source" style="margin-top: 1.5rem;">出典: 観光庁「訪日外国人消費動向調査」(2025年4–6月期)</p>
                 </div>
@@ -1403,28 +1693,79 @@ font-size: 1.8rem;
   </section>
   
         
-              <!-- 13: China Must-Buy -->
-              <section class="slide" data-title="パート2-③ 中国：SNS マストバイ2025">
-                <div class="center">
-                  <h2 style="font-weight: 500; font-size: 2.2rem;">パート2-③：【中国市場】SNS調査① マストバイリスト2025</h2>
-                  <p>「日本药妆必买清单2025」で検索時、Top20の「いいね」が多い投稿で共通して推薦されていた商品群です。</p>
-                  <div class="product-grid" style="grid-template-columns: repeat(6, 1fr);">
-                    <div class="product-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJNaxTc5k4Coa84mE40skOa3LHvrr_2oG2_g&s" alt="ヘパリーゼ"><h4>ヘパリーゼ</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=アルガード" alt="アルガード"><h4>アルガード</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=グミサプリ" alt="グミサプリ"><h4>グミサプリ</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=五層龍" alt="五層龍"><h4>五層龍</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=アリナミン" alt="アリナミンEX"><h4>アリナミンEX</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=カルシチュウ" alt="新カルシチュウ"><h4>新カルシチュウ</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=BAND-AID" alt="BAND-AID"><h4>BAND-AID</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=アイリスCL-I" alt="アイリスCL-I"><h4>アイリスCL-I</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=メメ" alt="メメ"><h4>メメ</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=SKIN+VAPE" alt="SKIN VAPE"><h4>SKIN VAPE</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/100x100/f0f0f0/333?text=ロキソニン" alt="ロキソニンSゲル"><h4>ロキソニンSゲル</h4></div>
-                    <div class="product-card"><p style="font-size:1.1rem;margin-top:2rem;">他多数...</p></div>
-                  </div>
-                  <p class="source" style="margin-top: 1rem;">※検索期間:25年3月~8月 / ※非公式ツールで抽出した参考データ</p>
-                </div>
-              </section>
+             <!-- 13: China Must-Buy (画像URL差し替え済み) -->
+
+<section class="slide" data-title="パート2-③ 中国：SNS マストバイ2025">
+    <div class="center">
+      <h2 style="font-weight: 500; font-size: 2.2rem;">パート2-③：【中国市場】SNS調査① マストバイリスト2025</h2>
+      <p>「日本药妆必买清单2025」で検索時、Top20の「いいね」が多い投稿で共通して推薦されていた商品群です。</p>
+  
+      <div class="product-grid" style="grid-template-columns: repeat(6, 1fr);">
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1X0kiSIcFNH98xsh5xTnac5j8GH0q9iK-" alt="リア新薬ヘパリーゼ">
+          <h4>リア新薬ヘパリーゼ</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=11ngpW_JzHnQQV-0F2-u_DQxjnyqd22_j" alt="ロートアルガード">
+          <h4>ロートアルガード</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=16YBpHYPmgMJ0kO-QdqA2yXRatFy-efgB" alt="UHAグミサプリ">
+          <h4>UHAグミサプリ</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=16K8SPk2KRZA0trWZY42-i7cmk4ehisXz" alt="JNTLコンシューマーヘルス株式会社（Kenvue）BAND AID">
+          <h4>JNTLコンシューマーヘルス株式会社（Kenvue）BAND AID</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1wtib-cDRs2z5wweXK7RrlVmE49d9f2e7" alt="大正製薬アイリスCL‐Iネオ">
+          <h4>大正製薬アイリスCL‐Iネオ</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1QikmQyETpnGJlr9NyrPrFy4cGpqtaGpX" alt="野口医学研究所五層龍">
+          <h4>野口医学研究所五層龍</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=19Uzh3lD7VsqcFIaMIKKtdTFEJiBx29WK" alt="アリナミン製薬アリナミンEXPlus">
+          <h4>アリナミン製薬アリナミンEXPlus</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1QJFaHujw1-3Qjtms9EBUGGPUU-Ljlhfx" alt="アリナミン製薬新カルシチュウD3">
+          <h4>アリナミン製薬新カルシチュウD3</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=17EcSXucahItrvH5VjfUzlooEWlaHApLQ" alt="ロートメメ">
+          <h4>ロートメメ</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1MW_doV9nBfDRHmbex2xTpPiBBZkroZ7X" alt="フマキラーSKIN VAPE">
+          <h4>フマキラーSKIN VAPE</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1YAdpla0dEiun5seYffYtmFS_FtVtJD3n" alt="第一三共ロキソニンSハードゲル">
+          <h4>第一三共ロキソニンSハードゲル</h4>
+        </div>
+  
+        <div class="product-card">
+          <p style="font-size:1.1rem;margin-top:2rem;">他多数...</p>
+        </div>
+      </div>
+  
+      <p class="source" style="margin-top: 1rem;">※検索期間:25年3月~8月 / ※非公式ツールで抽出した参考データ</p>
+    </div>
+  </section>
+  
+  
         
               <!-- 14: China Post Ranking -->
               <section class="slide" data-title="パート2-④ 中国：投稿数ランキング">
@@ -1573,24 +1914,68 @@ font-size: 1.8rem;
               </section>
         
               <!-- 20: Taiwan Top 10 -->
-              <section class="slide" data-title="パート2-⑩ 台湾：人気商品TOP10">
-                <div class="center">
-                  <h2 style="font-weight: 500;">パート2-⑩：【台湾市場】SNS自然投稿の人気商品TOP10</h2>
-                  <p>台湾籍社員による独自調査。2025年6月～9月の日本旅行に関する自然投稿30件を集計したランキングです。</p>
-                  <div class="product-grid" style="grid-template-columns: repeat(5, 1fr);">
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=パブロン" alt="パブロンゴールドA"><h4>1. パブロンゴールドA</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=アリナミン" alt="アリナミンEXプラス"><h4>2. アリナミンEXプラス</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=EVE" alt="イブ"><h4>3. イブ</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=ロイヒ" alt="ロイヒつぼ膏"><h4>4. ロイヒつぼ膏</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=ウナクール" alt="新ウナコーワ クール"><h4>5. 新ウナコーワ クール</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=休足時間" alt="休足時間"><h4>6. 休足時間</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=大正" alt="大正製薬口内炎パッチ"><h4>7. 大正製薬口内炎パッチ</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=サロンパス" alt="サロンパス"><h4>8. サロンパス</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=太田胃散" alt="太田胃散"><h4>9. 太田胃散</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/f9e4bc/8c5a03?text=わかもと" alt="わかもと"><h4>10. 強力わかもと</h4></div>
-                  </div>
-                </div>
-              </section>
+             
+<section class="slide" data-title="パート2-⑩ 台湾：人気商品TOP10">
+    <div class="center">
+      <h2 style="font-weight: 500;">パート2-⑩：【台湾市場】SNS自然投稿の人気商品TOP10</h2>
+      <p>台湾籍社員による独自調査。2025年6月～9月の日本旅行に関する自然投稿30件を集計したランキングです。</p>
+      <div class="product-grid" style="grid-template-columns: repeat(5, 1fr);">
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=10K312yuQ7vPw8mzw3584Kl60q2yvbeqG" alt="パブロンゴールドA">
+          <h4>1. パブロンゴールドA</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1bliCugqy3pL2py7NhR-M1XbjKEyAlzfr" alt="アリナミンEXプラス">
+          <h4>2. アリナミンEXプラス</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1h8QKlnVpSxSlQwDGuF7M2sX_cKjgSBnm" alt="イブ">
+          <h4>3. イブ</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1iQsiNmOvy1hf0vfeejaDnudTAw4b0zIQ" alt="ロイヒつぼ膏">
+          <h4>4. ロイヒつぼ膏</h4>
+        </div>
+  
+        <!-- 提供画像に合わせて表記をムヒSに変更 -->
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1dPTvH3KCnJ4bF9m-3kP1wNHjyf99BRBh" alt="ムヒS">
+          <h4>5. ムヒS</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1j8BCPDRK14ekV75zqfuWe_Ok4r6zmh3e" alt="休足時間">
+          <h4>6. 休足時間</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1yciFnvQZlJmwKWUzOjjm49Fq3YDuOL_b" alt="大正製薬口内炎パッチ">
+          <h4>7. 大正製薬口内炎パッチ</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1gDo9qvd82xOWDA1NE6YDlEKl0Kt-Uu8U" alt="サロンパス">
+          <h4>8. サロンパス</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1AA5mbsqPx2jrdo8wCMm1mxgTNl1uczlK" alt="太田胃散">
+          <h4>9. 太田胃散</h4>
+        </div>
+  
+        <div class="product-card">
+          <img src="https://drive.google.com/thumbnail?id=1uk2K6AM_F_dPosbvqOYFTJ9Ku3-oKg7X" alt="強力わかもと">
+          <h4>10. 強力わかもと</h4>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  
         
               <!-- 21: Taiwan Price -->
               <section class="slide" data-title="パート2-⑪ 台湾：価格比較">
@@ -1657,19 +2042,19 @@ font-size: 1.8rem;
                   <p>実際の購入者の投稿からは、商品への信頼と日本での買い物体験の楽しさが伝わってきます。</p>
                   <div class="cards" style="grid-template-columns: 1fr 1fr; align-items: stretch; gap: 1.5rem;">
                     <div class="voice-card">
-                      <img src="https://www.facebook.com/photo/?fbid=1314882953336486&set=a.210470347111091" alt="Pabron Gold A">
+                      <img src="https://drive.google.com/thumbnail?id=10K312yuQ7vPw8mzw3584Kl60q2yvbeqG" alt="Pabron Gold A">
                       <div><p>「風邪の気配がしたらすぐ<strong>パブロンゴールド</strong>を飲んで治す。効果が早い。海外に行く時は必ず数包持っていく。」<span class="author">- 2025.02.12</span></p></div>
                     </div>
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/f9e4bc/8c5a03?text=ビタミン剤" alt="Alinamin">
+                      <img src="https://drive.google.com/thumbnail?id=1bliCugqy3pL2py7NhR-M1XbjKEyAlzfr" alt="Alinamin">
                       <div><p>「沖縄のドンキで買った<strong>アリナミン</strong>。家族みんなが愛用している。」<span class="author">- 2025.08.12</span></p></div>
                     </div>
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/f9e4bc/8c5a03?text=足の疲れに" alt="Kyusoku Jikan">
+                      <img src="https://drive.google.com/thumbnail?id=1NSx4-ztP7xKA97Uu7tv3kjS1QAc8U7OZ" alt="Kyusoku Jikan">
                       <div><p>「日本のドラッグストアは本当に買いやすい。歩きすぎた足は<strong>休足時間</strong>で癒す。」<span class="author">- 2025.09.20</span></p></div>
                     </div>
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/f9e4bc/8c5a03?text=胃腸薬" alt="Wakamoto">
+                      <img src="https://drive.google.com/thumbnail?id=1uk2K6AM_F_dPosbvqOYFTJ9Ku3-oKg7X" alt="Wakamoto">
                       <div><p>「両親に頼まれて<strong>ワカモトを12本</strong>購入。スーツケースがいっぱいになった。」<span class="author">- 2025.03.23</span></p></div>
                     </div>
                   </div>
@@ -1711,30 +2096,122 @@ font-size: 1.8rem;
                 </div>
               </section>
         
+            
               <!-- 27: Korea Top 15 -->
-              <section class="slide" data-title="パート2-⑰ 韓国：人気医薬品TOP15">
-                <div class="center">
-                  <h2 style="font-weight: 500;">パート2-⑰：【韓国市場】人気医薬品TOP15</h2>
-                  <p>韓国人観光客が実際に購入している人気商品。鎮痛・貼付剤がランキングの上位を占めています。</p>
-                  <div class="korea-top15-grid">
-                    <div class="item"><div class="rank">1</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=サロンパス" alt="サロンパス"><h4>サロンパス</h4></div>
-                    <div class="item"><div class="rank">2</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=ピップエレキバン" alt="ピップエレキバン"><h4>ピップエレキバン</h4></div>
-                    <div class="item"><div class="rank">3</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=キャベジン" alt="キャベジン"><h4>キャベジンコーワα</h4></div>
-                    <div class="item"><div class="rank">4</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=Vロート" alt="Vロートプレミアム"><h4>Vロートプレミアム</h4></div>
-                    <div class="item"><div class="rank">5</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=ムヒパッチ" alt="ムヒパッチA"><h4>ムヒパッチA</h4></div>
-                    <div class="item"><div class="rank">6</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=ロイヒ" alt="ロイヒつぼ膏"><h4>ロイヒつぼ膏</h4></div>
-                    <div class="item"><div class="rank">7</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=イブ" alt="イブ"><h4>イブ<br>3ショットプレミアム</h4></div>
-                    <div class="item"><div class="rank">8</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=バファリン" alt="バファリン"><h4>バファリン<br>プレミアムDX</h4></div>
-                    <div class="item"><div class="rank">9</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=太田胃散" alt="太田胃散"><h4>太田胃散</h4></div>
-                    <div class="item"><div class="rank">10</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=ペアアクネ" alt="ペアアクネクリームW"><h4>ペアアクネ<br>クリームW</h4></div>
-                    <div class="item"><div class="rank">11</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=龍角散" alt="龍角散"><h4>龍角散</h4></div>
-                    <div class="item"><div class="rank">12</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=口内炎パッチ" alt="口内炎パッチ"><h4>口内炎パッチ<br>大正クイックケア</h4></div>
-                    <div class="item"><div class="rank">13</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=ストッパ" alt="ストッパ"><h4>ストッパ下痢止めEX</h4></div>
-                    <div class="item"><div class="rank">14</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=ロキソニン" alt="ロキソニンS"><h4>ロキソニンS<br>ハードゲル</h4></div>
-                    <div class="item"><div class="rank">15</div><img src="https://placehold.co/120x120/d6eaff/0047a0?text=アネロン" alt="アネロン"><h4>アネロン<br>ニスキャップ</h4></div>
-                  </div>
-                </div>
-              </section>
+<section class="slide" data-title="パート2-⑰ 韓国：人気医薬品TOP15">
+  <div class="center">
+    <h2 style="font-weight: 500;">パート2-⑰：【韓国市場】人気医薬品TOP15</h2>
+    <p>グローバル・デイリー韓国マーケチームによる独自調査。2025年1月～8月のポータルサイト（NAVER),SNS(Instagram, Facebookなど）、コミュニティーなどで関連投稿50件を集計しています。</p>
+    <div class="korea-top15-grid">
+      <!-- 1 サロンパス → 台湾URL 재사용 -->
+      <div class="item">
+        <div class="rank">1</div>
+        <img src="https://drive.google.com/thumbnail?id=1gDo9qvd82xOWDA1NE6YDlEKl0Kt-Uu8U" alt="サロンパス">
+        <h4>サロンパス</h4>
+      </div>
+
+      <!-- 2 ピップエレキバン (placeholder 유지) -->
+      <div class="item">
+        <div class="rank">2</div>
+        <img src="https://drive.google.com/thumbnail?id=1rYddYWMUAEn05Q5j7nb4b90Q4tBnZ5eV" alt="ピップエレキバン">
+        <h4>ピップエレキバン</h4>
+      </div>
+
+      <!-- 3 キャベジンコーワα (placeholder 유지) -->
+      <div class="item">
+        <div class="rank">3</div>
+        <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/ダウンロード.jpeg" alt="キャベジン">
+        <h4>キャベジンコーワα</h4>
+      </div>
+
+      <!-- 4 Vロートプレミアム (placeholder 유지) -->
+      <div class="item">
+        <div class="rank">4</div>
+        <img src="https://drive.google.com/thumbnail?id=14dZ-zAvnNkHIES90TqIdL_eGLxkCEty8
+        " alt="Vロートプレミアム">
+        <h4>Vロートプレミアム</h4>
+      </div>
+
+      <!-- 5 ムヒパッチA (placeholder 유지) -->
+      <div class="item">
+        <div class="rank">5</div>
+        <img src="https://drive.google.com/thumbnail?id=1HuOyPNRkjI6YJAffL7rEZkSwQOzuEBw0" alt="ムヒパッチA">
+        <h4>ムヒパッチA</h4>
+      </div>
+
+      <!-- 6 ロイヒつぼ膏 → 台湾URL 재사용 -->
+      <div class="item">
+        <div class="rank">6</div>
+        <img src="https://drive.google.com/thumbnail?id=1iQsiNmOvy1hf0vfeejaDnudTAw4b0zIQ" alt="ロイヒつぼ膏">
+        <h4>ロイヒつぼ膏</h4>
+      </div>
+
+      <!-- 7 イブ 3ショットプレミアム → 台湾URL(イブ) 재사용 -->
+      <div class="item">
+        <div class="rank">7</div>
+        <img src="https://drive.google.com/thumbnail?id=1h8QKlnVpSxSlQwDGuF7M2sX_cKjgSBnm" alt="イブ">
+        <h4>イブ<br>3ショットプレミアム</h4>
+      </div>
+
+      <!-- 8 バファリンプレミアムDX (placeholder 유지) -->
+      <div class="item">
+        <div class="rank">8</div>
+        <img src="https://drive.google.com/thumbnail?id=1U4eQZ69Dam8RaZPQxTPzzDNo7jKhk5J0" alt="バファリン">
+        <h4>バファリン<br>プレミアムDX</h4>
+      </div>
+
+      <!-- 9 太田胃散 → 台湾URL 재사용 -->
+      <div class="item">
+        <div class="rank">9</div>
+        <img src="https://drive.google.com/thumbnail?id=1AA5mbsqPx2jrdo8wCMm1mxgTNl1uczlK" alt="太田胃散">
+        <h4>太田胃散</h4>
+      </div>
+
+      <!-- 10 ペアアクネクリームW (placeholder 유지) -->
+      <div class="item">
+        <div class="rank">10</div>
+        <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/304216.webp" alt="ペアアクネクリームW">
+        <h4>ペアアクネ<br>クリームW</h4>
+      </div>
+
+      <!-- 11 龍角散 (placeholder 유지) -->
+      <div class="item">
+        <div class="rank">11</div>
+        <img src="https://drive.google.com/thumbnail?id=1txP1sbr83PCYthRCvo-YeN6fjQ0AjXcY" alt="龍角散">
+        <h4>龍角散</h4>
+      </div>
+
+      <!-- 12 口内炎パッチ 大正クイックケア → 台湾URL 재사용 -->
+      <div class="item">
+        <div class="rank">12</div>
+        <img src="https://drive.google.com/thumbnail?id=1yciFnvQZlJmwKWUzOjjm49Fq3YDuOL_b" alt="口内炎パッチ 大正クイックケア">
+        <h4>口内炎パッチ<br>大正クイックケア</h4>
+      </div>
+
+      <!-- 13 ストッパ下痢止めEX (placeholder 유지) -->
+      <div class="item">
+        <div class="rank">13</div>
+        <img src="https://drive.google.com/thumbnail?id=1SF1voKoAHY5jKrJRY3O6P1FS6ncNDr0j" alt="ストッパ">
+        <h4>ストッパ下痢止めEX</h4>
+      </div>
+
+      <!-- 14 ロキソニンS ハードゲル (placeholder 유지: 대만 목록엔 없음) -->
+      <div class="item">
+        <div class="rank">14</div>
+        <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/ダウンロード-1.jpeg" alt="ロキソニンS">
+        <h4>ロキソニンS<br>ハードゲル</h4>
+      </div>
+
+      <!-- 15 アネロン ニスキャップ (placeholder 유지) -->
+      <div class="item">
+        <div class="rank">15</div>
+        <img src="https://drive.google.com/thumbnail?id=1UHkbeHgtqVcq_DzVOAfkWivCgsF6zDhs" alt="アネロン">
+        <h4>アネロン<br>ニスキャップ</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
         
               <!-- 28: Korea categories (fixed grouping) -->
               <section class="slide" data-title="パート2-⑱ 韓国：購入要因カテゴリ">
@@ -1777,19 +2254,19 @@ font-size: 1.8rem;
                   <p>「効果が確実」「韓国の薬より効く」といった、<strong style="color:var(--danger-color)">即効性と効果への強い信頼</strong>がコメントから伺えます。</p>
                   <div class="cards" style="grid-template-columns: 1fr 1fr; align-items: stretch; gap: 1.5rem;">
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/d6eaff/0047a0?text=イブ" alt="EVE">
+                      <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/スクリーンショット-2025-10-02-16.18.07.png" alt="EVE">
                       <div><p>「タイレノールよりイブの方が即効性があります。韓国の鎮痛剤は効かないんです…心理的なものもあるかもしれませんが。」<span class="author">- 2025.09.08</span></p></div>
                     </div>
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/d6eaff/0047a0?text=太田胃散" alt="Ohta Isan">
+                      <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2023/06/naver-blog-logo-B1AC84614D-seeklogo.com_-150x150-1.png" alt="Ohta Isan">
                       <div><p>「本当に味はひどいけど効果はすごい！その味を我慢して飲んでいるうちに…だんだん癖になります…」<span class="author">- 8ヶ月前</span></p></div>
                     </div>
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/d6eaff/0047a0?text=龍角散" alt="Ryukakusan">
+                      <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/Instagram_logo_2022.svg.png" alt="Ryukakusan">
                       <div><p>「ひどい時は薬ほどには効かないけど、喉がイガイガする時は効果がよくて、喉の痛みが和らぐ感じです〜！」<span class="author">- 2025.04.04</span></p></div>
                     </div>
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/d6eaff/0047a0?text=アネロン" alt="Aneron">
+                      <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/スクリーンショット-2025-10-02-16.18.36.png" alt="Aneron">
                       <div><p>「私もアネロンを飲んで船酔いとバイバイしました。これを飲む前は、船に乗ると半分死んだようになってました（笑）」<span class="author">- 2025.01.11</span></p></div>
                     </div>
                   </div>
@@ -1863,18 +2340,19 @@ font-size: 1.8rem;
               <section class="slide" data-title="パート2-㉓ タイ：人気商品TOP10">
                 <div class="center">
                   <h2 style="font-weight: 500;">パート2-㉓：【タイ市場】SNSで話題の人気商品 TOP10</h2>
+                  <p>グローバル・デイリータイマーケティングチームによる独自調査。2025年1月～8月の日本の医薬品に関する検索結果（SNS,Communityがメイン）を集計しています。</p>
                   <p>オンラインで頻繁に話題に上がり、タイ人観光客が検索・購入する代表的な商品群です。</p>
                   <div class="product-grid" style="grid-template-columns: repeat(5, 1fr); gap: 1rem;">
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=パブロン" alt="Pabron Gold A"><h4>パブロンゴールドA</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=サロンパス" alt="Salonpas"><h4>サロンパス</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=ロートクール" alt="Rohto Cool 40a"><h4>ロートクール40α</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=DHC" alt="DHC Vitamin C"><h4>DHC ビタミンC</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=EVE" alt="EVE Quick DX"><h4>イブクイック頭痛薬DX</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=アリナミン" alt="Alinamin EX Plus"><h4>アリナミンEXプラス</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=ルルアタック" alt="LuluAttack EX"><h4>ルルアタックEX</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=ペアアクネ" alt="Pair Acne Cream W"><h4>ペアアクネクリームW</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=龍角散" alt="Ryukakusan Direct Stick"><h4>龍角散ダイレクトスティック</h4></div>
-                    <div class="product-card"><img src="https://placehold.co/120x120/fff0f0/333?text=口内炎パッチ" alt="Taisho Quick Care"><h4>口内炎パッチ 大正クイックケア</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1Br6HhHN7K4t6rtwu1aaZPbSJsPuhpHbs" alt="Pabron Gold A"><h4>パブロンゴールドA</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1J1BvBjT7mvdJ_EDy4YRJP9D-09KGYCAH" alt="Salonpas"><h4>サロンパス</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1TI8fawdjQY3MW7iAX6vemHBhNcQ86GPV" alt="Rohto Cool 40a"><h4>ロートクール40α</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1qIFs8piLe6eLODltog3QCYnQXLt2hSHA" alt="DHC Vitamin C"><h4>DHC ビタミンC</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1mXWFQgpjkSfLSb0jjvz_CBaBmiVP6SKE" alt="EVE Quick DX"><h4>イブクイック頭痛薬DX</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1LMfHqI8V4kjYFP2f82zNpet4NFbLhPGi" alt="Alinamin EX Plus"><h4>アリナミンEXプラス</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1MbGXisxMVWhFyE105StUqmFxpRthv5rI" alt="LuluAttack EX"><h4>ルルアタックEX</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1Kfr2t0dX2Zl4evZsZLRwARq_MZOsbHQi" alt="Pair Acne Cream W"><h4>ペアアクネクリームW</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1txP1sbr83PCYthRCvo-YeN6fjQ0AjXcY" alt="Ryukakusan Direct Stick"><h4>龍角散ダイレクトスティック</h4></div>
+                    <div class="product-card"><img src="https://drive.google.com/thumbnail?id=1X6RaQJXZKzC0OExdgKf-En2OPVSJLhBJ" alt="Taisho Quick Care"><h4>口内炎パッチ 大正クイックケア</h4></div>
                   </div>
                   <p class="source" style="margin-top: 1rem;">※明確な参考資料に基づく順位付けはなく、順不同です。</p>
                 </div>
@@ -1930,19 +2408,19 @@ font-size: 1.8rem;
                   <p>タイ人消費者のレビューからは、日本製品の効果への驚きと信頼が伝わってきます。</p>
                   <div class="cards" style="grid-template-columns: 1fr 1fr; align-items: stretch; gap: 1.5rem;">
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/fff0f0/333?text=パブロン" alt="Pabron Gold A">
+                      <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/スクリーンショット-2025-10-02-16.17.48.png" alt="Pabron Gold A">
                       <div><p>「この風邪薬は本当にすごい。一包飲んだだけで、朝までぐっすり眠れた。」</p></div>
                     </div>
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/fff0f0/333?text=サロンパス" alt="Salonpas Lotion">
+                      <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/スクリーンショット-2025-10-02-16.16.53.png" alt="Salonpas Lotion">
                       <div><p>「痛いところに塗ると温かくなります。腰痛の時に使ってみたら、すごく効きました。使いやすくて便利です。」</p></div>
                     </div>
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/fff0f0/333?text=目薬" alt="Eyedrops">
+                      <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/スクリーンショット-2025-10-02-16.17.54.png" alt="Eyedrops">
                       <div><p>「この目薬は本当に効果があります。目が乾いた時や、かゆみ・アレルギーが出た時にさすと、すぐにかゆみが治まります。10点満点！」</p></div>
                     </div>
                     <div class="voice-card">
-                      <img src="https://placehold.co/150x150/fff0f0/333?text=EVE" alt="EVE">
+                      <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2025/10/スクリーンショット-2025-10-02-16.16.37.png" alt="EVE">
                       <div><p>「以前は別の薬を使っていましたが効かなくなり、EVEに変えたら本当に効果がありました。飲んでからわずか10分で痛みがすっかり消えました。」</p></div>
                     </div>
                   </div>
@@ -2232,17 +2710,17 @@ font-size: 1.8rem;
       <p>各国調査で判明した購買動機に対応する、メーカー・小売店双方で検討可能な施策例です</p>
       <div class="cards" style="grid-template-columns: repeat(3, 1fr); margin-top: 2rem; align-items: stretch;">
         <div class="strategy-card">
-          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200&fit=crop" alt="国別陳列" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <img src="https://www.japankuru.com/gld-kanri/data/uploads/2025/09/DSC00762-1-1-800x533.jpg" alt="国別陳列" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
           <h3>国別特性に応じた陳列の工夫</h3>
           <p>韓国：鎮痛剤コーナーの拡充検討、<br>台湾：価格優位性の表示、<br>中国：定番ブランドの前面配置、<br>タイ：気候対応商品の集約陳列など</p>
         </div>
         <div class="strategy-card">
-          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop" alt="多言語案内" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <img src="https://www.japankuru.com/gld-kanri/data/uploads/2025/09/D05_2799-800x533.jpg" alt="多言語案内" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
           <h3>購買理由に特化した多言語案内</h3>
           <p>「なぜ日本で購入するのか」の理由別案内の充実。価格差、品質・成分の特徴、日本限定性など、動機の見える化を検討</p>
         </div>
         <div class="strategy-card">
-          <img src="https://images.unsplash.com/photo-1586473219010-2ffc57b0d282?w=300&h=200&fit=crop" alt="セット販売" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <img src="https://img.japankuru.com/prg_img/img/img2018121714133871797900.jpg" alt="セット販売" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
           <h3>用途別セット商品の展開</h3>
           <p>「旅行常備薬セット」「家族向けベーシックセット」など、使用場面別の商品構成により選択負担の軽減を図る</p>
         </div>
@@ -2479,312 +2957,199 @@ font-size: 1.8rem;
         
         </div>
 
-<script>
-    /* =========================================================================
-   GLD Presentation App
-   - data-title 기반으로 슬라이드 제목/페이지 번호 자동 동기화
-   - #hash(1-indexed) 딥링크
-   - 키보드 네비(← → Space Home End)
-   - A11y: aria-*, aria-hidden 토글
-   - Chart.js(3.x) 라인차트 초기화
-   ========================================================================= */
-
-(function () {
-  'use strict';
-
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  if (!slides.length) return;
-
-  const titleEl = document.getElementById('slideTitle');
-  const numEl = document.getElementById('slideNumber');
-  const footerNumEl = document.getElementById('pageNum');
-  const nextBtn = document.getElementById('nextButton');
-  const prevBtn = document.getElementById('prevButton');
-
-  const titles = slides.map((s, i) => (s.dataset.title || `スライド ${i + 1}`).trim());
-
-  // 초기 인덱스: #hash → 1-index
-  let current = readHashIndex();
-
-  // A11y init
-  slides.forEach((s, i) => {
-    s.setAttribute('role', 'region');
-    s.setAttribute('aria-roledescription', 'slide');
-    s.setAttribute('aria-label', titles[i]);
-    if (i !== current) s.setAttribute('aria-hidden', 'true');
-  });
-
-  // Bind
-  if (nextBtn) nextBtn.addEventListener('click', () => showSlide(current + 1));
-  if (prevBtn) prevBtn.addEventListener('click', () => showSlide(current - 1));
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); showSlide(current + 1); }
-    else if (e.key === 'ArrowLeft') { e.preventDefault(); showSlide(current - 1); }
-    else if (e.key.toLowerCase() === 'home') { e.preventDefault(); showSlide(0); }
-    else if (e.key.toLowerCase() === 'end') { e.preventDefault(); showSlide(slides.length - 1); }
-  });
-
-  window.addEventListener('hashchange', () => {
-    const idx = readHashIndex();
-    if (!Number.isNaN(idx) && idx !== current) {
-      showSlide(idx);
-    }
-  });
-
-  // Start
-  showSlide(current);
-  initVisitorChart();
-
-  /* ------------------ helpers ------------------ */
-  function readHashIndex() {
-    const raw = (window.location.hash || '').replace('#', '').trim();
-    const n = parseInt(raw, 10);
-    if (!Number.isNaN(n) && n >= 1 && n <= slides.length) return n - 1;
-    return 0;
-  }
-
-  function updateHash() {
-    const target = `#${current + 1}`;
-    if (window.location.hash !== target) {
-      window.location.hash = target;
-    }
-  }
-
-  function showSlide(n) {
-    const next = (n + slides.length) % slides.length;
-
-    // deactivate
-    slides[current].classList.remove('active');
-    slides[current].setAttribute('aria-hidden', 'true');
-
-    // activate
-    current = next;
-    slides[current].classList.add('active');
-    slides[current].setAttribute('aria-hidden', 'false');
-
-    // header/footer
-    const label = titles[current] || `スライド ${current + 1}`;
-    const fraction = `${current + 1} / ${slides.length}`;
-    if (titleEl) titleEl.textContent = label;
-    if (numEl) numEl.textContent = fraction;
-    if (footerNumEl) footerNumEl.textContent = fraction;
-
-    updateHash();
-  }
-
-})();
-
-/* ------------------ Chart.js: 月別推移 ------------------ */
-function initVisitorChart() {
-  const ctx = document.getElementById('visitorChart');
-  if (!ctx || typeof Chart === 'undefined') return;
-
-  // 2019 / 2024 / 2025(実績+予測) — 값 단위: 万人
-  const data2019 = [268.9, 260.4, 276.0, 292.7, 277.3, 288.0, 299.1, 252.0, 227.3, 249.7, 244.1, 252.6];
-  const data2024 = [268.8, 278.8, 308.2, 304.3, 304.0, 314.1, 329.3, 293.3, 287.2, 331.2, 318.7, 348.9];
-  const data2025Actual = [378.2, 325.8, 349.8, 390.9, 369.4, 337.8, 343.7, 342.8, null, null, null, null];
-  const data2025Forecast = [null, null, null, null, null, null, null, null, 300.0, 320.0, 350.0, 380.0];
-
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-      datasets: [
-        {
-          label: '2019年 実績',
-          data: data2019,
-          borderColor: 'rgba(108,117,125,0.7)',
-          borderWidth: 2,
-          tension: 0.3,
-          pointRadius: 3,
-          borderDash: [5, 5],
-          fill: false
-        },
-        {
-          label: '2024年 実績',
-          data: data2024,
-          borderColor: 'rgba(150,150,150,0.8)',
-          backgroundColor: 'rgba(150,150,150,0.1)',
-          borderWidth: 2,
-          tension: 0.3,
-          pointRadius: 3,
-          fill: false
-        },
-        {
-          label: '2025年 (実績)',
-          data: data2025Actual,
-          borderColor: 'rgba(0,122,255,1)',
-          backgroundColor: 'rgba(0,122,255,0.1)',
-          borderWidth: 4,
-          tension: 0.3,
-          pointRadius: 4,
-          pointBackgroundColor: 'rgba(0,122,255,1)',
-          fill: false
-        },
-        {
-          label: '2025年 (予測)',
-          data: data2025Forecast,
-          borderColor: 'rgba(0,122,255,1)',
-          borderWidth: 4,
-          tension: 0.3,
-          borderDash: [10, 5],
-          pointRadius: 4,
-          pointBackgroundColor: 'rgba(0,122,255,1)',
-          fill: false
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: false,
-          min: 200,
-          title: {
-            display: true,
-            text: '訪日外客数 (万人)',
-            font: { size: 14 }
-          }
-        },
-        x: {
-          title: {
-            display: true,
-            text: '月',
-            font: { size: 14 }
-          }
-        }
-      },
-      plugins: {
-        legend: { position: 'top' },
-        tooltip: {
-          mode: 'index',
-          intersect: false,
-          callbacks: {
-            label: function(context) {
-              let label = context.dataset.label || '';
-              if (label) label += ': ';
-              if (context.parsed.y !== null) label += context.parsed.y + ' 万人';
-              return label;
+        <script>
+            /* =========================================================================
+               GLD Presentation App — Consolidated (No duplicates)
+               - Slide title/page sync (header/footer)
+               - Deep-link via #hash (1-indexed)
+               - Keyboard: ← → Space Home End
+               - A11y: aria-* / tabindex
+               - Chart.js (single init; safe destroy)
+               ========================================================================= */
+            (function () {
+              'use strict';
+            
+              const slides = Array.from(document.querySelectorAll('.slide'));
+              if (!slides.length) return;
+            
+              const titleEl      = document.getElementById('slideTitle');
+              const numEl        = document.getElementById('slideNumber');
+              const footerNumEl  = document.getElementById('pageNum');
+              const nextBtn      = document.getElementById('nextButton');
+              const prevBtn      = document.getElementById('prevButton');
+            
+              const titles = slides.map((s, i) => (s.dataset.title || `スライド ${i + 1}`).trim());
+            
+              function readHashIndex() {
+                const m = location.hash.match(/^#(\d+)$/);
+                const n = m ? parseInt(m[1], 10) - 1 : 0;
+                return (Number.isFinite(n) && n >= 0 && n < slides.length) ? n : 0;
+              }
+            
+              let current = readHashIndex();
+            
+              // a11y init
+              slides.forEach((s, i) => {
+                s.setAttribute('role', 'region');
+                s.setAttribute('aria-roledescription', 'slide');
+                s.setAttribute('aria-label', titles[i]);
+                s.setAttribute('aria-hidden', i === current ? 'false' : 'true');
+                s.setAttribute('tabindex', '0');
+              });
+            
+              function syncHeaderFooter() {
+                const label = titles[current] || `スライド ${current + 1}`;
+                const frac  = `${current + 1} / ${slides.length}`;
+                if (titleEl)     titleEl.textContent = label;
+                if (numEl)       numEl.textContent = frac;
+                if (footerNumEl) footerNumEl.textContent = frac;
+            
+                // optional in-hero progress bar
+                const bar = slides[current].querySelector('.progress-bar');
+                if (bar) {
+                  const pct = Math.round(((current + 1) / slides.length) * 100);
+                  bar.style.width = `${pct}%`;
+                  bar.setAttribute('aria-valuenow', String(pct));
+                }
+              }
+            
+              function showSlide(n, fromHashChange = false) {
+                const next = (n + slides.length) % slides.length;
+                if (next === current && !fromHashChange) return;
+            
+                slides[current].classList.remove('active');
+                slides[current].setAttribute('aria-hidden', 'true');
+            
+                current = next;
+            
+                slides[current].classList.add('active');
+                slides[current].setAttribute('aria-hidden', 'false');
+            
+                if (!fromHashChange) location.hash = `#${current + 1}`;
+                syncHeaderFooter();
+              }
+            
+              // Bind buttons (use existing ones in HTML; do NOT create duplicates)
+              prevBtn?.addEventListener('click', () => showSlide(current - 1));
+              nextBtn?.addEventListener('click', () => showSlide(current + 1));
+            
+              // Keyboard
+              window.addEventListener('keydown', (e) => {
+                if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); showSlide(current + 1); }
+                else if (['ArrowLeft', 'PageUp'].includes(e.key))    { e.preventDefault(); showSlide(current - 1); }
+                else if (e.key === 'Home')                           { e.preventDefault(); showSlide(0); }
+                else if (e.key === 'End')                            { e.preventDefault(); showSlide(slides.length - 1); }
+              });
+            
+              // Deep-link
+              window.addEventListener('hashchange', () => showSlide(readHashIndex(), true));
+            
+              // Start
+              showSlide(current, true);
+            
+              // Chart init once
+              initVisitorChart();
+            })();
+            
+            /* ------------------ Chart.js: 月別推移 (single init; safe destroy) ------------------ */
+            function initVisitorChart() {
+              const canvas = document.getElementById('visitorChart');
+              if (!canvas || typeof Chart === 'undefined') return;
+            
+              // If re-initialized (e.g., hot-reload), destroy safely
+              if (canvas.__chartInstance) {
+                try { canvas.__chartInstance.destroy(); } catch (e) {}
+              }
+            
+              // 2019 / 2024 / 2025(実績+予測) — 値の単位: 万人（提供値そのまま）
+              const data2019        = [268.9, 260.4, 276.0, 292.7, 277.3, 288.0, 299.1, 252.0, 227.3, 249.7, 244.1, 252.6];
+              const data2024        = [268.8, 278.8, 308.2, 304.3, 304.0, 314.1, 329.3, 293.3, 287.2, 331.2, 318.7, 348.9];
+              const data2025Actual  = [378.2, 325.8, 349.8, 390.9, 369.4, 337.8, 343.7, 342.8, null, null, null, null];
+              const data2025Forecast= [null, null, null, null, null, null, null, null, 300.0, 320.0, 350.0, 380.0];
+            
+              const config = {
+                type: 'line',
+                data: {
+                  labels: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+                  datasets: [
+                    {
+                      label: '2019年 実績',
+                      data: data2019,
+                      borderColor: 'rgba(108,117,125,0.7)',
+                      borderWidth: 2,
+                      tension: 0.3,
+                      pointRadius: 3,
+                      borderDash: [5, 5],
+                      fill: false
+                    },
+                    {
+                      label: '2024年 実績',
+                      data: data2024,
+                      borderColor: 'rgba(150,150,150,0.8)',
+                      backgroundColor: 'rgba(150,150,150,0.1)',
+                      borderWidth: 2,
+                      tension: 0.3,
+                      pointRadius: 3,
+                      fill: false
+                    },
+                    {
+                      label: '2025年 (実績)',
+                      data: data2025Actual,
+                      borderColor: 'rgba(0,122,255,1)',
+                      backgroundColor: 'rgba(0,122,255,0.1)',
+                      borderWidth: 4,
+                      tension: 0.3,
+                      pointRadius: 4,
+                      pointBackgroundColor: 'rgba(0,122,255,1)',
+                      fill: false
+                    },
+                    {
+                      label: '2025年 (予測)',
+                      data: data2025Forecast,
+                      borderColor: 'rgba(0,122,255,1)',
+                      borderWidth: 4,
+                      tension: 0.3,
+                      borderDash: [10, 5],
+                      pointRadius: 4,
+                      pointBackgroundColor: 'rgba(0,122,255,1)',
+                      fill: false
+                    }
+                  ]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  interaction: { mode: 'index', intersect: false },
+                  scales: {
+                    y: {
+                      beginAtZero: false,
+                      min: 200,
+                      title: { display: true, text: '訪日外客数 (万人)', font: { size: 14 } }
+                    },
+                    x: {
+                      title: { display: true, text: '月', font: { size: 14 } }
+                    }
+                  },
+                  plugins: {
+                    legend: { position: 'top' },
+                    tooltip: {
+                      callbacks: {
+                        label: function(context) {
+                          let label = context.dataset.label || '';
+                          if (label) label += ': ';
+                          if (context.parsed.y !== null) label += context.parsed.y + ' 万人';
+                          return label;
+                        }
+                      }
+                    }
+                  }
+                }
+              };
+            
+              canvas.__chartInstance = new Chart(canvas.getContext('2d'), config);
             }
-          }
-        }
-      }
-    }
-  });
-}
-
-(() => {
-  const slides = [...document.querySelectorAll('.slide')];
-  const titleEl = document.getElementById('slideTitle');
-  const numEl = document.getElementById('slideNumber');
-  const nextBtn = document.createElement('button');
-  const prevBtn = document.createElement('button');
-
-  // ── ナビボタン作成
-  nextBtn.className = 'nav-btn next'; nextBtn.setAttribute('aria-label','次のスライド');
-  prevBtn.className = 'nav-btn prev'; prevBtn.setAttribute('aria-label','前のスライド');
-  nextBtn.textContent = '›'; prevBtn.textContent = '‹';
-  document.querySelector('.main').append(prevBtn, nextBtn);
-
-  let idx = 0;
-  const clamp = i => (i + slides.length) % slides.length;
-
-  function setActive(i, pushHash = true) {
-    idx = clamp(i);
-    slides.forEach((s,j) => s.classList.toggle('active', j === idx));
-    const t = slides[idx].dataset.title || `スライド ${idx+1}`;
-    const pg = `${idx+1} / ${slides.length}`;
-    if (titleEl) titleEl.textContent = t;
-    if (numEl) numEl.textContent = pg;
-
-    // ヒーロー内の進捗バーを更新（あれば）
-    const bar = slides[idx].querySelector('.progress-bar');
-    if (bar) {
-      const pct = Math.round(((idx+1) / slides.length) * 100);
-      bar.style.width = `${pct}%`;
-      bar.setAttribute('aria-valuenow', pct);
-    }
-
-    // ハッシュ同期（直接リンク可）
-    if (pushHash) location.hash = `#${idx+1}`;
-  }
-
-  function go(n) { setActive(idx + n); }
-  nextBtn.addEventListener('click', () => go(1));
-  prevBtn.addEventListener('click', () => go(-1));
-
-  // キー操作 ←→ / PgUp PgDn / Home End
-  window.addEventListener('keydown', (e) => {
-    if (['ArrowRight','PageDown'].includes(e.key)) { e.preventDefault(); go(1); }
-    else if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); go(-1); }
-    else if (e.key === 'Home') { e.preventDefault(); setActive(0); }
-    else if (e.key === 'End') { e.preventDefault(); setActive(slides.length-1); }
-  });
-
-  // クリックで進む（背景クリック時のみ）
-  document.querySelector('.main').addEventListener('click', (e) => {
-    const clickable = e.target.closest('a,button,input,textarea,select,details,summary');
-    if (!clickable) go(1);
-  });
-
-  // ハッシュ（#5 等）で特定ページへ
-  function initFromHash() {
-    const m = location.hash.match(/^#(\d+)$/);
-    const n = m ? parseInt(m[1],10) - 1 : 0;
-    setActive(isFinite(n) ? n : 0, false);
-  }
-  window.addEventListener('hashchange', initFromHash);
-  initFromHash();
-
-  // ── Chart.js（#visitorChart に描画）
-  const vc = document.getElementById('visitorChart');
-  if (vc && window.Chart) {
-    // 例：2019/2023/2024 実績 + 2025予測（月別の概形）
-    const labels = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-    const data2019 = [268, 259, 276, 292, 277, 288, 299, 252, 227, 266, 244, 240]; // 万人相当の概形
-    const data2024 = [320, 298, 340, 355, 360, 365, 370, 340, 330, 350, 360, 349]; // 概形（例）
-    const data2025 = [330, 315, 360, 370, 380, 390, 400, 370, 360, 380, 390, 435]; // 予測（例）
-    // 単位は見た目合わせの相対値。正確な値を入れる場合は差し替えてください。
-
-    new Chart(vc.getContext('2d'), {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [
-          { label: '2019（実績・概形）', data: data2019, borderWidth: 2, fill: false, tension: .25 },
-          { label: '2024（実績・概形）', data: data2024, borderWidth: 2, fill: false, tension: .25 },
-          { label: '2025（予測・概形）', data: data2025, borderWidth: 2, fill: false, borderDash:[6,4], tension: .25 },
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: 'nearest', intersect: false },
-        plugins: {
-          legend: { position: 'bottom' },
-          tooltip: { callbacks: {
-            label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}（相対）`
-          }}
-        },
-        scales: {
-          y: { beginAtZero: false, ticks: { callback: v => v } },
-          x: { ticks: { autoSkip: true, maxRotation: 0 } }
-        }
-      }
-    });
-  }
-
-  // ── アクセシビリティ小改善
-  document.querySelector('.header')?.setAttribute('role', 'banner');
-  document.querySelector('.footer')?.setAttribute('role', 'contentinfo');
-  slides.forEach(s => s.setAttribute('tabindex','0')); // フォーカス可能に
-})();
-
-
-
-</script>
+            </script>
+            
 
 
         </body>
