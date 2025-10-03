@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プレゼンテーション台本</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background: rgba(0,0,0,0.8);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .controls button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .controls button:hover {
+            background: #0056CC;
+        }
+        
+        .slide {
+            background: #2a2a2a;
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #007AFF;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .slide-number {
+            color: #007AFF;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .slide-title {
+            color: #FFD60A;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .slide-content {
+            font-size: 20px;
+            line-height: 1.9;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #FFD60A 0%, #FF9500 100%);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .current-slide {
+            border-left-color: #FF3B30;
+            background: #3a2a2a;
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 25px;
+        }
+        
+        .nav-btn {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #0056CC;
+            transform: scale(1.05);
+        }
+        
+        .nav-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #333;
+            z-index: 1001;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #007AFF, #FF3B30);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        ruby {
+            ruby-align: center;
+        }
+        
+        rt {
+            font-size: 0.7em;
+            color: #999;
+        }
+        
+        strong {
+            color: #FFD60A;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .slide {
+                padding: 20px;
+            }
+            
+            .slide-content {
+                font-size: 18px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+    
+    <div class="controls">
+        <button onclick="increaseFontSize()">A+</button>
+        <button onclick="decreaseFontSize()">A-</button>
+        <button onclick="toggleHighContrast()">コントラスト</button>
+        <button onclick="goToSlide()">移動</button>
+    </div>
+
+    <div class="slide" data-slide="1">
+        <span class="slide-number">スライド1</span>
+        <div class="slide-title">表紙</div>
+        <div class="slide-content">
+            皆様、本日はお招きいただき、誠にありがとうございます。グローバル・デイリからまいりました、金と申します。本日は、「各国SNS調査から見える医薬品消費トレンド」と共にインバウンド市場動向を題しまして、お話しさせていただきます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="2">
+        <span class="slide-number">スライド2</span>
+        <div class="slide-title">プログラム構成</div>
+        <div class="slide-content">
+            本日はこちらの4つのパートで構成しております。まず、インバウンド市場全体の動向を数字で確認し、次に<ruby>訪日<rt>ほうにち</rt></ruby>観光客総数約70％の市場である、中国・台湾・韓国・タイ・欧米をメインに、各国ごとのリアルな消費パターンをSNS調査から深掘りします。そして、その分析結果を具体的なアクションに繋げるための施策をご提案し、最後に、変化の速い市場に対応し続けるための体制についてお話しいたします。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="3">
+        <span class="slide-number">スライド3</span>
+        <div class="slide-title">会社概要</div>
+        <div class="slide-content">
+            本題に入る前に、私ども株式会社グローバル・デイリーについて少しだけご紹介させてください。私どもは、2008年からインバウンド事業に特化してきた広告代理店です。7カ国籍の社員が在籍しており、常に「外国の消費者の目線」を大切に、調査からプロモーションの実行までをワンストップでご支援してまいりました。本日のデータも、こうした我々の強みである、独自の海外リサーチ力と知見に基づいて分析したものです。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="4">
+        <span class="slide-number">スライド4</span>
+        <div class="slide-title">【市場概観①】訪日外客数の推移</div>
+        <div class="slide-content">
+            それでは、市場から見ていきます。こちらのグラフは、<ruby>訪日<rt>ほうにち</rt></ruby>外客数の推移です。コロナ禍を経て力強く回復し、2025年には過去最高であった2019年を大きく上回り、4,000万人に迫る勢いであることが見て取れます。（8月までの累計　2,838万人）
+        </div>
+    </div>
+
+    <div class="slide" data-slide="5">
+        <span class="slide-number">スライド5</span>
+        <div class="slide-title">【市場概観①-詳細】月別・訪日外客数</div>
+        <div class="slide-content">
+            月別推移を見ますと、2025年の実績は多くの月で2019年、そして2024年の水準を上回って推移しており、インバウンド市場は単なる「回復」ではなく、「新たな成長」のフェーズに入ったことが明確に示されています。<br>
+            もちろん、足元の為替動向やオーバーツーリズム対策、そして来年から始まる免税制度（還付）などの政策転換により、一時的な伸び悩みが表面化する可能性はあります。<br>
+            しかし、日本政府は2030年までに6,000万人・15兆円・消費単価25万円という明確な目標を掲げています。ここに示した<strong>オレンジの水平線（500万人/月）</strong>が、そのランレートの目安です。<br>
+            したがって市場は一時的な懸念を越え、<strong>消費額の増大を伴う「質的な拡大」</strong>を継続すると見ています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="6">
+        <span class="slide-number">スライド6</span>
+        <div class="slide-title">【市場概観②】国籍・地域別構成比</div>
+        <div class="slide-content">
+            では、どのような国・地域から日本へいらしているのでしょうか。こちらは今年1月から8月までのデータですが、中国、韓国、台湾の東アジア3カ国だけで、全体の約6割を占めており、依然としてインバウンド市場の<ruby>中核<rt>ちゅうかく</rt></ruby>を<ruby>担って<rt>になって</rt></ruby>います。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="7">
+        <span class="slide-number">スライド7</span>
+        <div class="slide-title">【市場概観③】旅行消費額の推移</div>
+        <div class="slide-content">
+            人数だけでなく、日本で使われるお金、つまり旅行消費額も見てみます。こちらも訪日客数と同様に力強く成長しており、2024年には過去最高の8.1兆円を記録。そして2025年は、上半期の時点ですでに4.8兆円に達しており、年間での最高額更新が確実視されています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="8">
+        <span class="slide-number">スライド8</span>
+        <div class="slide-title">【市場概観④】消費額の内訳</div>
+        <div class="slide-content">
+            その消費の内訳がこちらです。宿泊費に次いで大きいのが「買物代」で、全体の4分の1以上を占めています。本日のテーマである医薬品も、この「買物」カテゴリーの重要な要素です。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="9">
+        <span class="slide-number">スライド9</span>
+        <div class="slide-title">【市場概観⑤】国籍別1人当たり買物代</div>
+        <div class="slide-content">
+            国別の「買物代」では、中国が他国を圧倒的にリードしているように見えますが、これは旅行の総額に過ぎません。韓国と中国では平均滞在日数（韓国 3.7泊 vs 中国 8.3泊）に大きな違いがあるため、これを<strong>「1日あたりの支出額」</strong>という視点で見直す必要があります。その結果、韓国人旅行者が<strong>「短期間で効率よく消費する短期集中型リピーター」であることが明確になります。総額だけでは見えない、この各国の消費行動</strong>こそが、真に重要な市場特性なのです。このように、一つの資料でもどの「基準」で見るかによって、解釈は大きく変わります。表面的な数字ではなく、各国の旅行スタイルや消費者特性を深く分析することこそが、市場を理解する鍵となります。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="10">
+        <span class="slide-number">スライド10</span>
+        <div class="slide-title">【市場概観⑥】旅行前の情報収集実態</div>
+        <div class="slide-content">
+            消費行動の前に、旅行者が「どこで情報を得ているか」を見てみましょう。左の公式調査では動画サイトやSNSが上位ですが、右側の「実際の情報収集パターン」がより重要です。中国なら<ruby>小紅書<rt>しょうこうしょ</rt></ruby>（RED）、韓国ならInstagramや個人ブログ、というように、国ごとにメインとなる情報源が全く異なります。このことから、各国で主流のプラットフォームを直接分析しなければ、リアルな消費者インサイトは見えてこない、ということが言えます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="11">
+        <span class="slide-number">スライド11</span>
+        <div class="slide-title">【市場概観⑧】消費パターンの変化予測</div>
+        <div class="slide-content">
+            市場全体の変化の<ruby>兆候<rt>ちょうこう</rt></ruby>も5つのキーワードで整理しました。単に「モノ」を買うだけでなく、体験価値や環境配慮、自分に合った提案など、より高度で複合的な価値が求められる時代へとシフトしています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="12">
+        <span class="slide-number">スライド12</span>
+        <div class="slide-title">【市場概観⑦】まとめ</div>
+        <div class="slide-content">
+            ここまでの市場概観をまとめます。インバウンド市場は「回復」から「新たな成長」フェーズへと移行し、市場は活況です。しかしその一方で、旅行者の情報収集の方法や消費パターンは国ごとに多様化しています。ここからは、各国のSNSから見えたリアルな声に、さらに深く踏み込んでまいります。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="13">
+        <span class="slide-number">スライド13</span>
+        <div class="slide-title">パート2-① 中国市場イントロ</div>
+        <div class="slide-content">
+            パート2、まずは最大のマーケットである中国市場から分析していきます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="14">
+        <span class="slide-number">スライド14</span>
+        <div class="slide-title">パート2-② 中国：調査方法</div>
+        <div class="slide-content">
+            今回は、若者の間で絶大な影響力を持つSNS「<ruby>小紅書<rt>しょうこうしょ</rt></ruby>（RED）」での人気投稿と、現地での購入状況が見れるECサイト「タオバオ」の取引データを組み合わせて分析しました。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="15">
+        <span class="slide-number">スライド15</span>
+        <div class="slide-title">パート2-③ 中国：SNS マストバイ2025</div>
+        <div class="slide-content">
+            まず、「日本ドラッグストア マストバイ」というキーワードを、私たちの分析ツールを利用し検索しました。対象は直近半年間で「いいね」が最も多かった投稿20件です。その中から化粧品や日用品を取り除き、医薬品だけをピックアップした結果が、今ご覧いただいている商品になります。「じゃあ最初から『日本ドラッグ マストバイ（医薬品）』と検索すればいいんじゃないの？」と思う方もいるかもしれません。でも実はそう簡単ではなくて、法律やプラットフォームの規定で医薬品をおすすめする行為は制限されています。なので、ドラックを率直におススメする投稿をすること自体が難しく、また検索をしてもあまり参考になる投稿が出てこないし、実際に役立つ商品はほとんど見つからないです。<br>
+            話を戻して旅行客が出発前に調べて「いいね」を押した投稿の中で登場していた医薬品が、こちらになりますが、中国市場に詳しい方からすると、「え、意外だな」と感じる商品もあると思います。目薬、サプリメント、鎮痛剤、ジェルタイプのものなど──どこか馴染みがありつつも新鮮に見えるラインナップかと思います。こうした商品は、多くがプロモーション投稿の可能性が高いと私たちは考えております。実際、ほぼ毎月のように新しい日本の商品がREDで紹介されていて、それだけ競争が激しい市場になっているわけです。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="16">
+        <span class="slide-number">スライド16</span>
+        <div class="slide-title">パート2-④ 中国：※観光客写真ラインナップ追加</div>
+        <div class="slide-content">
+            では、実際に消費者はどのような商品を買っているのでしょうか。投稿を見ていると、消費者は商品を購入して写真は撮りますが、商品名までははっきり書かないことが多いです。なので「どのくらいの人が購入しているのか」を正確にポスティング数で把握するのは難しいです。ただ、写真を見ると大体どんな商品かは推測できます。例えば──太田胃散、イブ、サロンパス、龍角散…。先ほど「いいね」が多かった投稿に出てきた商品とはまた違った顔ぶれですね。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="17">
+        <span class="slide-number">スライド17</span>
+        <div class="slide-title">パート2-⑤ 中国：投稿数ランキング</div>
+        <div class="slide-content">
+            そして、これらの商品の投稿数を見てみると、意外に多いものもあれば、少ないものもあります。投稿が多い商品は、必ずしもインフルエンサーによるものではなく、バイヤーやKOC、一般の消費者から自然に取り上げられているケースが多いです。消費者は商品を購入するとき、過去の投稿や一般ユーザーのレビューなど、さまざまな情報を見てクロスチェックしながら購入する傾向があります。以前であれば「新しい薬だ」と聞くだけで、あまり深く考えずに購入するケースが多かったのですが、今ではより慎重に比較検討した上で選ぶようになっています。特に「薬」というのはデリケートな分野ですから、その傾向は一層強く表れています。つまり、メーカー側としては長期的に商品を露出させ続けることが不可欠になっている、ということです。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="18">
+        <span class="slide-number">スライド18</span>
+        <div class="slide-title">パート2-⑥ 中国：代理購入と価格差</div>
+        <div class="slide-content">
+            こちらは、ECサイト「タオバオ」での販売価格と日本の価格を比較したものです。中国のサイトを見ると、多くの商品は日本で買うより安い価格で手に入ることがあります。ですが「薬」であるがゆえに、たとえ公式サイトで販売されていたとしても、日本の現地で売られている商品と違いがあるのではないかと不安に感じる人が多いです。だからこそ、わざわざ旅行先の日本で購入する、という選択をする消費者が少なくありません。これは、医薬品というカテゴリーだからより鮮明に見える特徴だとも言えると思います。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="19">
+        <span class="slide-number">スライド19</span>
+        <div class="slide-title">パート2-⑦ 中国：重要インサイト</div>
+        <div class="slide-content">
+            これらの調査から、中国市場における3つの重要なインサイトが見えてきました中国の消費者はまず「マストバイ投稿」で商品を知りますが、それだけでは決めず、一般ユーザーのレビューを見て比較し、確かめてから購入します。だからメーカーにとっては長期的な露出が欠かせません。さらに、投稿で目立つ商品と実際に買われる商品にはギャップがあります。人気投稿では目薬や栄養剤が多い一方、実際は　オタイサンやイブ、サロンパス、龍角散など定番薬が多いのです。つまり長年愛されてきた「定番の神薬」が築されてきた口コミ。そして三つ目、中国のサイトの方が安くても薬は不安が残るため、旅行中に現地で買う人が多い。日本で買う安心感こそが最大の価値になっているのです。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="20">
+        <span class="slide-number">スライド20</span>
+        <div class="slide-title">パート2-⑧ 中国：法的リスク</div>
+        <div class="slide-content">
+            しかし、中国市場でプロモーションを行う際には、最も注意すべき点があります。それは、医薬品の持ち込みに関する厳しい法的リスクです。個人利用の範囲を超える大量購入や郵送は、税関での<ruby>没収<rt>ぼっしゅう</rt></ruby>や罰金の対象となる可能性が非常に高いです。この点を外国人にに伝えないまま販売を促進することは、大きなリスクを伴います。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="21">
+        <span class="slide-number">スライド21</span>
+        <div class="slide-title">パート2-⑨ 中国：PR 5つの訴求</div>
+        <div class="slide-content">
+            こうした背景を踏まえ、中国市場でのPRには、単に人気を伝えるだけでなく、ご覧の5つのポイント、「効果」「安全性」「ターゲット」「使用場面」「施策」を<ruby>網羅<rt>もうら</rt></ruby>し、信頼を勝ち取る情報設計が不可欠です。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="22">
+        <span class="slide-number">スライド22</span>
+        <div class="slide-title">パート2-⑩ 台湾市場イントロ</div>
+        <div class="slide-content">
+            続いて、日本との関係が深く、成熟したマーケットである台湾市場を見ていきます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="23">
+        <span class="slide-number">スライド23</span>
+        <div class="slide-title">パート2-⑪ 台湾：人気商品TOP10</div>
+        <div class="slide-content">
+            こちらは、弊社台湾籍社員が、実際のSNS自然投稿30件を分析し、特に言及が多かった人気商品TOP10です。「パブロン」や「アリナミン」など、台湾でも長年親しまれてきたブランドが上位を占めています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="24">
+        <span class="slide-number">スライド24</span>
+        <div class="slide-title">パート2-⑫ 台湾：価格比較</div>
+        <div class="slide-content">
+            では、なぜ台湾の旅行者はこれらの商品を日本で買うのでしょうか。その大きな理由が、この価格差です。ご覧の通り、多くの商品が台湾で購入するよりも日本で買う方が圧倒的に安く、特に「サロンパス」などは2倍以上の価格差があり、これが強力な購入インセンティブとなっています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="25">
+        <span class="slide-number">スライド25</span>
+        <div class="slide-title">パート2-⑬ 台湾：購入理由①</div>
+        <div class="slide-content">
+            購入理由をさらに深掘りしてみましょう。「パブロン」は台湾版と成分が異なり、日本のものがよく効く、という認識が強いです。また、「イブ」のように台湾では正規販売されていない商品は、「日本でしか買えない」という価値があります。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="26">
+        <span class="slide-number">スライド26</span>
+        <div class="slide-title">パート2-⑭ 台湾：購入理由②</div>
+        <div class="slide-content">
+            同様に、「大正製薬の口内炎パッチ」のように、台湾では主流でない「貼る」という剤形も、日本独自の製品として人気です。そして、「サロンパス」や「わかもと」は、現地での高い知名度に加え、日本での価格メリットが購入を後押ししています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="27">
+        <span class="slide-number">スライド27</span>
+        <div class="slide-title">パート2-⑮ 台湾：SNSの声</div>
+        <div class="slide-content">
+            実際のSNS投稿を見てみても、「パブロンは効果が早い」「両親に頼まれてワカモトを12本買った」といった声から、商品への強い信頼と、<ruby>必需品<rt>ひつじゅひん</rt></ruby>を日本でまとめ買いする様子が伺えます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="28">
+        <span class="slide-number">スライド28</span>
+        <div class="slide-title">パート2-⑯ 台湾：結論と施策</div>
+        <div class="slide-content">
+            台湾市場の結論です。長年のブランド信頼と価格メリットが購入の基盤となっています。一方で、若者世代には「口内炎パッチ」のような新しい<ruby>剤形<rt>ざいけい</rt></ruby>への関心が高いことも見えてきました。施策としては、若者向けに新しい切り口でのSNS発信や、子供向けのかゆみ止めパッチといった、新たなターゲットへのアプローチが有効と考えられます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="29">
+        <span class="slide-number">スライド29</span>
+        <div class="slide-title">パート2-⑰ 韓国市場イントロ</div>
+        <div class="slide-content">
+            続いて、リピート率が非常に高く、日本の医薬品への信頼が厚い、韓国市場です。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="30">
+        <span class="slide-number">スライド30</span>
+        <div class="slide-title">パート2-⑱ 韓国：人気医薬品TOP15</div>
+        <div class="slide-content">
+            弊社韓国マーケティングチームの調査による、人気医薬品TOP15がこちらです。「サロンパス」「ピップエレキバン」「キャベジン」などが上位にランクインしています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="31">
+        <span class="slide-number">スライド31</span>
+        <div class="slide-title">パート2-⑲ 韓国：購入要因カテゴリ</div>
+        <div class="slide-content">
+            このTOP15をカテゴリー別に分類すると、非常に特徴的な傾向が見られます。15品目中6品目が「痛み止め・<ruby>鎮痛<rt>ちんつう</rt></ruby>・<ruby>貼付剤<rt>ちょうふざい</rt></ruby>」で、全体の40%を占めています。韓国市場では、このカテゴリーが特に強く求められていることがわかります。私自身も、韓国の家族や知人から常に頼まれるのはこの貼付剤系で、実際に喜ばれることが多いです。これは国民性として健康意識が高いことに加え、日常的にアクティビティを楽しむ生活習慣が背景にあると考えられます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="32">
+        <span class="slide-number">スライド32</span>
+        <div class="slide-title">パート2-⑳ 韓国：SNSの声</div>
+        <div class="slide-content">
+            SNSでのリアルな声を見てみましょう。「韓国の鎮痛剤は効かない」「イブは即効性がある」といったコメントが多く、日本の医薬品の<strong>「効果の高さ」と「即効性」</strong>に対する強い信頼が、購入の根底にあることが伺えます。<br>
+            今年2月から韓国関税庁は、鎮痛薬EVEの韓国への持ち込みを禁止する措置を取りました。しかし7月以降は、その代替品として「EVEスリーショットプレミアム」がSNSで話題となっており、既存のイブ製品よりも強化された処方が「よく効く」というレビューや口コミにつながっているようです。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="33">
+        <span class="slide-number">スライド33</span>
+        <div class="slide-title">パート2-㉑ 韓国：購買パターン</div>
+        <div class="slide-content">
+            こうした背景から、韓国市場には特有の購買パターンが見られます。一度効果を体験すると習慣的にリピート購入すること、そして家族や知人へのお土産としての需要が非常に高く、それが大量購入に繋がっています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="34">
+        <span class="slide-number">スライド34</span>
+        <div class="slide-title">パート2-㉒ 韓国：販売強化提案</div>
+        <div class="slide-content">
+            韓国市場への施策提案です。効果への信頼が基盤となっているため、店頭では「症状別の韓国語案内パネル」で分かりやすさを向上させることが重要かと思います。また、リピートやまとめ買いを促進するために、「韓国人気ランキング棚」の設置や、大容量パックの訴求が効果的ではないかと思います。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="35">
+        <span class="slide-number">スライド35</span>
+        <div class="slide-title">パート2-㉓ タイ市場イントロ</div>
+        <div class="slide-content">
+            次に、東南アジアの主要マーケットとして急成長している、タイ市場です。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="36">
+        <span class="slide-number">スライド36</span>
+        <div class="slide-title">パート2-㉔ タイ：人気商品TOP10</div>
+        <div class="slide-content">
+            弊社タイマーケティングチームの調査による、人気商品TOP10です。総合風邪薬の「パブロン」、<ruby>鎮痛消炎剤<rt>ちんつうしょうえんざい</rt></ruby>の「サロンパス」、そして「ビタミンC」のサプリメントなどが人気を集めています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="37">
+        <span class="slide-number">スライド37</span>
+        <div class="slide-title">パート2-㉕ タイ：需要を牽引する要因</div>
+        <div class="slide-content">
+            タイ市場の購入動機で特徴的なのが、この「気候・環境への適合性」です。高温多湿な気候のため、日焼け止めや冷却ジェル、虫刺されの かゆみ止め、PM2.5などの<ruby>埃<rt>ほこり</rt></ruby>対策としての目薬など、現地のライフスタイルに<ruby>根差<rt>ねざ</rt></ruby>したニーズが非常に強いです。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="38">
+        <span class="slide-number">スライド38</span>
+        <div class="slide-title">パート2-㉖ タイ：価格プレミアム</div>
+        <div class="slide-content">
+            そして、タイ市場でも日本で購入する価格メリットは非常に大きいです。ご覧の通り、多くの商品がタイ現地では日本の1.5倍から2倍以上の価格で販売されており、これが訪日購入の強い動機となっています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="39">
+        <span class="slide-number">スライド39</span>
+        <div class="slide-title">パート2-㉗ タイ：SNSの声</div>
+        <div class="slide-content">
+            SNSの声からは、日本製品の効果に対する驚きと信頼が伝わってきます。「一包飲んだだけでぐっすり眠れた」「飲んで10分で痛みが消えた」など、その効果を高く評価するレビューが多く見られました。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="40">
+        <span class="slide-number">スライド40</span>
+        <div class="slide-title">パート2-㉘ タイ：施策提案</div>
+        <div class="slide-content">
+            タイ市場への施策提案です。まず、タイ語インフルエンサーを起用したSNSプロモーションや、正確な情報のタイ語コンテンツを作り、信頼できるウェブサイトでの掲載や拡散で、信頼性と日本で購入するメリットを訴求します。店頭では、タイ語の案内やQRコードでのショート動画案内によって、分かりやすさを改善し、初回購入のハードルを下げるためのトライアルパッケージの展開も有効と考えられます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="41">
+        <span class="slide-number">スライド41</span>
+        <div class="slide-title">パート2-㉙ 欧米市場イントロ</div>
+        <div class="slide-content">
+            パート2の最後は、アジア圏とはまた異なるニーズを持つ、欧米市場です。<br>
+            データ収集は、弊社の欧米市場マーケッターによる、SNSやBlog（Reddit（r/JapanTravel）や、Instagram（#japandrugstore））での関連検索語や人気タグ、そして、ECのアマゾンでの検索結果に基づいています。期間は2025年1月から8月です。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="42">
+        <span class="slide-number">スライド42</span>
+        <div class="slide-title">パート2-㉚ 欧米：人気家庭薬TOP5</div>
+        <div class="slide-content">
+            米国のAmazonやコミュニティサイトRedditなどで特に人気の高い商品がこちらです。アジア各国でも人気の「サロンパス」「ロイヒつぼ膏：ロイヒ つぼこう」「ペア アクネ クリーム」などが、欧米市場でも高く評価されていることがわかります。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="43">
+        <span class="slide-number">スライド43</span>
+        <div class="slide-title">パート2-㉛ 欧米：ポテンシャル評価</div>
+        <div class="slide-content">
+            今後のポテンシャルとしては、セルフケア市場が巨大で、すでにサロンパスが普及しているアメリカ、そして美容と医薬品を組み合わせた商品への関心が高いフランスなどが特に有望と評価できます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="44">
+        <span class="slide-number">スライド44</span>
+        <div class="slide-title">パート2-㉜ 欧米：SNSの声（Reddit）</div>
+        <div class="slide-content">
+            英語圏のコミュニティサイト、Redditの投稿を見てみますと、「サロンパスは素晴らしい」「ペア　アクネ　クリームは翌日にはニキビが治る」といった具体的な使用感のレビューが活発に共有されていて、日本の医薬品の品質への高い評価が伺えます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="45">
+        <span class="slide-number">スライド45</span>
+        <div class="slide-title">パート2-㉝ 欧州・新興市場：特徴比較</div>
+        <div class="slide-content">
+            <ruby>欧州<rt>おうしゅう</rt></ruby>の中でも、国によって特徴は異なります。例えば、オランダや<ruby>北欧<rt>ほくおう</rt></ruby>ではサプリメントへの関心が高く、スペインやイタリアでは、のど飴やハーブ系の製品が好まれる傾向にあります。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="46">
+        <span class="slide-number">スライド46</span>
+        <div class="slide-title">パート2-㉞ 欧米：今後の注力市場と施策</div>
+        <div class="slide-content">
+            こうした背景から、欧米市場へは段階的なアプローチが有効ではないかと思います。短期的には、市場規模の大きいアメリカや、口コミ文化が強いイギリス、自然派志向のドイツ・フランスを優先市場とし、それぞれの特性に合わせたメッセージを発信していくことが有効かと思います。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="47">
+        <span class="slide-number">スライド47</span>
+        <div class="slide-title">パート2-総括：国別 購買パターン早見表</div>
+        <div class="slide-content">
+            ここまで分析してきた各国市場の購買パターンを、一枚の早見表にまとめました。ご覧いただくと、同じ医薬品であっても、国によって購入動機や響くメッセージ、そして注意すべきリスクが異なることが　一目で　お分かりいただけるかと思います。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="48">
+        <span class="slide-number">スライド48</span>
+        <div class="slide-title">パート3 施策提案イントロ</div>
+        <div class="slide-content">
+            それではパート3として、これらの調査結果を、応用可能な具体的なアクションプランへと落とし込んでいきます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="49">
+        <span class="slide-number">スライド49</span>
+        <div class="slide-title">パート3-① 短期実施施策</div>
+        <div class="slide-content">
+            まずは短期的に、6ヶ月以内で実施可能な施策のご提案です。例えば、韓国向けには鎮痛剤コーナーを<ruby>拡充<rt>かくじゅう</rt></ruby>する、タイ向けには　気候対応商品をまとめて陳列するなど、国別の特性に応じた売り場の工夫。また、単なる商品説明だけでなく、「なぜ日本で買うとお得なのか」を価格や成分で示す多言語案内。そして、「旅行<ruby>常備薬<rt>じょうびやく</rt></ruby>セット」のような、選びやすいセット商品の展開などが考えられます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="50">
+        <span class="slide-number">スライド50</span>
+        <div class="slide-title">パート3-② 国別特化戦略</div>
+        <div class="slide-content">
+            国別の特化戦略を改めて整理します。中国向けには法的リスクの<ruby>啓発<rt>けいはつ</rt></ruby>を徹底し、台湾向けには価格メリットを可視化。韓国向けには人気商品の専用コーナーを設置し、タイ向けには気候ニーズに特化した訴求を強化する、といったピンポイントの施策が有効ではないかと思います。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="51">
+        <span class="slide-number">スライド51</span>
+        <div class="slide-title">パート3-③ 中長期ブランド戦略</div>
+        <div class="slide-content">
+            さらに中長期的には、商品の価値そのものを向上させるための取り組みが必要かと思います。<ruby>四半期<rt>しはんき</rt></ruby>ごとのSNS動向レポートといった継続的な市場モニタリング体制の構築や、POSデータとSNS反応を連携させた分析による施策精度の向上、そして各国インフルエンサーやドラッグストアとのパートナーシップ強化などが挙げられるかと思います。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="52">
+        <span class="slide-number">スライド52</span>
+        <div class="slide-title">パート4 モニタリングイントロ</div>
+        <div class="slide-content">
+            最後のパートでは、今ほど申し上げた「継続的な市場モニタリング」の必要性について、もう少し詳しくお話しします。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="53">
+        <span class="slide-number">スライド53</span>
+        <div class="slide-title">パート4-① 監視すべき変化要因</div>
+        <div class="slide-content">
+            インバウンド市場は、非常に変化の速い市場です。私たちは常に、各国の「法規制」、「市場・競合環境」、そして「消費者行動」という3つの視点から、変化の<ruby>兆候<rt>ちょうこう</rt></ruby>を監視しています。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="54">
+        <span class="slide-number">スライド54</span>
+        <div class="slide-title">パート4-② モニタリング5つの重要ポイント</div>
+        <div class="slide-content">
+            効果的なモニタリングのためには、ご覧の5つのポイント、「リアルタイム性」「多角的視点」「現地性」「継続性」「実用性」を押さえることが不可欠です。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="55">
+        <span class="slide-number">スライド55</span>
+        <div class="slide-title">パート4-③ モニタリング体制</div>
+        <div class="slide-content">
+            私たちがご提案するモニタリング体制は、この4つの項目から成ります。SNSの<ruby>定点観測<rt>ていてんかんそく</rt></ruby>、越境ECサイトでの価格動向調査、各国の法改正情報の収集、そして、<ruby>在留<rt>ざいりゅう</rt></ruby>（在日）外国人ネットワークを活用したアンケートや座談会。これらを組み合わせることで、変化の<ruby>兆候<rt>ちょうこう</rt></ruby>をいち早く捉え、戦略に反映させることが可能になります。こうした体制の構築・運用についても、ぜひ私どもグローバル・デイリーにご相談いただければと存じます。
+        </div>
+    </div>
+
+    <div class="slide" data-slide="56">
+        <span class="slide-number">スライド56</span>
+        <div class="slide-title">クロージング</div>
+        <div class="slide-content">
+            以上で、発表を終わります。変化し続けるインバウンド市場において、SNSから現地のリアルな声を<ruby>読み解く<rt>よみとく</rt></ruby>ことが、今後のインバウンド戦略の鍵となると思っております。本日の内容が、皆様のインバウンドビジネスの一助となれば幸いです。<br>
+            ご清聴いただき、ありがとうございました。
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ 前へ</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">次へ ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = document.querySelectorAll('.slide').length;
+        let fontSize = 20;
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('current-slide');
+            });
+            
+            const current = document.querySelector(`[data-slide="${currentSlide}"]`);
+            if (current) {
+                current.classList.add('current-slide');
+                current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(direction) {
+            const newSlide = currentSlide + direction;
+            if (newSlide >= 1 && newSlide <= totalSlides) {
+                currentSlide = newSlide;
+                updateSlide();
+            }
+        }
+
+        function goToSlide() {
+            const slideNumber = prompt(`スライド番号を入力してください (1-${totalSlides}):`);
+            const num = parseInt(slideNumber);
+            if (num >= 1 && num <= totalSlides) {
+                currentSlide = num;
+                updateSlide();
+            }
+        }
+
+        function increaseFontSize() {
+            fontSize = Math.min(fontSize + 2, 32);
+            document.querySelectorAll('.slide-content').forEach(content => {
+                content.style.fontSize = fontSize + 'px';
+            });
+        }
+
+        function decreaseFontSize() {
+            fontSize = Math.max(fontSize - 2, 16);
+            document.querySelectorAll('.slide-content').forEach(content => {
+                content.style.fontSize = fontSize + 'px';
+            });
+        }
+
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                changeSlide(-1);
+                e.preventDefault();
+            } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                changeSlide(1);
+                e.preventDefault();
+            } else if (e.key === 'Home') {
+                currentSlide = 1;
+                updateSlide();
+                e.preventDefault();
+            } else if (e.key === 'End') {
+                currentSlide = totalSlides;
+                updateSlide();
+                e.preventDefault();
+            }
+        });
+
+        let startX = null;
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (!startX) return;
+            const endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+            
+            if (Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    changeSlide(1);
+                } else {
+                    changeSlide(-1);
+                }
+            }
+            startX = null;
+        });
+
+        updateSlide();
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .high-contrast {
+                background-color: #000000 !important;
+                color: #ffffff !important;
+            }
+            .high-contrast .slide {
+                background-color: #111111 !important;
+                border-left-color: #ffffff !important;
+            }
+            .high-contrast .slide-title {
+                color: #ffffff !important;
+            }
+            .high-contrast .slide-number {
+                color: #ffffff !important;
+            }
+            .high-contrast strong {
+                color: #ffffff !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
