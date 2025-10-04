@@ -3,569 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>代理店パートナー様向け｜インバウンドマーケティング実践セミナーシリーズ2024</title>
+    <title>代理店パートナー様向け｜インバウンドマーケティング実践セミナーシリーズ2025</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
-            line-height: 1.7;
-            color: #333;
-            background: #fff;
+            line-height: 1.7; color: #333; background: #fff;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
         /* ヒーローセクション */
         .hero {
             background: linear-gradient(180deg, #2C3E50 0%, #34495E 100%);
-            color: white;
-            padding: 100px 0 80px;
-            position: relative;
+            color: white; padding: 100px 0 80px; position: relative;
         }
-        
         .hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
             background: linear-gradient(90deg, transparent, #E74C3C, transparent);
         }
-        
-        .hero-logo {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            width: 150px;
-            height: auto;
-            opacity: 0.9;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        
+        .hero-logo { position: absolute; top: 30px; right: 30px; width: 150px; height: auto; opacity: 0.9; }
+        .hero-content { position: relative; z-index: 1; }
         .hero-badge {
-            display: inline-block;
-            background: #E74C3C;
-            padding: 8px 25px;
-            margin-bottom: 30px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
+            display: inline-block; background: #E74C3C; padding: 8px 25px; margin-bottom: 30px;
+            font-weight: 600; font-size: 0.95rem; letter-spacing: 1px;
         }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 25px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            line-height: 1.3;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.15rem;
-            margin-bottom: 40px;
-            opacity: 0.95;
-            font-weight: 300;
-            line-height: 1.6;
-        }
-        
+        .hero h1 { font-size: 2.5rem; margin-bottom: 25px; font-weight: 600; letter-spacing: 0.5px; line-height: 1.3; }
+        .hero-subtitle { font-size: 1.15rem; margin-bottom: 40px; opacity: 0.95; font-weight: 300; line-height: 1.6; }
         .hero-meta {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            background: rgba(255,255,255,0.05);
-            padding: 30px;
-            margin-top: 40px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px; background: rgba(255,255,255,0.05); padding: 30px; margin-top: 40px;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        
-        .hero-meta-item {
-            text-align: center;
-            padding: 10px;
-        }
-        
-        .hero-meta-label {
-            font-size: 0.85rem;
-            opacity: 0.8;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .hero-meta-value {
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-        
+        .hero-meta-item { text-align: center; padding: 10px; }
+        .hero-meta-label { font-size: 0.85rem; opacity: 0.8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .hero-meta-value { font-size: 1.3rem; font-weight: 600; }
+
         /* セクションスタイル共通 */
-        .section {
-            padding: 80px 0;
-        }
-        
+        .section { padding: 80px 0; }
         .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #2C3E50;
-            font-weight: 600;
-            position: relative;
-            display: inline-block;
-            width: 100%;
+            text-align: center; font-size: 2rem; margin-bottom: 20px; color: #2C3E50; font-weight: 600;
+            position: relative; display: inline-block; width: 100%;
         }
-        
         .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 3px;
-            background: #E74C3C;
-            margin: 20px auto;
+            content: ''; display: block; width: 50px; height: 3px; background: #E74C3C; margin: 20px auto;
         }
-        
-        .section-subtitle {
-            text-align: center;
-            color: #7F8C8D;
-            font-size: 1.05rem;
-            margin-bottom: 50px;
-        }
-        
+        .section-subtitle { text-align: center; color: #7F8C8D; font-size: 1.05rem; margin-bottom: 50px; }
+
         /* ソリューション紹介 */
-        .solutions {
-            background: #F8F9FA;
-        }
-        
+        .solutions { background: #F8F9FA; }
         .solutions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 50px;
         }
-        
         .solution-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: white; border-radius: 8px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
-        
-        .solution-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-        
-        .solution-thumbnail {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-        
+        .solution-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .solution-thumbnail { width: 100%; height: 200px; object-fit: cover; display: block; }
+
         .solution-card-header {
-            background: #2C3E50;
-            color: white;
-            padding: 25px 30px;
-            position: relative;
+            background: #2C3E50; color: white; padding: 25px 30px; position: relative;
         }
-        
-        .solution-card-header.korekoko {
-            background: #27AE60;
-        }
-        
-        .solution-card-header.research {
-            background: #3498DB;
-        }
-        
+        .solution-card-header.korekoko { background: #27AE60; }
+        .solution-card-header.research { background: #3498DB; }
+
         .solution-number {
-            position: absolute;
-            top: 25px;
-            right: 30px;
-            font-size: 2rem;
-            opacity: 0.2;
-            font-weight: 700;
+            position: absolute; top: 20px; right: 20px; font-size: 2rem; opacity: 0.18; font-weight: 700;
         }
-        
-        .solution-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        
+        .solution-card h3 { font-size: 1.5rem; margin-bottom: 8px; font-weight: 600; }
+
+        /* ★ ご要望：タグラインを白＆強調に */
         .solution-card-tagline {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        .solution-card-body {
-            padding: 30px;
-        }
-        
-        .solution-card p {
-            color: #555;
-            line-height: 1.7;
-            margin-bottom: 20px;
             font-size: 0.95rem;
+            color: #fff;            /* 常に白 */
+            opacity: 1;             /* 透過なしでクッキリ */
+            font-weight: 600;       /* 太字で視認性UP */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.35); /* 背景に馴染ませつつ読みやすく */
+            letter-spacing: 0.2px;
         }
-        
+
+        /* ★ WEBリンクバナー（右上ボタン） */
+        .solution-link {
+            position: absolute; top: 20px; right: 60px;
+            display: inline-block; padding: 6px 12px; border-radius: 999px;
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
+            color: #fff; text-decoration: none; font-size: 0.85rem; font-weight: 600;
+            backdrop-filter: blur(2px);
+            transition: transform .2s, background .2s;
+        }
+        .solution-link:hover { transform: translateY(-1px); background: rgba(255,255,255,0.25); }
+
+        .solution-card-body { padding: 30px; }
+        .solution-card p { color: #555; line-height: 1.7; margin-bottom: 20px; font-size: 0.95rem; }
         .solution-features {
-            list-style: none;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid #E0E0E0;
+            list-style: none; margin-top: 25px; padding-top: 25px; border-top: 1px solid #E0E0E0;
         }
-        
         .solution-features li {
-            padding: 8px 0;
-            color: #666;
-            font-size: 0.9rem;
-            position: relative;
-            padding-left: 20px;
+            padding: 8px 0; color: #666; font-size: 0.9rem; position: relative; padding-left: 20px;
         }
-        
-        .solution-features li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: #E74C3C;
-        }
-        
+        .solution-features li:before { content: "▸"; position: absolute; left: 0; color: #E74C3C; }
+
         /* スケジュール */
-        .schedule {
-            background: white;
-        }
-        
-        .month-block {
-            margin-bottom: 50px;
-            border: 1px solid #DDD;
-            background: white;
-            overflow: hidden;
-        }
-        
+        .schedule { background: white; }
+        .month-block { margin-bottom: 50px; border: 1px solid #DDD; background: white; overflow: hidden; }
         .month-header {
-            background: #2C3E50;
-            color: white;
-            padding: 25px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
+            background: #2C3E50; color: white; padding: 25px 30px; display: flex;
+            justify-content: space-between; align-items: center; position: relative; overflow: hidden;
         }
-        
         .month-header::before {
             content: '多言語コンテンツ制作・発信 / クリエイティブソリューション / インフルエンサーマーケティング';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            opacity: 0.03;
-            white-space: nowrap;
-            letter-spacing: 2px;
-            font-weight: bold;
-            pointer-events: none;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 3rem; opacity: 0.03; white-space: nowrap; letter-spacing: 2px; font-weight: bold; pointer-events: none;
         }
-        
-        .month-header.november {
-            background: #27AE60;
-        }
-        
+        .month-header.november { background: #27AE60; }
         .month-header.november::before {
             content: 'リアルレビュー / 在留外国人ネットワーク / 信頼性マーケティング';
         }
-        
-        .month-header.december {
-            background: #3498DB;
-        }
-        
+        .month-header.december { background: #3498DB; }
         .month-header.december::before {
             content: 'データ分析 / 市場調査 / インサイトレポート / 戦略立案';
         }
-        
-        .month-header.november {
-            background: #27AE60;
-        }
-        
-        .month-header.december {
-            background: #3498DB;
-        }
-        
-        .month-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-        
-        .month-theme {
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-        
-        .session-list {
-            background: white;
-        }
-        
+        .month-title { font-size: 1.4rem; font-weight: 600; }
+        .month-theme { font-size: 0.95rem; opacity: 0.9; }
+
+        .session-list { background: white; }
         .session-item {
-            padding: 30px;
-            border-bottom: 1px solid #EEE;
-            display: flex;
-            gap: 30px;
-            transition: background 0.2s;
+            padding: 30px; border-bottom: 1px solid #EEE; display: flex; gap: 30px; transition: background 0.2s;
         }
-        
-        .session-item:last-child {
-            border-bottom: none;
-        }
-        
-        .session-item:hover {
-            background: #FAFAFA;
-        }
-        
-        .session-date-box {
-            flex-shrink: 0;
-            text-align: center;
-            min-width: 80px;
-            padding-top: 5px;
-        }
-        
-        .session-day {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #E74C3C;
-            line-height: 1;
-        }
-        
-        .session-weekday {
-            font-size: 0.85rem;
-            color: #999;
-            margin-top: 5px;
-        }
-        
-        .session-content {
-            flex-grow: 1;
-        }
-        
+        .session-item:last-child { border-bottom: none; }
+        .session-item:hover { background: #FAFAFA; }
+
+        .session-date-box { flex-shrink: 0; text-align: center; min-width: 80px; padding-top: 5px; }
+        .session-day { font-size: 2rem; font-weight: 700; color: #E74C3C; line-height: 1; }
+        .session-weekday { font-size: 0.85rem; color: #999; margin-top: 5px; }
+        .session-content { flex-grow: 1; }
         .session-number {
-            display: inline-block;
-            background: #2C3E50;
-            color: white;
-            padding: 3px 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 12px;
+            display: inline-block; background: #2C3E50; color: white; padding: 3px 12px;
+            font-size: 0.8rem; font-weight: 600; margin-bottom: 12px;
         }
-        
-        .session-number.november {
-            background: #27AE60;
-        }
-        
-        .session-number.december {
-            background: #3498DB;
-        }
-        
-        .session-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #2C3E50;
-        }
-        
+        .session-number.november { background: #27AE60; }
+        .session-number.december { background: #3498DB; }
+        .session-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 15px; color: #2C3E50; }
         .session-solution-note {
-            background: #F8F9FA;
-            padding: 10px 15px;
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 20px;
-            border-left: 3px solid #E74C3C;
+            background: #F8F9FA; padding: 10px 15px; font-size: 0.85rem; color: #666;
+            margin-bottom: 20px; border-left: 3px solid #E74C3C;
         }
-        
-        .session-topics {
-            list-style: none;
-            margin: 20px 0 25px;
-        }
-        
+        .session-topics { list-style: none; margin: 20px 0 25px; }
         .session-topics li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-            color: #555;
-            line-height: 1.6;
-            font-size: 0.95rem;
+            position: relative; padding-left: 20px; margin-bottom: 10px; color: #555; line-height: 1.6; font-size: 0.95rem;
         }
-        
-        .session-topics li:before {
-            content: "―";
-            position: absolute;
-            left: 0;
-            color: #BDC3C7;
-        }
-        
+        .session-topics li:before { content: "―"; position: absolute; left: 0; color: #BDC3C7; }
         .btn-apply {
-            display: inline-block;
-            background: #E74C3C;
-            color: white;
-            padding: 10px 30px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background 0.3s;
-            font-size: 0.9rem;
+            display: inline-block; background: #E74C3C; color: white; padding: 10px 30px;
+            text-decoration: none; font-weight: 500; transition: background 0.3s; font-size: 0.9rem;
         }
-        
-        .btn-apply:hover {
-            background: #C0392B;
-        }
-        
+        .btn-apply:hover { background: #C0392B; }
+
         /* 参加特典 */
-        .benefits {
-            background: #F8F9FA;
-        }
-        
+        .benefits { background: #F8F9FA; }
         .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-top: 50px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 50px; max-width: 800px;
+            margin-left: auto; margin-right: auto;
         }
-        
         .benefit-card {
-            background: white;
-            padding: 40px;
-            border: 1px solid #E0E0E0;
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: white; padding: 40px; border: 1px solid #E0E0E0; transition: transform 0.3s, box-shadow 0.3s;
         }
-        
-        .benefit-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
+        .benefit-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .benefit-number {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: #E74C3C;
-            color: white;
-            text-align: center;
-            line-height: 40px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            display: inline-block; width: 40px; height: 40px; background: #E74C3C; color: white;
+            text-align: center; line-height: 40px; font-weight: 700; font-size: 1.2rem; margin-bottom: 20px;
         }
-        
-        .benefit-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #2C3E50;
-        }
-        
-        .benefit-description {
-            color: #666;
-            line-height: 1.7;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-        
-        .benefit-list {
-            list-style: none;
-            color: #555;
-        }
-        
-        .benefit-list li {
-            padding: 8px 0;
-            padding-left: 20px;
-            position: relative;
-            font-size: 0.9rem;
-        }
-        
-        .benefit-list li:before {
-            content: "・";
-            position: absolute;
-            left: 5px;
-            color: #E74C3C;
-        }
-        
+        .benefit-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 15px; color: #2C3E50; }
+        .benefit-description { color: #666; line-height: 1.7; margin-bottom: 20px; font-size: 0.95rem; }
+        .benefit-list { list-style: none; color: #555; }
+        .benefit-list li { padding: 8px 0; padding-left: 20px; position: relative; font-size: 0.9rem; }
+        .benefit-list li:before { content: "・"; position: absolute; left: 5px; color: #E74C3C; }
+
         /* CTA */
-        .cta {
-            background: #2C3E50;
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-        }
-        
-        .cta h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        
-        .cta-subtitle {
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-        
+        .cta { background: #2C3E50; color: white; padding: 80px 0; text-align: center; }
+        .cta h2 { font-size: 2rem; margin-bottom: 20px; font-weight: 600; }
+        .cta-subtitle { font-size: 1.1rem; margin-bottom: 40px; opacity: 0.9; }
         .btn-cta {
-            display: inline-block;
-            background: #E74C3C;
-            color: white;
-            padding: 15px 50px;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: background 0.3s;
+            display: inline-block; background: #E74C3C; color: white; padding: 15px 50px; text-decoration: none;
+            font-size: 1.1rem; font-weight: 500; transition: background 0.3s;
         }
-        
-        .btn-cta:hover {
-            background: #C0392B;
-        }
-        
-        .cta-note {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        
+        .btn-cta:hover { background: #C0392B; }
+        .cta-note { margin-top: 30px; font-size: 0.9rem; opacity: 0.8; }
+
         /* レスポンシブ */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .hero-meta {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .session-item {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .solutions-grid,
-            .benefits-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .month-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
+            .hero h1 { font-size: 1.8rem; }
+            .hero-meta { grid-template-columns: repeat(2, 1fr); }
+            .session-item { flex-direction: column; gap: 20px; }
+            .solutions-grid, .benefits-grid { grid-template-columns: 1fr; }
+            .month-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .solution-link { position: static; margin-top: 8px; }
         }
     </style>
 </head>
@@ -578,7 +210,7 @@
         <div class="hero-badge">代理店パートナー様限定</div>
         <h1>インバウンドマーケティング<br>実践セミナーシリーズ 2025</h1>
         <p class="hero-subtitle">Global Dailyのソリューションを活用した、クライアント案件獲得・提案力強化のための3ヶ月集中プログラム</p>
-        
+
         <div class="hero-meta">
             <div class="hero-meta-item">
                 <div class="hero-meta-label">開催期間</div>
@@ -605,12 +237,14 @@
     <div class="container">
         <h2 class="section-title">Global Daily提供ソリューション</h2>
         <p class="section-subtitle">代理店パートナー様にご活用いただける3つのインバウンドソリューション</p>
-        
+
         <div class="solutions-grid">
+            <!-- JAPANKURU -->
             <div class="solution-card">
                 <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2024/08/S__67895305-e1722581256463.jpg" alt="JAPANKURU" class="solution-thumbnail">
                 <div class="solution-card-header">
                     <span class="solution-number">01</span>
+                    <a class="solution-link" href="https://www.japankuru.com" target="_blank" rel="noopener">公式サイト</a>
                     <h3>JAPANKURU</h3>
                     <p class="solution-card-tagline">訪日観光客向け多言語メディア</p>
                 </div>
@@ -625,11 +259,13 @@
                     </ul>
                 </div>
             </div>
-            
+
+            <!-- korekoko -->
             <div class="solution-card">
                 <img src="https://www.gldaily.com/gld-kanri/wp-content/uploads/2024/07/korekoko_frontpage-1.png" alt="korekoko" class="solution-thumbnail">
                 <div class="solution-card-header korekoko">
                     <span class="solution-number">02</span>
+                    <a class="solution-link" href="https://www.korekoko.co.jp" target="_blank" rel="noopener">公式サイト</a>
                     <h3>korekoko</h3>
                     <p class="solution-card-tagline">在留外国人マーケティングソリューション</p>
                 </div>
@@ -643,7 +279,8 @@
                     </ul>
                 </div>
             </div>
-            
+
+            <!-- Global Research -->
             <div class="solution-card">
                 <img src="https://www.gldaily.com/gld-kanri/wp-content/themes/gldaily/assets/images/img_our_services2.jpg" alt="Global Research" class="solution-thumbnail">
                 <div class="solution-card-header research">
@@ -671,83 +308,97 @@
     <div class="container">
         <h2 class="section-title">セミナースケジュール</h2>
         <p class="section-subtitle">毎週金曜日 17:00-18:00 オンライン開催</p>
-        
-        <!-- 10月 -->
+
+        <!-- 10月：JAPANKURU編（第1〜4回） -->
         <div class="month-block">
             <div class="month-header">
-                <div class="month-title">10月 ― JAPANKURU活用編</div>
-                <div class="month-theme">多言語メディアを活用した業界別アプローチ</div>
+                <div class="month-title">10月 ― JAPANKURU編</div>
+                <div class="month-theme">多言語メディアの実践的活用</div>
             </div>
             <div class="session-list">
+                <div class="session-item">
+                    <div class="session-date-box">
+                        <div class="session-day">4</div>
+                        <div class="session-weekday">金曜日</div>
+                    </div>
+                    <div class="session-content">
+                        <span class="session-number">第1回</span>
+                        <h3 class="session-title">メーカー（美容・食品・医薬品）</h3>
+                        <div class="session-solution-note">▶ メディア紹介・活用方法／信頼性・購買意向の最大化</div>
+                        <ul class="session-topics">
+                            <li>メディア紹介・活用方法</li>
+                            <li>商品価値／信頼性の向上</li>
+                            <li>買い物リストへの掲載</li>
+                            <li>事例（大手化粧品、抹茶食品、大手医薬品、ディスカウントストアのショッピングリスト訴求）</li>
+                            <li>特別料金の説明</li>
+                        </ul>
+                        <a href="#register" class="btn-apply">申込受付中</a>
+                    </div>
+                </div>
+
                 <div class="session-item">
                     <div class="session-date-box">
                         <div class="session-day">11</div>
                         <div class="session-weekday">金曜日</div>
                     </div>
                     <div class="session-content">
-                        <span class="session-number">第1回</span>
-                        <h3 class="session-title">製造業クライアント攻略法</h3>
-                        <div class="session-solution-note">
-                            ▶ JAPANKURUの活用：世界180カ国への製品PR、工場見学コンテンツの多言語発信
-                        </div>
+                        <span class="session-number">第2回</span>
+                        <h3 class="session-title">商業施設・ホテル</h3>
+                        <div class="session-solution-note">▶ エリアプロモーション×ターゲット国選定</div>
                         <ul class="session-topics">
-                            <li>メーカー案件の効果的な獲得方法</li>
-                            <li>BtoB企業のインバウンド活用提案</li>
-                            <li>成功事例テンプレートの活用法</li>
-                            <li>代理店様向け特別料金プログラム</li>
+                            <li>メディア紹介・活用方法</li>
+                            <li>エリアプロモーションの重要性／ターゲット国選定</li>
+                            <li>事例（エリアプロモーション、地方商業施設）</li>
+                            <li>特別料金の説明</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
                 </div>
-                
+
                 <div class="session-item">
                     <div class="session-date-box">
                         <div class="session-day">18</div>
                         <div class="session-weekday">金曜日</div>
                     </div>
                     <div class="session-content">
-                        <span class="session-number">第2回</span>
-                        <h3 class="session-title">商業施設向け年間契約獲得術</h3>
-                        <div class="session-solution-note">
-                            ▶ JAPANKURUの活用：エリア特集による回遊促進、季節イベント連動企画
-                        </div>
+                        <span class="session-number">第3回</span>
+                        <h3 class="session-title">アパレルメーカー</h3>
+                        <div class="session-solution-note">▶ 観光×ファッションの相乗効果</div>
                         <ul class="session-topics">
-                            <li>大型施設への効果的な提案方法</li>
-                            <li>年間契約獲得のための戦略設計</li>
-                            <li>多言語対応の必要性の訴求法</li>
-                            <li>継続率90%を実現する運用ノウハウ</li>
+                            <li>メディア紹介・活用方法</li>
+                            <li>観光×ファッションの重要性／ナショナルブランド対応</li>
+                            <li>事例</li>
+                            <li>特別料金の説明</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
                 </div>
-                
+
                 <div class="session-item">
                     <div class="session-date-box">
                         <div class="session-day">25</div>
                         <div class="session-weekday">金曜日</div>
                     </div>
                     <div class="session-content">
-                        <span class="session-number">第3回</span>
-                        <h3 class="session-title">アパレル・美容業界の攻略法</h3>
-                        <div class="session-solution-note">
-                            ▶ JAPANKURUの活用：インフルエンサーコラボ、ビジュアル重視のコンテンツ制作
-                        </div>
+                        <span class="session-number">第4回</span>
+                        <h3 class="session-title">自治体・交通機関</h3>
+                        <div class="session-solution-note">▶ 外国人目線のコンテンツ企画／地域活性への展開</div>
                         <ul class="session-topics">
-                            <li>ファッション・美容ブランドへの提案術</li>
-                            <li>越境ECとの連携プラン設計</li>
-                            <li>SNS連動キャンペーンの企画方法</li>
-                            <li>高単価案件の作り方</li>
+                            <li>メディア紹介・活用方法</li>
+                            <li>外国人目線でのコンテンツ作成の重要性</li>
+                            <li>事例</li>
+                            <li>特別料金の説明</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- 11月 -->
+
+        <!-- 11月：korekoko編（第5〜8回） -->
         <div class="month-block">
             <div class="month-header november">
-                <div class="month-title">11月 ― korekoko活用編</div>
+                <div class="month-title">11月 ― korekoko編</div>
                 <div class="month-theme">在留外国人レビューマーケティングの実践</div>
             </div>
             <div class="session-list">
@@ -757,112 +408,84 @@
                         <div class="session-weekday">金曜日</div>
                     </div>
                     <div class="session-content">
-                        <span class="session-number november">第4回</span>
-                        <h3 class="session-title">飲食業界の新規開拓戦略</h3>
-                        <div class="session-solution-note">
-                            ▶ korekokoの活用：在留外国人によるリアルな食レポ、母国への口コミ拡散
-                        </div>
+                        <span class="session-number november">第5回</span>
+                        <h3 class="session-title">飲食</h3>
+                        <div class="session-solution-note">▶ 外国人のリアルな口コミ造成で集客を強化</div>
                         <ul class="session-topics">
-                            <li>飲食チェーンへの効果的アプローチ</li>
-                            <li>リアルレビューによる信頼性構築</li>
-                            <li>小規模店舗向けパッケージ提案</li>
-                            <li>リピート受注の仕組み作り</li>
+                            <li>メディア紹介・活用方法</li>
+                            <li>外国人によるリアルな口コミ造成・マーケティング</li>
+                            <li>事例</li>
+                            <li>特別料金の説明</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
                 </div>
-                
+
                 <div class="session-item">
                     <div class="session-date-box">
                         <div class="session-day">8</div>
                         <div class="session-weekday">金曜日</div>
                     </div>
                     <div class="session-content">
-                        <span class="session-number november">第5回</span>
-                        <h3 class="session-title">美容・コスメ業界の攻略法</h3>
-                        <div class="session-solution-note">
-                            ▶ korekokoの活用：各国の美容トレンドを知る在留外国人の製品レビュー
-                        </div>
+                        <span class="session-number november">第6回</span>
+                        <h3 class="session-title">メーカー（美容・食品・医薬品）</h3>
+                        <div class="session-solution-note">▶ 座談会の活用／外国人から見た商品の価値</div>
                         <ul class="session-topics">
-                            <li>美容ブランドの課題解決提案</li>
-                            <li>各国トレンドデータの活用法</li>
-                            <li>製品体験キャンペーンの設計</li>
-                            <li>代理店限定インセンティブ</li>
+                            <li>メディア紹介・活用方法</li>
+                            <li>外国人によるリアルな口コミ造成・マーケティング</li>
+                            <li>座談会の活用／外国人視点での価値評価</li>
+                            <li>事例（大手美容メーカー／大手医薬化粧品メーカー）</li>
+                            <li>特別料金の説明</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
                 </div>
-                
+
                 <div class="session-item">
                     <div class="session-date-box">
                         <div class="session-day">15</div>
                         <div class="session-weekday">金曜日</div>
                     </div>
                     <div class="session-content">
-                        <span class="session-number november">第6回</span>
-                        <h3 class="session-title">宿泊施設への提案戦略</h3>
-                        <div class="session-solution-note">
-                            ▶ korekokoの活用：長期滞在者視点での詳細なサービスレビュー
-                        </div>
+                        <span class="session-number november">第7回</span>
+                        <h3 class="session-title">宿泊施設</h3>
+                        <div class="session-solution-note">▶ 外国人レビューで滞在体験を可視化</div>
                         <ul class="session-topics">
-                            <li>ホテル・旅館の決裁者攻略法</li>
-                            <li>在留外国人視点のサービス改善</li>
-                            <li>繁忙期向け戦略的提案</li>
-                            <li>長期契約のメリット訴求</li>
+                            <li>メディア紹介・活用方法</li>
+                            <li>外国人によるリアルな口コミ造成・マーケティング</li>
+                            <li>事例</li>
+                            <li>特別料金の説明</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
                 </div>
-                
+
                 <div class="session-item">
                     <div class="session-date-box">
                         <div class="session-day">22</div>
                         <div class="session-weekday">金曜日</div>
                     </div>
                     <div class="session-content">
-                        <span class="session-number november">第7回</span>
-                        <h3 class="session-title">地方自治体・DMO攻略法</h3>
-                        <div class="session-solution-note">
-                            ▶ korekokoの活用：地方在住外国人による隠れた魅力発見
-                        </div>
-                        <ul class="session-topics">
-                            <li>自治体向け企画提案のコツ</li>
-                            <li>補助金活用提案の設計法</li>
-                            <li>地方創生×インバウンド施策</li>
-                            <li>広域連携プロモーション</li>
-                        </ul>
-                        <a href="#register" class="btn-apply">申込受付中</a>
-                    </div>
-                </div>
-                
-                <div class="session-item">
-                    <div class="session-date-box">
-                        <div class="session-day">29</div>
-                        <div class="session-weekday">金曜日</div>
-                    </div>
-                    <div class="session-content">
                         <span class="session-number november">第8回</span>
-                        <h3 class="session-title">小売・EC事業者への提案術</h3>
-                        <div class="session-solution-note">
-                            ▶ korekokoの活用：購買後の詳細レビューで越境EC促進
-                        </div>
+                        <h3 class="session-title">自治体</h3>
+                        <div class="session-solution-note">▶ モデルツアー／長期計画を見据えた土台作り</div>
                         <ul class="session-topics">
-                            <li>小売業のインバウンド戦略</li>
-                            <li>店舗送客×越境EC連携</li>
-                            <li>商品レビューの販促活用</li>
-                            <li>継続的な売上向上PDCA</li>
+                            <li>メディア紹介・活用方法</li>
+                            <li>モデルツアー設計と長期計画の土台作り</li>
+                            <li>事例</li>
+                            <li>特別料金の説明</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- 12月 -->
+
+        <!-- 12月：Global Research編（第9〜11回） -->
         <div class="month-block">
             <div class="month-header december">
-                <div class="month-title">12月 ― Global Research & 統合提案編</div>
-                <div class="month-theme">データドリブンな提案とソリューション統合活用</div>
+                <div class="month-title">12月 ― Global Research編</div>
+                <div class="month-theme">データドリブンな意思決定</div>
             </div>
             <div class="session-list">
                 <div class="session-item">
@@ -872,20 +495,17 @@
                     </div>
                     <div class="session-content">
                         <span class="session-number december">第9回</span>
-                        <h3 class="session-title">データで勝つ提案術</h3>
-                        <div class="session-solution-note">
-                            ▶ Global Researchの活用：市場データを活用した説得力のある提案
-                        </div>
+                        <h3 class="session-title">市場別調査特徴</h3>
+                        <div class="session-solution-note">▶ 各市場のサンプル設計・取得チャネル・留意点</div>
                         <ul class="session-topics">
-                            <li>市場調査データの効果的な活用</li>
-                            <li>説得力のあるデータプレゼン</li>
-                            <li>調査×広告のセット提案</li>
-                            <li>競合に勝つデータ活用</li>
+                            <li>市場別調査の特徴と設計の考え方</li>
+                            <li>データ取得の実務ポイント</li>
+                            <li>レポート雛形の紹介</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
                 </div>
-                
+
                 <div class="session-item">
                     <div class="session-date-box">
                         <div class="session-day">13</div>
@@ -893,20 +513,17 @@
                     </div>
                     <div class="session-content">
                         <span class="session-number december">第10回</span>
-                        <h3 class="session-title">ソリューション統合提案</h3>
-                        <div class="session-solution-note">
-                            ▶ 3つのソリューション連携：認知から購買までの統合マーケティング
-                        </div>
+                        <h3 class="session-title">市場別調整事例</h3>
+                        <div class="session-solution-note">▶（事例中心）設計〜実査〜洞察抽出のプロセス</div>
                         <ul class="session-topics">
-                            <li>JAPANKURU×korekoko連携施策</li>
-                            <li>カスタマージャーニー設計</li>
-                            <li>ソリューション特性を活かした提案</li>
-                            <li>単価向上のテクニック</li>
+                            <li>業界別の調整・設計事例</li>
+                            <li>調査運用のベストプラクティス</li>
+                            <li>提案書への落とし込み</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
                 </div>
-                
+
                 <div class="session-item">
                     <div class="session-date-box">
                         <div class="session-day">20</div>
@@ -914,33 +531,12 @@
                     </div>
                     <div class="session-content">
                         <span class="session-number december">第11回</span>
-                        <h3 class="session-title">年間契約獲得の極意</h3>
-                        <div class="session-solution-note">
-                            ▶ 統合活用：年間を通じた戦略的プランニング提案
-                        </div>
+                        <h3 class="session-title">市場別調査活用事例</h3>
+                        <div class="session-solution-note">▶ マーケティング施策・KPI設計・検証への接続</div>
                         <ul class="session-topics">
-                            <li>次年度予算獲得のタイミング</li>
-                            <li>年間プランの設計と価格戦略</li>
-                            <li>KPI設定と効果測定</li>
-                            <li>継続率90%の運用術</li>
-                        </ul>
-                        <a href="#register" class="btn-apply">申込受付中</a>
-                    </div>
-                </div>
-                
-                <div class="session-item">
-                    <div class="session-date-box">
-                        <div class="session-day">27</div>
-                        <div class="session-weekday">金曜日</div>
-                    </div>
-                    <div class="session-content">
-                        <span class="session-number december">最終回</span>
-                        <h3 class="session-title">2025年の展望と新サービス</h3>
-                        <ul class="session-topics">
-                            <li>2025年市場予測と新たな機会</li>
-                            <li>新サービスの先行案内</li>
-                            <li>特別パートナープログラム</li>
-                            <li>成功への戦略的パートナーシップ</li>
+                            <li>調査から戦略・施策への展開</li>
+                            <li>KPI設計と検証フロー</li>
+                            <li>成功事例と再現方法</li>
                         </ul>
                         <a href="#register" class="btn-apply">申込受付中</a>
                     </div>
@@ -955,7 +551,7 @@
     <div class="container">
         <h2 class="section-title">代理店パートナー様限定特典</h2>
         <p class="section-subtitle">セミナー参加で得られる3つの価値</p>
-        
+
         <div class="benefits-grid">
             <div class="benefit-card">
                 <span class="benefit-number">1</span>
@@ -968,7 +564,7 @@
                     <li>エリア独占販売権</li>
                 </ul>
             </div>
-            
+
             <div class="benefit-card">
                 <span class="benefit-number">2</span>
                 <h3 class="benefit-title">継続サポート</h3>
@@ -988,12 +584,13 @@
 <section class="cta" id="register">
     <div class="container">
         <h2>まずは第1回セミナーにご参加ください</h2>
-        <p class="cta-subtitle">2024年10月11日（金）17:00-18:00<br>
-        「製造業クライアント攻略法」</p>
+        <p class="cta-subtitle">（日程は各回のご案内メールをご確認ください）</p>
         <div style="display: flex; gap: 20px; justify-content: center; align-items: center;">
             <a href="https://forms.gle/your-form-id" class="btn-cta" target="_blank">セミナーに申し込む</a>
-            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=【全12回】インバウンドマーケティング実践セミナー&dates=20241011T080000Z/20241227T090000Z&details=Global+Dailyインバウンドマーケティング実践セミナーシリーズ%0A%0A全12回・毎週金曜日17:00-18:00%0A%0A詳細とZoom+URLは各回セミナー前日にメールでお送りします&location=オンライン（Zoom）&recur=RRULE:FREQ=WEEKLY;BYDAY=FR;COUNT=12&sf=true&output=xml" target="_blank" style="display: inline-block; background: white; color: #2C3E50; padding: 15px 40px; text-decoration: none; font-size: 1rem; font-weight: 500; border: 2px solid white;">
-                📅 全日程をカレンダー登録
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=【全11回】インバウンドマーケティング実践セミナー&details=Global+Dailyインバウンドマーケティング実践セミナーシリーズ%0A%0A全11回・毎週金曜日17:00-18:00%0A%0A詳細とZoom+URLは各回セミナー前日にメールでお送りします&location=オンライン（Zoom）&sf=true&output=xml"
+               target="_blank"
+               style="display: inline-block; background: white; color: #2C3E50; padding: 15px 40px; text-decoration: none; font-size: 1rem; font-weight: 500; border: 2px solid white;">
+                📅 カレンダーに登録
             </a>
         </div>
         <p class="cta-note">※各回定員30社様限定 / 完全無料 / オンライン開催</p>
@@ -1007,10 +604,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if(target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     });
 });
