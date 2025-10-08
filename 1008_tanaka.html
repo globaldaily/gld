@@ -12,6 +12,16 @@
       --muted:#6b7280;     /* サブテキスト */
       --accent:#6a7c8a;    /* 静かなブルーグレー */
       --line:#e5e7eb;      /* 罫線 */
+    
+      /* pastel palette */
+      --p1:#eef2ff; /* indigo-50 */
+      --p2:#ecfeff; /* cyan-50 */
+      --p3:#f0fdf4; /* green-50 */
+      --p4:#fff7ed; /* orange-50 */
+      --p5:#fef2f2; /* rose-50 */
+      --p6:#f5f3ff; /* violet-50 */
+      --p7:#faf5ff; /* fuchsia-50 */
+      --p8:#f0f9ff; /* sky-50 */
     }
     html,body{height:100%;}
     body{
@@ -28,7 +38,15 @@
     .tag{font-size:12px;color:#fff;background:var(--accent);padding:3px 8px;border-radius:999px;}
     nav{margin:10px 0 24px;}
     .toc{display:flex;flex-wrap:wrap;gap:8px}
-    .toc a{font-size:14px;text-decoration:none;color:var(--accent);background:#eef2f6;border:1px solid #e6edf3;padding:6px 10px;border-radius:10px;}
+    .toc a{font-size:14px;text-decoration:none;color:var(--ink);background:var(--p1);border:1px solid #e7e7ef;padding:6px 10px;border-radius:10px;transition:filter .2s ease}
+    .toc a:nth-child(2){background:var(--p2)}
+    .toc a:nth-child(3){background:var(--p3)}
+    .toc a:nth-child(4){background:var(--p4)}
+    .toc a:nth-child(5){background:var(--p5)}
+    .toc a:nth-child(6){background:var(--p6)}
+    .toc a:nth-child(7){background:var(--p7)}
+    .toc a:nth-child(8){background:var(--p8)}
+    .toc a:hover{filter:brightness(.97)}
     .grid{display:grid;grid-template-columns:1fr;gap:16px}
     @media(min-width:900px){.grid{grid-template-columns:1fr;gap:16px}}
     section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 20px;}
@@ -47,7 +65,11 @@
     .small{font-size:13px}
     .hr{height:1px;background:var(--line);margin:14px 0}
     .chips{display:flex;flex-wrap:wrap;gap:6px}
-    .chip{background:#f1f5f9;border:1px solid #e5e7eb;color:#475569;padding:4px 8px;border-radius:999px;font-size:12px}
+    .chip{background:var(--p6);border:1px solid #e7e7ef;color:#574d6f;padding:4px 8px;border-radius:999px;font-size:12px}
+    .chip:nth-child(2){background:var(--p8)}
+    .chip:nth-child(3){background:var(--p3)}
+    .chip:nth-child(4){background:var(--p5)}
+    .chip:nth-child(5){background:var(--p4)}
     footer{color:var(--muted);font-size:12px;text-align:center;margin:36px 0 16px}
     .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
   </style>
@@ -68,14 +90,15 @@
       <div class="toc">
         <a href="#summary">概要（ひと目で）</a>
         <a href="#by-country">国別インサイト</a>
-        <a href="#why-now">なぜ今プロモーションか</a>
-        <a href="#data">データの当て方</a>
+        <a href="#field-data">根拠データ</a>
+        <a href="#no-change-plan">実行パッケージ（店舗改装・新包装なし）</a>
+        <a href="#comms">コミュニケーション設計（KOL/KOC・多言語）</a>
+        <a href="#qa-script">想定質問への回答スクリプト</a>
         <a href="#channels">チャネル別 実行ガイド</a>
         <a href="#creative">国別クリエイティブ・ポイント</a>
         <a href="#kpi">KPI（簡易）</a>
         <a href="#refs">参考（出典/根拠）</a>
         <a href="#qbb-onepager">QBB向け1枚企画書</a>
-        <a href="#comms">コミュニケーション設計（KOL/KOC・多言語）</a>
       </div>
     </nav>
 
@@ -129,6 +152,47 @@
     </section>
 
     <!-- コミュニケーション設計（KOL/KOC・多言語） -->
+    <section id="no-change-plan">
+      <h2>実行パッケージ（店舗改装・新包装なし／当社主導）</h2>
+      <p class="small muted">※<strong>店舗の什器変更・新規パッケージ開発なし</strong>で、当社の<strong>撮影・多言語編集・KOL/KOC・SNS運用</strong>のみで成立する現実的プランです。</p>
+      <h3>提供物（Deliverables）</h3>
+      <ul>
+        <li><strong>多言語LP×4</strong>（繁／簡／韓／泰）… 販売店MAP深リンク・よくある質問（持ち帰り/保冷/税関）・購入導線。</li>
+        <li><strong>UGC種まき</strong>：KOC 80–120名（各国20–30）にミニレビュー依頼→指定ハッシュタグUGC化。</li>
+        <li><strong>KOL動画</strong>：各国2–3名／計8–12本（30–60秒）。<span class="muted small">※RED/Weibo（中国）、YouTube/IG/TikTok（台・韓・泰）。</span></li>
+        <li><strong>自社撮影アセット</strong>：1日ロケで静止画20点＋短尺8本（15秒中心）。空港・都心・ホテル客室の3シーン。</li>
+        <li><strong>BLOG×8本</strong>：検索意図別（「どこで買える」「持ち帰り方」「人気味」「価格帯」ほか）。</li>
+        <li><strong>ホテル/空港OOH用 15秒静止画</strong>（掲出は任意／デジタル想定）。</li>
+      </ul>
+
+      <h3>運用スケジュール（8週間）</h3>
+      <ul>
+        <li><strong>W1–W2</strong>：撮影・多言語LP/BLOG制作／KOC選定・配布。</li>
+        <li><strong>W3–W4</strong>：KOL撮影・初回投稿開始／広告ブースト（各国・旅行興味セグメント）。</li>
+        <li><strong>W5–W6</strong>：検索リフト記事投下／UGC二次活用（リール・ショートの再編集）。</li>
+        <li><strong>W7–W8</strong>：ハイライト編集・ケース化（営業用PDF）／来期提案資料に転用。</li>
+      </ul>
+
+      <h3>測定（POSなしで追えるKPI）</h3>
+      <ul>
+        <li><strong>検索指名リフト</strong>（ブランド名＋チーズ／国別）</li>
+        <li><strong>LP流入＆MAPクリック</strong>（最寄り店舗導線）</li>
+        <li><strong>UGC量</strong>（投稿数・保存・シェア）／<strong>KOL視聴完了率</strong></li>
+        <li><strong>問い合わせ/DM件数</strong>（購入場所質問）</li>
+      </ul>
+
+      <h3>営業員の学習カード（1分暗記）</h3>
+      <ul>
+        <li>① <strong>菓子購入率71.8%</strong>・<strong>買い場はコンビニ82.9%/空港59.6%</strong>（カテゴリ＆動線適合）。</li>
+        <li>② <strong>要冷蔵＝出国後受取で解決</strong>、過去事例あり（空港常設ブランド）。</li>
+        <li>③ <strong>我々の強み</strong>＝KOL/KOC＋多言語LPで<strong>指名買いを先につくる</strong>（店舗改装不要）。</li>
+      </ul>
+
+      <div class="callout small">
+        <strong>面談での言い切り：</strong>「<u>店舗もパッケージもそのまま</u>で始められます。<u>多言語LPとKOL/KOC</u>で“見かける頻度”を上げ、MAP導線で最寄り店舗へ送客します。」
+      </div>
+    </section>
+
     <section id="comms">
       <h2>コミュニケーション設計（KOL/KOC・多言語）</h2>
       <p class="small muted">※当社＝KOC/KOLキャスティング、<u>多言語コンテンツ制作・SNS発信・BLOG運用</u>が主軸。<strong>「売場に置けない時でも“買いたくなる需要”を先に作る」</strong>設計に寄せます。</p>
@@ -164,6 +228,46 @@
       <div class="callout small">
         「御社は<strong>品質</strong>、私たちは<strong>話題化と多言語編集</strong>で、<u>“見かける頻度”と“買いやすさ”</u>を設計します。DFがなくても、<u>都心コンビニ×KOC/KOL×多言語LP</u>で<strong>指名買い</strong>を先に作れます。」
       </div>
+    </section>
+
+    <!-- 想定質問への回答スクリプト -->
+    <section id="qa-script">
+      <h2>想定質問への回答スクリプト（そのまま使える）</h2>
+      <h3>Q1. インバウンドは今すべきか？</h3>
+      <div class="callout small">
+        <strong>30秒版：</strong><br/>
+        「はい。訪日と免税の指標は高水準で推移しています。今期は<em>小さくPOC</em>、次期に<em>勝ちSKU拡張</em>が最短距離です。<u>空港×都心コンビニ</u>で検証します。」
+      </div>
+      <ul>
+        <li><strong>裏付け：</strong> 菓子カテゴリは上位、旅行動線と購買接点（コンビニ・空港）が強い。</li>
+        <li><strong>提案の芯：</strong> 1〜2か月のテストで意思決定、限定/多言語パッケージで価値訴求。</li>
+      </ul>
+
+      <h3>Q2. チーズに需要があるのか？（事例歓迎）</h3>
+      <div class="callout small">
+        <strong>20秒版：</strong><br/>
+        「あります。<strong>菓子購買の強さ</strong>と、空港・駅・百貨での<strong>チーズ菓子/スイーツの前例</strong>が根拠です。箱菓子・ミニタルト・チーズケーキは旅行者に相性◎。」
+      </div>
+      <ul>
+        <li><strong>具体例：</strong> Tokyo Milk Cheese Factory（空港動線）、BAKE CHEESE TART（駅/百貨）、LeTAO（冷凍/冷蔵土産）。</li>
+        <li><strong>当社の付加価値：</strong> KOLレビュー＆多言語BLOGで“指名検索”を増やし、棚取りを後押し。</li>
+      </ul>
+
+      <h3>Q3. 特に要冷蔵に需要はあるか？</h3>
+      <div class="callout small">
+        <strong>20秒版：</strong><br/>
+        「<strong>あります（導線設計が前提）</strong>。<u>出国後受取</u>や<u>ホテル受取</u>を組み合わせれば、保冷不安は解消できます。ミニポーション×個包装で“持ち帰りやすさ”を担保します。」
+      </div>
+      <ul>
+        <li><strong>売場の作り：</strong> 空港airsideで冷蔵SKU、都心では常温SKUで回転→高単価へ誘導。</li>
+        <li><strong>表現：</strong> 「Carry-on OK」「短時間で選べる」「Tokyo Only」を多言語で明示。</li>
+      </ul>
+
+      <h3>補助スクリプト（反論対応）</h3>
+      <ul>
+        <li><strong>DFで扱えない可能性：</strong> 「DFが無くても、<u>都心コンビニ×KOC/KOL</u>で需要を先に作り、<u>小売側に証拠</u>を提示して開拓します。」</li>
+        <li><strong>単価が小さい：</strong> 「<u>限定ラベル＋多言語POP</u>でセット率と客単価を改善。<u>越境EC</u>で帰国後のLTVも取りに行きます。」</li>
+      </ul>
     </section>
 
     <div class="grid">
@@ -218,6 +322,19 @@
       </section>
     </div>
 
+    <section id="field-data">
+      <h2>現場で即答できる根拠データ（要点）</h2>
+      <ul>
+        <li><strong>到着規模:</strong> 2024年の訪日客は<strong>3,687万人</strong>で過去最高、旅行消費は<strong>8.1兆円</strong>規模。25年も高水準継続見込み。<span class="muted small">（出典: Reuters/JNTO 集計）</span></li>
+        <li><strong>何を買うか:</strong> <u>菓子類の購入率が<strong>71.8%</strong></u>で最多。韓国<strong>82.2%</strong>、台湾<strong>78.1%</strong>、中国<strong>69.6%</strong>、米国<strong>53.5%</strong>。<span class="muted small">（出典: 観光庁 2024年4-6月期）</span></li>
+        <li><strong>どこで買うか:</strong> <u>コンビニ<strong>82.9%</strong></u>、百貨店・デパート<strong>60.4%</strong>、空港免税<strong>59.6%</strong>、ドラッグ<strong>56.9%</strong>、スーパー<strong>48.4%</strong>。<span class="muted small">（出典: 同上）</span></li>
+        <li><strong>要冷蔵の扱い:</strong> 空港内での人気洋菓子店（例：Tokyo Milk Cheese Factory）は<strong>空港ターミナル常設</strong>で、保冷前提の導線が既に確立。<span class="muted small">（例: 羽田公式ショップ情報）</span></li>
+      </ul>
+      <div class="callout small">
+        <strong>実務の示し方：</strong>上記数値を<u>国別トーク</u>に落とし、「<em>コンビニで試して→空港でギフト</em>」の2段導線を提案。要冷蔵は<strong>出国後受取</strong>・<strong>ホテル受取</strong>・<strong>薄型保冷</strong>の三択をセットで提示。
+      </div>
+    </section>
+
     <section id="why-now">
       <h2>なぜ今、インバウンドのチーズ/チーズ系スイーツを推すべきか</h2>
       <ul>
@@ -225,40 +342,6 @@
         <li><strong>カテゴリ適合:</strong> 東アジア主要国は<strong>菓子購買率が高く</strong>、チーズ系スイーツとの相性が良い。</li>
         <li><strong>チャネル適合:</strong> 購買接点の筆頭は<strong>コンビニ＋空港免税</strong>。小容量・個包装・常温/冷蔵のバリエーションがハマる。</li>
         <li><strong>実績の蓄積:</strong> NYPC、Tokyo Milk Cheese Factory、LeTAO、BAKE 等で行列/話題化の成功事例。限定・コラボ・地域性展開の余地が大きい。</li>
-      </ul>
-    </section>
-
-    <section id="data">
-      <h2>データの当て方（グラフは必要？）</h2>
-      <p class="small muted">※共有いただいた「品目別・国別の購買単価（2024→2025比較）」のような図表は、<strong>“入れるなら最小限”</strong>が原則。<u>意思決定を変える一言</u>に落として使います。</p>
-      <h3>結論</h3>
-      <ul>
-        <li><strong>必須ではない</strong>（詳細な折れ線/棒グラフをそのまま見せると主旨がぼけやすい）。</li>
-        <li>使うなら、<u>ターゲット4地域の“菓子・食品の単価/伸びが上向き”</u>という<strong>1フレーズ</strong>に要約して、<strong>1枚スライド</strong>で十分。</li>
-      </ul>
-      <h3>使う場合の“1枚化”テンプレ</h3>
-      <div class="callout small">
-        <ul>
-          <li>見出し：<strong>「台湾/韓国/中国/タイ：菓子カテゴリは単価も需要も堅調」</strong></li>
-          <li>要点3つ：
-            <ul>
-              <li>① 4地域とも<strong>菓子の購買が上位</strong>（旅行土産と親和性）。</li>
-              <li>② 単価は前年比で<u>微増〜堅調</u>（※該当データで確認した国名のみ明記）。</li>
-              <li>③ <strong>チーズ菓子/スイーツ＝カテゴリ適合</strong>（空港・都心売場で事例多数）。</li>
-            </ul>
-          </li>
-          <li>脚注：出典（観光庁/各種調査）・注記（サンプル/期間）。</li>
-        </ul>
-      </div>
-      <h3>話術（面談での言い切り）</h3>
-      <ul>
-        <li>「細かい数字より、<strong>“菓子は旅行者の最上位ニーズ”</strong>という事実が重要です。QBBはここに<strong>チーズで指名買い</strong>を作れます。」</li>
-        <li>「面で置けない時でも、<strong>KOL/KOC＋多言語LP</strong>で先に需要を作り、<u>都心コンビニ→空港→越境EC</u>へ波及させます。」</li>
-      </ul>
-      <h3>入れない場合の代替</h3>
-      <ul>
-        <li><strong>テキスト1行</strong>：「東アジア4地域は、みやげ＝菓子が主力。チーズ系スイーツとの相性◎」</li>
-        <li><strong>アイコン3つ</strong>（菓子上位・伸び堅調・事例多数）だけで構成し、<u>余白を広く</u>して落ち着いたトーンに。</li>
       </ul>
     </section>
 
